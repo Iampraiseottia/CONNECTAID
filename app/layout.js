@@ -7,7 +7,6 @@ import { icon } from '@fortawesome/fontawesome-svg-core'
 import Metadata from './components/Metadata';
 
 
-
 export const metadata = {
   '/': {
     title: 'ConnectAID Web Application',

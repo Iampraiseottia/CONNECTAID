@@ -3,7 +3,7 @@ import React from 'react'
 
 import globalStyle from './globals.css'
 
-import Navbar from './components/Navbar'
+import Hero from './components/Hero'
 
 import Metadata from './components/Metadata'
 
@@ -11,15 +11,15 @@ import Metadata from './components/Metadata'
 const ConnectAID_App = () => {
 
   const metadata = {
-    title: 'Njangi Web Application',
-    description: 'An application created where members join, create, and manage njangi groups with others all over the world.',
+    title: 'ConnectAID Web Application',
+    description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
   };
 
   return (
     <section className=''>
       <Metadata title={metadata.title} description={metadata.description} />
 
-      <Navbar />
+      <Hero />
       
     </section>
   )
