@@ -1,23 +1,33 @@
-
 "use client"
 
 import Image from 'next/image';
 import Link from 'next/link';
-
-import globalStyle from '../globals.css'
-
-import { ChevronDown, ChevronRight } from 'lucide-react'; 
-
-import { useRef } from 'react';
+import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react'; 
+import { useRef, useState, useEffect } from 'react';
 
 const Hero = () => {
-
-
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const firstImageRef = useRef(null);
   const secondImageRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth > 1240 && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [mobileMenuOpen]);
   
   const handleMouseMove = (e, ref) => {
-    if (!ref.current) return;
+    if (!ref.current || window.innerWidth < 1100) return;  
     
     const rect = ref.current.getBoundingClientRect(); 
     
@@ -36,140 +46,217 @@ const Hero = () => {
     ref.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
-
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   return (
-    <div className="min-h-screen relative bg-gray-950 text-white w-full">
-
+    <div className="min-h-[60vh] sm:min-h-[97vh] werey relative bg-gray-950 text-white w-full">
       <div className="absolute inset-0 z-0">
         <Image
           src="/hero/hero-bg.png"
           alt="Background" 
-          layout="fill" 
+          fill 
           style={{objectFit: 'cover'}}
-          quality={100}  
+          quality={100}   
           className="opacity-20"
+          priority
         />
       </div>
       
       <div className="relative z-10">
-        {/*ConnectAID Home Page Header */} 
-        <nav className="py-4 pt-12">
-          <div className="container px-4 ml-[5%] flex justify-between items-center"> 
-            {/* ConnectAID Logo Section */} 
+        {/* Header */} 
+        <nav className="py-4 pt-6 md:pt-12">
+          <div className="container mx-[5%] header-mid px-4 sm:px-6 flex justify-between items-center"> 
+            {/* Logo Section */} 
             <div className="flex items-center">
-              <Link href="/home">
+              <Link href="/home"> 
                 <div className="flex items-center cursor-pointer">
-                  <Image src="/logo.png" alt="ConnectAID Logo" width={90} height={80} />
-                  <span className="ml-3 tracking-wide text-4xl font-bold">ConnectAID</span>
+                  <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60} className="w-[60px] h-auto md:w-[90px]" />
+                  <span className="ml-2 md:ml-3 tracking-wide werey4 text-2xl md:text-4xl font-bold">ConnectAID</span>
                 </div>
               </Link>
             </div>
 
-            {/* ConnectAID Navigation Links Section */}
-            <div className="md:flex space-x-9 ease-in-out duration-300">
-              <Link href="/home" className="text-yellow-500 text-xl font-semibold">Home</Link>
-              <Link href="/about" className="hover:text-yellow-500 text-white text-xl font-semibold">About</Link>
-              <Link href="/donation" className="hover:text-yellow-500 text-white text-xl font-semibold">Donation</Link>
-              <Link href="/blog" className="hover:text-yellow-500 text-white text-xl font-semibold">Events</Link>
+            {/* Mobile Menu Button - Show up to 1240px */}
+            <div className="xl:hidden">
+              <button 
+                onClick={toggleMobileMenu}
+                className="p-2 focus:outline-none text-teal-500 mr-4"
+              >
+                {mobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
+              </button>
+            </div> 
+
+            {/* Desktop Navigation - Hidden until >= 1240px */}
+            <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
+              <Link href="/home" className="text-yellow-500 text-lg xl:text-xl font-semibold">Home</Link>
+              <Link href="/about" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">About</Link>
+              <Link href="/donation" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Donation</Link>
+              <Link href="/blog" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Events</Link>
               <div className="relative group z-10">
-                <button className="hover:text-yellow-500 text-white text-xl ease-in-out duration-300 font-semibold flex items-center">
-                  Pages <ChevronDown className="ml-1 w-5 h-5" />
+                <button className="hover:text-yellow-500 text-white text-lg xl:text-xl ease-in-out duration-300 font-semibold flex items-center">
+                  Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" />
                 </button>
                 <div className="absolute hidden bg-white w-60 border-t-2 border-t-teal-500 -ml-1 h-auto py-5 transition-all group-hover:block p-2 rounded shadow-lg">
-                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Blog
                   </Link>
-                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                    FAQs
+                  </Link>
+                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Event Details
                   </Link>
                   {/* Nested dropdown for Login */}
                   <div className="relative group/login">
-                    <div className="py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer">
+                    <div className="py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer">
                       <p>Login</p>
-                      <ChevronRight />
+                      <ChevronRight className="w-4 h-4" />
                     </div>
                     <div className="absolute left-full top-0 hidden bg-white w-60 border-l-2 border-t-2 border-l-teal-500 border-t-teal-500 h-auto py-5 transition-all group-hover/login:block p-2 rounded shadow-lg">
-                      <Link href="/login/user" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
-                        User Login
+                      <Link href="/login/user" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                        Login
                       </Link>
-                      <Link href="/login/admin" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
-                        Admin Login
+                      <Link href="/login/admin" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                        Registration
                       </Link>
-                      <Link href="/login/volunteer" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
-                        Volunteer Login
+                      <Link href="/login/volunteer" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                        Forgot Password
                       </Link>
                     </div>
                   </div>
-                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Blog Details
                   </Link>
-                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Privacy Policy
                   </Link>
-                  <Link href="/pages/events" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link href="/pages/events" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Terms-Condition
                   </Link>
                 </div>
               </div>
-              <Link href="/blog" className="hover:text-yellow-500 text-white text-xl font-semibold">FAQs</Link>
-              <Link href="/contact" className="hover:text-yellow-400 text-white text-xl font-semibold">Contact</Link>
+              
+              <Link href="/contact" className="hover:text-yellow-400 text-white text-lg xl:text-xl font-semibold">Contact</Link>
             </div>
 
-            {/* ConnectAID Right Section - Useful Button Area */}
-            <div className="flex items-center space-x-5 -mr-40">
-              
+            {/* Desktop Right Section - Donate Button & Language */}
+            <div className="hidden xl:flex items-center space-x-3 xl:space-x-5 -mr-40 header-mid2">
               <div className="relative group">
-                <button className="flex items-center hover:text-yellow-400">
+                <button className="flex items-center hover:text-yellow-400 text-sm xl:text-base">
                   Eng <span className="ml-1">▼</span>
                 </button>
                 <div className="absolute bg-white hidden group-hover:block p-2 rounded shadow-lg right-0">
-                  <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">English</button>
-                  <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[18px] hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
+                  <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">English</button>
+                  <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
                 </div>
               </div>
-              <Link href="/donate" className="bg-white text-black font-bold ease-in-out cursor-pointer py-4 px-9 hover:rounded-3xl hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300">
+              <Link href="/donate" className="bg-white text-black font-bold ease-in-out cursor-pointer py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base hover:rounded-3xl hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300 ">
                 DONATE NOW
               </Link>
             </div>
           </div>
         </nav>
 
+        {/* Mobile Menu - Display on top of the hero content until 1240px */}
+        {mobileMenuOpen && (
+          <div className="xl:hidden bg-gray-900 p-4 absolute w-full z-50">
+            <div className="flex flex-col space-y-4">
+              <Link href="/home" className="text-yellow-500 text-xl font-semibold">Home</Link>
+              <Link href="/about" className="hover:text-yellow-500 text-white text-xl font-semibold">About</Link>
+              <Link href="/donation" className="hover:text-yellow-500 text-white text-xl font-semibold">Donation</Link>
+              <Link href="/blog" className="hover:text-yellow-500 text-white text-xl font-semibold">Events</Link>
+              
+              <div className="relative">
+                <button 
+                  onClick={() => document.getElementById('mobilePages').classList.toggle('hidden')}
+                  className="hover:text-yellow-500 text-white text-xl font-semibold flex items-center justify-between w-full"
+                >
+                  Pages <ChevronDown className="ml-1 w-5 h-5" />
+                </button>
+                <div id="mobilePages" className="hidden bg-gray-800 mt-2 p-2 rounded">
+                  <Link href="/pages/team" className="block py-2 text-white hover:text-yellow-500">Blog</Link>
+                  <Link href="/pages/gallery" className="block py-2 text-white hover:text-yellow-500">Event Details</Link>
+                  <Link href="/blog" className="block py-2 text-white hover:text-yellow-500">FAQs</Link> 
+                  
+                  <div className="relative">
+                    <button 
+                      onClick={() => document.getElementById('mobileLogin').classList.toggle('hidden')}
+                      className="py-2 text-white hover:text-yellow-500 flex items-center justify-between w-full"
+                    >
+                      Login <ChevronRight className="ml-1 w-4 h-4" />
+                    </button>
+                    <div id="mobileLogin" className="hidden bg-gray-700 mt-1 p-2 rounded ml-4">
+                      <Link href="/login" className="block py-2 text-white hover:text-yellow-500">Login</Link>
+                      <Link href="/register" className="block py-2 text-white hover:text-yellow-500">Registration</Link>
+                      <Link href="/forgot_password" className="block py-2 text-white hover:text-yellow-500">Forgot Password</Link>
+                    </div>
+                  </div>
+                  
+                  <Link href="/pages/team" className="block py-2 text-white hover:text-yellow-500">Blog Details</Link>
+                  <Link href="/pages/gallery" className="block py-2 text-white hover:text-yellow-500">Privacy Policy</Link>
+                  <Link href="/pages/events" className="block py-2 text-white hover:text-yellow-500">Terms-Condition</Link>
+                </div>
+              </div>
+              
+              <Link href="/contact" className="hover:text-yellow-400 text-white text-xl font-semibold">Contact</Link>
+              
+              <div className="flex items-center justify-between mt-4">
+                <div className="relative group">
+                  <button  
+                    onClick={() => document.getElementById('mobileLang').classList.toggle('hidden')}
+                    className="flex items-center hover:text-yellow-400"
+                  >
+                    Eng <span className="ml-1">▼</span>
+                  </button>
+                  <div id="mobileLang" className="hidden bg-gray-800 mt-1 p-2 rounded">
+                    <button className="block py-2 text-white hover:text-yellow-500">English</button>
+                    <button className="block py-2 text-white hover:text-yellow-500">French</button>
+                  </div>
+                </div>
+                <Link href="/donate" className="bg-white text-black font-bold py-2 px-6 hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300">
+                  DONATE NOW
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
 
-        {/*Main Section - Hero Content */}
-        <div className="container ml-[1%] px-4 py-24 mt-10 leading-10 flex justify-evenly items-center flex-col md:flex-row"> 
-          
-          <div  className="">
-            <p className="text-yellow-500 text-2xl  mb-8 font-semibold">Speak Hope for the Homeless</p>
+        {/* Main Hero Content */}
+        <div className="container hero-mid ml-[5%] mt-16 px-4 sm:px-6 py-8 md:py-16 lg:py-24 flex flex-col md:flex-row justify-between items-center"> 
+          {/* Text Content */}
+          <div className="w-full md:w-1/2 mb-12 md:mb-0 -mt-10 sm:-mt-5">
+            <p className="text-yellow-500 text-xl md:text-2xl mb-4 md:mb-8 font-semibold">Speak Hope for the Homeless</p>
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-10 max-w-2xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-10">
               Donate to children & senior citizens
             </h1>
             
-            <p className="text-gray-300 max-w-2xl mb-10 text-lg">
+            <p className="text-gray-300 mb-8 md:mb-10 text-base md:text-lg max-w-2xl mr-2">
               Involves donating one's body after death for medical research, education, or
               anatomical dissection. Body donation plays a crucial role in advancing medical
               science
             </p>
             
             <div className="flex flex-wrap gap-4">
-              <Link href="/donate" className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-xl cursor-pointer ease-in-out duration-300 py-3 px-14 rounded-full transition ">
+              <Link href="/donate" className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-base md:text-xl cursor-pointer ease-in-out duration-300 py-2 px-8 md:py-3 md:px-14 rounded-full transition">
                 Donate Now
               </Link>
-              <Link href="/register" className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-xl cursor-pointer ease-in-out duration-300 py-3 px-14 rounded-full transition">
+              <Link href="/register" className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-base md:text-xl cursor-pointer ease-in-out duration-300 py-2 px-8 md:py-3 md:px-14 rounded-full transition">
                 Join ConnectAID
               </Link>
             </div>
-            
           </div>
 
-          {/* Image Cards */}
-          <div className="mt-16 flex flex-wrap gap-6 justify-end ml-24 -mr-40">
+          {/* Image Cards - Hidden on small screens, visible from medium screens up */}
+          <div className="hidden md:flex flex-col md:flex-row flex-wrap gap-4 lg:gap-6 justify-center md:justify-end md:w-1/2">
             <div 
               ref={firstImageRef}
-              className="relative w-[250px] h-[410px] overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out" 
+              className="relative w-[180px] h-[300px] lg:w-[250px] lg:h-[410px] overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey2" 
               onMouseMove={(e) => handleMouseMove(e, firstImageRef)}
-              onMouseLeave={() => handleMouseLeave(firstImageRef)} > 
+              onMouseLeave={() => handleMouseLeave(firstImageRef)} 
+            > 
               <Image
                 src="/hero/hero-2.png"
                 alt="Children in need"
@@ -179,9 +266,10 @@ const Hero = () => {
             </div>
             <div 
               ref={secondImageRef}
-              className="relative w-[320px] h-[540px] -mt-20 overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out"
+              className="relative w-[220px] h-[400px] lg:w-[320px] lg:h-[540px] -mt-10 lg:-mt-20 overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey5"
               onMouseMove={(e) => handleMouseMove(e, secondImageRef)} 
-              onMouseLeave={() => handleMouseLeave(secondImageRef)} >
+              onMouseLeave={() => handleMouseLeave(secondImageRef)} 
+            >
               <Image
                 src="/hero/hero-3.png"
                 alt="Child smiling"
