@@ -4,6 +4,7 @@ import React from 'react'
 import globalStyle from './globals.css'
 
 import Hero from './components/Hero'
+// import Navbar from './components/Navbar'
 
 import Metadata from './components/Metadata'
 
@@ -20,8 +21,11 @@ const ConnectAID_App = () => {
       <Metadata title={metadata.title} description={metadata.description} />
 
       <Hero />
+
+      {/* <Navbar /> */}
+
       
-    </section>
+    </section> 
   )
 }
 

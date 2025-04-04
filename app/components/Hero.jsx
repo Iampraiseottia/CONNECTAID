@@ -1,15 +1,22 @@
+
 "use client"
 
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react'; 
+
 import { useRef, useState, useEffect } from 'react';
+
+import { motion } from "motion/react"
+
 
 const Hero = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const firstImageRef = useRef(null);
   const secondImageRef = useRef(null);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+  const [isScrolled, setIsScrolled] = useState(false);
   
   // Handle window resize
   useEffect(() => {
@@ -25,6 +32,22 @@ const Hero = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [mobileMenuOpen]);
+  
+  // Handle scroll for sticky header
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   
   const handleMouseMove = (e, ref) => {
     if (!ref.current || window.innerWidth < 1100) return;  
@@ -51,7 +74,11 @@ const Hero = () => {
   };
 
   return (
-    <div className="min-h-[60vh] sm:min-h-[97vh] werey relative bg-gray-950 text-white w-full">
+    <motion.div 
+      initial={{opacity: 0, y: 100}}
+      whileInView={{y: 0, opacity: 1}}
+      transition={{duration: 0.5, delay: 0.5}} 
+      className="min-h-[60vh] sm:min-h-[97vh] werey relative bg-gray-950 text-white w-full">
       <div className="absolute inset-0 z-0">
         <Image
           src="/hero/hero-bg.png"
@@ -60,28 +87,28 @@ const Hero = () => {
           style={{objectFit: 'cover'}}
           quality={100}   
           className="opacity-20"
-          priority
+          priority 
         />
       </div>
       
       <div className="relative z-10">
-        {/* Header */} 
-        <nav className="py-4 pt-6 md:pt-12">
+        {/* Sticky Header */} 
+        <nav className={`py-4 w-full z-50 transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 bg-gray-950 bg-opacity-85 shadow-lg py-7 ' : 'pt-6 md:pt-12'}`}>
           <div className="container mx-[5%] header-mid px-4 sm:px-6 flex justify-between items-center"> 
-            {/* Logo Section */} 
+            {/* Logo Section */}
             <div className="flex items-center">
-              <Link href="/home"> 
+              <Link href="/">
                 <div className="flex items-center cursor-pointer">
-                  <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60} className="w-[60px] h-auto md:w-[90px]" />
-                  <span className="ml-2 md:ml-3 tracking-wide werey4 text-2xl md:text-4xl font-bold">ConnectAID</span>
+                  <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60} className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
+                  <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold transition-all duration-300 ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
                 </div>
               </Link>
-            </div>
+            </div> 
 
-            {/* Mobile Menu Button - Show up to 1240px */}
+            {/* Mobile Menu Button  */}
             <div className="xl:hidden">
               <button 
-                onClick={toggleMobileMenu}
+                onClick={toggleMobileMenu} 
                 className="p-2 focus:outline-none text-teal-500 mr-4"
               >
                 {mobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
@@ -90,7 +117,7 @@ const Hero = () => {
 
             {/* Desktop Navigation - Hidden until >= 1240px */}
             <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
-              <Link href="/home" className="text-yellow-500 text-lg xl:text-xl font-semibold">Home</Link>
+              <Link href="/" className="text-yellow-500 text-lg xl:text-xl font-semibold">Home</Link>
               <Link href="/about" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">About</Link>
               <Link href="/donation" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Donation</Link>
               <Link href="/blog" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Events</Link>
@@ -152,7 +179,7 @@ const Hero = () => {
                   <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
                 </div>
               </div>
-              <Link href="/donate" className="bg-white text-black font-bold ease-in-out cursor-pointer py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base hover:rounded-3xl hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300 ">
+              <Link href="/donate" className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300 ${isScrolled ? 'py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
                 DONATE NOW
               </Link>
             </div>
@@ -161,9 +188,9 @@ const Hero = () => {
 
         {/* Mobile Menu - Display on top of the hero content until 1240px */}
         {mobileMenuOpen && (
-          <div className="xl:hidden bg-gray-900 p-4 absolute w-full z-50">
+          <div className={`xl:hidden bg-gray-900 p-4 z-50 w-full ${isScrolled ? 'fixed top-16' : 'absolute'}`}>
             <div className="flex flex-col space-y-4">
-              <Link href="/home" className="text-yellow-500 text-xl font-semibold">Home</Link>
+              <Link href="/" className="text-yellow-500 text-xl font-semibold">Home</Link>
               <Link href="/about" className="hover:text-yellow-500 text-white text-xl font-semibold">About</Link>
               <Link href="/donation" className="hover:text-yellow-500 text-white text-xl font-semibold">Donation</Link>
               <Link href="/blog" className="hover:text-yellow-500 text-white text-xl font-semibold">Events</Link>
@@ -224,9 +251,9 @@ const Hero = () => {
         )}
 
         {/* Main Hero Content */}
-        <div className="container hero-mid ml-[5%] mt-16 px-4 sm:px-6 py-8 md:py-16 lg:py-24 flex flex-col md:flex-row justify-between items-center"> 
+        <div className={`container hero-mid ml-[5%] px-4 sm:px-6 py-8 md:py-16 lg:py-24 flex flex-col md:flex-row justify-between items-center ${isScrolled ? 'mt-24' : 'mt-16'}`}> 
           {/* Text Content */}
-          <div className="w-full md:w-1/2 mb-12 md:mb-0 -mt-10 sm:-mt-5">
+          <div className="w-full md:w-1/2 mb-12 md:mb-0 -mt-10 sm:-mt-5"> 
             <p className="text-yellow-500 text-xl md:text-2xl mb-4 md:mb-8 font-semibold">Speak Hope for the Homeless</p>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-10">
@@ -280,7 +307,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
