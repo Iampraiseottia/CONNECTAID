@@ -1,4 +1,3 @@
-
 "use client"
 
 import Image from 'next/image';
@@ -54,31 +53,47 @@ const Hero = () => {
     
     const rect = ref.current.getBoundingClientRect(); 
     
+    // Calculate position as a value between 0 and 1
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     
-    const tiltX = 10 * (0.5 - y);
-    const tiltY = -10 * (0.5 - x);
+    const xPos = (x - 0.5) * 2;
+    const yPos = (y - 0.5) * 2;
     
-    ref.current.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.00, 1.00, 1.00)`; 
+    const intensityFactor = 1.5;
+    
+    const edgeResponse = (val) => Math.sign(val) * Math.pow(Math.abs(val), intensityFactor);
+    
+    const tiltX = 20 * edgeResponse(yPos); 
+    const tiltY = -20 * edgeResponse(xPos);
+    
+    const centerProximity = 1 - (Math.abs(xPos) + Math.abs(yPos)) / 2;
+    const zoomFactor = 1 + (centerProximity * 0.05);
+    
+    ref.current.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(${zoomFactor}, ${zoomFactor}, 1)`;
+    
+    ref.current.style.transition = `transform ${Math.abs(xPos) > 0.8 || Math.abs(yPos) > 0.8 ? '100ms' : '0ms'}`;
   };
   
   const handleMouseLeave = (ref) => {
     if (!ref.current) return;
     
+    ref.current.style.transition = 'transform 300ms ease-out';
     ref.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
+  
 
   return (
     <motion.div 
       initial={{opacity: 0, y: 100}}
       whileInView={{y: 0, opacity: 1}}
       transition={{duration: 0.5, delay: 0.5}} 
-      className="min-h-[60vh] sm:min-h-[97vh] werey relative bg-gray-950 text-white w-full">
+      viewport={{once: true}}
+      className="min-h-[40vh] sm:min-h-[50vh] md:min-h-[70vh] lg:min-h-[97vh] werey relative bg-gray-950 text-white w-full">
       <div className="absolute inset-0 z-0">
         <Image
           src="/hero/hero-bg.png"
@@ -86,7 +101,7 @@ const Hero = () => {
           fill 
           style={{objectFit: 'cover'}}
           quality={100}   
-          className="opacity-20"
+          className="opacity-20 object-top lg:object-center"  
           priority 
         />
       </div>
@@ -115,7 +130,7 @@ const Hero = () => {
               </button>
             </div> 
 
-            {/* Desktop Navigation - Hidden until >= 1240px */}
+            {/* Desktop Navigation */}
             <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
               <Link href="/" className="text-yellow-500 text-lg xl:text-xl font-semibold">Home</Link>
               <Link href="/about" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">About</Link>
@@ -186,7 +201,7 @@ const Hero = () => {
           </div>
         </nav>
 
-        {/* Mobile Menu - Display on top of the hero content until 1240px */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className={`xl:hidden bg-gray-900 p-4 z-50 w-full ${isScrolled ? 'fixed top-16' : 'absolute'}`}>
             <div className="flex flex-col space-y-4">
@@ -251,26 +266,26 @@ const Hero = () => {
         )}
 
         {/* Main Hero Content */}
-        <div className={`container hero-mid ml-[5%] px-4 sm:px-6 py-8 md:py-16 lg:py-24 flex flex-col md:flex-row justify-between items-center ${isScrolled ? 'mt-24' : 'mt-16'}`}> 
+        <div className={`container hero-mid ml-[5%] px-4 sm:px-6 py-6 md:py-12 lg:py-24 flex flex-col md:flex-row justify-between items-center ${isScrolled ? 'mt-24' : 'mt-8 md:mt-12 lg:mt-16'}`}> 
           {/* Text Content */}
-          <div className="w-full md:w-1/2 mb-12 md:mb-0 -mt-10 sm:-mt-5"> 
-            <p className="text-yellow-500 text-xl md:text-2xl mb-4 md:mb-8 font-semibold">Speak Hope for the Homeless</p>
+          <div className="w-full md:w-1/2 mb-8 md:mb-0 mt-0 sm:mt-0 md:-mt-5 lg:-mt-10"> 
+            <p className="text-yellow-500 text-xl md:text-2xl mb-3 md:mb-6 lg:mb-8 font-semibold">Speak Hope for the Homeless</p>
             
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-10">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 lg:mb-10">
               Donate to children & senior citizens
             </h1>
             
-            <p className="text-gray-300 mb-8 md:mb-10 text-base md:text-lg max-w-2xl mr-2">
+            <p className="text-gray-300 mb-6 md:mb-8 lg:mb-10 text-sm sm:text-base md:text-lg max-w-2xl mr-2">
               Involves donating one's body after death for medical research, education, or
               anatomical dissection. Body donation plays a crucial role in advancing medical
               science
             </p>
             
-            <div className="flex flex-wrap gap-4">
-              <Link href="/donate" className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-base md:text-xl cursor-pointer ease-in-out duration-300 py-2 px-8 md:py-3 md:px-14 rounded-full transition">
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              <Link href="/donate" className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
                 Donate Now
               </Link>
-              <Link href="/register" className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-base md:text-xl cursor-pointer ease-in-out duration-300 py-2 px-8 md:py-3 md:px-14 rounded-full transition">
+              <Link href="/register" className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
                 Join ConnectAID
               </Link>
             </div>
@@ -280,7 +295,7 @@ const Hero = () => {
           <div className="hidden md:flex flex-col md:flex-row flex-wrap gap-4 lg:gap-6 justify-center md:justify-end md:w-1/2">
             <div 
               ref={firstImageRef}
-              className="relative w-[180px] h-[300px] lg:w-[250px] lg:h-[410px] overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey2" 
+              className="relative w-[150px] h-[250px] lg:w-[250px] lg:h-[410px] overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey2" 
               onMouseMove={(e) => handleMouseMove(e, firstImageRef)}
               onMouseLeave={() => handleMouseLeave(firstImageRef)} 
             > 
@@ -293,7 +308,7 @@ const Hero = () => {
             </div>
             <div 
               ref={secondImageRef}
-              className="relative w-[220px] h-[400px] lg:w-[320px] lg:h-[540px] -mt-10 lg:-mt-20 overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey5"
+              className="relative w-[180px] h-[320px] lg:w-[320px] lg:h-[540px] -mt-5 lg:-mt-20 overflow-hidden rounded-lg shadow-lg transition-transform duration-200 ease-out werey5"
               onMouseMove={(e) => handleMouseMove(e, secondImageRef)} 
               onMouseLeave={() => handleMouseLeave(secondImageRef)} 
             >

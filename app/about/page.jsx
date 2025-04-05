@@ -1,5 +1,6 @@
 
 import React from 'react'
+
 import globalStyle from '../globals.css'
 
 import Navbar from '../components/Navbar'

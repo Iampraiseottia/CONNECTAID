@@ -53,31 +53,31 @@ const Navbar = () => {
   };
 
   return (
-    <>
+    <main className='min-h-[20%] w-full bg-slate-600'>  
       {/* Sticky Header */} 
-      <nav className={`py-4 w-full z-50 transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 bg-white shadow-lg py-7' : 'pt-6 md:pt-12 bg-white'}`}>
-        <div className="container mx-[5%] header-mid px-4 sm:px-6 flex justify-between items-center"> 
+      <nav className={`py-4 w-full z-50 transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 bg-white shadow-lg mb-96 ' : 'pt-6 md:pt-12 bg-white'}`}>
+        <div className="container mx-[5%] mt-3 mb-3 header-mid px-4 sm:px-6 flex justify-between items-center"> 
           {/* Logo Section */}  
           <div className="flex items-center">
-            <Link href="/"> 
-                <div className="flex items-center cursor-pointer">
-                <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60} className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
+            <Link href="/">
+                <div className="flex items-center cursor-pointer"> 
+                <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60}  className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
                 <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold text-black transition-all duration-300 ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
-              </div>
+              </div> 
             </Link>
           </div>
-
-          {/* Mobile Menu Button - Show up to 1240px */}
+ 
+          {/* Mobile Menu Button */}
           <div className="xl:hidden">
-            <button 
+            <button  
               onClick={toggleMobileMenu}
-              className="p-2 focus:outline-none text-teal-500 mr-4"
+              className="p-2 focus:outline-none text-teal-500 mr-4" 
             >
               {mobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
             </button>
           </div> 
 
-          {/* Desktop Navigation - Hidden until >= 1240px */}
+          {/* Desktop Navigation  */}
           <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
             <Link 
               href="/" 
@@ -206,49 +206,49 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Right Section - Donate Button & Language */} 
+          {/* Desktop Right Section - Donate Button & Language */}  
           <div className="hidden xl:flex items-center space-x-3 xl:space-x-5 -mr-40 header-mid2">
             <div className="relative group">
-              <button className="flex items-center hover:text-yellow-400 text-black text-sm xl:text-base">
+              <button className="flex items-center hover:text-teal-400 text-black text-sm xl:text-base">
                 Eng <span className="ml-1">▼</span>
-              </button>
+              </button> 
               <div className="absolute bg-white hidden group-hover:block p-2 rounded shadow-lg right-0">
                 <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">English</button>
                 <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
               </div>
             </div>
-            <Link href="/donate" className={`bg-teal-600 text-white font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-white hover:bg-yellow-500 transition duration-300 ${isScrolled ? 'py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
+            <Link href="/donate" className={`bg-teal-600 text-white font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl  hover:bg-transparent hover:border-2 hover:border-teal-500 hover:text-teal-500  transition duration-300 ${isScrolled ? 'py-3 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-3 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
               DONATE NOW
             </Link>
           </div>
-        </div>
+        </div> 
       </nav>
 
-      {/* Mobile Menu - Display on top of the hero content until 1240px */}
+      {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className={`xl:hidden bg-white p-4 z-50 w-full ${isScrolled ? 'fixed top-16' : 'absolute'}`}>
+        <div className={`xl:hidden bg-white p-4 z-50 w-full ${isScrolled ? 'fixed top-16' : 'absolute'}`}> 
           <div className="flex flex-col space-y-4">
             <Link 
               href="/" 
-              className={`text-xl font-semibold ${isActive('/') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+              className={`text-xl font-semibold ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Home
             </Link>
             <Link 
               href="/about" 
-              className={`text-xl font-semibold ${isActive('/about') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+              className={`text-xl font-semibold ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               About
             </Link>
             <Link 
               href="/donation" 
-              className={`text-xl font-semibold ${isActive('/donation') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+              className={`text-xl font-semibold ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Donation
             </Link>
             <Link 
               href="/blog" 
-              className={`text-xl font-semibold ${isActive('/blog') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+              className={`text-xl font-semibold ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Events
             </Link>
@@ -258,8 +258,8 @@ const Navbar = () => {
                 onClick={() => document.getElementById('mobilePages').classList.toggle('hidden')}
                 className={`text-xl font-semibold flex items-center justify-between w-full ${
                   ['/pages/team', '/pages/gallery', '/login/user', '/login/admin', '/login/volunteer', '/pages/blog-details', '/pages/privacy-policy', '/pages/terms-condition'].some(path => isActive(path)) 
-                    ? 'text-yellow-500' 
-                    : 'text-black hover:text-yellow-500'
+                    ? 'text-teal-500' 
+                    : 'text-black hover:text-teal-500'
                 }`}
               >
                 Pages <ChevronDown className="ml-1 w-5 h-5" />
@@ -267,19 +267,19 @@ const Navbar = () => {
               <div id="mobilePages" className="hidden bg-gray-100 mt-2 p-2 rounded">
                 <Link 
                   href="/pages/team" 
-                  className={`block py-2 ${isActive('/pages/team') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/pages/team') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Blog
                 </Link>
                 <Link 
                   href="/pages/gallery" 
-                  className={`block py-2 ${isActive('/pages/gallery') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/pages/gallery') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Event Details
                 </Link>
                 <Link 
                   href="/blog" 
-                  className={`block py-2 ${isActive('/blog') && pathname !== '/blog' ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/blog') && pathname !== '/blog' ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   FAQs
                 </Link> 
@@ -289,8 +289,8 @@ const Navbar = () => {
                     onClick={() => document.getElementById('mobileLogin').classList.toggle('hidden')}
                     className={`py-2 flex items-center justify-between w-full ${
                       ['/login/user', '/login/admin', '/login/volunteer'].some(path => isActive(path)) 
-                      ? 'text-yellow-500' 
-                      : 'text-black hover:text-yellow-500'
+                      ? 'text-teal-500' 
+                      : 'text-black hover:text-teal-500'
                     }`}
                   >
                     Login <ChevronRight className="ml-1 w-4 h-4" />
@@ -298,19 +298,19 @@ const Navbar = () => {
                   <div id="mobileLogin" className="hidden bg-gray-200 mt-1 p-2 rounded ml-4">
                     <Link 
                       href="/login/user" 
-                      className={`block py-2 ${isActive('/login/user') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                      className={`block py-2 ${isActive('/login/user') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Login
                     </Link>
                     <Link 
                       href="/login/admin" 
-                      className={`block py-2 ${isActive('/login/admin') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                      className={`block py-2 ${isActive('/login/admin') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Registration
                     </Link>
                     <Link 
                       href="/login/volunteer" 
-                      className={`block py-2 ${isActive('/login/volunteer') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                      className={`block py-2 ${isActive('/login/volunteer') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Forgot Password
                     </Link>
@@ -319,19 +319,19 @@ const Navbar = () => {
                 
                 <Link 
                   href="/pages/blog-details" 
-                  className={`block py-2 ${isActive('/pages/blog-details') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/pages/blog-details') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Blog Details
                 </Link>
                 <Link 
                   href="/pages/privacy-policy" 
-                  className={`block py-2 ${isActive('/pages/privacy-policy') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/pages/privacy-policy') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Privacy Policy
                 </Link>
                 <Link 
                   href="/pages/terms-condition" 
-                  className={`block py-2 ${isActive('/pages/terms-condition') ? 'text-yellow-500' : 'text-black hover:text-yellow-500'}`}
+                  className={`block py-2 ${isActive('/pages/terms-condition') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Terms-Condition
                 </Link>
@@ -340,7 +340,7 @@ const Navbar = () => {
             
             <Link 
               href="/contact" 
-              className={`text-xl font-semibold ${isActive('/contact') ? 'text-yellow-500' : 'text-black hover:text-yellow-400'}`}
+              className={`text-xl font-semibold ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
             >
               Contact
             </Link>
@@ -354,18 +354,18 @@ const Navbar = () => {
                   Eng <span className="ml-1">▼</span>
                 </button>
                 <div id="mobileLang" className="hidden bg-gray-100 mt-1 p-2 rounded">
-                  <button className="block py-2 text-black hover:text-yellow-500">English</button>
-                  <button className="block py-2 text-black hover:text-yellow-500">French</button>
+                  <button className="block py-2 text-black hover:text-teal-500">English</button>
+                  <button className="block py-2 text-black hover:text-teal-500">French</button>
                 </div>
               </div>
-              <Link href="/donate" className="bg-teal-600 text-white font-bold py-2 px-6 hover:text-white hover:bg-yellow-500 rounded transition duration-300">
+              <Link href="/donate" className="bg-teal-600 text-white font-bold py-2 px-6 hover:text-white hover:bg-teal-500 rounded transition duration-300">
                 DONATE NOW
               </Link>
             </div>
           </div>
         </div>
       )}
-    </>
+    </main>
   );
 }
 
