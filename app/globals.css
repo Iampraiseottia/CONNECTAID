@@ -107,3 +107,27 @@ body {
     width: 250px !important;
   }
 }
+ 
+
+
+/* ScrollBar  */
+
+::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  background: #797979;
+  transition: all 0.5s ease-in-out;
+} 
+
+::-webkit-scrollbar-thumb:hover {
+  background: #666565;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f9f9;
+}
+
+

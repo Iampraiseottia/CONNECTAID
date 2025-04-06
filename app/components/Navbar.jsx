@@ -61,7 +61,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link href="/">
                 <div className="flex items-center cursor-pointer"> 
-                <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60}  className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
+                <Image src="/icon/logo.png" alt="ConnectAID Logo" width={70} height={60}  className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
                 <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold text-black transition-all duration-300 ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
               </div> 
             </Link>
@@ -81,25 +81,29 @@ const Navbar = () => {
           <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
             <Link 
               href="/" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Home
             </Link>
             <Link 
               href="/about" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               About
             </Link>
             <Link 
               href="/donation" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Donation
             </Link>
             <Link 
               href="/blog" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Events
             </Link>
@@ -200,7 +204,8 @@ const Navbar = () => {
             
             <Link 
               href="/contact" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Contact
             </Link>
@@ -230,25 +235,29 @@ const Navbar = () => {
           <div className="flex flex-col space-y-4">
             <Link 
               href="/" 
-              className={`text-xl font-semibold ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-xl font-semibold 
+              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Home
             </Link>
             <Link 
               href="/about" 
-              className={`text-xl font-semibold ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-xl font-semibold 
+              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               About
             </Link>
             <Link 
               href="/donation" 
-              className={`text-xl font-semibold ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-xl font-semibold 
+              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Donation
             </Link>
             <Link 
               href="/blog" 
-              className={`text-xl font-semibold ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-xl font-semibold 
+              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
             >
               Events
             </Link>
@@ -267,19 +276,22 @@ const Navbar = () => {
               <div id="mobilePages" className="hidden bg-gray-100 mt-2 p-2 rounded">
                 <Link 
                   href="/pages/team" 
-                  className={`block py-2 ${isActive('/pages/team') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/pages/team') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Blog
                 </Link>
                 <Link 
                   href="/pages/gallery" 
-                  className={`block py-2 ${isActive('/pages/gallery') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/pages/gallery') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Event Details
                 </Link>
                 <Link 
                   href="/blog" 
-                  className={`block py-2 ${isActive('/blog') && pathname !== '/blog' ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/blog') && pathname !== '/blog' ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   FAQs
                 </Link> 
@@ -298,19 +310,22 @@ const Navbar = () => {
                   <div id="mobileLogin" className="hidden bg-gray-200 mt-1 p-2 rounded ml-4">
                     <Link 
                       href="/login/user" 
-                      className={`block py-2 ${isActive('/login/user') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      className={`block py-2 
+                      ${isActive('/login/user') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Login
                     </Link>
                     <Link 
                       href="/login/admin" 
-                      className={`block py-2 ${isActive('/login/admin') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      className={`block py-2 
+                      ${isActive('/login/admin') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Registration
                     </Link>
                     <Link 
                       href="/login/volunteer" 
-                      className={`block py-2 ${isActive('/login/volunteer') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      className={`block py-2 
+                      ${isActive('/login/volunteer') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                     >
                       Forgot Password
                     </Link>
@@ -319,19 +334,22 @@ const Navbar = () => {
                 
                 <Link 
                   href="/pages/blog-details" 
-                  className={`block py-2 ${isActive('/pages/blog-details') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/pages/blog-details') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Blog Details
                 </Link>
                 <Link 
                   href="/pages/privacy-policy" 
-                  className={`block py-2 ${isActive('/pages/privacy-policy') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/pages/privacy-policy') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Privacy Policy
                 </Link>
                 <Link 
                   href="/pages/terms-condition" 
-                  className={`block py-2 ${isActive('/pages/terms-condition') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  className={`block py-2 
+                  ${isActive('/pages/terms-condition') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
                 >
                   Terms-Condition
                 </Link>
@@ -340,7 +358,8 @@ const Navbar = () => {
             
             <Link 
               href="/contact" 
-              className={`text-xl font-semibold ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
+              className={`text-xl font-semibold 
+              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
             >
               Contact
             </Link>

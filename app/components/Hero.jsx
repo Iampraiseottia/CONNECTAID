@@ -108,20 +108,23 @@ const Hero = () => {
       
       <div className="relative z-10">
         {/* Sticky Header */} 
-        <nav className={`py-4 w-full z-50 transition-all duration-300 ${isScrolled ? 'fixed top-0 left-0 bg-gray-950 bg-opacity-85 shadow-lg py-7 ' : 'pt-6 md:pt-12'}`}>
+        <nav className={`py-4 w-full z-50 transition-all duration-300 
+          ${isScrolled ? 'fixed top-0 left-0 bg-gray-950 bg-opacity-85 shadow-lg py-7 ' : 'pt-6 md:pt-12'}`}>
           <div className="container mx-[5%] header-mid px-4 sm:px-6 flex justify-between items-center"> 
             {/* Logo Section */}
             <div className="flex items-center">
               <Link href="/">
                 <div className="flex items-center cursor-pointer">
-                  <Image src="/logo.png" alt="ConnectAID Logo" width={70} height={60} className={`h-auto transition-all duration-300 ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
-                  <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold transition-all duration-300 ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
+                  <Image src="/icon/logo.png" alt="ConnectAID Logo" width={70} height={60} className={`h-auto transition-all      duration-300 
+                    ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
+                  <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold transition-all duration-300
+                    ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
                 </div>
-              </Link>
+              </Link>  
             </div> 
 
             {/* Mobile Menu Button  */}
-            <div className="xl:hidden">
+            <div className="xl:hidden"> 
               <button 
                 onClick={toggleMobileMenu} 
                 className="p-2 focus:outline-none text-teal-500 mr-4"
@@ -132,10 +135,22 @@ const Hero = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden xl:flex space-x-4 xl:space-x-9 ease-in-out duration-300">
-              <Link href="/" className="text-yellow-500 text-lg xl:text-xl font-semibold">Home</Link>
-              <Link href="/about" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">About</Link>
-              <Link href="/donation" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Donation</Link>
-              <Link href="/blog" className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">Events</Link>
+              <Link href="/" 
+                className="text-yellow-500 text-lg xl:text-xl font-semibold">
+                Home
+              </Link>
+              <Link href="/about" 
+                className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">
+                About
+              </Link>
+              <Link href="/donation" 
+                className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">
+                Donation
+              </Link>
+              <Link href="/blog" 
+                className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">
+                Events
+              </Link>
               <div className="relative group z-10">
                 <button className="hover:text-yellow-500 text-white text-lg xl:text-xl ease-in-out duration-300 font-semibold flex items-center">
                   Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" />
@@ -180,7 +195,10 @@ const Hero = () => {
                 </div>
               </div>
               
-              <Link href="/contact" className="hover:text-yellow-400 text-white text-lg xl:text-xl font-semibold">Contact</Link>
+              <Link href="/contact"
+                className="hover:text-yellow-400 text-white text-lg xl:text-xl font-semibold">
+                Contact
+              </Link>
             </div>
 
             {/* Desktop Right Section - Donate Button & Language */}
@@ -194,7 +212,8 @@ const Hero = () => {
                   <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
                 </div>
               </div>
-              <Link href="/donate" className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300 ${isScrolled ? 'py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
+              <Link href="/donate" className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300
+                ${isScrolled ? 'py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
                 DONATE NOW
               </Link>
             </div>
@@ -205,22 +224,42 @@ const Hero = () => {
         {mobileMenuOpen && (
           <div className={`xl:hidden bg-gray-900 p-4 z-50 w-full ${isScrolled ? 'fixed top-16' : 'absolute'}`}>
             <div className="flex flex-col space-y-4">
-              <Link href="/" className="text-yellow-500 text-xl font-semibold">Home</Link>
-              <Link href="/about" className="hover:text-yellow-500 text-white text-xl font-semibold">About</Link>
-              <Link href="/donation" className="hover:text-yellow-500 text-white text-xl font-semibold">Donation</Link>
-              <Link href="/blog" className="hover:text-yellow-500 text-white text-xl font-semibold">Events</Link>
+              <Link href="/" 
+                className="text-yellow-500 text-xl font-semibold">
+                Home
+              </Link>
+              <Link href="/about" 
+                className="hover:text-yellow-500 text-white text-xl font-semibold">
+                About
+              </Link>
+              <Link href="/donation"
+                className="hover:text-yellow-500 text-white text-xl font-semibold">
+                Donation
+              </Link>
+              <Link href="/blog" 
+                className="hover:text-yellow-500 text-white text-xl font-semibold">
+                Events
+              </Link>
               
               <div className="relative">
                 <button 
                   onClick={() => document.getElementById('mobilePages').classList.toggle('hidden')}
-                  className="hover:text-yellow-500 text-white text-xl font-semibold flex items-center justify-between w-full"
-                >
+                  className="hover:text-yellow-500 text-white text-xl font-semibold flex items-center justify-between w-full">
                   Pages <ChevronDown className="ml-1 w-5 h-5" />
                 </button>
                 <div id="mobilePages" className="hidden bg-gray-800 mt-2 p-2 rounded">
-                  <Link href="/pages/team" className="block py-2 text-white hover:text-yellow-500">Blog</Link>
-                  <Link href="/pages/gallery" className="block py-2 text-white hover:text-yellow-500">Event Details</Link>
-                  <Link href="/blog" className="block py-2 text-white hover:text-yellow-500">FAQs</Link> 
+                  <Link href="/pages/team" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                      Blog
+                  </Link>
+                  <Link href="/pages/gallery" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Event Details
+                  </Link>
+                  <Link href="/blog" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    FAQs
+                  </Link> 
                   
                   <div className="relative">
                     <button 
@@ -230,19 +269,40 @@ const Hero = () => {
                       Login <ChevronRight className="ml-1 w-4 h-4" />
                     </button>
                     <div id="mobileLogin" className="hidden bg-gray-700 mt-1 p-2 rounded ml-4">
-                      <Link href="/login" className="block py-2 text-white hover:text-yellow-500">Login</Link>
-                      <Link href="/register" className="block py-2 text-white hover:text-yellow-500">Registration</Link>
-                      <Link href="/forgot_password" className="block py-2 text-white hover:text-yellow-500">Forgot Password</Link>
+                      <Link href="/login" 
+                        className="block py-2 text-white hover:text-yellow-500">
+                        Login
+                      </Link>
+                      <Link href="/register" 
+                        className="block py-2 text-white hover:text-yellow-500">
+                        Registration
+                      </Link>
+                      <Link href="/forgot_password" 
+                        className="block py-2 text-white hover:text-yellow-500">
+                        Forgot Password
+                      </Link>
                     </div>
                   </div>
                   
-                  <Link href="/pages/team" className="block py-2 text-white hover:text-yellow-500">Blog Details</Link>
-                  <Link href="/pages/gallery" className="block py-2 text-white hover:text-yellow-500">Privacy Policy</Link>
-                  <Link href="/pages/events" className="block py-2 text-white hover:text-yellow-500">Terms-Condition</Link>
+                  <Link href="/pages/team" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Blog Details
+                  </Link>
+                  <Link href="/pages/gallery" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Privacy Policy
+                  </Link>
+                  <Link href="/pages/events" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Terms-Condition
+                  </Link>
                 </div>
               </div>
               
-              <Link href="/contact" className="hover:text-yellow-400 text-white text-xl font-semibold">Contact</Link>
+              <Link href="/contact" 
+                className="hover:text-yellow-400 text-white text-xl font-semibold">
+                Contact
+              </Link>
               
               <div className="flex items-center justify-between mt-4">
                 <div className="relative group">
@@ -266,7 +326,8 @@ const Hero = () => {
         )}
 
         {/* Main Hero Content */}
-        <div className={`container hero-mid ml-[5%] px-4 sm:px-6 py-6 md:py-12 lg:py-24 flex flex-col md:flex-row justify-between items-center ${isScrolled ? 'mt-24' : 'mt-8 md:mt-12 lg:mt-16'}`}> 
+        <div className={`container hero-mid ml-[5%] px-4 sm:px-6 py-6 md:py-12 lg:py-24 flex flex-col md:flex-row justify-between items-center
+          ${isScrolled ? 'mt-24' : 'mt-8 md:mt-12 lg:mt-16'}`}> 
           {/* Text Content */}
           <div className="w-full md:w-1/2 mb-8 md:mb-0 mt-0 sm:mt-0 md:-mt-5 lg:-mt-10"> 
             <p className="text-yellow-500 text-xl md:text-2xl mb-3 md:mb-6 lg:mb-8 font-semibold">Speak Hope for the Homeless</p>
