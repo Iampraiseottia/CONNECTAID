@@ -131,3 +131,54 @@ body {
 }
 
 
+
+/* URGENT and FAQs  */
+@media (min-width: 1021px) and (max-width: 1536px) {
+  .responsiveUrgent{
+    margin-left: -1px !important;
+    width: 100% !important;
+  }
+
+  .responsiveUrgent2{
+    display: flex;
+    flex-direction: column !important;
+  }
+
+  .responsiveUrgent3{
+    width: 1200px !important;
+  }
+
+  .faq1{
+    margin-left: -70px !important; 
+  }
+
+  .faq2{
+    width: 500px !important;
+  }
+
+  .faq3{
+    margin-left: 120px !important;
+  } 
+}
+
+@media (min-width: 769px) and (max-width: 1020px) {
+  .faq3{
+    margin-top: -10px !important;
+  }
+
+  .faq1{
+    width: 100% !important;
+  } 
+}
+
+
+@media (min-width: 434px) and (max-width: 768px) {
+  .faq3{
+    margin-top: -85px !important;
+    margin-bottom: 15px !important;
+  }
+
+  .faq1{
+    width: 100% !important; 
+  } 
+}

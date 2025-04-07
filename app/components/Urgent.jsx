@@ -31,6 +31,8 @@ import slideImg3 from '/public/urgent/urgent-3.png';
 import slideImg4 from '/public/urgent/urgent-4.png'; 
 import slideImg6 from '/public/urgent/urgent-6.png';
 
+import { motion } from "motion/react"
+
 
 const Urgent = () => {
   const [activeTab, setActiveTab] = useState('tab-section-one');
@@ -41,18 +43,27 @@ const Urgent = () => {
 
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 lg:py-20">
+    <section 
+      className="py-8 sm:py-12 md:py-16 lg:py-20">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Section Title */}
-        <div className="flex justify-center mb-8 sm:mb-10 md:mb-12">
+        <motion.div 
+          initial={{opacity: 0, y: 100}}
+          whileInView={{y: 0, opacity: 1}}
+          transition={{duration: 0.5, delay: 0.5}} 
+          className="flex justify-center mb-8 sm:mb-10 md:mb-12">
           <div className="w-full max-w-3xl text-center">
           <h3 className='text-center text-teal-700 font-bold tracking-wide text-3xl'>In urgent cases</h3>
           <p className='text-center text-5xl mt-8 tracking-tight font-semibold mb-10'>The best way is to find yourself</p> 
           </div>
-        </div>
+        </motion.div>
         
-        <div className="flex flex-col lg:flex-row justify-center gap-6">
-          {/* Left side - Swiper Slider */}
+        <motion.div 
+          initial={{opacity: 0, y: 100}}
+          whileInView={{y: 0, opacity: 1}}
+          transition={{duration: 0.5, delay: 0.5}} 
+          className="flex flex-col lg:flex-row justify-center gap-6 responsiveUrgent2">
+          {/* Left side - Swiper Slider */} 
           <div className="w-full lg:w-2/3 xl:w-7/12">
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
@@ -69,7 +80,7 @@ const Urgent = () => {
                 delay: 5000,
                 disableOnInteraction: false,
               }} 
-              className="h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] lg:w-[1000px]"> 
+              className="h-[300px] sm:h-[350px] md:h-[400px] lg:h-[650px] lg:w-[1000px] responsiveUrgent3"> 
 
               {/* Slide 1 */} 
               <SwiperSlide> 
@@ -215,11 +226,11 @@ const Urgent = () => {
           </div>
           
           {/* Right side - Tab Content */}
-          <div className="w-full lg:w-[40%] lg:ml-[100px] z-10 xl:w-3/12 bg-[#00815D] text-white shadow-lg mt-6 lg:mt-0">
+          <div className="w-full lg:w-[40%] lg:ml-[100px] xl:w-3/12 bg-[#00815D] text-white shadow-lg mt-6 lg:mt-0 responsiveUrgent">
             <div className="p-4 sm:p-5 md:p-6 leading-8"> 
-              {/* Tab Content 1 */}
+              
               <div className={`${activeTab === 'tab-section-one' ? 'block' : 'hidden'}`}>
-                <div className="flex justify-center items-center gap-2 mb-2 sm:mb-5 sm:mt-16 mt-5">
+                <div className="flex justify-center items-center gap-2 mb-2 sm:mb-5 sm:mt-16 mt-5"> 
                   <FontAwesomeIcon icon={faClock} className="text-xs sm:text-sm" /> 
                   <p className="text-xs sm:text-xl">652 Days Remaining</p> 
                 </div>
@@ -263,7 +274,7 @@ const Urgent = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -48,6 +48,7 @@ const Hero = () => {
     };
   }, []);
   
+  
   const handleMouseMove = (e, ref) => {
     if (!ref.current || window.innerWidth < 1100) return;  
     

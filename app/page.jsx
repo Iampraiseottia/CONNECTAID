@@ -9,6 +9,7 @@ import Image from 'next/image'
 
 import Hero from './components/Hero'
 import Urgent from './components/Urgent'
+import FAQs from './components/FAQs'
 
 import Metadata from './components/Metadata'
 
@@ -147,6 +148,9 @@ const ConnectAID_App = () => {
 
       {/* Urgent Situations */}
       <Urgent />  
+
+      {/* Urgent Situations */}
+      <FAQs />  
 
     </main> 
   )
