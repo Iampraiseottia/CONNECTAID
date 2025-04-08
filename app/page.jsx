@@ -10,6 +10,8 @@ import Image from 'next/image'
 import Hero from './components/Hero'
 import Urgent from './components/Urgent'
 import FAQs from './components/FAQs'
+import UpcomingEvents from './components/UpcomingEvents'
+
 
 import Metadata from './components/Metadata'
 
@@ -149,8 +151,12 @@ const ConnectAID_App = () => {
       {/* Urgent Situations */}
       <Urgent />  
 
-      {/* Urgent Situations */}
+      {/* Frequently Asked Questions */}
       <FAQs />  
+
+      {/* Upcoming Events  */}
+      <UpcomingEvents />
+
 
     </main> 
   )

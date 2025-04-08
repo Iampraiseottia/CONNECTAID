@@ -94,10 +94,10 @@ const FAQs = () => {
             ref={detailsRef[0]}
             onClick={() => handleToggle(0)}>
             <summary className='font-semibold text-lg sm:text-xl cursor-pointer'>
-              How will you gather feedback from stakeholders
+              What percentage of my donation goes directly to the cause?
             </summary>
             <p className='mt-2 ml-4 sm:ml-11 text-[18px]'>
-              When deciding which charity to donate to, it's important to do your search.
+              On average, 92% of donations made through our platform go directly to the charitable programs. We maintain a standard 5% platform fee to cover operational costs, payment processing, and security measures. The remaining 3% covers payment processing fees. However, you can always opt to cover these fees yourself, ensuring 100% of your intended donation reaches the charity.
             </p> 
           </details> 
 
@@ -106,10 +106,10 @@ const FAQs = () => {
             ref={detailsRef[1]}
             onClick={() => handleToggle(1)}>
             <summary className='font-semibold text-lg sm:text-xl cursor-pointer'>
-              How will you gather feedback from stakeholders
+              How can I track the impact of my donations and volunteering?
             </summary>
             <p className='mt-2 ml-4 sm:ml-11 text-[18px]'>
-              When deciding which charity to donate to, it's important to do your search.
+              Our impact dashboard provides real-time updates on how your contributions are making a difference. For monetary donations, you'll receive impact reports showing exactly what your donation has funded.
             </p>
           </details>
 
@@ -118,10 +118,10 @@ const FAQs = () => {
             ref={detailsRef[2]}
             onClick={() => handleToggle(2)}>
             <summary className='font-semibold text-lg sm:text-xl cursor-pointer'>
-              How will you gather feedback from stakeholders
+              Is my personal and payment information secure on your platform?
             </summary>
             <p className='mt-2 ml-4 sm:ml-11 text-[18px]'>
-              When deciding which charity to donate to, it's important to do your search.
+              Yes, we prioritize the security of your data. We employ bank-level encryption (256-bit SSL) for all transactions and personal information. We never store complete credit card information on our servers. Our platform undergoes regular security audits and penetration testing by independent cybersecurity firms. We're also compliant with GDPR, CCPA, and other privacy regulations to ensure your data is handled responsibly.
             </p>
           </details>
 
@@ -130,10 +130,10 @@ const FAQs = () => {
             ref={detailsRef[3]}
             onClick={() => handleToggle(3)}>
             <summary className='font-semibold text-lg sm:text-xl cursor-pointer'>
-              How will you gather feedback from stakeholders
+              Can I create fundraising campaigns for important causes?
             </summary>
             <p className='mt-2 ml-4 sm:ml-11 text-[18px]'>
-              When deciding which charity to donate to, it's important to do your search.
+              Absolutely, you can create fundraising campaigns for a variety of important causes. Our platform allows you to personalize your campaign to reflect the cause. However, please note that all campaigns must be verified by our admins to ensure their legitimacy before they go live.
             </p>
           </details>
         </div>
