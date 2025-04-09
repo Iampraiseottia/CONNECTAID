@@ -11,6 +11,7 @@ import Hero from './components/Hero'
 import Urgent from './components/Urgent'
 import FAQs from './components/FAQs'
 import UpcomingEvents from './components/UpcomingEvents'
+import Testimony from './components/Testimony'
 
 
 import Metadata from './components/Metadata'
@@ -156,6 +157,9 @@ const ConnectAID_App = () => {
 
       {/* Upcoming Events  */}
       <UpcomingEvents />
+
+       {/* Testimonials   */}
+      <Testimony />
 
 
     </main> 

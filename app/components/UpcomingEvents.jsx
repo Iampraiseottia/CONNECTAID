@@ -69,7 +69,7 @@ const UpcomingEvents = () => {
             <div className="relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 swiper-slide-content" > 
               <div className="relative aspect-[4/3]">
                 <Image
-                  src="/gallery/event-6.png"
+                  src="/hero/hero4.png"
                   alt="Donation Campaign"
                   fill
                   className="object-cover"
@@ -93,14 +93,14 @@ const UpcomingEvents = () => {
                 </h3>
                 <div className="flex">
                   <p className="text-yellow-400 text-sm">
-                    Leadership, Pro Event
+                    Impact Lives, Formal
                   </p>
                 </div>
                 <div className="mt-2">
                   <p className="text-white/90 text-sm">
-                    Join us for this special event and help make a difference in our community.
+                    Join us for this special event and help people in critical conditions in our community.
                   </p>
-                </div>
+                </div> 
               </div>
               
               <Link href="#" className="absolute inset-0 z-10">
@@ -142,7 +142,7 @@ const UpcomingEvents = () => {
                 </div>
                 <div className="mt-2">
                   <p className="text-white/90 text-sm">
-                    Help us reach more people in need with our community outreach program.
+                    Help us reach more people in facing and suffering from proper drinking water source.
                   </p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ const UpcomingEvents = () => {
             <div className="relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 swiper-slide-content">
               <div className="relative aspect-[4/3]">
                 <Image
-                  src="/gallery/event-6.png"
+                  src="/gallery/event-2.png"
                   alt="Donation Campaign"
                   fill
                   className="object-cover"
@@ -177,11 +177,11 @@ const UpcomingEvents = () => {
               
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/80 to-transparent">
                 <h3 className="text-white font-semibold mb-2 text-xl">
-                  Educational Workshop Series
+                  Workshop Series
                 </h3>
                 <div className="flex">
                   <p className="text-yellow-400 text-sm">
-                    Education, Workshop
+                    Skills & Technology, Workshop
                   </p>
                 </div>
                 <div className="mt-2">
@@ -201,7 +201,7 @@ const UpcomingEvents = () => {
             <div className="relative rounded-lg overflow-hidden shadow-lg transition-all duration-500 swiper-slide-content">
               <div className="relative aspect-[4/3]">
                 <Image
-                  src="/gallery/event-6.png"
+                  src="/hero/hero-bg.png"
                   alt="Donation Campaign"
                   fill
                   className="object-cover"
@@ -251,7 +251,19 @@ const UpcomingEvents = () => {
           .swiper-slide-active {
             z-index: 10;
           }
+
+          .swiper-button-next,
+          .swiper-button-prev {
+            color: lightseagreen;
+          }
         
+        .swiper-pagination-bullet-active {
+          background: lightseagreen;
+        }
+        .swiper-pagination-bullet{
+          margin-top: 200px !important;
+        } 
+      
         `}</style>
       </motion.div>
     </main>
