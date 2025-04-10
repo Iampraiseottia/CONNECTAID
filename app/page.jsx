@@ -5,14 +5,13 @@ import React, { useState } from 'react'
 
 import globalStyle from './globals.css'
 
-import Image from 'next/image'
-
 import Hero from './components/Hero'
 import Urgent from './components/Urgent'
 import FAQs from './components/FAQs'
 import UpcomingEvents from './components/UpcomingEvents'
 import Testimony from './components/Testimony'
 import Blog from './components/Blog'
+import Partners from './components/Partners'
 
 
 import Metadata from './components/Metadata'
@@ -164,6 +163,10 @@ const ConnectAID_App = () => {
 
       {/* Blogs  */}
       <Blog />
+
+      {/* Partners and Sponsors and Collaborators  */}
+      <Partners />
+
 
 
     </main> 
