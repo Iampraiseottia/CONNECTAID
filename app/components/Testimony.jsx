@@ -7,10 +7,12 @@ import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import TestimonialCard from '../components/TestimonialCard'
 
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
+import { motion } from "motion/react"
+
 
 const testimonials = [
   {
@@ -79,9 +81,14 @@ const Testimony = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-12 md:py-16 bg-gray-50 pt-24 ">
+    <section 
+      className="py-12 md:py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="mb-8 md:mb-12 flex flex-wrap items-center justify-between">
+        <motion.div 
+          initial={{opacity: 0, y: 100}}
+          whileInView={{y: 0, opacity: 1}}
+          transition={{duration: 0.5, delay: 0.5}}
+          className="mb-8 md:mb-12 flex flex-wrap items-center justify-between">
           <div className="w-full md:w-auto mb-6 md:mb-0">
             <span className="text-teal-700 font-semibold mb-1 md:mb-2 block">Testimonials</span>
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">What They're Talking About Us</h2>
@@ -108,9 +115,14 @@ const Testimony = () => {
               </svg>
             </button>
           </div>
-        </div>
+        </motion.div>
         
-        <div className="relative">
+         
+        <motion.div 
+          initial={{opacity: 0, y: 100}}
+          whileInView={{y: 0, opacity: 1}}
+          transition={{duration: 0.5, delay: 0.5}}
+          className="relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={10}
@@ -128,7 +140,7 @@ const Testimony = () => {
                 slidesPerView: 2.5,
                 spaceBetween: 20,
               },
-              1024: {
+              1024: { 
                 slidesPerView: 3,
                 spaceBetween: 20,
               },
@@ -171,7 +183,7 @@ const Testimony = () => {
           </Swiper>
           
           <div className="testimonial-pagination flex justify-center space-x-2 mt-6"></div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
