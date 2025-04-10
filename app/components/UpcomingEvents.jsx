@@ -15,7 +15,7 @@ import { motion } from "motion/react"
 
 const UpcomingEvents = () => {
   return (
-    <main>
+    <main className='mb-20'>
       <motion.div 
         initial={{opacity: 0, y: 100}}
         whileInView={{y: 0, opacity: 1}}
@@ -92,7 +92,7 @@ const UpcomingEvents = () => {
                   Your donation, no matter how big or small, can make.
                 </h3>
                 <div className="flex">
-                  <p className="text-yellow-400 text-sm">
+                  <p className="text-yellow-500 text-xl font-semibold ">
                     Impact Lives, Formal
                   </p>
                 </div>
@@ -136,7 +136,7 @@ const UpcomingEvents = () => {
                   Community Outreach Program
                 </h3>
                 <div className="flex">
-                  <p className="text-yellow-400 text-sm">
+                  <p className="text-yellow-500 text-xl font-semibold ">
                     Community, Outreach
                   </p>
                 </div>
@@ -180,7 +180,7 @@ const UpcomingEvents = () => {
                   Workshop Series
                 </h3>
                 <div className="flex">
-                  <p className="text-yellow-400 text-sm">
+                  <p className="text-yellow-500 text-xl font-semibold ">
                     Skills & Technology, Workshop
                   </p>
                 </div>
@@ -224,7 +224,7 @@ const UpcomingEvents = () => {
                   Annual Fundraising Gala
                 </h3>
                 <div className="flex">
-                  <p className="text-yellow-400 text-sm">
+                  <p className="text-yellow-500 text-xl font-semibold ">
                     Fundraising, Formal
                   </p>
                 </div>
