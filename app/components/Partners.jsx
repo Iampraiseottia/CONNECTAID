@@ -9,10 +9,10 @@ const Partners = () => {
   const [isAnimating, setIsAnimating] = useState(false);
   
   const logos = [
-    { src: '/partners/brand-1.png', alt: ' Logo' },
-    { src: '/partners/brand-2.png', alt: 'DigitalOcean Logo' },
-    { src: '/partners/brand-3.png', alt: 'Funnel Logo' },
-    { src: '/partners/brand-4.png', alt: 'Sketch Logo 2' }
+    { src: '/partners/brand-1.png', alt: 'Brand Logo 1' },
+    { src: '/partners/brand-2.png', alt: 'Brand Logo 2' },
+    { src: '/partners/brand-3.png', alt: 'Brand Logo 3' },
+    { src: '/partners/brand-4.png', alt: 'SBrand Logo 4' }
   ];
   
   
@@ -60,9 +60,9 @@ const Partners = () => {
       initial={{opacity: 0, y: 100}}
       whileInView={{y: 0, opacity: 1}}
       transition={{duration: 0.5, delay: 0.5}} 
-      className="w-full pt-24 pb-20 sm:px-40 mr-40 bg-white relative">
+      className="w-full py-10 sm:pt-24 sm:pb-20 sm:px-40 mr-40 bg-white relative">
       
-      <div className="sm:w-[100%] w-full overflow-hidden bg-white border-gray-50 border-solid border-2">
+      <div className="sm:w-[100%] w-full overflow-hidden bg-white border-gray-50 border-solid border-2"> 
         <div className="gallery-slider flex items-center justify-center" ref={sliderRef}>
           {duplicatedLogos.map((logo, index) => ( 
             <div key={index} className="gallery-img flex-none px-8 py-4 ">

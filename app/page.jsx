@@ -12,6 +12,7 @@ import UpcomingEvents from './components/UpcomingEvents'
 import Testimony from './components/Testimony'
 import Blog from './components/Blog'
 import Partners from './components/Partners'
+import Gallery from './components/Gallery'
 
 
 import Metadata from './components/Metadata'
@@ -166,6 +167,9 @@ const ConnectAID_App = () => {
 
       {/* Partners and Sponsors and Collaborators  */}
       <Partners />
+
+      {/* Gallery of Images  */}
+      <Gallery />
 
 
 
