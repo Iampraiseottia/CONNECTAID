@@ -13,6 +13,7 @@ import Testimony from './components/Testimony'
 import Blog from './components/Blog'
 import Partners from './components/Partners'
 import Gallery from './components/Gallery'
+import Footer from './components/Footer'
 
 
 import Metadata from './components/Metadata'
@@ -171,7 +172,8 @@ const ConnectAID_App = () => {
       {/* Gallery of Images  */}
       <Gallery />
 
-
+      {/* Footer  */}
+      <Footer />
 
     </main> 
   )

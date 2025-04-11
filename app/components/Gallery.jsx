@@ -21,7 +21,6 @@ const Gallery = () => {
     { src: '/gallery/gallery-11.png', alt: 'Gallery Image 11' },
     { src: '/gallery/gallery-12.png', alt: 'Gallery Image 12' },
     { src: '/gallery/gallery-13.png', alt: 'Gallery Image 13' },
-    { src: '/gallery/gallery-14.png', alt: 'Gallery Image 14' },
     { src: '/gallery/gallery-15.png', alt: 'Gallery Image 15' },
     { src: '/gallery/gallery-16.png', alt: 'Gallery Image 16' },
     { src: '/gallery/gallery-17.png', alt: 'Gallery Image 17' },
@@ -73,7 +72,7 @@ const Gallery = () => {
       initial={{opacity: 0, y: 100}}
       whileInView={{y: 0, opacity: 1}}
       transition={{duration: 0.5, delay: 0.5}} 
-      className="w-full py-10 mr-40 bg-white pt-32 relative"> 
+      className="w-full mr-40 bg-white pt-32 relative"> 
       
       <div className="sm:w-[100%] w-full overflow-hidden"> 
         <div className="gallery-slider flex" ref={sliderRef}>
