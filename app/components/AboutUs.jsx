@@ -5,18 +5,21 @@ import { faCircleDollarToSlot, faPeopleGroup } from '@fortawesome/free-solid-svg
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useState } from 'react';
+import { motion } from "motion/react"
 
-const AboutUs = () => {
 
-    const [videoOverlay, setVideoOverlay] = useState(false);
+const AboutUs = () => { 
 
   return (
     <section className="py-16 px-4">
       <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row justify-between mt-16">
           {/* Left Content Area */}
-          <div className="lg:w-1/2 lg:pr-10 mb-10 lg:mb-0 leading-10">
+          <motion.div 
+            initial={{opacity: 0, y: 100}}
+            whileInView={{y: 0, opacity: 1}}
+            transition={{duration: 0.5, delay: 0.5}} 
+            className="lg:w-1/2 lg:pr-10 mb-10 lg:mb-0 leading-10">
             {/* Section Title */}
             <div className="mb-8">
               <span className="text-emerald-600 font-semibold text-2xl">About Us</span>
@@ -60,10 +63,14 @@ const AboutUs = () => {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Images Area */}
-          <div className="lg:w-5/12 relative w-full max-w-md md:max-w-lg lg:max-w-xl sm:mt-20 ">
+          <motion.div 
+            initial={{opacity: 0, y: 100}}
+            whileInView={{y: 0, opacity: 1}}
+            transition={{duration: 0.5, delay: 0.5}} 
+            className="lg:w-5/12 relative w-full max-w-md md:max-w-lg lg:max-w-xl sm:mt-20 ">
                 <Image 
                     src='/about/about-1.png' 
                     width={800}
@@ -71,7 +78,7 @@ const AboutUs = () => {
                     className=' object-contain' 
                     alt="Frequently Asked Questions Image" 
                 />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

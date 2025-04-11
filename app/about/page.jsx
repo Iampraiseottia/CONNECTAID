@@ -10,6 +10,7 @@ import Footer from '../components/Footer'
 import Gallery from '../components/Gallery'
 import Breadcrumb from '../components/Breadcrumb'
 import AboutUs from '../components/AboutUs'
+import Favorite from '../components/Favorite'
 
 import { motion } from "motion/react" 
 
@@ -36,14 +37,14 @@ const Login = () => {
 
 
   return (
-    <main className='bg-[#f7f7f7]'>
+    <main className='bg-[#f9f9f9]'>
 
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Navigation Bar | Header  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb for ABout Page */} 
       <motion.div 
         initial={{opacity: 0, y: 100}}
         whileInView={{y: 0, opacity: 1}}
@@ -188,6 +189,9 @@ const Login = () => {
         
         {/* About Us Main  */}
         <AboutUs />
+
+        {/* Favorite */}
+        <Favorite />
 
       {/* Picture Gallery  */}
       <Gallery />
