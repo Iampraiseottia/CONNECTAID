@@ -82,28 +82,28 @@ const Navbar = () => {
             <Link 
               href="/" 
               className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Home
             </Link>
             <Link 
               href="/about" 
               className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               About
             </Link>
             <Link 
               href="/donation" 
-              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300
+              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Donation
             </Link>
             <Link 
               href="/blog" 
               className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Events
             </Link>
@@ -111,7 +111,7 @@ const Navbar = () => {
               <button className={`text-lg xl:text-xl ease-in-out duration-300 font-semibold flex items-center ${
                 ['/pages/team', '/pages/gallery', '/login/user', '/login/admin', '/login/volunteer'].some(path => isActive(path)) 
                   ? 'text-teal-500' 
-                  : 'text-black hover:text-teal-500'
+                  : 'text-black hover:text-teal-600'
               }`}>
                 Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" />
               </button>
@@ -205,7 +205,7 @@ const Navbar = () => {
             <Link 
               href="/contact" 
               className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Contact
             </Link>
@@ -222,7 +222,7 @@ const Navbar = () => {
                 <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
               </div>
             </div>
-            <Link href="/donate" className={`bg-teal-600 text-white font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl  hover:bg-transparent hover:border-2 hover:border-teal-500 hover:text-teal-500  transition duration-300 ${isScrolled ? 'py-3 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-3 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
+            <Link href="/donate" className={`bg-teal-600 text-white font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl  hover:bg-transparent hover:border-2 hover:border-teal-500 hover:text-teal-600  transition duration-300 ${isScrolled ? 'py-3 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-3 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
               DONATE NOW
             </Link>
           </div>
@@ -236,28 +236,28 @@ const Navbar = () => {
             <Link 
               href="/" 
               className={`text-xl font-semibold 
-              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Home
             </Link>
             <Link 
               href="/about" 
               className={`text-xl font-semibold 
-              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/about') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               About
             </Link>
             <Link 
               href="/donation" 
               className={`text-xl font-semibold 
-              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/donation') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Donation
             </Link>
             <Link 
               href="/blog" 
               className={`text-xl font-semibold 
-              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+              ${isActive('/blog') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Events
             </Link>
@@ -268,7 +268,7 @@ const Navbar = () => {
                 className={`text-xl font-semibold flex items-center justify-between w-full ${
                   ['/pages/team', '/pages/gallery', '/login/user', '/login/admin', '/login/volunteer', '/pages/blog-details', '/pages/privacy-policy', '/pages/terms-condition'].some(path => isActive(path)) 
                     ? 'text-teal-500' 
-                    : 'text-black hover:text-teal-500'
+                    : 'text-black hover:text-teal-600'
                 }`}
               >
                 Pages <ChevronDown className="ml-1 w-5 h-5" />
@@ -277,21 +277,21 @@ const Navbar = () => {
                 <Link 
                   href="/pages/team" 
                   className={`block py-2 
-                  ${isActive('/pages/team') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/pages/team') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Blog
                 </Link>
                 <Link 
                   href="/pages/gallery" 
                   className={`block py-2 
-                  ${isActive('/pages/gallery') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/pages/gallery') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Event Details
                 </Link>
                 <Link 
                   href="/blog" 
                   className={`block py-2 
-                  ${isActive('/blog') && pathname !== '/blog' ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/blog') && pathname !== '/blog' ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   FAQs
                 </Link> 
@@ -302,7 +302,7 @@ const Navbar = () => {
                     className={`py-2 flex items-center justify-between w-full ${
                       ['/login/user', '/login/admin', '/login/volunteer'].some(path => isActive(path)) 
                       ? 'text-teal-500' 
-                      : 'text-black hover:text-teal-500'
+                      : 'text-black hover:text-teal-600'
                     }`}
                   >
                     Login <ChevronRight className="ml-1 w-4 h-4" />
@@ -311,21 +311,21 @@ const Navbar = () => {
                     <Link 
                       href="/login/user" 
                       className={`block py-2 
-                      ${isActive('/login/user') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      ${isActive('/login/user') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                     >
                       Login
                     </Link>
                     <Link 
                       href="/login/admin" 
                       className={`block py-2 
-                      ${isActive('/login/admin') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      ${isActive('/login/admin') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                     >
                       Registration
                     </Link>
                     <Link 
                       href="/login/volunteer" 
                       className={`block py-2 
-                      ${isActive('/login/volunteer') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                      ${isActive('/login/volunteer') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                     >
                       Forgot Password
                     </Link>
@@ -335,21 +335,21 @@ const Navbar = () => {
                 <Link 
                   href="/pages/blog-details" 
                   className={`block py-2 
-                  ${isActive('/pages/blog-details') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/pages/blog-details') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Blog Details
                 </Link>
                 <Link 
                   href="/pages/privacy-policy" 
                   className={`block py-2 
-                  ${isActive('/pages/privacy-policy') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/pages/privacy-policy') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Privacy Policy
                 </Link>
                 <Link 
                   href="/pages/terms-condition" 
                   className={`block py-2 
-                  ${isActive('/pages/terms-condition') ? 'text-teal-500' : 'text-black hover:text-teal-500'}`}
+                  ${isActive('/pages/terms-condition') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Terms-Condition
                 </Link>
@@ -373,8 +373,8 @@ const Navbar = () => {
                   Eng <span className="ml-1">▼</span>
                 </button>
                 <div id="mobileLang" className="hidden bg-gray-100 mt-1 p-2 rounded">
-                  <button className="block py-2 text-black hover:text-teal-500">English</button>
-                  <button className="block py-2 text-black hover:text-teal-500">French</button>
+                  <button className="block py-2 text-black hover:text-teal-600">English</button>
+                  <button className="block py-2 text-black hover:text-teal-600">French</button>
                 </div>
               </div>
               <Link href="/donate" className="bg-teal-600 text-white font-bold py-2 px-6 hover:text-white hover:bg-teal-500 rounded transition duration-300">

@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Gallery from '../components/Gallery'
 import Breadcrumb from '../components/Breadcrumb'
+import AboutUs from '../components/AboutUs'
 
 import { motion } from "motion/react" 
 
@@ -183,6 +184,10 @@ const Login = () => {
             </div>
           </div>
         </motion.section>
+
+        
+        {/* About Us Main  */}
+        <AboutUs />
 
       {/* Picture Gallery  */}
       <Gallery />
