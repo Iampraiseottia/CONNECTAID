@@ -13,16 +13,10 @@ import Youtube from "/public/icon/youtube.png"
 import Instagram from "/public/icon/ig.png"
 import LinkedIn from "/public/icon/linkedin.png"
 
-import { motion } from "motion/react";
-
 
 const Footer = () => {
   return (
-    <motion.footer 
-      initial={{opacity: 0, y: 100}}
-      whileInView={{y: 0, opacity: 1}}
-      transition={{duration: 0.5, delay: 0.5}} 
-      className="relative">
+    <footer className="relative">
       
       <div className="absolute inset-0 bg-gray-900 opacity-90 z-0"></div>
       
@@ -166,7 +160,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
 
