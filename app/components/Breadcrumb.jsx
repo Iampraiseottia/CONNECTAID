@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Breadcrumb = ({ homeTitle, homeSlug, title, breadcrumbImage, breadcrumbAlt }) => {
+const Breadcrumb = ({ homeTitle, homeSlug, title, breadcrumbImage }) => {
   return (
     <section className="relative w-full overflow-hidden h-[35vh]">
       <div className="absolute inset-0 z-0">
-        <Image 
+        <Image  
           src={breadcrumbImage}
-          alt={breadcrumbAlt}
+          alt='Breadcrumb Image'
           fill
-          className="object-cover object-center opacity-95 transparent" 
+          className="object-cover object-center opacity-95 transparent"  
           priority
         />
       </div>

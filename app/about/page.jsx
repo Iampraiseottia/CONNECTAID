@@ -11,6 +11,9 @@ import Gallery from '../components/Gallery'
 import Breadcrumb from '../components/Breadcrumb'
 import AboutUs from '../components/AboutUs'
 import Favorite from '../components/Favorite'
+import Team from '../components/Team'
+import Testimony from '../components/Testimony'
+import Blog from '../components/Blog'
 
 import { motion } from "motion/react" 
 
@@ -20,7 +23,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGraduationCap, faPeopleArrows, faGift, faHospital } from '@fortawesome/free-solid-svg-icons' 
 import { ArrowUpRight } from 'lucide-react'
 
-import Link from 'next/link'
+import Link from 'next/link' 
 
 
 const Login = () => {
@@ -193,6 +196,15 @@ const Login = () => {
         {/* Favorite */}
         <Favorite />
 
+        {/* Our Team */}
+        <Team />
+
+        {/* Testimony */}
+        <Testimony />
+
+        {/* Blog Post */}
+        {/* <Blog /> */}
+
       {/* Picture Gallery  */}
       <Gallery />
 
@@ -203,4 +215,4 @@ const Login = () => {
   )
 }
 
-export default Login; 
+export default Login;

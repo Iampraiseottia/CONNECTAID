@@ -140,21 +140,25 @@ const Footer = () => {
             <Link href="#" className="bg-white p-2 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer">
               <Image
                 src={Facebook}
+                alt='Facebook Icon'
                 className="text-white h-9 w-9" />
             </Link>
             <Link href="#" className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer">
               <Image 
                 src={Youtube}
+                alt='Youtube Icon'
                 className="text-white h-6 w-6" /> 
             </Link>
             <Link href="#" className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer">
               <Image
                 src={Instagram}
+                alt='Instagram Icon'
                 className="text-white h-6 w-6" /> 
             </Link>
             <Link href="#" className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer">
               <Image 
                 src={LinkedIn}
+                alt='Linked Icon'
                 className="text-white h-6 w-6" /> 
             </Link>
           </div>
