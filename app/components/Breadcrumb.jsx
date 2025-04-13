@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Breadcrumb = ({ homeTitle, homeSlug, title, breadcrumbImage }) => {
+const Breadcrumb = ({ homeTitle, homeSlug, title, description, breadcrumbImage }) => {
   return (
     <section className="relative w-full overflow-hidden h-[35vh]">
       <div className="absolute inset-0 z-0">
@@ -34,7 +34,7 @@ const Breadcrumb = ({ homeTitle, homeSlug, title, breadcrumbImage }) => {
           
           {/* Page Title */}
           <h1 className="text-5xl md:text-6xl font-bold mt-7 uppercase tracking-wide">
-            {title }
+            {description}
           </h1>
         </div>
       </div>
