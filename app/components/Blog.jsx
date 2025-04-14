@@ -27,28 +27,28 @@ const Blog = () => {
           <div className="w-full">
             <BlogCard 
                 imageSrc="/blog/blog-4.png"
-                date="30 Jun 2023"
-                title="Donate Your Money For Africa Poor Child."
+                date="20 Jun 2024"
+                title="Empowering Futures Through Accessible Education for All"
                 linkBlog="/blog-details-1"
-                excerpt="We understand that there are many people organization The seeking support,"
+                excerpt="Education transforms lives, fostering opportunities and breaking barriers for under-served communities worldwide."
             />
           </div>
           <div className="w-full my-5 sm:my-0">
             <BlogCard  
                 linkBlog="/blog-details-2"
                 imageSrc="/blog/blog-6.png"
-                date="30 Jun 2023"
-                title="Donate Your Money For Africa Poor Child."
-                excerpt="We understand that there are many people organization The seeking support,"
+                date="09 Nov 2024"
+                title="Transforming Lives Through Accessible Medical Care"
+                excerpt="Medicine saves lives, promotes health, and ensures equitable access for all communities in need."
             />
           </div>
           <div className="w-full"> 
             <BlogCard 
                 linkBlog="/blog-details-3"
                 imageSrc="/blog/blog-5.png"
-                date="30 Jun 2023"
-                title="Donate Your Money For Africa Poor Child."
-                excerpt="We understand that there are many people organization The seeking support," 
+                date="04 Apr 2025"
+                title="Nourishing Communities: The Power of Food"
+                excerpt="Food sustains life, fosters community, and combats hunger for a healthier, more equitable world." 
             />
           </div>
         </motion.div>

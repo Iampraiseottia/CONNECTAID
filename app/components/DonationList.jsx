@@ -15,7 +15,8 @@ const DonationList = () => {
       title: 'Together we can end hunger — Donate today and make a long lasting impacts in lives of people and communities!',
       description: 'Your contribution can help fill empty plates and hearts. By donating, you support families and people in desperate need, ensuring everyone has access to nutritious meals and a brighter future.',
       totalAmt: '$1, 005, 000',
-      raisedAmt: '$835, 025'
+      raisedAmt: '$835, 025',
+      donationSlug: '/donation-details-1'
     },
     {
       id: 2,
@@ -26,7 +27,10 @@ const DonationList = () => {
       title: 'Empower minds, change futures — Your donation can provide education and hope to children in need!',
       description: 'Support our mission to provide quality education for underprivileged children. Your generous donations help fund school supplies, scholarships, & resources, ensuring every child has the opportunity to learn and thrive.',
       totalAmt: '$750, 000',
-      raisedAmt: '$155, 750' 
+      donationSlug: '/donation-details-2',
+      raisedAmt: '$155, 750',
+      donationSlug: '/donation-details-2'
+      
     },
     {
       id: 3,
@@ -37,7 +41,9 @@ const DonationList = () => {
       title: 'Heal lives, restore hope — Your donation can provide essential medical care to those in need!',
       description: ' Join our mission to provide vital medical assistance to under-served communities. Your generous donations help fund treatments, medications, and healthcare services, ensuring everyone has access to the care they deserve.',
       totalAmt: '$3, 000, 000',
-      raisedAmt: '$2, 050, 284'
+      raisedAmt: '$2, 050, 284',
+      donationSlug: '/donation-details-3'
+
     }, 
     {
       id: 4,
@@ -48,7 +54,9 @@ const DonationList = () => {
       title: '"Quench thirst, transform lives—your donation can provide clean water to communities in need!',
       description: 'Help us bring clean, safe drinking water to those who lack access. Your generous donations support water projects, ensuring healthier communities and a brighter future for families everywhere',
       totalAmt: '$55, 000',
-      raisedAmt: '$40, 090'
+      raisedAmt: '$40, 090',
+      donationSlug: '/donation-details-4'
+
     },
     { 
       id: 5,
@@ -59,7 +67,9 @@ const DonationList = () => {
       title: 'Give hope, change lives—your donation can provide shelter and support for the homeless today!',
       description: 'Join our mission to help the homeless find stability and support. Your generous donations provide essential services, shelter, and resources, empowering individuals to rebuild their lives and regain dignity.',
       totalAmt: '$312, 000',
-      raisedAmt: '$63, 100'
+      raisedAmt: '$63, 100',
+      donationSlug: '/donation-details-5'
+
     },  
     { 
       id: 6,
@@ -70,7 +80,9 @@ const DonationList = () => {
       title: 'Act now, save lives—your donation can support those facing extreme hardships and urgent needs!',
       description: 'Help us provide immediate assistance to individuals in extreme situations. Your generous donations fund critical resources, emergency aid, and support services, ensuring that no one faces their struggles alone.',
       totalAmt: '$10, 000, 000',
-      raisedAmt: '$782, 000'
+      raisedAmt: '$782, 000',
+      donationSlug: '/donation-details-6'
+
     }, 
   ];
 
@@ -82,7 +94,7 @@ const DonationList = () => {
           {donations.map((donation) => (
             <div key={donation.id} className="flex flex-col h-full bg-white rounded-lg shadow-md overflow-hidden">
               <div className="relative">
-                <Link href="/donation-details">
+                <Link href={donation.donationSlug}>
                   <div className="aspect-w-16 aspect-h-10 relative">
                     <Image
                       src={donation.image}
@@ -104,12 +116,12 @@ const DonationList = () => {
               
               <div className="flex-1 p-5 leading-8 ">
                 <h3 className="text-xl font-bold mb-4">
-                  <Link href="/donation-details" className="text-gray-800 hover:text-emerald-600">
+                  <Link href={donation.donationSlug} className="text-gray-800 hover:text-emerald-600">
                     {donation.title}
                   </Link> 
                 </h3> 
                 <p className="text-gray-600 mb-4">
-                  {donation.description}
+                  {donation.description} 
                 </p>
                 
                 <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
@@ -131,7 +143,7 @@ const DonationList = () => {
                     </div>
                   </div>
                   <button className="text-gray-500 rounded-full border border-gray-300 p-2 hover:bg-gray-100">
-                    <Reply size={18} /> 
+                    <Reply size={18} />  
                   </button>
                 </div>
                 

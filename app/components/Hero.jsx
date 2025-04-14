@@ -112,11 +112,17 @@ const Hero = () => {
         <nav className={`py-4 w-full z-50 transition-all duration-300 
           ${isScrolled ? 'fixed top-0 left-0 bg-gray-950 bg-opacity-85 shadow-lg py-7 ' : 'pt-6 md:pt-12'}`}>
           <div className="container mx-[5%] header-mid px-4 sm:px-6 flex justify-between items-center"> 
+
             {/* Logo Section */}
             <div className="flex items-center">
               <Link href="/">
                 <div className="flex items-center cursor-pointer">
-                  <Image src="/icon/logo.png" alt="ConnectAID Logo" width={70} height={60} className={`h-auto transition-all      duration-300 
+                  <Image 
+                    src="/icon/logo.png" 
+                    alt="ConnectAID Logo" 
+                    width={70} 
+                    height={60} 
+                    className={`h-auto transition-all duration-300 
                     ${isScrolled ? 'w-[50px] md:w-[70px]' : 'w-[60px] md:w-[90px]'}`} />
                   <span className={`ml-2 md:ml-3 tracking-wide werey4 font-bold transition-all duration-300
                     ${isScrolled ? 'text-xl md:text-3xl' : 'text-2xl md:text-4xl'}`}>ConnectAID</span>
@@ -148,7 +154,7 @@ const Hero = () => {
                 className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">
                 Donation
               </Link>
-              <Link href="/blog" 
+              <Link href="/events" 
                 className="hover:text-yellow-500 text-white text-lg xl:text-xl font-semibold">
                 Events
               </Link>
@@ -157,13 +163,24 @@ const Hero = () => {
                   Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" />
                 </button>
                 <div className="absolute hidden bg-white w-60 border-t-2 border-t-teal-500 -ml-1 h-auto py-5 transition-all group-hover:block p-2 rounded shadow-lg">
-                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                    href="/blog" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Blog
                   </Link>
-                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                    href="/faqs" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     FAQs
                   </Link>
-                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                    href="/donate-payment" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                    Donate Pay
+                  </Link>
+                  <Link 
+                    href="/upcoming-event-details-1" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Event Details
                   </Link>
                   {/* Nested dropdown for Login */}
@@ -173,24 +190,39 @@ const Hero = () => {
                       <ChevronRight className="w-4 h-4" />
                     </div>
                     <div className="absolute left-full top-0 hidden bg-white w-60 border-l-2 border-t-2 border-l-teal-500 border-t-teal-500 h-auto py-5 transition-all group-hover/login:block p-2 rounded shadow-lg">
-                      <Link href="/login/user" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                      <Link 
+                        href="/login" 
+                        className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                         Login
                       </Link>
-                      <Link href="/login/admin" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                      <Link 
+                        href="/register" 
+                        className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                         Registration
                       </Link>
-                      <Link href="/login/volunteer" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                      <Link href="/forgot-password" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                         Forgot Password
                       </Link>
                     </div>
                   </div>
-                  <Link href="/pages/team" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                    href="/blog-details-1" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Blog Details
                   </Link>
-                  <Link href="/pages/gallery" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                    href="/gallery" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                    Gallery
+                  </Link>
+                  <Link 
+                    href="/privacy-policy" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Privacy Policy
                   </Link>
-                  <Link href="/pages/events" className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                  <Link 
+                  href="/terms-conditions" 
+                  className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Terms-Condition
                   </Link>
                 </div>
@@ -213,7 +245,9 @@ const Hero = () => {
                   <button className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">French</button>
                 </div>
               </div>
-              <Link href="/donate" className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300
+              <Link 
+                href="/donate-payment" 
+                className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300
                 ${isScrolled ? 'py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base' : 'py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base'}`}>
                 DONATE NOW
               </Link>
@@ -237,7 +271,7 @@ const Hero = () => {
                 className="hover:text-yellow-500 text-white text-xl font-semibold">
                 Donation
               </Link>
-              <Link href="/blog" 
+              <Link href="/events" 
                 className="hover:text-yellow-500 text-white text-xl font-semibold">
                 Events
               </Link>
@@ -249,18 +283,22 @@ const Hero = () => {
                   Pages <ChevronDown className="ml-1 w-5 h-5" />
                 </button>
                 <div id="mobilePages" className="hidden bg-gray-800 mt-2 p-2 rounded">
-                  <Link href="/pages/team" 
+                  <Link href="/blog" 
                     className="block py-2 text-white hover:text-yellow-500">
                       Blog
                   </Link>
-                  <Link href="/pages/gallery" 
+                  <Link href="/upcoming-event-details-1" 
                     className="block py-2 text-white hover:text-yellow-500">
                     Event Details
                   </Link>
-                  <Link href="/blog" 
+                  <Link href="/faqs" 
                     className="block py-2 text-white hover:text-yellow-500">
                     FAQs
                   </Link> 
+                  <Link href="/donate-payment" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Donate Pay
+                  </Link>
                   
                   <div className="relative">
                     <button 
@@ -278,22 +316,26 @@ const Hero = () => {
                         className="block py-2 text-white hover:text-yellow-500">
                         Registration
                       </Link>
-                      <Link href="/forgot_password" 
+                      <Link href="/forgot-password" 
                         className="block py-2 text-white hover:text-yellow-500">
                         Forgot Password
                       </Link>
                     </div>
                   </div>
                   
-                  <Link href="/pages/team" 
+                  <Link href="/blog-details-1" 
                     className="block py-2 text-white hover:text-yellow-500">
                     Blog Details
                   </Link>
-                  <Link href="/pages/gallery" 
+                  <Link href="/gallery" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Gallery
+                  </Link>
+                  <Link href="/privacy-policy"
                     className="block py-2 text-white hover:text-yellow-500">
                     Privacy Policy
                   </Link>
-                  <Link href="/pages/events" 
+                  <Link href="/terms-conditions" 
                     className="block py-2 text-white hover:text-yellow-500">
                     Terms-Condition
                   </Link>
@@ -318,7 +360,9 @@ const Hero = () => {
                     <button className="block py-2 text-white hover:text-yellow-500">French</button>
                   </div>
                 </div>
-                <Link href="/donate" className="bg-white text-black font-bold py-2 px-6 hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300">
+                <Link 
+                  href="/donate-payment" 
+                  className="bg-white text-black font-bold py-2 px-6 hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300">
                   DONATE NOW
                 </Link>
               </div>
@@ -344,10 +388,14 @@ const Hero = () => {
             </p>
             
             <div className="flex flex-wrap gap-3 md:gap-4">
-              <Link href="/donate" className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
+              <Link 
+                href="/donate-payment" 
+                className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
                 Donate Now
               </Link>
-              <Link href="/register" className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
+              <Link 
+                href="/register" 
+                className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition">
                 Join ConnectAID
               </Link>
             </div>

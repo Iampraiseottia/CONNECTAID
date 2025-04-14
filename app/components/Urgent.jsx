@@ -262,11 +262,11 @@ const Urgent = () => {
               {/* Tabs */}
               <div className="flex justify-center mt-4 sm:mt-8">
                 <div className="inline-flex h-auto">
-                  <Link href='/donate'
+                  <Link href='/donate-payment'
                     className='bg-yellow-400 h-12 w-36 text-black text-2xl font-semibold pt-2 pl-6 hover:opacity-85 '>
                     Donate
                   </Link>
-                  <Link href='/details' 
+                  <Link href='/donation-details-7' 
                     className='bg-white h-12 w-36 text-black text-2xl font-semibold pt-2 pl-6 hover:opacity-85' >
                     Details
                   </Link> 

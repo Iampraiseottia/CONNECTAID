@@ -11,15 +11,13 @@ const TeamMember = ({ name, position, image, delay }) => {
     <div className="w-full sm:w-1/2 lg:w-1/3 px-4 mb-8" data-wow-delay={`${delay}s`}>
       <div className="bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="relative">
-          <Link href="/volunteer-details">
-            <Image 
-              src={image} 
-              alt={name}
-              width={400}
-              height={500}
-              className="w-full h-auto object-cover"
-            />  
-          </Link>
+          <Image 
+            src={image} 
+            alt={name}
+            width={400}
+            height={500}
+            className="w-full h-auto object-cover"
+          />  
         </div>
         <div className="p-5">
           <div className="flex justify-between items-center">
