@@ -221,9 +221,9 @@ const Navbar = () => {
             </div>
             
             <Link 
-              href="/contact" 
+              href="/contact-us" 
               className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
-              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
+              ${isActive('/contact-us') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Contact
             </Link>
@@ -392,9 +392,9 @@ const Navbar = () => {
             </div>
             
             <Link 
-              href="/contact" 
+              href="/contact-us" 
               className={`text-xl font-semibold 
-              ${isActive('/contact') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
+              ${isActive('/contact-us') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
             >
               Contact
             </Link>

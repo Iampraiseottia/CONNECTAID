@@ -228,7 +228,7 @@ const Hero = () => {
                 </div>
               </div>
               
-              <Link href="/contact"
+              <Link href="contact-us"
                 className="hover:text-yellow-400 text-white text-lg xl:text-xl font-semibold">
                 Contact
               </Link>
@@ -342,7 +342,7 @@ const Hero = () => {
                 </div>
               </div>
               
-              <Link href="/contact" 
+              <Link href="contact-us" 
                 className="hover:text-yellow-400 text-white text-xl font-semibold">
                 Contact
               </Link>
