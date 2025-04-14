@@ -9,7 +9,8 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Gallery from '../components/Gallery'
 import Breadcrumb from '../components/Breadcrumb'
-import DonationList from '../components/DonationList'
+import Upcoming from '../components/Upcoming'
+import Past from '../components/Past'
 
 import { motion } from "motion/react" 
 
@@ -19,7 +20,7 @@ import Metadata from '../components/Metadata'
 const Events = () => {
 
   const metadata = {
-    title: 'Donations - ConnectAID Web Application',
+    title: 'Events - ConnectAID Web Application',
     description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
   };
 
@@ -50,10 +51,13 @@ const Events = () => {
         </motion.div>
 
     
-        {/* Donation List */} 
-        <DonationList />
+        {/* Upcoming Events */} 
+        <Upcoming />
 
-        {/* Picture Gallery  */}
+        {/* Upcoming Events */} 
+        <Past />
+
+        {/* Picture Gallery  */} 
         <Gallery />
 
         {/* Footer  */}

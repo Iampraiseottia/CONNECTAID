@@ -125,7 +125,7 @@ const About = () => {
               Investing in education changes lives! Your donations provide essential resources and opportunities for those in need. Help us empower future generations 🏫 and create a brighter tomorrow!
             </p>
             <Link href='/donation' className={`mb-3 text-sm md:text-base px-3 transition-colors duration-200 flex justify-center items-center mt-4 
-              ${isHoveredMedical ? 'text-white' : 'text-teal-600'}`}> 
+              ${isHoveredEducation ? 'text-white' : 'text-teal-600'}`}> 
               <span className='font-semibold text-xl tracking-wide hover:text-[21px]'>Read More </span>
               <ArrowUpRight className='ml-1' /> 
             </Link>
@@ -154,7 +154,7 @@ const About = () => {
               Make a meaningful difference in the lives of those in need. Your generosity provides essential resources, support, and hope, fostering positive change in communities and individuals.
             </p>
             <Link href='/donation' className={`mb-3 text-sm md:text-base px-3 transition-colors duration-200 flex justify-center items-center mt-4 
-              ${isHoveredMedical ? 'text-white' : 'text-teal-600'}`}> 
+              ${isHoveredCharity ? 'text-white' : 'text-teal-600'}`}> 
               <span className='font-semibold text-xl tracking-wide hover:text-[21px]'>Read More </span>
               <ArrowUpRight className='ml-1' /> 
             </Link>
@@ -183,7 +183,7 @@ const About = () => {
               Social service promotes community well-being by addressing needs, providing support, and empowering individuals through programs that enhance quality of life and foster social connection.
             </p>
             <Link href='/donation' className={`mb-3 text-sm md:text-base px-3 transition-colors duration-200 flex justify-center items-center mt-4 
-              ${isHoveredMedical ? 'text-white' : 'text-teal-600'}`}> 
+              ${isHoveredSocialService ? 'text-white' : 'text-teal-600'}`}> 
               <span className='font-semibold text-xl tracking-wide hover:text-[21px]'>Read More </span>
               <ArrowUpRight className='ml-1' /> 
             </Link>

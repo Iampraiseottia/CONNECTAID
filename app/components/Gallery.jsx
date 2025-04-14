@@ -13,7 +13,7 @@ const Gallery = () => {
     { src: '/gallery/gallery-3.png', alt: 'Gallery Image 3' },
     { src: '/gallery/gallery-4.png', alt: 'Gallery Image 4' },
     { src: '/gallery/gallery-5.png', alt: 'Gallery Image 5' },
-    { src: '/gallery/gallery-6.png', alt: 'Gallery Image 6' },
+    // { src: '/gallery/gallery-6.png', alt: 'Gallery Image 6' },
     { src: '/gallery/gallery-7.png', alt: 'Gallery Image 7' },
     { src: '/gallery/gallery-8.png', alt: 'Gallery Image 8' },
     { src: '/gallery/gallery-9.png', alt: 'Gallery Image 9' },
