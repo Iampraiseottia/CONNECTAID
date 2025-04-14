@@ -1,4 +1,3 @@
-
 "use client"
 
 import React, { useState, useRef } from 'react'
@@ -22,6 +21,86 @@ const ContactUS = () => {
   const metadata = {
     title: 'Contact Us - ConnectAID Web Application',
     description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
+  };
+
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
+
+  const [errors, setErrors] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+    
+    if (errors[id]) {
+      setErrors({
+        ...errors,
+        [id]: ''
+      });
+    }
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...errors };
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+      valid = false;
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+      valid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email address is required';
+      valid = false;
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+      valid = false;
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = 'Message is required';
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (validateForm()) {
+      console.log('Form data submitted:', formData);
+      
+      setFormData({
+        fullName: '',
+        phone: '',
+        email: '',
+        message: ''
+      });
+      
+      console.log('Message sent successfully!');
+    } else {
+      console.log('Form validation failed');
+    }
   };
 
   const fullNameRef = useRef();
@@ -135,7 +214,7 @@ const ContactUS = () => {
             <div className="mt-16">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div className="bg-white rounded-lg shadow-md p-6">
-                  <form className="space-y-6">
+                  <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
                       <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
                         Full Name
@@ -144,10 +223,15 @@ const ContactUS = () => {
                         type="text"
                         id="fullName"
                         placeholder="Alex Jordan"
-                        className="w-full px-4 py-3 border border-gray-300 ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className={`w-full px-4 py-3 border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
                         ref={fullNameRef}
                         onMouseEnter={onMouseEnterFullNameRef}
+                        value={formData.fullName}
+                        onChange={handleChange}
                       /> 
+                      {errors.fullName && (
+                        <p className="mt-1 text-red-500 text-sm">{errors.fullName}</p>
+                      )}
                     </div>
                     
                     <div>
@@ -158,10 +242,15 @@ const ContactUS = () => {
                         type="text"
                         id="phone"
                         placeholder="Phone"
-                        className="w-full px-4 py-3 border border-gray-300 ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className={`w-full px-4 py-3 border ${errors.phone ? 'border-red-500' : 'border-gray-300'} ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
                         ref={phoneNumberRef}
                         onMouseEnter={onMouseEnterPhoneNumberRefRef}
+                        value={formData.phone}
+                        onChange={handleChange}
                       />
+                      {errors.phone && (
+                        <p className="mt-1 text-red-500 text-sm">{errors.phone}</p>
+                      )}
                     </div>
                     
                     <div>
@@ -172,10 +261,15 @@ const ContactUS = () => {
                         type="email"
                         id="email"
                         placeholder="name@example.com"
-                        className="w-full px-4 py-3 border border-gray-300 ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
                         ref={emailAddressRef}
                         onMouseEnter={onMouseEnterEmailAddressRef}
+                        value={formData.email}
+                        onChange={handleChange}
                       />
+                      {errors.email && (
+                        <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
+                      )}
                     </div>
                     
                     <div>
@@ -186,10 +280,15 @@ const ContactUS = () => {
                         id="message"
                         rows="6"
                         placeholder="Type You message here"
-                        className="w-full px-4 py-3 border border-gray-300 ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className={`w-full px-4 py-3 border ${errors.message ? 'border-red-500' : 'border-gray-300'} ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
                         ref={messageRef}
                         onMouseEnter={onMouseEnterMessageRef}
+                        value={formData.message}
+                        onChange={handleChange}
                       ></textarea>
+                      {errors.message && (
+                        <p className="mt-1 text-red-500 text-sm">{errors.message}</p>
+                      )}
                     </div>
                     
                     <button
