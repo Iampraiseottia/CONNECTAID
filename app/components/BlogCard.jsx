@@ -51,11 +51,14 @@ const BlogCard = ({ imageSrc, date, title, excerpt, linkBlog }) => {
             <Link href={linkBlog}>{title}</Link>
           </h4>
           <p className="text-gray-600 mb-4">{excerpt}</p>
-          <Link href={linkBlog} className="flex mb-2 items-center text-emerald-600 font-medium hover:text-emerald-700 transition-colors w-fit">
+          
+          <Link 
+            href={linkBlog}
+            className={`bg-teal-600 text-white font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl  hover:bg-transparent hover:border-2 hover:border-teal-500 hover:text-teal-600  transition duration-300 py-3 text-center `}>
             Read More <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4 ml-1" />
           </Link>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };

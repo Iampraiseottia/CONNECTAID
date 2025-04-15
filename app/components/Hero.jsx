@@ -182,7 +182,13 @@ const Hero = () => {
                     href="/upcoming-event-details-1" 
                     className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
                     Event Details
+                  </Link> 
+                  <Link 
+                    href="/donation-details-1" 
+                    className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide">
+                    Donation Details
                   </Link>
+
                   {/* Nested dropdown for Login */}
                   <div className="relative group/login">
                     <div className="py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer">
@@ -290,6 +296,10 @@ const Hero = () => {
                   <Link href="/upcoming-event-details-1" 
                     className="block py-2 text-white hover:text-yellow-500">
                     Event Details
+                  </Link>
+                  <Link href="/donation-details-1" 
+                    className="block py-2 text-white hover:text-yellow-500">
+                    Donation Details
                   </Link>
                   <Link href="/faqs" 
                     className="block py-2 text-white hover:text-yellow-500">

@@ -157,6 +157,12 @@ const Navbar = () => {
                 >
                   Event Details
                 </Link>
+                <Link 
+                  href="/donation-details-1" 
+                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
+                    ${isActive('/donation-details-1') ? 'text-teal-500' : 'text-slate-800'}`}>
+                      Donation Details
+                </Link>
                 {/* Nested dropdown for Login */}
                 <div className="relative group/login">
                   <div className={`py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer 
@@ -302,6 +308,13 @@ const Navbar = () => {
                   Blog
                 </Link>
                 <Link 
+                  href="/donate-payment" 
+                  className={`block py-2 
+                  ${isActive('/donate-payment') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
+                >
+                  Donate Pay
+                </Link> 
+                <Link 
                   href="/upcoming-event-details-1" 
                   className={`block py-2 
                   ${isActive('/upcoming-event-details-1') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
@@ -314,15 +327,15 @@ const Navbar = () => {
                   ${isActive('/faqs') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   FAQs
-                </Link> 
-                <Link 
-                  href="/donate-payment" 
-                  className={`block py-2 
-                  ${isActive('/donate-payment') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
-                >
-                  Donate Pay
-                </Link> 
+                </Link>
                 
+                <Link 
+                  href="/donation-details-1"
+                  className={`block py-2 
+                  ${isActive('/donation-details-1') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
+                >
+                  Donation Details
+                </Link> 
                 <div className="relative">
                   <button 
                     onClick={() => document.getElementById('mobileLogin').classList.toggle('hidden')}

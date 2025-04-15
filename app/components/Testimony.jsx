@@ -1,18 +1,15 @@
+import React, { useRef, useState } from "react";
 
-import React, { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import TestimonialCard from "../components/TestimonialCard";
 
-import TestimonialCard from '../components/TestimonialCard'
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
-import { motion } from "motion/react"
-
+import { motion } from "motion/react";
 
 const testimonials = [
   {
@@ -48,7 +45,7 @@ const testimonials = [
     name: "Siti Nurhali",
     location: "Jakarta, Indonesia 🇮🇩",
     text: `In the face of hardship, ConnectAID has been a source of strength. It connects us with vital resources, helping our community rebuild and thrive despite the challenges we encounter`,
-    image: "/testimony/testimonial-8.png", 
+    image: "/testimony/testimonial-8.png",
   },
   {
     id: 6,
@@ -73,56 +70,80 @@ const testimonials = [
   },
 ];
 
-
-
 const Testimony = () => {
   const navigationPrevRef = useRef(null);
   const navigationNextRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section 
-      className="py-12 md:py-16 bg-gray-50">
+    <section className="py-12 md:py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <motion.div 
-          initial={{opacity: 0, y: 100}}
-          whileInView={{y: 0, opacity: 1}}
-          transition={{duration: 0.5, delay: 0.5}}
-          className="mb-8 md:mb-12 flex flex-wrap items-center justify-between">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="mb-8 md:mb-12 flex flex-wrap items-center justify-between"
+        >
           <div className="w-full md:w-auto mb-6 md:mb-0">
-            <span className="text-teal-700 font-semibold mb-1 md:mb-2 block">Testimonials</span>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">What They're Talking About Us</h2>
+            <span className="text-teal-700 font-semibold mb-1 md:mb-2 block">
+              Testimonials
+            </span>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900">
+              What They're Talking About Us
+            </h2>
           </div>
-          
-          {/* Navigation buttons positioned above the testimonials */} 
+
+          {/* Navigation buttons positioned above the testimonials */}
           <div className="w-full md:w-auto flex justify-end space-x-2">
-            <button 
+            <button
               ref={navigationPrevRef}
               className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-teal-700 text-white hover:bg-teal-800 transition-colors shadow-md focus:outline-none"
               aria-label="Previous slide"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 md:h-6 md:w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             </button>
-            <button 
+            <button
               ref={navigationNextRef}
               className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-teal-700 text-white hover:bg-teal-800 transition-colors shadow-md focus:outline-none"
               aria-label="Next slide"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 md:h-6 md:w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             </button>
           </div>
         </motion.div>
-        
-         
-        <motion.div 
-          initial={{opacity: 0, y: 100}}
-          whileInView={{y: 0, opacity: 1}}
-          transition={{duration: 0.5, delay: 0.5}}
-          className="relative">
+
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="relative"
+        >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={10}
@@ -140,15 +161,15 @@ const Testimony = () => {
                 slidesPerView: 2.5,
                 spaceBetween: 20,
               },
-              1024: { 
+              1024: {
                 slidesPerView: 3,
                 spaceBetween: 20,
               },
               1280: {
                 slidesPerView: 3,
                 spaceBetween: 20,
-              } 
-            }} 
+              },
+            }}
             loop={true}
             autoplay={{
               delay: 5000,
@@ -156,9 +177,10 @@ const Testimony = () => {
             }}
             pagination={{
               clickable: true,
-              el: '.testimonial-pagination',
-              bulletClass: 'w-3 h-3 rounded-full bg-gray-300 mx-1 inline-block cursor-pointer',
-              bulletActiveClass: '!bg-teal-700',
+              el: ".testimonial-pagination",
+              bulletClass:
+                "w-3 h-3 rounded-full bg-gray-300 mx-1 inline-block cursor-pointer",
+              bulletActiveClass: "!bg-teal-700",
             }}
             navigation={{
               prevEl: navigationPrevRef.current,
@@ -174,14 +196,14 @@ const Testimony = () => {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={testimonial.id}>
-                <TestimonialCard 
-                  testimonial={testimonial} 
-                  isActive={index === activeIndex} 
+                <TestimonialCard
+                  testimonial={testimonial}
+                  isActive={index === activeIndex}
                 />
               </SwiperSlide>
             ))}
           </Swiper>
-          
+
           <div className="testimonial-pagination flex justify-center space-x-2 mt-6"></div>
         </motion.div>
       </div>

@@ -25,17 +25,17 @@ const Past = () => {
             transition={{duration: 0.5, delay: 0.5}}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
           <div className="w-full"> 
-            <BlogCard
+            <BlogCard 
               imageSrc="/gallery/gallery-20.png"
               date="03 Sept 2024"
               title="Empowering Futures Through Accessible Education for All"
-              linkBlog="/upcoming-event-details-1"
+              linkBlog="/past-event-details-1"
               excerpt="Through your donations, we provided educational resources and support, empowering underprivileged children and fostering a brighter future through enhanced access to quality education."
             />
           </div>
           <div className="w-full my-5 sm:my-0">
             <BlogCard  
-              linkBlog="/upcoming-event-details-2"
+              linkBlog="/past-event-details-2"
               imageSrc="/gallery/gallery-11.png"
               date="09 Nov 2024"
               title="Quality Medicine: Empowering a Healthier Community "
@@ -44,7 +44,7 @@ const Past = () => {
           </div>
           <div className="w-full"> 
             <BlogCard 
-                linkBlog="/upcoming-event-details-3" 
+                linkBlog="/past-event-details-3" 
                 imageSrc="/gallery/gallery-13.png"
                 date="24 Feb 2025"
                 title="Nourished Communities: The Power of Good Food"

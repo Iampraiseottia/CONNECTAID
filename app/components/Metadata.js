@@ -1,24 +1,20 @@
+"use client";
 
-'use client';
-
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const Metadata = ({ title, description }) => {
   useEffect(() => {
-  
     document.title = title;
-
 
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', description);
+      metaDescription.setAttribute("content", description);
     } else {
-     
-      console.warn('Meta description tag not found');
+      console.warn("Meta description tag not found");
     }
   }, [title, description]);
 
-  return null; 
+  return null;
 };
 
 export default Metadata;
