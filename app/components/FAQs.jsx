@@ -5,7 +5,7 @@ import {React, useRef, useEffect} from 'react'
 
 import Image from 'next/image';
 
-import faqImg from '/public/gallery/about-cover-2.png'; 
+import faqImg from '/public/gallery/about-cover-2.png';
 
 import { motion } from "motion/react"
 

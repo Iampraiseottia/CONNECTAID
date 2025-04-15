@@ -3,10 +3,10 @@ import Link from 'next/link';
 
 const Breadcrumb = ({ homeTitle, homeSlug, title, description, breadcrumbImage }) => {
   return (
-    <section className="relative w-full overflow-hidden h-[35vh]">
+    <section className="relative w-full overflow-hidden h-[37vh] z-10"> 
       <div className="absolute inset-0 z-0">
         <Image  
-          src={breadcrumbImage}
+          src={breadcrumbImage} 
           alt='Breadcrumb Image'
           fill
           className="object-cover object-center opacity-95 transparent"  
@@ -19,7 +19,7 @@ const Breadcrumb = ({ homeTitle, homeSlug, title, description, breadcrumbImage }
           <nav className="mb-2 breadCrumbBg shadow py-2 px-5 w-72 rounded" aria-label="breadcrumb"> 
             <ul className="flex items-center text-lg"> 
               <li className='hover:cursor-pointer hover:opacity-80'>
-                <Link href={homeSlug} className="transition duration-300 uppercase font-semibold text-xl tracking-wide">
+                <Link href={homeSlug} className="transition duration-300 uppercase font-semibold text-xl tracking-wide"> 
                   {homeTitle}
                 </Link>
               </li>

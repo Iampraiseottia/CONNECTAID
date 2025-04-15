@@ -2,9 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react'; 
+
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -52,16 +55,21 @@ const Navbar = () => {
     return pathname === path;
   };
 
+  // Function to check if the current path is in an array of possible paths
+  const isActiveInArray = (paths) => {
+    return paths.some(path => pathname === path);
+  };
+
   return (
-    <main className='min-h-[20%] w-full bg-slate-600'>  
-      {/* Sticky Header */} 
-      <nav className={`py-4 w-full z-50 transition-all duration-300 
-        ${isScrolled ? 'fixed top-0 left-0 bg-white shadow-lg mb-96 ' : 'pt-6 md:pt-12 bg-white'}`}>
+    <main className='min-h-[20vh] w-full relative z-50'> 
+      {/* Sticky Header */}
+      <nav className={`py-4 w-full transition-all duration-300 
+        ${isScrolled ? 'fixed top-0 left-0 bg-white shadow-lg mb-96 ' : 'pt-6 md:pt-20 bg-white'}`}> 
         <div className="container mx-[5%] mt-3 mb-3 header-mid px-4 sm:px-6 flex justify-between items-center"> 
           {/* Logo Section */}  
           <div className="flex items-center">
             <Link href="/">
-                <div className="flex items-center cursor-pointer"> 
+                <div className="flex items-center cursor-pointer">
                 <Image 
                   src="/icon/logo.png" 
                   alt="ConnectAID Logo" 
@@ -114,48 +122,45 @@ const Navbar = () => {
             >
               Events
             </Link>
-            <div className="relative group z-10">
+            <div className="relative group z-50"> {/* Increased z-index here */}
               <button className={`text-lg xl:text-xl ease-in-out duration-300 font-semibold flex items-center 
               ${
-                ['blog', 'upcoming-event-details-1', '/login', '/register', '/forgot-password'].some(path => isActive(path)) 
+                isActiveInArray(['/blog', '/upcoming-event-details-1', '/login', '/register', '/forgot-password', '/faqs', '/donate-payment', '/blog-details-1', '/gallery', '/privacy-policy', '/terms-conditions']) 
                   ? 'text-teal-500' 
                   : 'text-black hover:text-teal-600'
               }`}>
-                Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" />
+                Pages <ChevronDown className="ml-1 w-4 h-4 xl:w-5 xl:h-5" /> 
               </button>
               <div className="absolute hidden bg-white w-60 border-t-2 border-t-teal-500 -ml-1 h-auto py-5 transition-all group-hover:block p-2 rounded shadow-lg">
-                <Link 
-                  href="blog" 
+                <Link  
+                  href="/blog" 
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                    ${isActive('blog') ? 'text-teal-600' : 'text-slate-800' }`} >
+                    ${isActive('/blog') ? 'text-teal-500' : 'text-slate-800' }`} >
                   Blog
                 </Link>
                 <Link 
                   href="/faqs" 
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                    ${isActive('/faqs') && pathname !== '/faqs' ? 'text-teal-600' : 'text-slate-800'}`}>
+                    ${isActive('/faqs') ? 'text-teal-500' : 'text-slate-800'}`}>
                   FAQs
                 </Link>
                 <Link 
                   href="/donate-payment" 
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                    ${isActive('/donate-payment') && pathname !== '/donate-payment' ? 'text-teal-600' : 'text-slate-800'}`}>
+                    ${isActive('/donate-payment') ? 'text-teal-500' : 'text-slate-800'}`}>
                   Donate Pay
                 </Link>
                 <Link 
-                  href="upcoming-event-details-1" 
-                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide ${
-                    isActive('upcoming-event-details-1') ? 'text-teal-600' : 'text-slate-800'
-                  }`}
+                  href="/upcoming-event-details-1" 
+                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
+                    ${isActive('/upcoming-event-details-1') ? 'text-teal-500' : 'text-slate-800'}`}
                 >
                   Event Details
                 </Link>
                 {/* Nested dropdown for Login */}
                 <div className="relative group/login">
                   <div className={`py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer 
-                  ${
-                    ['/login', '/register', '/forgot-password'].some(path => isActive(path)) ? 'text-teal-600' : 'text-slate-800'
-                  }`}>
+                  ${isActiveInArray(['/login', '/register', '/forgot-password']) ? 'text-teal-500' : 'text-slate-800'}`}>
                     <p>Login</p>
                     <ChevronRight className="w-4 h-4" />
                   </div>
@@ -163,21 +168,21 @@ const Navbar = () => {
                     <Link 
                       href="/login" 
                       className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${isActive('/login') ? 'text-teal-600' : 'text-slate-800'}`}
+                        ${isActive('/login') ? 'text-teal-500' : 'text-slate-800'}`}
                     >
                       Login
                     </Link>
                     <Link 
                       href="/register" 
                       className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${isActive('/register') ? 'text-teal-600' : 'text-slate-800'}`}
+                        ${isActive('/register') ? 'text-teal-500' : 'text-slate-800'}`}
                     >
                       Registration
                     </Link>
                     <Link 
                       href="/forgot-password" 
                       className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${isActive('/forgot-password') ? 'text-teal-600' : 'text-slate-800'}`}
+                        ${isActive('/forgot-password') ? 'text-teal-500' : 'text-slate-800'}`}
                     >
                       Forgot Password
                     </Link>
@@ -186,34 +191,28 @@ const Navbar = () => {
                 <Link 
                   href="/blog-details-1" 
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                    ${
-                    isActive('/blog-details-1') ? 'text-teal-600' : 'text-slate-800'
-                  }`}
+                    ${isActive('/blog-details-1') ? 'text-teal-500' : 'text-slate-800'}`}
                 >
                   Blog Details
                 </Link>
                 <Link 
                   href="/gallery" 
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                    ${
-                    isActive('/gallery') ? 'text-teal-600' : 'text-slate-800'
-                  }`}
+                    ${isActive('/gallery') ? 'text-teal-500' : 'text-slate-800'}`}
                 >
                   Gallery
                 </Link>
                 <Link 
                   href="/privacy-policy" 
-                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide ${
-                    isActive('/privacy-policy') ? 'text-teal-600' : 'text-slate-800'
-                  }`}
+                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
+                    ${isActive('/privacy-policy') ? 'text-teal-500' : 'text-slate-800'}`}
                 >
                   Privacy Policy
                 </Link>
                 <Link 
                   href="/terms-conditions" 
-                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide ${
-                    isActive('/terms-conditions') ? 'text-teal-600' : 'text-slate-800'
-                  }`}
+                  className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
+                    ${isActive('/terms-conditions') ? 'text-teal-500' : 'text-slate-800'}`}
                 >
                   Terms-Condition
                 </Link>
@@ -231,7 +230,7 @@ const Navbar = () => {
 
           {/* Desktop Right Section - Donate Button & Language */}  
           <div className="hidden xl:flex items-center space-x-3 xl:space-x-5 -mr-40 header-mid2">
-            <div className="relative group">
+            <div className="relative group z-40"> {/* Adjusted z-index here */}
               <button className="flex items-center hover:text-teal-400 text-black text-sm xl:text-base">
                 Eng <span className="ml-1">▼</span>
               </button> 
@@ -287,7 +286,7 @@ const Navbar = () => {
               <button 
                 onClick={() => document.getElementById('mobilePages').classList.toggle('hidden')}
                 className={`text-xl font-semibold flex items-center justify-between w-full ${
-                  ['/blog', '/upcoming-event-details-1', '/login', '/register', '/forgot-password', '/pages/blog-details', '/pages/privacy-policy', '/pages/terms-condition'].some(path => isActive(path)) 
+                  isActiveInArray(['/blog', '/upcoming-event-details-1', '/login', '/register', '/forgot-password', '/faqs', '/donate-payment', '/blog-details-1', '/gallery', '/privacy-policy', '/terms-conditions']) 
                     ? 'text-teal-500' 
                     : 'text-black hover:text-teal-600'
                 }`}
@@ -312,14 +311,14 @@ const Navbar = () => {
                 <Link 
                   href="/faqs" 
                   className={`block py-2 
-                  ${isActive('/faqs') && pathname !== '/faqs' ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
+                  ${isActive('/faqs') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   FAQs
                 </Link> 
                 <Link 
                   href="/donate-payment" 
                   className={`block py-2 
-                  ${isActive('/donate-payment') && pathname !== '/donate-payment' ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
+                  ${isActive('/donate-payment') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
                 >
                   Donate Pay
                 </Link> 
@@ -328,7 +327,7 @@ const Navbar = () => {
                   <button 
                     onClick={() => document.getElementById('mobileLogin').classList.toggle('hidden')}
                     className={`py-2 flex items-center justify-between w-full ${
-                      ['/login', '/register', '/forgot-password'].some(path => isActive(path)) 
+                      isActiveInArray(['/login', '/register', '/forgot-password']) 
                       ? 'text-teal-500' 
                       : 'text-black hover:text-teal-600'
                     }`}
@@ -394,7 +393,7 @@ const Navbar = () => {
             <Link 
               href="/contact-us" 
               className={`text-xl font-semibold 
-              ${isActive('/contact-us') ? 'text-teal-500' : 'text-black hover:text-yellow-400'}`}
+              ${isActive('/contact-us') ? 'text-teal-500' : 'text-black hover:text-teal-600'}`}
             >
               Contact
             </Link>
@@ -403,7 +402,7 @@ const Navbar = () => {
               <div className="relative group">
                 <button  
                   onClick={() => document.getElementById('mobileLang').classList.toggle('hidden')}
-                  className="flex items-center hover:text-yellow-400 text-black"
+                  className="flex items-center hover:text-teal-600 text-black"
                 >
                   Eng <span className="ml-1">▼</span>
                 </button>
