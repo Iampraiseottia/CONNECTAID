@@ -44,6 +44,7 @@ const Upcoming = () => {
               excerpt="It focuses on providing clean water access, essential for children's health and education, ensuring a sustainable future. Join us in making a vital impact!"
             />
           </div>
+          
           <div className="w-full">
             <BlogCard
               linkBlog="/upcoming-event-details-3"

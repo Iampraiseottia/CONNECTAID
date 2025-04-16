@@ -36,12 +36,13 @@ const Blog = () => {
           <div className="w-full my-5 sm:my-0">
             <BlogCard
               linkBlog="/blog-details-2"
-              imageSrc="/blog/blog-6.png"
+              imageSrc="/gallery/medicine.jpg"
               date="09 Nov 2024"
               title="Transforming Lives Through Accessible Medical Care"
               excerpt="Medicine saves lives, promotes health, and ensures equitable access for all communities in need."
             />
           </div>
+
           <div className="w-full">
             <BlogCard
               linkBlog="/blog-details-3"

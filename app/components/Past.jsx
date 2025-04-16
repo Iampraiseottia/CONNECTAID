@@ -42,6 +42,7 @@ const Past = () => {
               excerpt="Your generous donations enabled us to deliver essential medical care and education, empowering underprivileged persons and communities and ensuring their well-being and good way of living."
             />
           </div>
+          
           <div className="w-full"> 
             <BlogCard 
                 linkBlog="/past-event-details-3" 

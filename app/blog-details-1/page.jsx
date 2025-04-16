@@ -311,7 +311,7 @@ const BlogDetails1 = () => {
                   {/* {[1, 2].map((item) => ( */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
-                      <Link href="/blog-details-1">
+                      <Link href="/blog-details-2">
                         <Image
                           src="/blog/blog-6.png"
                           alt="Related blog"
@@ -342,7 +342,7 @@ const BlogDetails1 = () => {
                       </p>
 
                       <Link
-                        href="/blog-details-1"
+                        href="/blog-details-2"
                         className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
                       >
                         Read More
@@ -352,7 +352,7 @@ const BlogDetails1 = () => {
                   {/* ))} */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
-                      <Link href="/blog-details-1">
+                      <Link href="/blog-details-3">
                         <Image
                           src="/blog/blog-5.png"
                           alt="Related blog"
@@ -530,7 +530,7 @@ const BlogDetails1 = () => {
                           Serena Morgan
                         </p>
                         <p className="text-sm text-gray-500">
-                          Sep 107, 2024 At 11.00 pm
+                          Sep 17, 2024 At 11.00 pm
                         </p>
                       </div>
                       <p className="text-gray-600 mb-3">
@@ -1032,7 +1032,7 @@ const BlogDetails1 = () => {
 
                   <div className="flex flex-wrap gap-2">
                     <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
-                      Medical
+                      Education
                     </span>
                     <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                       Food
@@ -1041,7 +1041,7 @@ const BlogDetails1 = () => {
                       Water
                     </span>
                     <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      Education
+                      Medical
                     </span>
                     <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                       Kindness
