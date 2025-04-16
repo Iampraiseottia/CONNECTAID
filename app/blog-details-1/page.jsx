@@ -9,20 +9,19 @@ import globalStyle from "../globals.css";
 
 import Metadata from "../components/Metadata";
 
-import {
-  User,
-  MessageSquare,
-  Search,
-  Clock,
-  ChevronLeft,
-  ChevronRight,
-  DollarSign,
-} from "lucide-react";
+import { motion } from "motion/react";
+
+import { User, MessageSquare, Search, Clock, DollarSign } from "lucide-react";
 
 import Facebook from "/public/icon/fb.png";
 import Youtube from "/public/icon/youtube.png";
 import Instagram from "/public/icon/ig.png";
 import LinkedIn from "/public/icon/linkedin.png";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Gallery from "../components/Gallery";
+import Breadcrumb from "../components/Breadcrumb";
 
 const BlogDetails1 = () => {
   const metadata = {
@@ -66,6 +65,27 @@ const BlogDetails1 = () => {
     <div className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
+      {/* Navigation Bar | Header  */}
+      <Navbar />
+
+      {/* Breadcrumb for ABout Page */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
+        className="w-full"
+      >
+        <Breadcrumb
+          homeTitle="HOME"
+          homeSlug="/"
+          title="EDUCATION"
+          description="Empowering Futures Through Accessible Education for All"
+          breadcrumAlt="EDUCATION Hero Background Image"
+          breadcrumbImage="/gallery/breadcrumb-1.png"
+        />
+      </motion.div>
+
       {/* Blog Details Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -73,7 +93,13 @@ const BlogDetails1 = () => {
             <div className="lg:col-span-9">
               <div className="rounded-lg overflow-hidden shadow-md">
                 {/* Blog Main Image */}
-                <div className="relative">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="relative"
+                >
                   <div className="">
                     <Image
                       src="/gallery/event-6.png"
@@ -93,12 +119,18 @@ const BlogDetails1 = () => {
                       className="w-full h-auto"
                     />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Blog Info */}
                 <div className="p-6 bg-white">
                   <div className="mb-6">
-                    <div className="flex flex-wrap gap-4 mb-5 items-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-wrap gap-4 mb-5 items-center"
+                    >
                       <div className="flex gap-2 items-center">
                         <User className="w-5 h-5 text-gray-700" />
                         <p className="text-gray-600 text-sm">By: admin</p>
@@ -107,31 +139,61 @@ const BlogDetails1 = () => {
                         <MessageSquare className="w-5 h-5 text-gray-700" />
                         <p className="text-gray-600 text-sm">Education</p>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+                    <motion.h1
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+                    >
                       Empowering Futures Through Accessible and Quality
                       Education for All
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       Education has the power to transform lives, creating
                       opportunities and dismantling barriers for under-served
                       communities across the globe, ultimately fostering growth,
                       empowerment, and a brighter future for all.
-                    </p>
+                    </motion.p>
 
-                    <hr className="my-6 border-gray-200" />
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       Education serves as a catalyst for change, equipping
                       individuals with essential skills and knowledge. By
                       providing access to quality learning, it empowers
                       under-served communities to pursue better job
                       opportunities and improve their living conditions.
-                    </p>
+                    </motion.p>
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       We understand that there are many organizations seeking
                       support, and we appreciate your consideration of
                       [Organization Name]. We assure you that your donation will
@@ -141,12 +203,24 @@ const BlogDetails1 = () => {
                       themselves and their communities. This empowerment fosters
                       social mobility, allowing people to break free from cycles
                       of poverty and inequality.
-                    </p>
+                    </motion.p>
 
-                    <hr className="my-6 border-gray-200" />
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
 
                     {/* Quote Section */}
-                    <div className="bg-gray-50 p-6 my-8 rounded-lg relative">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="bg-gray-50 p-6 my-8 rounded-lg relative"
+                    >
                       <div className="absolute top-6 left-6 text-gray-200">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -169,10 +243,16 @@ const BlogDetails1 = () => {
                         in need. There are various educational causes to
                         support, from local programs to global initiatives.
                       </h4>
-                    </div>
+                    </motion.div>
 
                     {/* Multiple Images */}
-                    <div className="flex flex-col md:flex-row gap-5 my-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-col md:flex-row gap-5 my-8"
+                    >
                       <div className="w-full md:w-1/2">
                         <Image
                           src="/blog/blog-multi-1.png"
@@ -191,10 +271,16 @@ const BlogDetails1 = () => {
                           className="w-full h-auto rounded-lg"
                         />
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Donation Content */}
-                    <div className="mt-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mt-8"
+                    >
                       <h4 className="text-xl font-bold text-gray-800 mb-4">
                         Donation
                       </h4>
@@ -235,11 +321,17 @@ const BlogDetails1 = () => {
                       </ul>
 
                       <hr className="my-6 border-gray-200" />
-                    </div>
+                    </motion.div>
                   </div>
 
                   {/* Blog Info Tags and Share */}
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8"
+                  >
                     <div className="flex items-center flex-wrap gap-2">
                       <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
                         Education
@@ -297,17 +389,29 @@ const BlogDetails1 = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
 
               {/* Related Blogs Section */}
               <div className="mt-12">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
                   Related Blogs
-                </h3>
+                </motion.h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
                   {/* {[1, 2].map((item) => ( */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
@@ -354,7 +458,7 @@ const BlogDetails1 = () => {
                     <div className="relative h-72">
                       <Link href="/blog-details-3">
                         <Image
-                          src="/blog/blog-5.png"
+                          src="/gallery/Childfoodhelp.jpg"
                           alt="Related blog"
                           fill
                           className="object-cover hover:scale-105 ease-in-out duration-200 "
@@ -390,16 +494,28 @@ const BlogDetails1 = () => {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               {/* Comment Form */}
               <div className="mt-16">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
                   Leave a Comment
-                </h3>
+                </motion.h3>
 
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -466,17 +582,29 @@ const BlogDetails1 = () => {
                       Submit Comment
                     </button>
                   </form>
-                </div>
+                </motion.div>
               </div>
 
               {/* Comments List */}
               <div className="mt-16">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
                   04 Comment
-                </h3>
+                </motion.h3>
 
                 {/* {[1, 2, 3, 4].map((comment) => ( */}
-                <div className="mb-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="mb-6"
+                >
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
@@ -511,9 +639,15 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </div>
+                </motion.div>
                 {/* ))} */}
-                <div className="mb-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="mb-6"
+                >
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
@@ -548,9 +682,15 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </div>
+                </motion.div>
 
-                <div className="mb-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="mb-6"
+                >
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
@@ -585,9 +725,15 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </div>
+                </motion.div>
 
-                <div className="mb-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="mb-6"
+                >
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
@@ -621,7 +767,7 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </div>
+                </motion.div>
               </div>
             </div>
 
@@ -629,7 +775,13 @@ const BlogDetails1 = () => {
             <div className="lg:col-span-3">
               <div className="space-y-8">
                 {/* Search Box */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Search Here
                   </h3>
@@ -645,10 +797,16 @@ const BlogDetails1 = () => {
                       <Search className="w-5 h-5 text-gray-500" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Category List */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Category List
                   </h3>
@@ -677,10 +835,16 @@ const BlogDetails1 = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
                 {/* Related Posts */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   Global
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Related Post
@@ -1024,7 +1188,7 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Tags */}
                 <div className="bg-white rounded-lg shadow-md p-6">
@@ -1111,6 +1275,12 @@ const BlogDetails1 = () => {
           </div>
         </div>
       </section>
+
+      {/* Picture Gallery  */}
+      <Gallery />
+
+      {/* Footer  */}
+      <Footer />
     </div>
   );
 };

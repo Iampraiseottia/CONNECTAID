@@ -9,6 +9,8 @@ import globalStyle from "../globals.css";
 
 import Metadata from "../components/Metadata";
 
+import { motion } from "motion/react";
+
 import {
   User,
   MessageSquare,
@@ -18,6 +20,11 @@ import {
   ChevronRight,
   DollarSign,
 } from "lucide-react";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import Gallery from "../components/Gallery";
+import Breadcrumb from "../components/Breadcrumb";
 
 import Facebook from "/public/icon/fb.png";
 import Youtube from "/public/icon/youtube.png";
@@ -66,6 +73,27 @@ const BlogDetails2 = () => {
     <div className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
+      {/* Navigation Bar | Header  */}
+      <Navbar />
+
+      {/* Breadcrumb for ABout Page */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        viewport={{ once: true, amount: 0.5 }}
+        className="w-full"
+      >
+        <Breadcrumb
+          homeTitle="HOME"
+          homeSlug="/"
+          title="MEDICINE"
+          description="Transforming Lives Through Accessible Medical Care"
+          breadcrumAlt="Medicine Hero Background Image"
+          breadcrumbImage="/gallery/breadcrumb-1.png"
+        />
+      </motion.div>
+
       {/* Blog Details Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
@@ -73,7 +101,13 @@ const BlogDetails2 = () => {
             <div className="lg:col-span-9">
               <div className="rounded-lg overflow-hidden shadow-md">
                 {/* Blog Main Image */}
-                <div className="relative">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="relative"
+                >
                   <div className="">
                     <Image
                       src="/gallery/medicine.jpg"
@@ -93,12 +127,18 @@ const BlogDetails2 = () => {
                       className="w-full h-auto"
                     />
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Blog Info */}
                 <div className="p-6 bg-white">
                   <div className="mb-6">
-                    <div className="flex flex-wrap gap-4 mb-5 items-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-wrap gap-4 mb-5 items-center"
+                    >
                       <div className="flex gap-2 items-center">
                         <User className="w-5 h-5 text-gray-700" />
                         <p className="text-gray-600 text-sm">By: admin</p>
@@ -107,23 +147,47 @@ const BlogDetails2 = () => {
                         <MessageSquare className="w-5 h-5 text-gray-700" />
                         <p className="text-gray-600 text-sm">Medicine</p>
                       </div>
-                    </div>
+                    </motion.div>
 
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+                    <motion.h1
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+                    >
                       Transforming Lives Through Accessible Medical Care
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       Medicine saves lives, enhances health, and guarantees
                       equitable access for all communities in need. By
                       addressing healthcare disparities and promoting
                       well-being, it plays a crucial role in fostering healthier
                       societies and improving the quality of life for everyone.
-                    </p>
+                    </motion.p>
 
-                    <hr className="my-6 border-gray-200" />
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       In an increasingly interconnected world, the importance of
                       accessible medical care cannot be overstated. Access to
                       healthcare is a fundamental human right, yet millions of
@@ -135,9 +199,15 @@ const BlogDetails2 = () => {
                       blog delves into the various dimensions of accessible
                       medical care, its significance, the challenges faced, and
                       the innovative solutions that are making a difference.
-                    </p>
+                    </motion.p>
 
-                    <p className="text-gray-600 mb-6">
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
                       Accessible medical care refers to the ability of
                       individuals to obtain necessary healthcare services
                       without facing significant barriers. These barriers can be
@@ -145,12 +215,24 @@ const BlogDetails2 = () => {
                       care encompasses a range of services, including preventive
                       care, primary care, specialty services, mental health
                       support, and emergency care.
-                    </p>
+                    </motion.p>
 
-                    <hr className="my-6 border-gray-200" />
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
 
                     {/* Quote Section */}
-                    <div className="bg-gray-50 p-6 my-8 rounded-lg relative">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="bg-gray-50 p-6 my-8 rounded-lg relative"
+                    >
                       <div className="absolute top-6 left-6 text-gray-200">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -173,10 +255,16 @@ const BlogDetails2 = () => {
                         There are various medical causes to support, from local
                         programs to global initiatives.
                       </h4>
-                    </div>
+                    </motion.div>
 
                     {/* Multiple Images */}
-                    <div className="flex flex-col md:flex-row gap-5 my-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-col md:flex-row gap-5 my-8"
+                    >
                       <div className="w-full md:w-1/2">
                         <Image
                           src="/gallery/gallery-3.png"
@@ -195,14 +283,26 @@ const BlogDetails2 = () => {
                           className="w-full h-auto rounded-lg"
                         />
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Donation Content */}
                     <div className="mt-8">
-                      <h4 className="text-xl font-bold text-gray-800 mb-4">
+                      <motion.h4
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="text-xl font-bold text-gray-800 mb-4"
+                      >
                         Donation
-                      </h4>
-                      <p className="text-gray-600 mb-6">
+                      </motion.h4>
+                      <motion.p
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="text-gray-600 mb-6"
+                      >
                         Charitable donations in the medical field not only
                         provide immediate assistance but also contribute to
                         long-term health improvements. By supporting medical
@@ -212,23 +312,41 @@ const BlogDetails2 = () => {
                         charitable efforts can amplify the impact, creating a
                         ripple effect of generosity and support for those in
                         need.
-                      </p>
+                      </motion.p>
 
-                      <hr className="my-6 border-gray-200" />
+                      <motion.hr
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="my-6 border-gray-200"
+                      />
 
-                      <p className="text-gray-600 mb-6">
+                      <motion.p
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="text-gray-600 mb-6"
+                      >
                         Key Components of Accessible Medical Care includes:
-                      </p>
+                      </motion.p>
 
-                      <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
+                      <motion.ul
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
+                      >
                         <li>
                           <b>Affordability:</b> Healthcare should be affordable
-                          for everyone, regardless of their economic status.{" "}
+                          for everyone, regardless of their economic status.
                         </li>
                         <li>
                           <b>Availability:</b> Medical services must be
                           available in sufficient quantity and variety to meet
-                          the needs of the population.{" "}
+                          the needs of the population.
                         </li>
                         <li>
                           <b>Geographical Accessibility: </b>Healthcare
@@ -240,7 +358,7 @@ const BlogDetails2 = () => {
                           <b>Cultural Competence: </b> Healthcare providers must
                           be trained to understand and respect the diverse
                           cultural backgrounds of their patients, ensuring that
-                          care is sensitive to their needs and preferences.{" "}
+                          care is sensitive to their needs and preferences.
                         </li>
                         <li>
                           <b>Health Literacy: </b> Patients should have the
@@ -248,40 +366,88 @@ const BlogDetails2 = () => {
                           decisions about their health and navigate the
                           healthcare system effectively.
                         </li>
-                      </ul>
+                      </motion.ul>
 
-                      <hr className="my-6 border-gray-200" />
+                      <motion.hr
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="my-6 border-gray-200"
+                      />
 
-                      <p className="text-gray-600 mb-6">
+                      <motion.p
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="text-gray-600 mb-6"
+                      >
                         The Significance of Accessible Medical Care:
-                      </p>
+                      </motion.p>
 
-                      <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
+                      <motion.ul
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
+                      >
                         <li> Improving Health Outcomes.</li>
                         <li>Reducing Health Disparities</li>
                         <li>Enhancing Community Resilience</li>
                         <li> Economic Benefits</li>
-                      </ul>
+                      </motion.ul>
 
-                      <hr className="my-6 border-gray-200" />
+                      <motion.hr
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="my-6 border-gray-200"
+                      />
 
-                      <p className="text-gray-600 mb-6">
+                      <motion.p
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="text-gray-600 mb-6"
+                      >
                         Challenges to Achieving Accessible Medical Care:
-                      </p>
+                      </motion.p>
 
-                      <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
+                      <motion.ul
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
+                      >
                         <li> Financial Barriers</li>
                         <li>Geographic Barriers</li>
                         <li>Systemic Inequities</li>
                         <li> Cultural and Linguistic Barriers</li>
-                      </ul>
+                      </motion.ul>
 
-                      <hr className="my-6 border-gray-200" />
+                      <motion.hr
+                        initial={{ opacity: 0, y: 100 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.5 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="my-6 border-gray-200"
+                      />
                     </div>
                   </div>
 
                   {/* Blog Info Tags and Share */}
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8"
+                  >
                     <div className="flex items-center flex-wrap gap-2">
                       <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
                         Medicine
@@ -339,17 +505,29 @@ const BlogDetails2 = () => {
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
 
               {/* Related Blogs Section */}
               <div className="mt-12">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
                   Related Blogs
-                </h3>
+                </motion.h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
                   {/* {[1, 2].map((item) => ( */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
@@ -397,7 +575,7 @@ const BlogDetails2 = () => {
                     <div className="relative h-72">
                       <Link href="/blog-details-3">
                         <Image
-                          src="/blog/blog-5.png"
+                          src="/gallery/Childfoodhelp.jpg"
                           alt="Related blog"
                           fill
                           className="object-cover hover:scale-105 ease-in-out duration-200 "
@@ -433,16 +611,28 @@ const BlogDetails2 = () => {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               {/* Comment Form */}
               <div className="mt-16">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
                   Leave a Comment
-                </h3>
+                </motion.h3>
 
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -509,11 +699,17 @@ const BlogDetails2 = () => {
                       Submit Comment
                     </button>
                   </form>
-                </div>
+                </motion.div>
               </div>
 
               {/* Comments List */}
-              <div className="mt-16">
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="mt-16"
+              >
                 <h3 className="text-xl font-bold text-gray-800 mb-6">
                   04 Comment
                 </h3>
@@ -663,14 +859,20 @@ const BlogDetails2 = () => {
                   </div>
                   <hr className="my-6 border-gray-200" />
                 </div>
-              </div>
+              </motion.div>
             </div>
 
             {/* Sidebar */}
             <div className="lg:col-span-3">
               <div className="space-y-8">
                 {/* Search Box */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Search Here
                   </h3>
@@ -686,10 +888,16 @@ const BlogDetails2 = () => {
                       <Search className="w-5 h-5 text-gray-500" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Category List */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Category List
                   </h3>
@@ -718,10 +926,16 @@ const BlogDetails2 = () => {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </motion.div>
 
                 {/* Related Posts */}
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
                   Global
                   <h3 className="text-lg font-bold text-gray-800 mb-2">
                     Related Post
@@ -1065,7 +1279,7 @@ const BlogDetails2 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Tags */}
                 <div className="bg-white rounded-lg shadow-md p-6">
@@ -1094,14 +1308,14 @@ const BlogDetails2 = () => {
                 <div className="bg-white rounded-lg shadow-md p-6 text-center">
                   <div className="w-20 h-20 mx-auto mb-4 relative">
                     <Image
-                      src="/gallery/user.png"
+                      src="/gallery/nikluas.png"
                       alt="Author"
                       fill
                       className="rounded-full object-cover"
                     />
                   </div>
                   <h4 className="font-bold text-gray-800 mb-2">
-                    Nikluas Michealson
+                    Niklaus Mikaelson
                   </h4>
                   <p className="text-gray-600 mb-4">
                     Hi! amazing people. I`m the author of this blog.
@@ -1154,6 +1368,12 @@ const BlogDetails2 = () => {
           </div>
         </div>
       </section>
+
+      {/* Picture Gallery  */}
+      <Gallery />
+
+      {/* Footer  */}
+      <Footer />
     </div>
   );
 };

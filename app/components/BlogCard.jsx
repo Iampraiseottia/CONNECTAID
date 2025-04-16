@@ -16,8 +16,8 @@ const BlogCard = ({ imageSrc, date, title, excerpt, linkBlog }) => {
               src={imageSrc} 
               alt={title}
               fill
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw" 
+              className="object-cover hover:scale-105 ease-in-out"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             />
           </div>
         </Link>

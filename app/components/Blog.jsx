@@ -46,7 +46,7 @@ const Blog = () => {
           <div className="w-full">
             <BlogCard
               linkBlog="/blog-details-3"
-              imageSrc="/blog/blog-5.png"
+              imageSrc="/gallery/food.jpg"  
               date="04 Apr 2025"
               title="Nourishing Communities: The Power of Good and Quality Food"
               excerpt="Food sustains life, fosters community, and combats hunger for a healthier, more equitable world."
