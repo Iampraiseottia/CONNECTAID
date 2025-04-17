@@ -1,7 +1,8 @@
+
 import Image from "next/image";
 import Link from "next/link";
 
-import { ArrowRight, Reply } from "lucide-react";
+import { Reply } from "lucide-react";
 
 const DonationList = () => {
   const donations = [
@@ -9,14 +10,14 @@ const DonationList = () => {
       id: 1,
       image: "/gallery/gallery-1.png",
       category: "FOOD",
-      progress: 83.36,
-      backgroundColor: "bg-emerald-600",
+      progress: 43.36,
+      backgroundColor: "bg-emerald-600", 
       title:
         "Together we can end hunger — Donate today and make a long lasting impacts in lives of people and communities!",
       description:
         "Your contribution can help fill empty plates and hearts. By donating, you support families and people in desperate need, ensuring everyone has access to nutritious meals and a brighter future.",
-      totalAmt: "$1, 005, 000",
-      raisedAmt: "$835, 025",
+      totalAmt: "20, 000, 000 Francs<",
+      raisedAmt: "8, 650, 000 Francs",
       donationSlug: "/donation-details-1",
     },
     {
