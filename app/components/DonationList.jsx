@@ -16,7 +16,7 @@ const DonationList = () => {
         "Together we can end hunger — Donate today and make a long lasting impacts in lives of people and communities!",
       description:
         "Your contribution can help fill empty plates and hearts. By donating, you support families and people in desperate need, ensuring everyone has access to nutritious meals and a brighter future.",
-      totalAmt: "20, 000, 000 Francs<",
+      totalAmt: "20, 000, 000 Francs",
       raisedAmt: "8, 650, 000 Francs",
       donationSlug: "/donation-details-1",
     },
@@ -24,43 +24,43 @@ const DonationList = () => {
       id: 2,
       image: "/gallery/gallery-2.png",
       category: "EDUCATION",
-      progress: 20.77,
+      progress: 60.77,
       backgroundColor: "bg-emerald-600",
       title:
         "Empower minds, change futures — Your donation can provide education and hope to children in need!",
       description:
         "Support our mission to provide quality education for underprivileged children. Your generous donations help fund school supplies, scholarships, & resources, ensuring every child has the opportunity to learn and thrive.",
-      totalAmt: "$750, 000",
+      totalAmt: "10, 000, 000 Francs",
       donationSlug: "/donation-details-2",
-      raisedAmt: "$155, 750",
+      raisedAmt: "6, 126, 750 Francs", 
       donationSlug: "/donation-details-2",
     },
     {
       id: 3,
       image: "/gallery/gallery-3.png",
       category: "MEDICAL",
-      progress: 68,
+      progress: 18,
       backgroundColor: "bg-emerald-600",
       title:
         "Heal lives, restore hope — Your donation can provide essential medical care to those in need!",
       description:
         " Join our mission to provide vital medical assistance to under-served communities. Your generous donations help fund treatments, medications, and healthcare services, ensuring everyone has access to the care they deserve.",
-      totalAmt: "$3, 000, 000",
-      raisedAmt: "$2, 050, 284",
+      totalAmt: "53, 000, 000 Francs",
+      raisedAmt: "12, 050, 250 Francs",
       donationSlug: "/donation-details-3",
     },
     {
       id: 4,
       image: "/gallery/donationList-2.png",
       category: "WATER",
-      progress: 55,
+      progress: 72,
       backgroundColor: "bg-emerald-600",
       title:
         "Quench thirst, transform lives—your donation can provide clean water to communities in need!",
       description:
         "Help us bring clean, safe drinking water to those who lack access. Your generous donations support water projects, ensuring healthier communities and a brighter future for families everywhere",
-      totalAmt: "$55, 000",
-      raisedAmt: "$40, 090",
+      totalAmt: "35, 750, 000 Francs",
+      raisedAmt: "26, 058, 500 Francs",
       donationSlug: "/donation-details-4",
     },
     {
@@ -73,22 +73,22 @@ const DonationList = () => {
         "Give hope, change lives—your donation can provide shelter and support for the homeless today!",
       description:
         "Join our mission to help the homeless find stability and support. Your generous donations provide essential services, shelter, and resources, empowering individuals to rebuild their lives and regain dignity.",
-      totalAmt: "$312, 000",
-      raisedAmt: "$63, 100",
+      totalAmt: "28, 500, 000 Francs",
+      raisedAmt: "15, 100, 000 Francs",
       donationSlug: "/donation-details-5",
     },
     {
       id: 6,
       image: "/gallery/gallery-4.png",
       category: "EXTREME CASES",
-      progress: 72.89,
+      progress: 22,
       backgroundColor: "bg-emerald-600",
       title:
         "Act now, save lives—your donation can support those facing extreme hardships and urgent needs!",
       description:
         "Help us provide immediate assistance to individuals in extreme situations. Your generous donations fund critical resources, emergency aid, and support services, ensuring that no one faces their struggles alone.",
-      totalAmt: "$10, 000, 000",
-      raisedAmt: "$782, 000",
+      totalAmt: "100, 000, 000, 000 Francs",
+      raisedAmt: "22, 000, 000 Francs",
       donationSlug: "/donation-details-6",
     },
   ];

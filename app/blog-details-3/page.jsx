@@ -914,7 +914,7 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $782, 000</span>
+                            <span>Raised Amount: 22, 000, 000 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-6">
@@ -970,7 +970,7 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $63, 100</span>
+                            <span>Raised Amount: 15, 100, 000 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-5">
@@ -1028,12 +1028,12 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $155, 750</span>
+                            <span>Raised Amount: 6, 126, 750 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-1">
-                              Together we can end hunger — Donate today and make
-                              a long lasting impacts in lives of people and
+                              Empower minds, change futures — Donate today and
+                              make a long lasting impacts in lives of people and
                               communities!
                             </a>
                           </h4>
@@ -1084,7 +1084,7 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $2, 050, 284</span>
+                            <span>Raised Amount: 12, 050, 250 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-3">
@@ -1140,7 +1140,7 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $155, 750</span>
+                            <span>Raised Amount: 6, 126, 750 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-2">
@@ -1195,7 +1195,7 @@ const BlogDetails3 = () => {
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                             <DollarSign className="w-3 h-3 text-teal-500 " />
-                            <span>Raised Amount: $40, 090</span>
+                            <span>Raised Amount: 26, 058, 500 Francs</span>
                           </div>
                           <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                             <a href="/donation-details-4">

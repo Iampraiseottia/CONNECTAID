@@ -539,7 +539,7 @@ const DonationDetails1 = () => {
                       { name: "Food", active: true },
                       { name: "Medical", active: false },
                       { name: "Water", active: false },
-                      { name: "Education", active: false }, 
+                      { name: "Education", active: false },
                     ].map((category, index) => (
                       <li
                         key={index}
@@ -618,7 +618,7 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $782, 000</span>
+                          <span>Raised Amount: 22, 000, 000 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-6">
@@ -674,7 +674,7 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $63, 100</span>
+                          <span>Raised Amount: 15, 100, 000 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-5">
@@ -732,12 +732,12 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $155, 750</span>
+                          <span>Raised Amount: 6, 126, 750 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-1">
-                            Together we can end hunger — Donate today and make a
-                            long lasting impacts in lives of people and
+                            Empower minds, change futures — Donate today and
+                            make a long lasting impacts in lives of people and
                             communities!
                           </a>
                         </h4>
@@ -788,7 +788,7 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $2, 050, 284</span>
+                          <span>Raised Amount: 12, 050, 250 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-3">
@@ -844,7 +844,7 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $155, 750</span>
+                          <span>Raised Amount: 6, 126, 750 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-2">
@@ -899,7 +899,7 @@ const DonationDetails1 = () => {
                       <div className="flex-1">
                         <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
                           <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: $40, 090</span>
+                          <span>Raised Amount: 26, 058, 500 Francs</span>
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-4">
@@ -920,36 +920,26 @@ const DonationDetails1 = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 viewport={{ once: true, amount: 0.1 }}
+                className="bg-white rounded-lg shadow-md p-6"
               >
-                <div className="flex justify-between items-center mb-4">
-                  <p className="text-gray-600 font-medium">Tags</p>
-                  <div className="flex space-x-1">
-                    <div className="h-1 w-6 bg-green-600 rounded"></div>
-                    <div className="h-1 w-6 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
+                <h3 className="text-lg font-bold text-gray-800 mb-2 mt-12">Tags</h3>
 
-                <div className="bg-white rounded-lg shadow-sm p-4">
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      { name: "medical", active: false },
-                      { name: "Food", active: true },
-                      { name: "Election", active: false },
-                      { name: "Campaign", active: false },
-                      { name: "Security", active: false },
-                    ].map((tag, index) => (
-                      <span
-                        key={index}
-                        className={`px-3 py-1 rounded-full text-sm ${
-                          tag.active
-                            ? "bg-green-600 text-white"
-                            : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                        }`}
-                      >
-                        {tag.name}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
+                    Food
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Education
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Water
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Medical
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Kindness
+                  </span>
                 </div>
               </motion.div>
             </div>
