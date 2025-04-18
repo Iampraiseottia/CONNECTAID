@@ -56,7 +56,7 @@ const DonationList = () => {
       progress: 72,
       backgroundColor: "bg-emerald-600",
       title:
-        "Quench thirst, transform lives—your donation can provide clean water to communities in need!",
+        "Quench thirst, transform lives — Your donation can provide clean water to communities in need!",
       description:
         "Help us bring clean, safe drinking water to those who lack access. Your generous donations support water projects, ensuring healthier communities and a brighter future for families everywhere",
       totalAmt: "35, 750, 000 Francs",

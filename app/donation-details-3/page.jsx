@@ -750,7 +750,7 @@ const DonationDetails3 = () => {
                   some of the key challenges:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Limited Resources and Infrastructure:</b> <br />
+                  <b>1. Limited Resources and Infrastructure:</b> <br />
                   <strong>Healthcare Facilities:</strong> Many under-served
                   areas lack adequate healthcare facilities, making it difficult
                   to provide comprehensive medical care. Donations may not be
@@ -761,7 +761,7 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Access to Care:</b> <br />
+                  <b>2. Access to Care:</b> <br />
                   <strong>Transportation Barriers: </strong> In rural or
                   isolated communities, transportation can be a significant
                   barrier. Patients may struggle to reach healthcare facilities,
@@ -773,7 +773,7 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b> Sustainability of Programs</b> <br />
+                  <b>3. Sustainability of Programs</b> <br />
                   <strong>Funding Continuity:</strong> Many healthcare
                   initiatives rely on one-time donations or grants, making it
                   challenging to sustain programs over the long term. Without
@@ -786,7 +786,7 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Economic Factors</b> <br />
+                  <b>4. Economic Factors</b> <br />
                   <strong>Poverty:</strong> High levels of poverty can limit
                   individuals' ability to seek care, even when it is available.
                   Donations may not address the underlying economic issues that
@@ -826,9 +826,9 @@ const DonationDetails3 = () => {
                   lasting impact. Here are some key goals:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b> Increase Access to Healthcare Services </b> <br /> Expand
-                  the reach of healthcare services to under-served and remote
-                  communities. <br />
+                  <b> 1. Increase Access to Healthcare Services </b> <br />{" "}
+                  Expand the reach of healthcare services to under-served and
+                  remote communities. <br />
                   <b>Action Steps</b> <br />
                   <ul>
                     <li>Establish mobile clinics to provide on-site care.</li>
@@ -844,8 +844,8 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b> Enhance Healthcare Infrastructure: </b> <br /> Improve the
-                  quality and availability of healthcare facilities and
+                  <b>2. Enhance Healthcare Infrastructure: </b> <br /> Improve
+                  the quality and availability of healthcare facilities and
                   resources. <br />
                   <b>Action Steps:</b> <br />
                   <ul>
@@ -865,7 +865,8 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b> Ensure Sustainability of Healthcare Programs: </b> <br />
+                  <b> 3. Ensure Sustainability of Healthcare Programs: </b>{" "}
+                  <br />
                   Create sustainable healthcare initiatives that can continue to
                   operate long-term. <br />
                   <b>Action Steps:</b> <br />
@@ -886,7 +887,7 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b> Address Economic Barriers to Healthcare: </b> <br />
+                  <b>4. Address Economic Barriers to Healthcare: </b> <br />
                   Reduce financial barriers that prevent individuals from
                   seeking medical care. <br />
                   <b>Action Steps:</b> <br />
@@ -907,9 +908,9 @@ const DonationDetails3 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b> Advocate for Policy Change: </b> <br /> Influence policies
-                  that promote equitable access to healthcare and support
-                  under-served communities. <br />
+                  <b>5. Advocate for Policy Change: </b> <br /> Influence
+                  policies that promote equitable access to healthcare and
+                  support under-served communities. <br />
                   <b>Action Steps</b> <br />
                   <ul>
                     <li>

@@ -2,7 +2,7 @@
 
 import globalStyle from "../globals.css";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -722,27 +722,27 @@ const DonationDetails1 = () => {
                   hunger is multifaceted and includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Food Insecurity:</b> <br /> Many families lack consistent
+                  <b>1. Food Insecurity:</b> <br /> Many families lack consistent
                   access to enough food for an active, healthy life. This can be
                   due to economic barriers, lack of transportation, or limited
                   availability of nutritious food options.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Rising Costs :</b> <br /> The increasing cost of living,
+                  <b>2. Rising Costs :</b> <br /> The increasing cost of living,
                   coupled with stagnant wages, makes it difficult for low-income
                   families to afford healthy food. Many are forced to choose
                   cheaper, less nutritious options.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Food Deserts: </b> <br /> In many urban and rural areas,
+                  <b>3. Food Deserts: </b> <br /> In many urban and rural areas,
                   access to grocery stores and fresh produce is limited. Food
                   deserts contribute to poor dietary choices and health
                   outcomes.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Lack of Awareness:</b> <br /> Many people are unaware of
+                  <b>4. Lack of Awareness:</b> <br /> Many people are unaware of
                   the resources available to help them access food. This lack of
                   information can prevent those in need from seeking assistance.
                 </p>
@@ -762,27 +762,27 @@ const DonationDetails1 = () => {
                   a comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Increasing Access to Food:</b> <br /> We will work to
+                  <b>1. Increasing Access to Food:</b> <br /> We will work to
                   establish more food pantries, community kitchens, and mobile
                   food distribution programs to ensure that everyone can access
                   healthy food options.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Supporting Local Agriculture: </b> <br /> By partnering
+                  <b>2. Supporting Local Agriculture: </b> <br /> By partnering
                   with local farmers and food producers, we can promote
                   farm-to-table initiatives that provide fresh, seasonal produce
                   to our communities while supporting the local economy.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Education and Awareness: I</b> <br /> We will implement
+                  <b>3. Education and Awareness: I</b> <br /> We will implement
                   nutrition education programs that teach individuals and
                   families how to make healthy food choices, cook nutritious
                   meals, and budget for food expenses.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Advocacy:</b> <br /> We will advocate for policies that
+                  <b>4. Advocacy:</b> <br /> We will advocate for policies that
                   address the root causes of hunger, such as living wages,
                   affordable housing, and improved access to healthcare. By
                   raising awareness and mobilizing community support, we can
@@ -790,7 +790,7 @@ const DonationDetails1 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Building Community Resilience:</b> <br /> We will foster
+                  <b>5. Building Community Resilience:</b> <br /> We will foster
                   community engagement through volunteer opportunities,
                   community gardens, and collaborative events that bring people
                   together to share resources and knowledge.

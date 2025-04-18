@@ -2,7 +2,7 @@
 
 import globalStyle from "../globals.css";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -723,13 +723,13 @@ const DonationDetails2 = () => {
                   make a lasting impact in our communities and they include:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Access to Quality Education:</b> <br /> Many individuals,
+                  <b>1. Access to Quality Education:</b> <br /> Many individuals,
                   especially in underserved communities, face significant
                   barriers to accessing quality education. This includes a lack
                   of schools, inadequate facilities, and insufficient resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Economic Barriers:</b> <br /> The rising costs of
+                  <b>2. Economic Barriers:</b> <br /> The rising costs of
                   education, including tuition, books, and supplies, can be
                   prohibitive for low-income families. Many students are forced
                   to drop out or forgo higher education due to financial
@@ -737,14 +737,14 @@ const DonationDetails2 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Language Barriers: </b> <br /> Non-native speakers may
+                  <b>3. Language Barriers: </b> <br /> Non-native speakers may
                   struggle in educational settings where the primary language of
                   instruction is not their first language, making it difficult
                   for them to fully engage and succeed.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Limited Awareness of Resources:</b> <br /> Many individuals
+                  <b>4. Limited Awareness of Resources:</b> <br /> Many individuals
                   are unaware of the educational resources and support available
                   to them, which can prevent them from seeking help and
                   accessing opportunities.
@@ -765,7 +765,7 @@ const DonationDetails2 = () => {
                   comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Increase Access to Education: </b> <br /> Our primary goal
+                  <b>1. Increase Access to Education: </b> <br /> Our primary goal
                   is to ensure that all individuals, regardless of their
                   background, have access to quality education. This includes
                   building more schools, providing transportation, and ensuring
@@ -773,21 +773,21 @@ const DonationDetails2 = () => {
                   resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Provide Financial Support: </b> <br /> We aim to establish
+                  <b>2. Provide Financial Support: </b> <br /> We aim to establish
                   scholarship programs and financial aid initiatives to
                   alleviate the economic burden of education. This will help
                   students cover tuition, books, and other essential expenses.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Enhance Teacher Training and Support: I</b> <br /> We will
+                  <b>3. Enhance Teacher Training and Support: I</b> <br /> We will
                   work to improve teacher training programs and provide ongoing
                   professional development to ensure that educators are
                   well-equipped to meet the needs of their students.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is
+                  <b>4. Promote Inclusivity and Diversity: </b> <br /> Our goal is
                   to create an inclusive educational environment that respects
                   and accommodates the diverse cultural backgrounds of all
                   students. This includes implementing programs that encourage
@@ -795,13 +795,13 @@ const DonationDetails2 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Language Support Programs: I</b> <br /> We will develop
+                  <b>5. Language Support Programs: I</b> <br /> We will develop
                   language support programs for non-native speakers to help them
                   improve their language skills and succeed in their studies.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Raise Awareness and Advocacy:</b> <br /> We aim to increase
+                  <b>6. Raise Awareness and Advocacy:</b> <br /> We aim to increase
                   awareness of available educational resources and support
                   systems within communities. This includes outreach programs,
                   workshops, and partnerships with local organizations to ensure
