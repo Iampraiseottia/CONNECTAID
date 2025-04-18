@@ -1,76 +1,36 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-
-import { useState, useRef } from "react";
-
 import globalStyle from "../globals.css";
 
-import Metadata from "../components/Metadata";
+import { useState } from "react";
 
-import { motion } from "motion/react";
-
-import {
-  User,
-  MessageSquare,
-  Search,
-  Clock,
-  ChevronLeft,
-  ChevronRight,
-  DollarSign,
-} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import Facebook from "/public/icon/fb.png";
-import Youtube from "/public/icon/youtube.png";
-import Instagram from "/public/icon/ig.png";
-import LinkedIn from "/public/icon/linkedin.png";
+import { Clock, DollarSign } from "lucide-react";
 
-const BlogDetails2 = () => {
+import { motion } from "motion/react";
+
+import Metadata from "../components/Metadata";
+
+const DonationDetails2 = () => {
   const metadata = {
-    title:
-      "Transforming Lives Through Accessible Medical Care - ConnectAID Web Application",
+    title: "Empower minds, change futures - ConnectAID Web Application",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ fullName, email, comment });
-    setFullName("");
-    setEmail("");
-    setComment("");
-  };
-
-  const fullNameRef = useRef();
-  const emailAddressRef = useRef();
-  const commentRef = useRef();
-  const searchRef = useRef();
-
-  const onMouseEnterFullNameRef = () => {
-    fullNameRef.current.focus();
-  };
-  const onMouseEnterEmailAddressRef = () => {
-    emailAddressRef.current.focus();
-  };
-  const onMouseEnterCommentRef = () => {
-    commentRef.current.focus();
-  };
-  const onMouseEnterSearchRef = () => {
-    searchRef.current.focus();
-  };
+  const [selectedPayment, setSelectedPayment] = useState("mtn");
+  const [selectedAmount, setSelectedAmount] = useState(1000);
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
 
   return (
-    <div className="bg-[#f9f9f9]">
+    <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Navigation Bar | Header  */}
@@ -87,20 +47,21 @@ const BlogDetails2 = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="MEDICINE"
-          description="Transforming Lives Through Accessible Medical Care"
-          breadcrumAlt="Medicine Hero Background Image"
+          title="EDUCATION"
+          description="Empower minds, change futures"
+          breadcrumAlt="Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>
 
-      {/* Blog Details Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-9">
-              <div className="rounded-lg overflow-hidden shadow-md">
-                {/* Blog Main Image */}
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Main Content - Left Section */}
+            <div className="w-full lg:w-2/3">
+              {/* Donate Details */} 
+              <div className="rounded-lg shadow-md overflow-hidden mb-12">
+                {/* Hero Image */}
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}
                   whileInView={{ y: 0, opacity: 1 }}
@@ -110,7 +71,7 @@ const BlogDetails2 = () => {
                 >
                   <div className="">
                     <Image
-                      src="/gallery/medicine.jpg"
+                      src="/gallery/education.png"
                       alt="Blog main image"
                       width={500}
                       height={500}
@@ -120,7 +81,7 @@ const BlogDetails2 = () => {
                   </div>
                   <div className="absolute top-0 left-0">
                     <Image
-                      src="/gallery/brush-bg-two.png"
+                      src="/gallery/brush.png"
                       alt="Brush background"
                       width={200}
                       height={100}
@@ -129,806 +90,443 @@ const BlogDetails2 = () => {
                   </div>
                 </motion.div>
 
-                {/* Blog Info */}
-                <div className="p-6 bg-white">
-                  <div className="mb-6">
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="flex flex-wrap gap-4 mb-5 items-center"
-                    >
-                      <div className="flex gap-2 items-center">
-                        <User className="w-5 h-5 text-gray-700" />
-                        <p className="text-gray-600 text-sm">By: admin</p>
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <MessageSquare className="w-5 h-5 text-gray-700" />
-                        <p className="text-gray-600 text-sm">Medicine</p>
-                      </div>
-                    </motion.div>
-
-                    <motion.h1
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
-                    >
-                      Transforming Lives Through Accessible Medical Care
-                    </motion.h1>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-gray-600 mb-6"
-                    >
-                      Medicine saves lives, enhances health, and guarantees
-                      equitable access for all communities in need. By
-                      addressing healthcare disparities and promoting
-                      well-being, it plays a crucial role in fostering healthier
-                      societies and improving the quality of life for everyone.
-                    </motion.p>
-
-                    <motion.hr
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="my-6 border-gray-200"
-                    />
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-gray-600 mb-6"
-                    >
-                      In an increasingly interconnected world, the importance of
-                      accessible medical care cannot be overstated. Access to
-                      healthcare is a fundamental human right, yet millions of
-                      people around the globe still face barriers that prevent
-                      them from receiving the medical attention they need.
-                      Transforming lives through accessible medical care is not
-                      just a noble goal; it is a necessity for building
-                      healthier communities and fostering social equity. This
-                      blog delves into the various dimensions of accessible
-                      medical care, its significance, the challenges faced, and
-                      the innovative solutions that are making a difference.
-                    </motion.p>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-gray-600 mb-6"
-                    >
-                      Accessible medical care refers to the ability of
-                      individuals to obtain necessary healthcare services
-                      without facing significant barriers. These barriers can be
-                      financial, geographical, cultural, or systemic. Accessible
-                      care encompasses a range of services, including preventive
-                      care, primary care, specialty services, mental health
-                      support, and emergency care.
-                    </motion.p>
-
-                    <motion.hr
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="my-6 border-gray-200"
-                    />
-
-                    {/* Quote Section */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="bg-gray-50 p-6 my-8 rounded-lg relative"
-                    >
-                      <div className="absolute top-6 left-6 text-gray-200">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="76"
-                          height="54"
-                          viewBox="0 0 76 54"
-                          fill="none"
-                          className="w-16 h-16 text-gray-300"
-                        >
-                          <path
-                            d="M67.1429 32.4V30.4H65.1429H54.2857C49.3919 30.4 45.4286 26.4424 45.4286 21.6V10.8C45.4286 5.95763 49.3919 2 54.2857 2H65.1429C70.0366 2 74 5.95763 74 10.8V16.2V21.6V33.75C74 43.8236 65.7956 52 55.6429 52H54.2857C52.3776 52 50.8571 50.4724 50.8571 48.6C50.8571 46.7276 52.3776 45.2 54.2857 45.2H55.6429C61.9794 45.2 67.1429 40.0789 67.1429 33.75V32.4ZM23.7143 32.4V30.4H21.7143H10.8571C5.96336 30.4 2 26.4424 2 21.6V10.8C2 5.95763 5.96336 2 10.8571 2H21.7143C26.6081 2 30.5714 5.95763 30.5714 10.8V16.2V21.6V33.75C30.5714 43.8236 22.367 52 12.2143 52H10.8571C8.94907 52 7.42857 50.4724 7.42857 48.6C7.42857 46.7276 8.94907 45.2 10.8571 45.2H12.2143C18.5509 45.2 23.7143 40.0789 23.7143 33.75V32.4Z"
-                            stroke="#090E0D"
-                            strokeWidth="4"
-                          />
-                        </svg>
-                      </div>
-                      <h4 className="text-xl font-semibold text-gray-800 pl-20 pt-4">
-                        Contributing to medical charities is an impactful way to
-                        make a difference in the world and assist those in need.
-                        There are various medical causes to support, from local
-                        programs to global initiatives.
-                      </h4>
-                    </motion.div>
-
-                    {/* Multiple Images */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="flex flex-col md:flex-row gap-5 my-8"
-                    >
-                      <div className="w-full md:w-1/2">
-                        <Image
-                          src="/gallery/gallery-3.png"
-                          alt="gallery image 1"
-                          width={400}
-                          height={300}
-                          className="w-full h-auto rounded-lg"
-                        />
-                      </div>
-                      <div className="w-full md:w-1/2">
-                        <Image
-                          src="/gallery/gallery-4.png"
-                          alt="gallery image 2"
-                          width={400}
-                          height={300}
-                          className="w-full h-auto rounded-lg"
-                        />
-                      </div>
-                    </motion.div>
-
-                    {/* Donation Content */}
-                    <div className="mt-8">
-                      <motion.h4
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="text-xl font-bold text-gray-800 mb-4"
-                      >
-                        Donation
-                      </motion.h4>
-                      <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="text-gray-600 mb-6"
-                      >
-                        Charitable donations in the medical field not only
-                        provide immediate assistance but also contribute to
-                        long-term health improvements. By supporting medical
-                        charities, donors play a crucial role in enhancing
-                        healthcare access, funding research, and fostering
-                        healthier communities. Engaging others in your
-                        charitable efforts can amplify the impact, creating a
-                        ripple effect of generosity and support for those in
-                        need.
-                      </motion.p>
-
-                      <motion.hr
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="my-6 border-gray-200"
-                      />
-
-                      <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="text-gray-600 mb-6"
-                      >
-                        Key Components of Accessible Medical Care includes:
-                      </motion.p>
-
-                      <motion.ul
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
-                      >
-                        <li>
-                          <b>Affordability:</b> Healthcare should be affordable
-                          for everyone, regardless of their economic status.
-                        </li>
-                        <li>
-                          <b>Availability:</b> Medical services must be
-                          available in sufficient quantity and variety to meet
-                          the needs of the population.
-                        </li>
-                        <li>
-                          <b>Geographical Accessibility: </b>Healthcare
-                          facilities should be located within reasonable
-                          distances from where people live, especially in rural
-                          and under-served urban areas.
-                        </li>
-                        <li>
-                          <b>Cultural Competence: </b> Healthcare providers must
-                          be trained to understand and respect the diverse
-                          cultural backgrounds of their patients, ensuring that
-                          care is sensitive to their needs and preferences.
-                        </li>
-                        <li>
-                          <b>Health Literacy: </b> Patients should have the
-                          knowledge and understanding necessary to make informed
-                          decisions about their health and navigate the
-                          healthcare system effectively.
-                        </li>
-                      </motion.ul>
-
-                      <motion.hr
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="my-6 border-gray-200"
-                      />
-
-                      <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="text-gray-600 mb-6"
-                      >
-                        The Significance of Accessible Medical Care:
-                      </motion.p>
-
-                      <motion.ul
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
-                      >
-                        <li> Improving Health Outcomes.</li>
-                        <li>Reducing Health Disparities</li>
-                        <li>Enhancing Community Resilience</li>
-                        <li> Economic Benefits</li>
-                      </motion.ul>
-
-                      <motion.hr
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="my-6 border-gray-200"
-                      />
-
-                      <motion.p
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="text-gray-600 mb-6"
-                      >
-                        Challenges to Achieving Accessible Medical Care:
-                      </motion.p>
-
-                      <motion.ul
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="list-disc pl-6 mb-6 text-gray-600 space-y-2"
-                      >
-                        <li> Financial Barriers</li>
-                        <li>Geographic Barriers</li>
-                        <li>Systemic Inequities</li>
-                        <li> Cultural and Linguistic Barriers</li>
-                      </motion.ul>
-
-                      <motion.hr
-                        initial={{ opacity: 0, y: 100 }}
-                        whileInView={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.5, delay: 0.5 }}
-                        viewport={{ once: true, amount: 0.1 }}
-                        className="my-6 border-gray-200"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Blog Info Tags and Share */}
+                {/* Donation Content */}
+                <div className="p-6 md:p-8">
                   <motion.div
                     initial={{ opacity: 0, y: 100 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8"
+                    className="mb-6"
                   >
-                    <div className="flex items-center flex-wrap gap-2">
-                      <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
-                        Medicine
-                      </span>
-                      <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                        Food
-                      </span>
-                      <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                        Education
-                      </span>
+                    <h4 className="text-2xl font-bold mb-3 mt-2">
+                    Your Support Can Empower Children's Future.
+                    </h4>
+                    <p className="text-gray-600 mb-6">
+                    Education is a fundamental human right and a powerful tool for personal and societal transformation. It has the potential to break the cycle of poverty, foster economic growth, and promote social equity. However, many individuals, especially in underserved communities, face significant barriers to accessing quality education. Your support can play a crucial role in empowering these individuals and helping them realize their full potential. Here’s a detailed explanation of how your contributions can make a difference.
+                    </p>
+
+                    {/* Alert */}
+                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 flex items-start mb-6">
+                      <div className="text-yellow-500 mr-3">
+                        <svg
+                          className="w-6 h-6"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800">Notice:</h4>
+                        <p className="text-gray-600">
+                          Be The Source Of Someone's Joy Today. Please Ensure to
+                          DONATE something 🥺
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <p className="text-gray-700 font-medium">Share:</p>
-                      <div className="flex gap-2">
-                        <Link
-                          href="#"
-                          className="bg-white p-2 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                      <div
+                        className="bg-green-600 h-2.5 rounded-full mt-4"
+                        style={{ width: "60.36%" }}
+                      ></div>
+                    </div>
+
+                    <div className="flex justify-between items-center mb-6 leading-8">
+                      <div className="flex gap-6">
+                        <div>
+                          <p className="text-gray-600">10, 000, 000 Francs</p>
+                          <h4 className="font-semibold">Goals</h4>
+                        </div>
+                        <div>
+                          <p className="text-gray-600">6, 126, 750  Francs</p>
+                          <h4 className="font-semibold">Raised</h4>
+                        </div>
+                      </div>
+                      <button className="text-green-600 p-2 border border-green-600 rounded-full hover:bg-green-50">
+                        <svg
+                          className="w-5 h-5 transform rotate-180"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <Image
-                            src={Facebook}
-                            alt="Facebook Icon"
-                            className="text-white h-9 w-9"
-                          />
-                        </Link>
-                        <Link
-                          href="#"
-                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
+                          <path
+                            fillRule="evenodd"
+                            d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          ></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </motion.div>
+
+                  {/* Payment Method */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="mb-8"
+                  >
+                    <h4 className="text-lg font-bold mb-4">
+                      Select Payment Method
+                    </h4>
+                    <div className="space-y-3 ">
+                      <div className="flex items-center">
+                        <input
+                          id="mtn-momo"
+                          type="radio"
+                          name="mtn-momo"
+                          value="mtn"
+                          checked={selectedPayment === "mtn"}
+                          onChange={() => setSelectedPayment("mtn")}
+                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                        />
+                        <label
+                          htmlFor="mtn-momo"
+                          className="ml-2 text-gray-700"
                         >
-                          <Image
-                            src={Youtube}
-                            alt="Youtube Icon"
-                            className="text-white h-6 w-6"
-                          />
-                        </Link>
-                        <Link
-                          href="#"
-                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
+                          MTN Mobile Money
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          id="orange-momo"
+                          type="radio"
+                          name="payment"
+                          value="orange"
+                          checked={selectedPayment === "orange"}
+                          onChange={() => setSelectedPayment("orange")}
+                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                        />
+                        <label
+                          htmlFor="orange-momo"
+                          className="ml-2 text-gray-700"
                         >
-                          <Image
-                            src={Instagram}
-                            alt="Instagram Icon"
-                            className="text-white h-6 w-6"
-                          />
-                        </Link>
-                        <Link
-                          href="#"
-                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
-                        >
-                          <Image
-                            src={LinkedIn}
-                            alt="Linked Icon"
-                            className="text-white h-6 w-6"
-                          />
-                        </Link>
+                          ORANGE Mobile Money
+                        </label>
                       </div>
                     </div>
                   </motion.div>
-                </div>
-              </div>
 
-              {/* Related Blogs Section */}
-              <div className="mt-12">
-                <motion.h3
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="text-xl font-bold text-gray-800 mb-6"
-                >
-                  Related Blogs
-                </motion.h3>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
-                >
-                  {/* {[1, 2].map((item) => ( */}
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="relative h-72">
-                      <Link href="/blog-details-1">
-                        <Image
-                          src="/gallery/event-6.png"
-                          alt="Related blog"
-                          fill
-                          className="object-cover hover:scale-105 ease-in-out duration-200 "
-                        />
-                      </Link>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex flex-wrap gap-4 mb-4 items-center">
-                        <div className="flex gap-2 items-center">
-                          <User className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">By: admin</p>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                          <MessageSquare className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">Medicine</p>
-                        </div>
-                      </div>
-
-                      <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Empowering Futures Through Accessible Education for All
-                      </h4>
-
-                      <p className="text-gray-600 mb-6 text-sm">
-                        Education transforms lives, fostering opportunities and
-                        breaking barriers for under-served communities
-                        worldwide.
-                      </p>
-
-                      <Link
-                        href="/blog-details-1"
-                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
-                      >
-                        Read More
-                      </Link>
-                    </div>
-                  </div>
-                  {/* ))} */}
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="relative h-72">
-                      <Link href="/blog-details-3">
-                        <Image
-                          src="/gallery/Childfoodhelp.jpg"
-                          alt="Related blog"
-                          fill
-                          className="object-cover hover:scale-105 ease-in-out duration-200 "
-                        />
-                      </Link>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex flex-wrap gap-4 mb-4 items-center">
-                        <div className="flex gap-2 items-center">
-                          <User className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">By: admin</p>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                          <MessageSquare className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">Food</p>
-                        </div>
-                      </div>
-
-                      <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Nourishing Communities: The Power of Good Food
-                      </h4>
-
-                      <p className="text-gray-600 mb-6 text-sm">
-                        Food sustains life, fosters community, and combats
-                        hunger for a healthier, more equitable world.
-                      </p>
-
-                      <Link
-                        href="/blog-details-3"
-                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
-                      >
-                        Read More
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-
-              {/* Comment Form */}
-              <div className="mt-16">
-                <motion.h3
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="text-xl font-bold text-gray-800 mb-6"
-                >
-                  Leave a Comment
-                </motion.h3>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="bg-white rounded-lg shadow-md p-6"
-                >
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label
-                          htmlFor="fullName"
-                          className="block text-sm font-medium text-gray-700 mb-2"
+                  {/* Amount */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="mb-8"
+                  >
+                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 ">
+                      Select An Amount From Available Options Below
+                    </button>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {[
+                        500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
+                        5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
+                        9500, 10000, 50000, 100000, 500000, 1000000,
+                      ].map((amount) => (
+                        <button
+                          key={amount}
+                          onClick={() => setSelectedAmount(amount)}
+                          className={`py-2 px-4 rounded border ${
+                            selectedAmount === amount
+                              ? "bg-green-600 text-white border-green-600"
+                              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                          }`}
                         >
-                          Full Name
-                        </label>
+                          {amount} Frs
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+
+                  {/* Details */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="mb-8"
+                  >
+                    <h4 className="text-lg font-bold mb-4">Payment Details</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <input
                           type="text"
-                          id="fullName"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          placeholder="Alex Jordan"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                          ref={fullNameRef}
-                          onMouseEnter={onMouseEnterFullNameRef}
+                          placeholder="Mobile Money Number e.g +237 686 529 762*"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          name="Mobile_Money_Number"
+                          id="Mobile_Money_Number"
                         />
-                      </div>
-                      <div>
-                        <label
-                          htmlFor="email"
-                          className="block text-sm font-medium text-gray-700 mb-2"
-                        >
-                          Email address
-                        </label>
                         <input
-                          type="email"
-                          id="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="name@example.com"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                          ref={emailAddressRef}
-                          onMouseEnter={onMouseEnterEmailAddressRef}
+                          type="text"
+                          name="Mobile_Money_Name"
+                          id="Mobile_Money_Name"
+                          placeholder="Mobile Money Name e.g Alex Jordan*"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                         />
                       </div>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="comment"
-                        className="block text-sm font-medium text-gray-700 mb-2"
-                      >
-                        Comment
-                      </label>
-                      <textarea
-                        id="comment"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="Type Keyword"
-                        rows={4}
-                        className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                        ref={commentRef}
-                        onMouseEnter={onMouseEnterCommentRef}
+                      <input
+                        type="text"
+                        placeholder="Your Full Name*"
+                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        name="Full_Name"
+                        id="Full_Name"
                       />
                     </div>
+                  </motion.div>
 
-                    <button
-                      type="submit"
-                      className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors"
-                    >
-                      Submit Comment
+                  {/* Address */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="mb-8"
+                  >
+                    <h4 className="text-lg font-bold mb-4">Address</h4>
+                    <div className="bg-gray-50 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input
+                          type="email"
+                          placeholder="Email Address e.g name@gmail.com*"
+                          name="Email_Address"
+                          id="Email_Address"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Region e.g South-west*"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          name="Region"
+                          id="Region"
+                        />
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input
+                          type="text"
+                          placeholder="City/Town e.g Limbe*"
+                          name="City_Town"
+                          id="City_Town"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
+                          name="Home_Address"
+                          id="Home_Address"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Terms */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="mb-20 "
+                  >
+                    <div className="flex items-center ">
+                      <input
+                        id="terms"
+                        type="checkbox"
+                        checked={agreedToTerms}
+                        onChange={() => setAgreedToTerms(!agreedToTerms)}
+                        className="w-4 h-4 text-green-600 focus:ring-green-500"
+                      />
+                      <label htmlFor="terms" className="ml-2 text-gray-700">
+                        I agree with the Terms Of service
+                      </label>
+                    </div>
+                  </motion.div>
+
+                  {/* Action Buttons */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="flex flex-wrap gap-4 -mt-10 mb-10 "
+                  >
+                    <button className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition">
+                      Donate Now
                     </button>
-                  </form>
-                </motion.div>
+                    <button className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition">
+                      Total Donation: ${selectedAmount}
+                    </button>
+                  </motion.div>
+                </div>
+                {/* <p className="text-[]">We love you</p> */}
               </div>
-
-              {/* Comments List */}
+              <motion.hr
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="my-6 border-gray-200"
+              />
+              {/* Donation Content */}
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 viewport={{ once: true, amount: 0.1 }}
-                className="mt-16"
+                className="mb-12"
               >
-                <h3 className="text-xl font-bold text-gray-800 mb-6">
-                  04 Comment
-                </h3>
+                <p className="text-gray-600 mb-4">
+                  <b>
+                    <strong>Real Life Story, Real Impact</strong>
+                  </b>
+                  <br />
+                  Amina is a 14-year-old girl from a small village in a rural area where access to quality education is limited. Growing up in a family of five, her parents worked tirelessly as farmers, earning just enough to provide for basic needs. Despite their hard work, they struggled to afford school fees, uniforms, and supplies for Amina and her younger siblings. Amina story is just one of many that
+                  illustrate the profound impact your donations can have.
+                </p>
+                <p className="text-gray-600 mb-6">
+                Education is a challenge we can overcome, and with your support, we can build a future where everyone has access to the knowledge and skills they need to succeed. Join us in the mission to empower individuals in our local communities through education. Your contribution can transform lives and foster a stronger, more equitable society for all.
+                </p>
 
-                {/* {[1, 2, 3, 4].map((comment) => ( */}
-                <div className="mb-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={`/gallery/comment-7.png`}
-                        alt="Commenter"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <p className="font-semibold text-gray-800">
-                          Sita Reddy
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Sep 02, 2024 At 5.00 am
-                        </p>
-                      </div>
-                      <p className="text-gray-600 mb-3">
-                        The economic benefits of accessible healthcare are often
-                        overlooked. Healthier communities contribute more to the
-                        economy. Thank you for highlighting this!
-                      </p>
-                      <a
-                        href="/blog-details-1"
-                        className="text-teal-600 hover:text-teal-700 text-sm font-medium"
-                      >
-                        Reply
-                      </a>
-                    </div>
-                  </div>
-                  <hr className="my-6 border-gray-200" />
-                </div>
-                {/* ))} */}
-                <div className="mb-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={`/gallery/comment-9.png`}
-                        alt="Commenter"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <p className="font-semibold text-gray-800">
-                          Pedro Karan
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Oct 17, 2024 At 11.45 am
-                        </p>
-                      </div>
-                      <p className="text-gray-600 mb-3">
-                        I love how this blog emphasizes the importance of health
-                        literacy. Educating patients is key to empowering them
-                        to make informed decisions about their health.
-                      </p>
-                      <a
-                        href="/blog-details-1"
-                        className="text-teal-600 hover:text-teal-700 text-sm font-medium"
-                      >
-                        Reply
-                      </a>
-                    </div>
-                  </div>
-                  <hr className="my-6 border-gray-200" />
-                </div>
+                <motion.hr
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="my-6 border-gray-200"
+                />
 
-                <div className="mb-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={`/gallery/comment-8.png`}
-                        alt="Commenter"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <p className="font-semibold text-gray-800">
-                          Meera Patel
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Nov 21, 2024 At 1.23 pm
-                        </p>
-                      </div>
-                      <p className="text-gray-600 mb-3">
-                        Thank you for addressing the barriers to healthcare
-                        access. It's a complex issue, but with awareness and
-                        action, we can create positive change.
-                      </p>
-                      <a
-                        href="/blog-details-1"
-                        className="text-teal-600 hover:text-teal-700 text-sm font-medium"
-                      >
-                        Reply
-                      </a>
-                    </div>
-                  </div>
-                  <hr className="my-6 border-gray-200" />
-                </div>
+                <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
+                <p className="text-gray-600 mb-4">
+                By addressing these challenges and working towards these goals, we can empower individuals through education and create a brighter, more equitable future for all. Together, we can make a lasting impact in our communities and they include:
+                </p>
+                <p className="text-gray-600 mb-4">
+                  <b>Access to Quality Education:</b> <br /> Many individuals, especially in underserved communities, face significant barriers to accessing quality education. This includes a lack of schools, inadequate facilities, and insufficient resources.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  <b>Economic Barriers:</b> <br /> The rising costs of education, including tuition, books, and supplies, can be prohibitive for low-income families. Many students are forced to drop out or forgo higher education due to financial constraints.
 
-                <div className="mb-6">
-                  <div className="flex gap-4">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={`/gallery/comment-10.png`}
-                        alt="Commenter"
-                        width={55}
-                        height={50}
-                        className="rounded-full"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <p className="font-semibold text-gray-800">
-                          Neha Gupta
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          Dec 28, 2024 At 7.42 pm
-                        </p>
-                      </div>
-                      <p className="text-gray-600 mb-3">
-                        It beautifully highlights the importance of accessible
-                        medical care. It's crucial for improving health outcomes
-                        in under-served communities. Thank you for raising
-                        awareness!"
-                      </p>
-                      <a
-                        href="/blog-details-1"
-                        className="text-teal-600 hover:text-teal-700 text-sm font-medium"
-                      >
-                        Reply
-                      </a>
-                    </div>
-                  </div>
-                  <hr className="my-6 border-gray-200" />
-                </div>
+
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Language Barriers: </b> <br /> Non-native speakers may struggle in educational settings where the primary language of instruction is not their first language, making it difficult for them to fully engage and succeed.
+
+
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Limited Awareness of Resources:</b> <br /> Many individuals are unaware of the educational resources and support available to them, which can prevent them from seeking help and accessing opportunities.
+
+
+                </p>
+
+                <motion.hr
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="my-6 border-gray-200"
+                />
+
+                <h4 className="text-xl font-bold mb-3">Our Goals </h4>
+                <p className="text-gray-600 mb-4">
+                  Our goal is to create a community where everyone
+                  has access to good and quality education. We aim to achieve this through
+                  a comprehensive approach that includes:
+                </p>
+                <p className="text-gray-600 mb-4">
+                  <b>Increase Access to Education: </b> <br /> Our primary goal is to ensure that all individuals, regardless of their background, have access to quality education. This includes building more schools, providing transportation, and ensuring that educational facilities are equipped with necessary resources.
+                </p>
+                <p className="text-gray-600 mb-4">
+                  <b>Provide Financial Support: </b> <br /> We aim to establish scholarship programs and financial aid initiatives to alleviate the economic burden of education. This will help students cover tuition, books, and other essential expenses.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Enhance Teacher Training and Support: I</b> <br /> We will work to improve teacher training programs and provide ongoing professional development to ensure that educators are well-equipped to meet the needs of their students.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is to create an inclusive educational environment that respects and accommodates the diverse cultural backgrounds of all students. This includes implementing programs that encourage the participation of underrepresented groups.</p>
+
+                  <p className="text-gray-600 mb-4">
+                  <b>Language Support Programs:  I</b> <br />  We will develop language support programs for non-native speakers to help them improve their language skills and succeed in their studies.
+                </p>
+
+
+                <p className="text-gray-600 mb-4">
+                  <b>Raise Awareness and Advocacy:</b> <br />  We aim to increase awareness of available educational resources and support systems within communities. This includes outreach programs, workshops, and partnerships with local organizations to ensure that individuals know how to access the help they need.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Foster Community Engagement: </b> <br />  We will encourage community involvement in education through volunteer opportunities, mentorship programs, and collaborative events that bring together students, educators, and community members.
+                </p>
+
+                <motion.hr
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="my-6 border-gray-200"
+                />
               </motion.div>
             </div>
 
-            {/* Sidebar */}
-            <div className="lg:col-span-3">
-              <div className="space-y-8">
-                {/* Search Box */}
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="bg-white rounded-lg shadow-md p-6"
-                >
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    Search Here
-                  </h3>
-                  <div className="relative">
-                    <input
-                      type="search"
-                      placeholder="Enter Your Keyword"
-                      className="w-full p-3 pr-10 border border-gray-300 outline-none rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                      ref={searchRef}
-                      onMouseEnter={onMouseEnterSearchRef}
-                    />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <Search className="w-5 h-5 text-gray-500" />
-                    </div>
+            {/* Sidebar - Right Section */}
+            <div className="w-full lg:w-1/3">
+              {/* Category */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="mb-8"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <p className="text-gray-600 font-medium">Category List</p>
+                  <div className="flex space-x-1">
+                    <div className="h-1 w-6 bg-green-600 rounded"></div>
+                    <div className="h-1 w-6 bg-gray-200 rounded"></div>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Category List */}
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="bg-white rounded-lg shadow-md p-6"
-                >
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    Category List
-                  </h3>
-
+                <div className="bg-white rounded-lg shadow-sm p-4">
                   <ul className="space-y-2">
                     {[
-                      "Food",
-                      "Medical",
-                      "Education",
-                      "Wireframing",
-                      "Recycline",
-                      "Education",
+                      { name: "Food", active: false },
+                      { name: "Medical", active: false },
+                      { name: "Water", active: false },
+                      { name: "Education", active: true }, 
                     ].map((category, index) => (
                       <li
-                        key={category}
-                        className={
-                          index === 1 ? "text-teal-700 font-medium" : ""
-                        }
+                        key={index}
+                        className={`py-2 px-4 rounded transition ${
+                          category.active
+                            ? "bg-green-50 text-green-600 font-semibold"
+                            : "hover:bg-gray-50"
+                        }`}
                       >
-                        <a
-                          href="/blog-details-1"
-                          className="hover:text-teal-600 hover:text-[17px] ease-in-out transition-colors"
-                        >
-                          {category}
-                        </a>
+                        {/* <a href="#" className="flex items-center"> */}
+                        {category.active && (
+                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
+                        )}
+                        {category.name}
+                        {/* </a> */}
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
+              </motion.div>
 
-                {/* Related Posts */}
+              {/* Related Posts */}
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -1275,95 +873,38 @@ const BlogDetails2 = () => {
                           </a>
                         </h4>
                       </div>
-                    </div> 
+                    </div>
                     <hr className="my-4 border-gray-200" />
                   </div>
                 </div>
               </motion.div>
 
-                {/* Tags */}
-                <div className="bg-white rounded-lg shadow-md p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">Tags</h3>
+              {/* Tags */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="bg-white rounded-lg shadow-md p-6 mt-12"
+              >
+                <h3 className="text-lg font-bold text-gray-800 mb-2">Tags</h3>
 
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
-                      Medical
-                    </span>
-                    <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      Food
-                    </span>
-                    <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      Water
-                    </span>
-                    <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      Education
-                    </span>
-                    <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                      Kindness
-                    </span>
-                  </div>
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
+                    Education
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Water
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Medical
+                  </span>
+                  <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                    Kindness
+                  </span>
                 </div>
+              </motion.div>
 
-                {/* User Box */}
-                <div className="bg-white rounded-lg shadow-md p-6 text-center">
-                  <div className="w-20 h-20 mx-auto mb-4 relative">
-                    <Image
-                      src="/gallery/nikluas.png"
-                      alt="Author"
-                      fill
-                      className="rounded-full object-cover"
-                    />
-                  </div>
-                  <h4 className="font-bold text-gray-800 mb-2">
-                    Niklaus Mikaelson
-                  </h4>
-                  <p className="text-gray-600 mb-4">
-                    Hi! amazing people. I`m the author of this blog.
-                  </p>
-                  <div className="flex justify-center gap-2">
-                    <Link
-                      href="#"
-                      className="bg-white p-2 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
-                    >
-                      <Image
-                        src={Facebook}
-                        alt="Facebook Icon"
-                        className="text-white h-9 w-9"
-                      />
-                    </Link>
-                    <Link
-                      href="#"
-                      className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
-                    >
-                      <Image
-                        src={Youtube}
-                        alt="Youtube Icon"
-                        className="text-white h-6 w-6"
-                      />
-                    </Link>
-                    <Link
-                      href="#"
-                      className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
-                    >
-                      <Image
-                        src={Instagram}
-                        alt="Instagram Icon"
-                        className="text-white h-6 w-6"
-                      />
-                    </Link>
-                    <Link
-                      href="#"
-                      className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
-                    >
-                      <Image
-                        src={LinkedIn}
-                        alt="Linked Icon"
-                        className="text-white h-6 w-6"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1374,8 +915,8 @@ const BlogDetails2 = () => {
 
       {/* Footer  */}
       <Footer />
-    </div>
+    </main>
   );
 };
 
-export default BlogDetails2;
+export default DonationDetails2;

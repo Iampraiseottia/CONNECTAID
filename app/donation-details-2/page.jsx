@@ -894,7 +894,7 @@ const DonationDetails2 = () => {
                      Education
                   </span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                    
+                    Food
                   </span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                     Water
