@@ -25,12 +25,165 @@ const DonationDetails3 = () => {
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
+  // Payment and amount selection state
   const [selectedPayment, setSelectedPayment] = useState("mtn");
   const [selectedAmount, setSelectedAmount] = useState(1000);
   const [agreedToTerms, setAgreedToTerms] = useState(true);
+  
+  // Form field states
+  const [formData, setFormData] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: ""
+  });
+  
+
+  const [errors, setErrors] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: "",
+    terms: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+    
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ""
+      });
+    }
+  };
+
+  const validateMobileNumber = (number) => {
+    const mobileRegex = /^\+\d{1,3}\s\d{3}\s\d{3}\s\d{3}$/;
+    return mobileRegex.test(number);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleDonation = (e) => {
+    e.preventDefault();
+    
+    const newErrors = {};
+    let isValid = true;
+    
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber = "Please enter a valid mobile number (e.g. +237 686 529 762)";
+      isValid = false;
+    } else if (formData.mobileNumber.length < 2) {
+      newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileNumber.length > 16) {
+      newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
+      isValid = false;
+    }
+    
+
+    if (!formData.mobileName) {
+      newErrors.mobileName = "Mobile money name is required";
+      isValid = false;
+    } else if (formData.mobileName.length < 2) {
+      newErrors.mobileName = " Mobile Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileName.length > 30) {
+      newErrors.mobileName = " Mobile Name cannot exceed 30 characters";
+      isValid = false;
+    }
+    
+
+    if (!formData.fullName) {
+      newErrors.fullName = "Full Name is required";
+      isValid = false;
+    } else if (formData.fullName.length < 2) {
+      newErrors.fullName = "Full Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.fullName.length > 40) {
+      newErrors.fullName = "Full Name cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    
+    if (!formData.email) {
+      newErrors.email = "Email address is required";
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+    
+
+    if (!formData.region) {
+      newErrors.region = "Region is required";
+      isValid = false;
+    } else if (formData.region.length < 2) {
+      newErrors.region = "Region must be at least 2 characters";
+      isValid = false;
+    } else if (formData.region.length > 20) {
+      newErrors.region = "Region cannot exceed 20 characters";
+      isValid = false;
+    }
+    
+    
+    if (!formData.city) {
+      newErrors.city = "City/Town is required";
+      isValid = false;
+    } else if (formData.city.length < 2) {
+      newErrors.city = "City must be at least 2 characters";
+      isValid = false;
+    } else if (formData.city.length > 50) {
+      newErrors.city = "City cannot exceed 50 characters";
+      isValid = false;
+    }
+
+  
+    if (!formData.address) {
+      newErrors.address = "Home address is required";
+      isValid = false;
+    } else if (formData.address.length < 2) {
+      newErrors.address = "Home Address must be at least 2 characters";
+      isValid = false;
+    } else if (formData.address.length > 50) {
+      newErrors.address = "Home Address cannot exceed 50 characters";
+      isValid = false;
+    }
+    
+    
+    if (!agreedToTerms) {
+      newErrors.terms = "You must agree to the Terms of Service";
+      isValid = false;
+    }
+    
+    setErrors(newErrors);
+    
+    if (isValid) {
+      console.log("Donation input fields okay! .");
+    }
+  };
+
 
   return (
     <main className="bg-[#f9f9f9]">
+      
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Navigation Bar | Header  */}
@@ -173,208 +326,292 @@ const DonationDetails3 = () => {
                     </div>
                   </motion.div>
 
-                  {/* Payment Method */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4">
-                      Select Payment Method
-                    </h4>
-                    <div className="space-y-3 ">
-                      <div className="flex items-center">
-                        <input
-                          id="mtn-momo"
-                          type="radio"
-                          name="mtn-momo"
-                          value="mtn"
-                          checked={selectedPayment === "mtn"}
-                          onChange={() => setSelectedPayment("mtn")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
-                        />
-                        <label
-                          htmlFor="mtn-momo"
-                          className="ml-2 text-gray-700"
-                        >
-                          MTN Mobile Money
-                        </label>
+                  {/* Form starts here */}
+                  <form onSubmit={handleDonation}>
+                    {/* Payment Method */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mb-8"
+                    >
+                      <h4 className="text-lg font-bold mb-4">
+                        Select Payment Method
+                      </h4>
+                      <div className="space-y-3 ">
+                        <div className="flex items-center">
+                          <input
+                            id="mtn-momo"
+                            type="radio"
+                            name="paymentMethod"
+                            value="mtn"
+                            checked={selectedPayment === "mtn"}
+                            onChange={() => setSelectedPayment("mtn")}
+                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          />
+                          <label
+                            htmlFor="mtn-momo"
+                            className="ml-2 text-gray-700"
+                          >
+                            MTN Mobile Money
+                          </label>
+                        </div>
+                        <div className="flex items-center">
+                          <input
+                            id="orange-momo"
+                            type="radio"
+                            name="paymentMethod"
+                            value="orange"
+                            checked={selectedPayment === "orange"}
+                            onChange={() => setSelectedPayment("orange")}
+                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          />
+                          <label
+                            htmlFor="orange-momo"
+                            className="ml-2 text-gray-700"
+                          >
+                            ORANGE Mobile Money
+                          </label>
+                        </div>
                       </div>
-                      <div className="flex items-center">
-                        <input
-                          id="orange-momo"
-                          type="radio"
-                          name="payment"
-                          value="orange"
-                          checked={selectedPayment === "orange"}
-                          onChange={() => setSelectedPayment("orange")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
-                        />
-                        <label
-                          htmlFor="orange-momo"
-                          className="ml-2 text-gray-700"
-                        >
-                          ORANGE Mobile Money
-                        </label>
-                      </div>
-                    </div>
-                  </motion.div>
+                    </motion.div>
 
-                  {/* Amount */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 ">
-                      Select An Amount From Available Options Below
-                    </button>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {[
-                        500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
-                        5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
-                        9500, 10000, 50000, 100000, 500000, 1000000,
-                      ].map((amount) => (
-                        <button
-                          key={amount}
-                          onClick={() => setSelectedAmount(amount)}
-                          className={`py-2 px-4 rounded border ${
-                            selectedAmount === amount
-                              ? "bg-green-600 text-white border-green-600"
-                              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                    {/* Amount */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mb-8"
+                    >
+                      <button 
+                        type="button" 
+                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10"
+                      >
+                        Select An Amount From Available Options Below
+                      </button>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {[
+                          500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
+                          5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
+                          9500, 10000, 50000, 100000, 500000, 1000000,
+                        ].map((amount) => (
+                          <button
+                            type="button"
+                            key={amount}
+                            onClick={() => setSelectedAmount(amount)}
+                            className={`py-2 px-4 rounded border ${
+                              selectedAmount === amount
+                                ? "bg-green-600 text-white border-green-600"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                            }`}
+                          >
+                            {amount} Frs
+                          </button>
+                        ))}
+                      </div>
+                    </motion.div>
+
+                    {/* Details */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mb-8"
+                    >
+                      <h4 className="text-lg font-bold mb-4">Payment Details</h4>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Mobile Money Number e.g +237 686 529 762*"
+                              className={`w-full px-4 py-2 border ${
+                                errors.mobileNumber ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              name="mobileNumber"
+                              id="Mobile_Money_Number"
+                              value={formData.mobileNumber}
+                              onChange={handleInputChange}
+                            />
+                            {errors.mobileNumber && (
+                              <p className="text-red-500 text-sm mt-1">{errors.mobileNumber}</p>
+                            )}
+                          </div>
+                          <div>
+                            <input
+                              type="text"
+                              name="mobileName"
+                              id="Mobile_Money_Name"
+                              placeholder="Mobile Money Name e.g Alex Jordan*"
+                              className={`w-full px-4 py-2 border ${
+                                errors.mobileName ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              value={formData.mobileName}
+                              onChange={handleInputChange}
+                            />
+                            {errors.mobileName && (
+                              <p className="text-red-500 text-sm mt-1">{errors.mobileName}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Your Full Name*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.fullName ? "border-red-500" : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            name="fullName"
+                            id="Full_Name"
+                            value={formData.fullName}
+                            onChange={handleInputChange}
+                          />
+                          {errors.fullName && (
+                            <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Address */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mb-8"
+                    >
+                      <h4 className="text-lg font-bold mb-4">Address</h4>
+                      <div className="bg-gray-50 p-4 rounded-lg">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="email"
+                              placeholder="Email Address e.g name@gmail.com*"
+                              name="email"
+                              id="Email_Address"
+                              className={`w-full px-4 py-2 border ${
+                                errors.email ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              value={formData.email}
+                              onChange={handleInputChange}
+                            />
+                            {errors.email && (
+                              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                            )}
+                          </div>
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Region e.g South-west*"
+                              className={`w-full px-4 py-2 border ${
+                                errors.region ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              name="region"
+                              id="Region"
+                              value={formData.region}
+                              onChange={handleInputChange}
+                            />
+                            {errors.region && (
+                              <p className="text-red-500 text-sm mt-1">{errors.region}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="City/Town e.g Limbe*"
+                              name="city"
+                              id="City_Town"
+                              className={`w-full px-4 py-2 border ${
+                                errors.city ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              value={formData.city}
+                              onChange={handleInputChange}
+                            />
+                            {errors.city && (
+                              <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                            )}
+                          </div>
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
+                              name="address"
+                              id="Home_Address"
+                              className={`w-full px-4 py-2 border ${
+                                errors.address ? "border-red-500" : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              value={formData.address}
+                              onChange={handleInputChange}
+                            />
+                            {errors.address && (
+                              <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Terms */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="mb-20"
+                    >
+                      <div className="flex items-center">
+                        <input
+                          id="terms"
+                          type="checkbox"
+                          checked={agreedToTerms}
+                          onChange={() => {
+                            setAgreedToTerms(!agreedToTerms);
+                            if (!agreedToTerms) {
+                              setErrors({...errors, terms: ""});
+                            }
+                          }}
+                          className={`w-4 h-4 text-green-600 focus:ring-green-500 ${
+                            errors.terms ? "border-red-500" : ""
                           }`}
-                        >
-                          {amount} Frs
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {/* Details */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4">Payment Details</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="Mobile Money Number e.g +237 686 529 762*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Mobile_Money_Number"
-                          id="Mobile_Money_Number"
                         />
-                        <input
-                          type="text"
-                          name="Mobile_Money_Name"
-                          id="Mobile_Money_Name"
-                          placeholder="Mobile Money Name e.g Alex Jordan*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                        <label htmlFor="terms" className="ml-2 text-gray-700">
+                          I agree with the Terms Of service
+                        </label>
                       </div>
-                      <input
-                        type="text"
-                        placeholder="Your Full Name*"
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        name="Full_Name"
-                        id="Full_Name"
-                      />
-                    </div>
-                  </motion.div>
+                      {errors.terms && (
+                        <p className="text-red-500 text-sm mt-1">{errors.terms}</p>
+                      )}
+                    </motion.div>
 
-                  {/* Address */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4">Address</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="email"
-                          placeholder="Email Address e.g name@gmail.com*"
-                          name="Email_Address"
-                          id="Email_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Region e.g South-west*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Region"
-                          id="Region"
-                        />
+                    {/* Action Buttons */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-wrap gap-4 -mt-10 mb-10"
+                    >
+                      <button 
+                        type="submit" 
+                        className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition"
+                      >
+                        Donate Now
+                      </button>
+                      <div className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300">
+                        Total Donation: {selectedAmount} Frs
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="City/Town e.g Limbe*"
-                          name="City_Town"
-                          id="City_Town"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
-                          name="Home_Address"
-                          id="Home_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Terms */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-20 "
-                  >
-                    <div className="flex items-center ">
-                      <input
-                        id="terms"
-                        type="checkbox"
-                        checked={agreedToTerms}
-                        onChange={() => setAgreedToTerms(!agreedToTerms)}
-                        className="w-4 h-4 text-green-600 focus:ring-green-500"
-                      />
-                      <label htmlFor="terms" className="ml-2 text-gray-700">
-                        I agree with the Terms Of service
-                      </label>
-                    </div>
-                  </motion.div>
-
-                  {/* Action Buttons */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="flex flex-wrap gap-4 -mt-10 mb-10 "
-                  >
-                    <button className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition">
-                      Donate Now
-                    </button>
-                    <button className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition">
-                      Total Donation: ${selectedAmount}
-                    </button>
-                  </motion.div>
+                    </motion.div>
+                  </form>
                 </div>
-                {/* <p className="text-[]">We love you</p> */}
               </div>
+
+              
               <motion.hr
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}
