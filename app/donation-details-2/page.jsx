@@ -29,6 +29,194 @@ const DonationDetails2 = () => {
   const [selectedAmount, setSelectedAmount] = useState(1000);
   const [agreedToTerms, setAgreedToTerms] = useState(true);
 
+  const [formData, setFormData] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: "",
+  });
+
+  const [errors, setErrors] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: "",
+    terms: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  const validateMobileNumber = (number) => {
+    const mobileRegex = /^\+\d{1,3}\s\d{3}\s\d{3}\s\d{3}$/;
+    return mobileRegex.test(number);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleDonation = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. +237 686 529 762)";
+      isValid = false;
+    } else if (formData.mobileNumber.length < 2) {
+      newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileNumber.length > 16) {
+      newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
+      isValid = false;
+    }
+
+    if (!formData.mobileName) {
+      newErrors.mobileName = "Mobile money name is required";
+      isValid = false;
+    } else if (formData.mobileName.length < 2) {
+      newErrors.mobileName = " Mobile Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileName.length > 30) {
+      newErrors.mobileName = " Mobile Name cannot exceed 30 characters";
+      isValid = false;
+    }
+
+    if (!formData.fullName) {
+      newErrors.fullName = "Full Name is required";
+      isValid = false;
+    } else if (formData.fullName.length < 2) {
+      newErrors.fullName = "Full Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.fullName.length > 40) {
+      newErrors.fullName = "Full Name cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email address is required";
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (!formData.region) {
+      newErrors.region = "Region is required";
+      isValid = false;
+    } else if (formData.region.length < 2) {
+      newErrors.region = "Region must be at least 2 characters";
+      isValid = false;
+    } else if (formData.region.length > 20) {
+      newErrors.region = "Region cannot exceed 20 characters";
+      isValid = false;
+    }
+
+    if (!formData.city) {
+      newErrors.city = "City/Town is required";
+      isValid = false;
+    } else if (formData.city.length < 2) {
+      newErrors.city = "City must be at least 2 characters";
+      isValid = false;
+    } else if (formData.city.length > 50) {
+      newErrors.city = "City cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!formData.address) {
+      newErrors.address = "Home address is required";
+      isValid = false;
+    } else if (formData.address.length < 2) {
+      newErrors.address = "Home Address must be at least 2 characters";
+      isValid = false;
+    } else if (formData.address.length > 50) {
+      newErrors.address = "Home Address cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!agreedToTerms) {
+      newErrors.terms = "You must agree to the Terms of Service";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (isValid) {
+      console.log("Donation input fields okay! .");
+    }
+
+    setFormData({
+      mobileNumber: "",
+      mobileName: "",
+      fullName: "",
+      email: "",
+      region: "",
+      city: "",
+      address: "",
+    });
+  };
+
+  const mobileMoneyNumberRef = useRef();
+  const mobileMoneyNameRef = useRef();
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+  const regionRef = useRef();
+  const cityRef = useRef();
+  const homeAddressRef = useRef();
+
+  const onMouseEnterMobileNUmberRef = () => {
+    mobileMoneyNumberRef.current.focus();
+  };
+
+  const onMouseEnterMobileMoneyNameRef = () => {
+    mobileMoneyNameRef.current.focus();
+  };
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+
+  const onMouseEnterRegionRef = () => {
+    regionRef.current.focus();
+  };
+
+  const onMouseEnterCityRef = () => {
+    cityRef.current.focus();
+  };
+
+  const onMouseEnterHomeAddressRef = () => {
+    homeAddressRef.current.focus();
+  };
+
   return (
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
@@ -59,7 +247,7 @@ const DonationDetails2 = () => {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Main Content - Left Section */}
             <div className="w-full lg:w-2/3">
-              {/* Donate Details */} 
+              {/* Donate Details */}
               <div className="rounded-lg shadow-md overflow-hidden mb-12">
                 {/* Hero Image */}
                 <motion.div
@@ -100,10 +288,19 @@ const DonationDetails2 = () => {
                     className="mb-6"
                   >
                     <h4 className="text-2xl font-bold mb-3 mt-2">
-                    Your Support Can Empower Children's Future.
+                      Your Support Can Empower Children's Future.
                     </h4>
                     <p className="text-gray-600 mb-6">
-                    Education is a fundamental human right and a powerful tool for personal and societal transformation. It has the potential to break the cycle of poverty, foster economic growth, and promote social equity. However, many individuals, especially in underserved communities, face significant barriers to accessing quality education. Your support can play a crucial role in empowering these individuals and helping them realize their full potential. Here’s a detailed explanation of how your contributions can make a difference.
+                      Education is a fundamental human right and a powerful tool
+                      for personal and societal transformation. It has the
+                      potential to break the cycle of poverty, foster economic
+                      growth, and promote social equity. However, many
+                      individuals, especially in underserved communities, face
+                      significant barriers to accessing quality education. Your
+                      support can play a crucial role in empowering these
+                      individuals and helping them realize their full potential.
+                      Here’s a detailed explanation of how your contributions
+                      can make a difference.
                     </p>
 
                     {/* Alert */}
@@ -146,7 +343,7 @@ const DonationDetails2 = () => {
                           <h4 className="font-semibold">Goals</h4>
                         </div>
                         <div>
-                          <p className="text-gray-600">6, 126, 750  Francs</p>
+                          <p className="text-gray-600">6, 126, 750 Francs</p>
                           <h4 className="font-semibold">Raised</h4>
                         </div>
                       </div>
@@ -259,28 +456,73 @@ const DonationDetails2 = () => {
                     <h4 className="text-lg font-bold mb-4">Payment Details</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="Mobile Money Number e.g +237 686 529 762*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Mobile_Money_Number"
-                          id="Mobile_Money_Number"
-                        />
-                        <input
-                          type="text"
-                          name="Mobile_Money_Name"
-                          id="Mobile_Money_Name"
-                          placeholder="Mobile Money Name e.g Alex Jordan*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Mobile Money Number e.g +237 686 529 762*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.mobileNumber
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            name="mobileNumber"
+                            id="Mobile_Money_Number"
+                            value={formData.mobileNumber}
+                            onChange={handleInputChange}
+                            ref={mobileMoneyNumberRef}
+                            onMouseEnter={onMouseEnterMobileNUmberRef}
+                          />
+                          {errors.mobileNumber && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.mobileNumber}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            name="mobileName"
+                            id="Mobile_Money_Name"
+                            placeholder="Mobile Money Name e.g Alex Jordan*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.mobileName
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.mobileName}
+                            onChange={handleInputChange}
+                            ref={mobileMoneyNameRef}
+                            onMouseEnter={onMouseEnterMobileMoneyNameRef}
+                          />
+                          {errors.mobileName && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.mobileName}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                      <input
-                        type="text"
-                        placeholder="Your Full Name*"
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        name="Full_Name"
-                        id="Full_Name"
-                      />
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Your Full Name*"
+                          className={`w-full px-4 py-2 border ${
+                            errors.fullName
+                              ? "border-red-500"
+                              : "border-gray-300"
+                          } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                          name="fullName"
+                          id="Full_Name"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          ref={fullNameRef}
+                          onMouseEnter={onMouseEnterFullNameRef}
+                        />
+                        {errors.fullName && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.fullName}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
 
@@ -295,38 +537,96 @@ const DonationDetails2 = () => {
                     <h4 className="text-lg font-bold mb-4">Address</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="email"
-                          placeholder="Email Address e.g name@gmail.com*"
-                          name="Email_Address"
-                          id="Email_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Region e.g South-west*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Region"
-                          id="Region"
-                        />
+                        <div>
+                          <input
+                            type="email"
+                            placeholder="Email Address e.g name@gmail.com*"
+                            name="email"
+                            id="Email_Address"
+                            className={`w-full px-4 py-2 border ${
+                              errors.email
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            ref={emailAddressRef}
+                            onMouseEnter={onMouseEnterEmailAddressRef}
+                          />
+                          {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.email}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Region e.g South-west*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.region
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            name="region"
+                            id="Region"
+                            value={formData.region}
+                            onChange={handleInputChange}
+                            ref={regionRef}
+                            onMouseEnter={onMouseEnterRegionRef}
+                          />
+                          {errors.region && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.region}
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="City/Town e.g Limbe*"
-                          name="City_Town"
-                          id="City_Town"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
-                          name="Home_Address"
-                          id="Home_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="City/Town e.g Limbe*"
+                            name="city"
+                            id="City_Town"
+                            className={`w-full px-4 py-2 border ${
+                              errors.city ? "border-red-500" : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.city}
+                            onChange={handleInputChange}
+                            ref={cityRef}
+                            onMouseEnter={onMouseEnterCityRef}
+                          />
+                          {errors.city && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.city}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
+                            name="address"
+                            id="Home_Address"
+                            className={`w-full px-4 py-2 border ${
+                              errors.address
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            ref={homeAddressRef}
+                            onMouseEnter={onMouseEnterHomeAddressRef}
+                          />
+                          {errors.address && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.address}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    </div> 
                   </motion.div>
 
                   {/* Terms */}
@@ -389,11 +689,22 @@ const DonationDetails2 = () => {
                     <strong>Real Life Story, Real Impact</strong>
                   </b>
                   <br />
-                  Amina is a 14-year-old girl from a small village in a rural area where access to quality education is limited. Growing up in a family of five, her parents worked tirelessly as farmers, earning just enough to provide for basic needs. Despite their hard work, they struggled to afford school fees, uniforms, and supplies for Amina and her younger siblings. Amina story is just one of many that
-                  illustrate the profound impact your donations can have.
+                  Amina is a 14-year-old girl from a small village in a rural
+                  area where access to quality education is limited. Growing up
+                  in a family of five, her parents worked tirelessly as farmers,
+                  earning just enough to provide for basic needs. Despite their
+                  hard work, they struggled to afford school fees, uniforms, and
+                  supplies for Amina and her younger siblings. Amina story is
+                  just one of many that illustrate the profound impact your
+                  donations can have.
                 </p>
                 <p className="text-gray-600 mb-6">
-                Education is a challenge we can overcome, and with your support, we can build a future where everyone has access to the knowledge and skills they need to succeed. Join us in the mission to empower individuals in our local communities through education. Your contribution can transform lives and foster a stronger, more equitable society for all.
+                  Education is a challenge we can overcome, and with your
+                  support, we can build a future where everyone has access to
+                  the knowledge and skills they need to succeed. Join us in the
+                  mission to empower individuals in our local communities
+                  through education. Your contribution can transform lives and
+                  foster a stronger, more equitable society for all.
                 </p>
 
                 <motion.hr
@@ -406,27 +717,37 @@ const DonationDetails2 = () => {
 
                 <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
                 <p className="text-gray-600 mb-4">
-                By addressing these challenges and working towards these goals, we can empower individuals through education and create a brighter, more equitable future for all. Together, we can make a lasting impact in our communities and they include:
+                  By addressing these challenges and working towards these
+                  goals, we can empower individuals through education and create
+                  a brighter, more equitable future for all. Together, we can
+                  make a lasting impact in our communities and they include:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Access to Quality Education:</b> <br /> Many individuals, especially in underserved communities, face significant barriers to accessing quality education. This includes a lack of schools, inadequate facilities, and insufficient resources.
+                  <b>Access to Quality Education:</b> <br /> Many individuals,
+                  especially in underserved communities, face significant
+                  barriers to accessing quality education. This includes a lack
+                  of schools, inadequate facilities, and insufficient resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Economic Barriers:</b> <br /> The rising costs of education, including tuition, books, and supplies, can be prohibitive for low-income families. Many students are forced to drop out or forgo higher education due to financial constraints.
-
-
+                  <b>Economic Barriers:</b> <br /> The rising costs of
+                  education, including tuition, books, and supplies, can be
+                  prohibitive for low-income families. Many students are forced
+                  to drop out or forgo higher education due to financial
+                  constraints.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Language Barriers: </b> <br /> Non-native speakers may struggle in educational settings where the primary language of instruction is not their first language, making it difficult for them to fully engage and succeed.
-
-
+                  <b>Language Barriers: </b> <br /> Non-native speakers may
+                  struggle in educational settings where the primary language of
+                  instruction is not their first language, making it difficult
+                  for them to fully engage and succeed.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Limited Awareness of Resources:</b> <br /> Many individuals are unaware of the educational resources and support available to them, which can prevent them from seeking help and accessing opportunities.
-
-
+                  <b>Limited Awareness of Resources:</b> <br /> Many individuals
+                  are unaware of the educational resources and support available
+                  to them, which can prevent them from seeking help and
+                  accessing opportunities.
                 </p>
 
                 <motion.hr
@@ -439,35 +760,60 @@ const DonationDetails2 = () => {
 
                 <h4 className="text-xl font-bold mb-3">Our Goals </h4>
                 <p className="text-gray-600 mb-4">
-                  Our goal is to create a community where everyone
-                  has access to good and quality education. We aim to achieve this through
-                  a comprehensive approach that includes:
+                  Our goal is to create a community where everyone has access to
+                  good and quality education. We aim to achieve this through a
+                  comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Increase Access to Education: </b> <br /> Our primary goal is to ensure that all individuals, regardless of their background, have access to quality education. This includes building more schools, providing transportation, and ensuring that educational facilities are equipped with necessary resources.
+                  <b>Increase Access to Education: </b> <br /> Our primary goal
+                  is to ensure that all individuals, regardless of their
+                  background, have access to quality education. This includes
+                  building more schools, providing transportation, and ensuring
+                  that educational facilities are equipped with necessary
+                  resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Provide Financial Support: </b> <br /> We aim to establish scholarship programs and financial aid initiatives to alleviate the economic burden of education. This will help students cover tuition, books, and other essential expenses.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Enhance Teacher Training and Support: I</b> <br /> We will work to improve teacher training programs and provide ongoing professional development to ensure that educators are well-equipped to meet the needs of their students.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is to create an inclusive educational environment that respects and accommodates the diverse cultural backgrounds of all students. This includes implementing programs that encourage the participation of underrepresented groups.</p>
-
-                  <p className="text-gray-600 mb-4">
-                  <b>Language Support Programs:  I</b> <br />  We will develop language support programs for non-native speakers to help them improve their language skills and succeed in their studies.
-                </p>
-
-
-                <p className="text-gray-600 mb-4">
-                  <b>Raise Awareness and Advocacy:</b> <br />  We aim to increase awareness of available educational resources and support systems within communities. This includes outreach programs, workshops, and partnerships with local organizations to ensure that individuals know how to access the help they need.
+                  <b>Provide Financial Support: </b> <br /> We aim to establish
+                  scholarship programs and financial aid initiatives to
+                  alleviate the economic burden of education. This will help
+                  students cover tuition, books, and other essential expenses.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Foster Community Engagement: </b> <br />  We will encourage community involvement in education through volunteer opportunities, mentorship programs, and collaborative events that bring together students, educators, and community members.
+                  <b>Enhance Teacher Training and Support: I</b> <br /> We will
+                  work to improve teacher training programs and provide ongoing
+                  professional development to ensure that educators are
+                  well-equipped to meet the needs of their students.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is
+                  to create an inclusive educational environment that respects
+                  and accommodates the diverse cultural backgrounds of all
+                  students. This includes implementing programs that encourage
+                  the participation of underrepresented groups.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Language Support Programs: I</b> <br /> We will develop
+                  language support programs for non-native speakers to help them
+                  improve their language skills and succeed in their studies.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Raise Awareness and Advocacy:</b> <br /> We aim to increase
+                  awareness of available educational resources and support
+                  systems within communities. This includes outreach programs,
+                  workshops, and partnerships with local organizations to ensure
+                  that individuals know how to access the help they need.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Foster Community Engagement: </b> <br /> We will encourage
+                  community involvement in education through volunteer
+                  opportunities, mentorship programs, and collaborative events
+                  that bring together students, educators, and community
+                  members.
                 </p>
 
                 <motion.hr
@@ -504,7 +850,7 @@ const DonationDetails2 = () => {
                       { name: "Food", active: false },
                       { name: "Medical", active: false },
                       { name: "Water", active: false },
-                      { name: "Education", active: true }, 
+                      { name: "Education", active: true },
                     ].map((category, index) => (
                       <li
                         key={index}
@@ -701,8 +1047,8 @@ const DonationDetails2 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-1">
-                            Empower minds, change futures — Donate today and make a
-                            long lasting impacts in lives of people and
+                            Empower minds, change futures — Donate today and
+                            make a long lasting impacts in lives of people and
                             communities!
                           </a>
                         </h4>
@@ -891,7 +1237,7 @@ const DonationDetails2 = () => {
 
                 <div className="flex flex-wrap gap-2">
                   <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
-                     Education
+                    Education
                   </span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                     Food
@@ -907,7 +1253,6 @@ const DonationDetails2 = () => {
                   </span>
                 </div>
               </motion.div>
-
             </div>
           </div>
         </div>

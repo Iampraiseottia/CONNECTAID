@@ -2,7 +2,7 @@
 
 import globalStyle from "../globals.css";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -25,12 +25,10 @@ const DonationDetails3 = () => {
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
-  // Payment and amount selection state
   const [selectedPayment, setSelectedPayment] = useState("mtn");
   const [selectedAmount, setSelectedAmount] = useState(1000);
   const [agreedToTerms, setAgreedToTerms] = useState(true);
-  
-  // Form field states
+
   const [formData, setFormData] = useState({
     mobileNumber: "",
     mobileName: "",
@@ -38,9 +36,8 @@ const DonationDetails3 = () => {
     email: "",
     region: "",
     city: "",
-    address: ""
+    address: "",
   });
-  
 
   const [errors, setErrors] = useState({
     mobileNumber: "",
@@ -50,20 +47,20 @@ const DonationDetails3 = () => {
     region: "",
     city: "",
     address: "",
-    terms: ""
+    terms: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
-    
+
     if (errors[name]) {
       setErrors({
         ...errors,
-        [name]: ""
+        [name]: "",
       });
     }
   };
@@ -80,15 +77,16 @@ const DonationDetails3 = () => {
 
   const handleDonation = (e) => {
     e.preventDefault();
-    
+
     const newErrors = {};
     let isValid = true;
-    
+
     if (!formData.mobileNumber) {
       newErrors.mobileNumber = "Mobile number is required";
       isValid = false;
     } else if (!validateMobileNumber(formData.mobileNumber)) {
-      newErrors.mobileNumber = "Please enter a valid mobile number (e.g. +237 686 529 762)";
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. +237 686 529 762)";
       isValid = false;
     } else if (formData.mobileNumber.length < 2) {
       newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
@@ -97,7 +95,6 @@ const DonationDetails3 = () => {
       newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
       isValid = false;
     }
-    
 
     if (!formData.mobileName) {
       newErrors.mobileName = "Mobile money name is required";
@@ -109,7 +106,6 @@ const DonationDetails3 = () => {
       newErrors.mobileName = " Mobile Name cannot exceed 30 characters";
       isValid = false;
     }
-    
 
     if (!formData.fullName) {
       newErrors.fullName = "Full Name is required";
@@ -122,7 +118,6 @@ const DonationDetails3 = () => {
       isValid = false;
     }
 
-    
     if (!formData.email) {
       newErrors.email = "Email address is required";
       isValid = false;
@@ -130,7 +125,6 @@ const DonationDetails3 = () => {
       newErrors.email = "Please enter a valid email address";
       isValid = false;
     }
-    
 
     if (!formData.region) {
       newErrors.region = "Region is required";
@@ -142,8 +136,7 @@ const DonationDetails3 = () => {
       newErrors.region = "Region cannot exceed 20 characters";
       isValid = false;
     }
-    
-    
+
     if (!formData.city) {
       newErrors.city = "City/Town is required";
       isValid = false;
@@ -155,7 +148,6 @@ const DonationDetails3 = () => {
       isValid = false;
     }
 
-  
     if (!formData.address) {
       newErrors.address = "Home address is required";
       isValid = false;
@@ -166,24 +158,67 @@ const DonationDetails3 = () => {
       newErrors.address = "Home Address cannot exceed 50 characters";
       isValid = false;
     }
-    
-    
+
     if (!agreedToTerms) {
       newErrors.terms = "You must agree to the Terms of Service";
       isValid = false;
     }
-    
+
     setErrors(newErrors);
-    
+
     if (isValid) {
       console.log("Donation input fields okay! .");
     }
+
+    setFormData({
+      mobileNumber: "",
+      mobileName: "",
+      fullName: "",
+      email: "",
+      region: "",
+      city: "",
+      address: "",
+    });
   };
 
+  const mobileMoneyNumberRef = useRef();
+  const mobileMoneyNameRef = useRef();
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+  const regionRef = useRef();
+  const cityRef = useRef();
+  const homeAddressRef = useRef();
+
+  const onMouseEnterMobileNUmberRef = () => {
+    mobileMoneyNumberRef.current.focus();
+  };
+
+  const onMouseEnterMobileMoneyNameRef = () => {
+    mobileMoneyNameRef.current.focus();
+  };
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+
+  const onMouseEnterRegionRef = () => {
+    regionRef.current.focus();
+  };
+
+  const onMouseEnterCityRef = () => {
+    cityRef.current.focus();
+  };
+
+  const onMouseEnterHomeAddressRef = () => {
+    homeAddressRef.current.focus();
+  };
 
   return (
     <main className="bg-[#f9f9f9]">
-      
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Navigation Bar | Header  */}
@@ -385,8 +420,8 @@ const DonationDetails3 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10"
                       >
                         Select An Amount From Available Options Below
@@ -421,7 +456,9 @@ const DonationDetails3 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">Payment Details</h4>
+                      <h4 className="text-lg font-bold mb-4">
+                        Payment Details
+                      </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           <div>
@@ -429,15 +466,21 @@ const DonationDetails3 = () => {
                               type="text"
                               placeholder="Mobile Money Number e.g +237 686 529 762*"
                               className={`w-full px-4 py-2 border ${
-                                errors.mobileNumber ? "border-red-500" : "border-gray-300"
+                                errors.mobileNumber
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               name="mobileNumber"
                               id="Mobile_Money_Number"
                               value={formData.mobileNumber}
                               onChange={handleInputChange}
+                              ref={mobileMoneyNumberRef}
+                              onMouseEnter={onMouseEnterMobileNUmberRef}
                             />
                             {errors.mobileNumber && (
-                              <p className="text-red-500 text-sm mt-1">{errors.mobileNumber}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.mobileNumber}
+                              </p>
                             )}
                           </div>
                           <div>
@@ -447,13 +490,19 @@ const DonationDetails3 = () => {
                               id="Mobile_Money_Name"
                               placeholder="Mobile Money Name e.g Alex Jordan*"
                               className={`w-full px-4 py-2 border ${
-                                errors.mobileName ? "border-red-500" : "border-gray-300"
+                                errors.mobileName
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               value={formData.mobileName}
                               onChange={handleInputChange}
+                              ref={mobileMoneyNameRef}
+                              onMouseEnter={onMouseEnterMobileMoneyNameRef}
                             />
                             {errors.mobileName && (
-                              <p className="text-red-500 text-sm mt-1">{errors.mobileName}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.mobileName}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -462,15 +511,21 @@ const DonationDetails3 = () => {
                             type="text"
                             placeholder="Your Full Name*"
                             className={`w-full px-4 py-2 border ${
-                              errors.fullName ? "border-red-500" : "border-gray-300"
+                              errors.fullName
+                                ? "border-red-500"
+                                : "border-gray-300"
                             } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                             name="fullName"
                             id="Full_Name"
                             value={formData.fullName}
                             onChange={handleInputChange}
+                            ref={fullNameRef}
+                            onMouseEnter={onMouseEnterFullNameRef}
                           />
                           {errors.fullName && (
-                            <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.fullName}
+                            </p>
                           )}
                         </div>
                       </div>
@@ -494,13 +549,19 @@ const DonationDetails3 = () => {
                               name="email"
                               id="Email_Address"
                               className={`w-full px-4 py-2 border ${
-                                errors.email ? "border-red-500" : "border-gray-300"
+                                errors.email
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               value={formData.email}
                               onChange={handleInputChange}
+                              ref={emailAddressRef}
+                              onMouseEnter={onMouseEnterEmailAddressRef}
                             />
                             {errors.email && (
-                              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.email}
+                              </p>
                             )}
                           </div>
                           <div>
@@ -508,15 +569,21 @@ const DonationDetails3 = () => {
                               type="text"
                               placeholder="Region e.g South-west*"
                               className={`w-full px-4 py-2 border ${
-                                errors.region ? "border-red-500" : "border-gray-300"
+                                errors.region
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               name="region"
                               id="Region"
                               value={formData.region}
                               onChange={handleInputChange}
+                              ref={regionRef}
+                              onMouseEnter={onMouseEnterRegionRef}
                             />
                             {errors.region && (
-                              <p className="text-red-500 text-sm mt-1">{errors.region}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.region}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -528,13 +595,19 @@ const DonationDetails3 = () => {
                               name="city"
                               id="City_Town"
                               className={`w-full px-4 py-2 border ${
-                                errors.city ? "border-red-500" : "border-gray-300"
+                                errors.city
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               value={formData.city}
                               onChange={handleInputChange}
+                              ref={cityRef}
+                              onMouseEnter={onMouseEnterCityRef}
                             />
                             {errors.city && (
-                              <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.city}
+                              </p>
                             )}
                           </div>
                           <div>
@@ -544,13 +617,19 @@ const DonationDetails3 = () => {
                               name="address"
                               id="Home_Address"
                               className={`w-full px-4 py-2 border ${
-                                errors.address ? "border-red-500" : "border-gray-300"
+                                errors.address
+                                  ? "border-red-500"
+                                  : "border-gray-300"
                               } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
                               value={formData.address}
                               onChange={handleInputChange}
+                              ref={homeAddressRef}
+                              onMouseEnter={onMouseEnterHomeAddressRef}
                             />
                             {errors.address && (
-                              <p className="text-red-500 text-sm mt-1">{errors.address}</p>
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.address}
+                              </p>
                             )}
                           </div>
                         </div>
@@ -573,7 +652,7 @@ const DonationDetails3 = () => {
                           onChange={() => {
                             setAgreedToTerms(!agreedToTerms);
                             if (!agreedToTerms) {
-                              setErrors({...errors, terms: ""});
+                              setErrors({ ...errors, terms: "" });
                             }
                           }}
                           className={`w-4 h-4 text-green-600 focus:ring-green-500 ${
@@ -585,7 +664,9 @@ const DonationDetails3 = () => {
                         </label>
                       </div>
                       {errors.terms && (
-                        <p className="text-red-500 text-sm mt-1">{errors.terms}</p>
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.terms}
+                        </p>
                       )}
                     </motion.div>
 
@@ -597,8 +678,8 @@ const DonationDetails3 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="flex flex-wrap gap-4 -mt-10 mb-10"
                     >
-                      <button 
-                        type="submit" 
+                      <button
+                        type="submit"
                         className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition"
                       >
                         Donate Now
@@ -611,7 +692,6 @@ const DonationDetails3 = () => {
                 </div>
               </div>
 
-              
               <motion.hr
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}

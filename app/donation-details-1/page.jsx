@@ -29,6 +29,194 @@ const DonationDetails1 = () => {
   const [selectedAmount, setSelectedAmount] = useState(1000);
   const [agreedToTerms, setAgreedToTerms] = useState(true);
 
+  const [formData, setFormData] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: "",
+  });
+
+  const [errors, setErrors] = useState({
+    mobileNumber: "",
+    mobileName: "",
+    fullName: "",
+    email: "",
+    region: "",
+    city: "",
+    address: "",
+    terms: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  const validateMobileNumber = (number) => {
+    const mobileRegex = /^\+\d{1,3}\s\d{3}\s\d{3}\s\d{3}$/;
+    return mobileRegex.test(number);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleDonation = (e) => {
+    e.preventDefault();
+
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. +237 686 529 762)";
+      isValid = false;
+    } else if (formData.mobileNumber.length < 2) {
+      newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileNumber.length > 16) {
+      newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
+      isValid = false;
+    }
+
+    if (!formData.mobileName) {
+      newErrors.mobileName = "Mobile money name is required";
+      isValid = false;
+    } else if (formData.mobileName.length < 2) {
+      newErrors.mobileName = " Mobile Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.mobileName.length > 30) {
+      newErrors.mobileName = " Mobile Name cannot exceed 30 characters";
+      isValid = false;
+    }
+
+    if (!formData.fullName) {
+      newErrors.fullName = "Full Name is required";
+      isValid = false;
+    } else if (formData.fullName.length < 2) {
+      newErrors.fullName = "Full Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.fullName.length > 40) {
+      newErrors.fullName = "Full Name cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email address is required";
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (!formData.region) {
+      newErrors.region = "Region is required";
+      isValid = false;
+    } else if (formData.region.length < 2) {
+      newErrors.region = "Region must be at least 2 characters";
+      isValid = false;
+    } else if (formData.region.length > 20) {
+      newErrors.region = "Region cannot exceed 20 characters";
+      isValid = false;
+    }
+
+    if (!formData.city) {
+      newErrors.city = "City/Town is required";
+      isValid = false;
+    } else if (formData.city.length < 2) {
+      newErrors.city = "City must be at least 2 characters";
+      isValid = false;
+    } else if (formData.city.length > 50) {
+      newErrors.city = "City cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!formData.address) {
+      newErrors.address = "Home address is required";
+      isValid = false;
+    } else if (formData.address.length < 2) {
+      newErrors.address = "Home Address must be at least 2 characters";
+      isValid = false;
+    } else if (formData.address.length > 50) {
+      newErrors.address = "Home Address cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!agreedToTerms) {
+      newErrors.terms = "You must agree to the Terms of Service";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (isValid) {
+      console.log("Donation input fields okay! .");
+    }
+
+    setFormData({
+      mobileNumber: "",
+      mobileName: "",
+      fullName: "",
+      email: "",
+      region: "",
+      city: "",
+      address: "",
+    });
+  };
+
+  const mobileMoneyNumberRef = useRef();
+  const mobileMoneyNameRef = useRef();
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+  const regionRef = useRef();
+  const cityRef = useRef();
+  const homeAddressRef = useRef();
+
+  const onMouseEnterMobileNUmberRef = () => {
+    mobileMoneyNumberRef.current.focus();
+  };
+
+  const onMouseEnterMobileMoneyNameRef = () => {
+    mobileMoneyNameRef.current.focus();
+  };
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+
+  const onMouseEnterRegionRef = () => {
+    regionRef.current.focus();
+  };
+
+  const onMouseEnterCityRef = () => {
+    cityRef.current.focus();
+  };
+
+  const onMouseEnterHomeAddressRef = () => {
+    homeAddressRef.current.focus();
+  };
+
   return (
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
@@ -267,28 +455,73 @@ const DonationDetails1 = () => {
                     <h4 className="text-lg font-bold mb-4">Payment Details</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="Mobile Money Number e.g +237 686 529 762*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Mobile_Money_Number"
-                          id="Mobile_Money_Number"
-                        />
-                        <input
-                          type="text"
-                          name="Mobile_Money_Name"
-                          id="Mobile_Money_Name"
-                          placeholder="Mobile Money Name e.g Alex Jordan*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Mobile Money Number e.g +237 686 529 762*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.mobileNumber
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            name="mobileNumber"
+                            id="Mobile_Money_Number"
+                            value={formData.mobileNumber}
+                            onChange={handleInputChange}
+                            ref={mobileMoneyNumberRef}
+                            onMouseEnter={onMouseEnterMobileNUmberRef}
+                          />
+                          {errors.mobileNumber && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.mobileNumber}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            name="mobileName"
+                            id="Mobile_Money_Name"
+                            placeholder="Mobile Money Name e.g Alex Jordan*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.mobileName
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.mobileName}
+                            onChange={handleInputChange}
+                            ref={mobileMoneyNameRef}
+                            onMouseEnter={onMouseEnterMobileMoneyNameRef}
+                          />
+                          {errors.mobileName && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.mobileName}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                      <input
-                        type="text"
-                        placeholder="Your Full Name*"
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        name="Full_Name"
-                        id="Full_Name"
-                      />
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Your Full Name*"
+                          className={`w-full px-4 py-2 border ${
+                            errors.fullName
+                              ? "border-red-500"
+                              : "border-gray-300"
+                          } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                          name="fullName"
+                          id="Full_Name"
+                          value={formData.fullName}
+                          onChange={handleInputChange}
+                          ref={fullNameRef}
+                          onMouseEnter={onMouseEnterFullNameRef}
+                        />
+                        {errors.fullName && (
+                          <p className="text-red-500 text-sm mt-1">
+                            {errors.fullName}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </motion.div>
 
@@ -303,36 +536,94 @@ const DonationDetails1 = () => {
                     <h4 className="text-lg font-bold mb-4">Address</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="email"
-                          placeholder="Email Address e.g name@gmail.com*"
-                          name="Email_Address"
-                          id="Email_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Region e.g South-west*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                          name="Region"
-                          id="Region"
-                        />
+                        <div>
+                          <input
+                            type="email"
+                            placeholder="Email Address e.g name@gmail.com*"
+                            name="email"
+                            id="Email_Address"
+                            className={`w-full px-4 py-2 border ${
+                              errors.email
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            ref={emailAddressRef}
+                            onMouseEnter={onMouseEnterEmailAddressRef}
+                          />
+                          {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.email}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Region e.g South-west*"
+                            className={`w-full px-4 py-2 border ${
+                              errors.region
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            name="region"
+                            id="Region"
+                            value={formData.region}
+                            onChange={handleInputChange}
+                            ref={regionRef}
+                            onMouseEnter={onMouseEnterRegionRef}
+                          />
+                          {errors.region && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.region}
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="City/Town e.g Limbe*"
-                          name="City_Town"
-                          id="City_Town"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
-                          name="Home_Address"
-                          id="Home_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
-                        />
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="City/Town e.g Limbe*"
+                            name="city"
+                            id="City_Town"
+                            className={`w-full px-4 py-2 border ${
+                              errors.city ? "border-red-500" : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.city}
+                            onChange={handleInputChange}
+                            ref={cityRef}
+                            onMouseEnter={onMouseEnterCityRef}
+                          />
+                          {errors.city && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.city}
+                            </p>
+                          )}
+                        </div>
+                        <div>
+                          <input
+                            type="text"
+                            placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
+                            name="address"
+                            id="Home_Address"
+                            className={`w-full px-4 py-2 border ${
+                              errors.address
+                                ? "border-red-500"
+                                : "border-gray-300"
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            value={formData.address}
+                            onChange={handleInputChange}
+                            ref={homeAddressRef}
+                            onMouseEnter={onMouseEnterHomeAddressRef}
+                          />
+                          {errors.address && (
+                            <p className="text-red-500 text-sm mt-1">
+                              {errors.address}
+                            </p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -922,7 +1213,9 @@ const DonationDetails1 = () => {
                 viewport={{ once: true, amount: 0.1 }}
                 className="bg-white rounded-lg shadow-md p-6"
               >
-                <h3 className="text-lg font-bold text-gray-800 mb-2 mt-12">Tags</h3>
+                <h3 className="text-lg font-bold text-gray-800 mb-2 mt-12">
+                  Tags
+                </h3>
 
                 <div className="flex flex-wrap gap-2">
                   <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
