@@ -70,7 +70,7 @@ const DonationList = () => {
       progress: 55,
       backgroundColor: "bg-emerald-600",
       title:
-        "Give hope, change lives—your donation can provide shelter and support for the homeless today!",
+        "Give hope, change lives — Your donation can provide shelter and support for the homeless today!",
       description:
         "Join our mission to help the homeless find stability and support. Your generous donations provide essential services, shelter, and resources, empowering individuals to rebuild their lives and regain dignity.",
       totalAmt: "28, 500, 000 Francs",

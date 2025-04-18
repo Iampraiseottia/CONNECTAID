@@ -345,7 +345,7 @@ const DonationDetails4 = () => {
                           <h4 className="font-semibold">Goals</h4>
                         </div>
                         <div>
-                          <p className="text-gray-600">26, 058, 500Francs</p>
+                          <p className="text-gray-600">26, 058, 500 Francs</p>
                           <h4 className="font-semibold">Raised</h4>
                         </div>
                       </div>
