@@ -235,7 +235,7 @@ const DonationDetails4 = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="MEDICINE"
+          title="WATER"
           description="Quench thirst, transform lives"
           breadcrumAlt="Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"

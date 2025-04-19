@@ -84,7 +84,7 @@ const DonationList = () => {
       progress: 22,
       backgroundColor: "bg-emerald-600",
       title:
-        "Act now, save lives—your donation can support those facing extreme hardships and urgent needs!",
+        "Act now, save lives — Your donation can support those facing extreme hardships and urgent needs!",
       description:
         "Help us provide immediate assistance to individuals in extreme situations. Your generous donations fund critical resources, emergency aid, and support services, ensuring that no one faces their struggles alone.",
       totalAmt: "100, 000, 000, 000 Francs",
