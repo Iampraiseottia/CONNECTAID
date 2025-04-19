@@ -10,8 +10,7 @@ import { faEnvelope, faLock, faEye } from "@fortawesome/free-solid-svg-icons";
 
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
-import { motion } from "motion/react" 
-
+import { motion } from "motion/react";
 
 const Login = () => {
   const emailRef = useRef();
@@ -32,10 +31,13 @@ const Login = () => {
   };
 
   return (
-    <motion.main initial={{opacity: 0, y: 100}}
-    whileInView={{y: 0, opacity: 1}}
-    transition={{duration: 0.5, delay: 0.5}} 
-    viewport={{once: true, amount: 0.1}}  className="py-32 flex items-center justify-center">
+    <motion.main
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
+      viewport={{ once: true, amount: 0.1 }}
+      className="py-32 flex items-center justify-center"
+    >
       <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
         <div className="flex items-center justify-center">
           <Image
@@ -125,15 +127,21 @@ const Login = () => {
           </Link>
         </p>
 
-        <Link href="#" target="_blank"
+        <Link
+          href="#"
+          target="_blank"
           className="mx-[10%] mt-4 mb-4 py-4 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out duration-200 hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-xl text-xl font-bold tracking-wide w-[80%] "
-          
         >
-          <Image height={30} width={30} src="/icon/google.png" className="mr-3 " /> 
+          <Image
+            height={30}
+            width={30}
+            src="/icon/google.png"
+            className="mr-3 "
+          />
           <span>Login With Google</span>
-        </Link> 
+        </Link>
       </div>
-    </motion.main> 
+    </motion.main>
   );
 };
 

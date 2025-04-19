@@ -50,7 +50,7 @@ const LoginPage = () => {
       </motion.div>
 
   
-      {/* Our Blog */}
+      {/* Login */}
       <Login />
 
       {/* Picture Gallery  */}

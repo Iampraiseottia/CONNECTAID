@@ -50,7 +50,7 @@ const Registration = () => {
       </motion.div>
 
   
-      {/* Our Blog */}
+      {/* Registration */}
       <Register />
 
       {/* Picture Gallery  */}

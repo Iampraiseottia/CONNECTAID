@@ -23,8 +23,8 @@ const Breadcrumb = ({
       <div className="container mx-auto px-6 py-12 md:py-16 relative z-10">
         <div className="text-white ">
           <nav
-            className="mb-2 breadCrumbBg shadow py-2 px-5 w-72 rounded"
-            aria-label="breadcrumb"
+            className="mb-2 breadCrumbBg shadow py-2 px-5 w-96 rounded"
+            aria-label="breadcrumb" 
           >
             <ul className="flex items-center text-lg">
               <li className="hover:cursor-pointer hover:opacity-80">
