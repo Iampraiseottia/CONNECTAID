@@ -125,7 +125,7 @@ const Login = () => {
           </Link>
         </p>
 
-        <Link href="#"
+        <Link href="#" target="_blank"
           className="mx-[10%] mt-4 mb-4 py-4 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out duration-200 hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-xl text-xl font-bold tracking-wide w-[80%] "
           
         >
