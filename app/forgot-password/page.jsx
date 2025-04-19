@@ -1,6 +1,7 @@
 "use client";
 
-import { React, useRef } from "react";
+import { React, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import globalStyle from "../globals.css";
 
@@ -30,6 +31,32 @@ const ForgotPassword = () => {
 
   const onMouseEnterEmailRef = () => {
     emailRef.current.focus();
+  };
+
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setError("");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email.trim()) {
+      setError("Please enter an Email Address");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    router.push("/verify");
   };
 
   return (
@@ -79,7 +106,7 @@ const ForgotPassword = () => {
 
           <br />
 
-          <form className="">
+          <form onSubmit={handleSubmit} className="">
             <div className="px-[10%] mt-4 mb-4">
               <label htmlFor="emailAddress" className="text-xl ">
                 <FontAwesomeIcon
@@ -91,14 +118,23 @@ const ForgotPassword = () => {
               <br />
 
               <input
+                id="email"
                 type="email"
-                name="emailAddress"
-                placeholder="Your Email Address"
-                id="emailAddress"
                 ref={emailRef}
+                value={email}
+                onChange={handleEmailChange}
                 onMouseEnter={onMouseEnterEmailRef}
-                className="border-[1px] border-slate-500 px-5 mt-3 ease-in-out duration-200 focus:outline-none focus:ring-1 focus:ring-teal-400 outline-none w-full py-3 text-[18px] rounded-lg "
+                placeholder="Enter Your Email Address"
+                className={`w-full text-base bg-transparent rounded-xl border-2 ${
+                  error ? "border-red-500" : "border-green-500"
+                } py-3 px-4 focus:ring-1 focus:ring-[#0ef] outline-none focus:outline-none duration-300 mt-3 `}
               />
+
+              {error && (
+                <p className="text-red-500 mt-2 text-right font-medium">
+                  {error}
+                </p>
+              )}
             </div>
 
             <button
