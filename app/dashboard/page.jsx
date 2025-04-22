@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { Suspense } from "react";
+
+import SideBar from "../components/SideBar";
+
+import globalStyle from "../globals.css";
 
 const DashBoard = () => {
   return (
-    <div>DashBoard</div>
-  )
-}
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-screen">
+          <div id="fountainG">
+            <div id="fountainG_1" class="fountainG"></div>
+            <div id="fountainG_2" class="fountainG"></div>
+            <div id="fountainG_3" class="fountainG"></div>
+            <div id="fountainG_4" class="fountainG"></div>
+            <div id="fountainG_5" class="fountainG"></div>
+            <div id="fountainG_6" class="fountainG"></div>
+            <div id="fountainG_7" class="fountainG"></div>
+            <div id="fountainG_8" class="fountainG"></div>
+          </div>
+        </div>
+      }
+    >
+      <SideBar />
+    </Suspense>
+  );
+};
 
 export default DashBoard;

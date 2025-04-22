@@ -204,12 +204,13 @@ const Register = () => {
             </div>
           </div>
 
-          <button
+          <Link
+            href="/dashboard"
             className="mx-[10%] mt-4 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"
-            type="submit"
+            // type="submit"
           >
             Register
-          </button>
+          </Link>
         </form>
 
         <p className="mx-[10%] mt-4 mb-4 text-center py-2 ">
@@ -228,7 +229,7 @@ const Register = () => {
         >
           <Image
             height={30}
-            width={30} 
+            width={30}
             src="/icon/google.png"
             className="mr-3 "
           />
