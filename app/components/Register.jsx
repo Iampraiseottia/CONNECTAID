@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,6 +12,8 @@ import {
   faEye,
   faUser,
   faCircleUser,
+  faExclamationCircle,
+  faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
@@ -19,41 +21,168 @@ import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { motion } from "motion/react";
 
 const Register = () => {
+  const router = useRouter();
   const emailRef = useRef();
   const passwordRef = useRef();
   const fullNameRef = useRef();
   const userNameRef = useRef();
   const confirmPasswordRef = useRef();
 
+  const [formValues, setFormValues] = useState({
+    fullName: "",
+    email: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    userType: "Donor",
+  });
+
+  const [errors, setErrors] = useState({
+    fullName: "",
+    email: "",
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    general: "",
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const onMouseEnterFullNameRef = () => {
     fullNameRef.current.focus();
-  };
-
-  const onMouseEnterConfirmPasswordRef = () => {
-    confirmPasswordRef.current.focus();
-  };
-
-  const onMouseEnterUserNameRef = () => {
-    userNameRef.current.focus();
   };
 
   const onMouseEnterEmailRef = () => {
     emailRef.current.focus();
   };
 
+  const onMouseEnterUserNameRef = () => {
+    userNameRef.current.focus();
+  };
+
   const onMouseEnterPasswordRef = () => {
     passwordRef.current.focus();
   };
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const onMouseEnterConfirmPasswordRef = () => {
+    confirmPasswordRef.current.focus();
   };
 
-  const toggleConfirmPasswordVisibility = () => {
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () =>
     setShowConfirmPassword(!showConfirmPassword);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
+
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  const handleUserTypeChange = (e) => {
+    setFormValues({
+      ...formValues,
+      userType: e.target.id,
+    });
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { ...errors };
+
+    if (!formValues.fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+      isValid = false;
+    } else if (formValues.fullName.trim().length < 7) {
+      newErrors.fullName = "Full name must be at least 7 characters";
+      isValid = false;
+    } else if (formValues.fullName.trim().length > 38) {
+      newErrors.fullName = "Full name must not exceed 37 characters";
+      isValid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formValues.email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!emailRegex.test(formValues.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (!formValues.userName.trim()) {
+      newErrors.userName = "Username is required";
+      isValid = false;
+    } else if (formValues.userName.trim().length < 3) {
+      newErrors.userName = "Username must be at least 3 characters";
+      isValid = false;
+    } else if (formValues.userName.trim().length > 15) {
+      newErrors.userName = "Username must not exceed 14 characters";
+      isValid = false;
+    }
+
+    if (!formValues.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (formValues.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters";
+      isValid = false;
+    } else if (!/(?=.*[A-Z])/.test(formValues.password)) {
+      newErrors.password =
+        "Password must contain at least one uppercase letter";
+      isValid = false;
+    } else if (!/(?=.*[0-9])/.test(formValues.password)) {
+      newErrors.password = "Password must contain at least one number";
+      isValid = false;
+    }
+
+    if (!formValues.confirmPassword) {
+      newErrors.confirmPassword = "Please confirm your password";
+      isValid = false;
+    } else if (formValues.password !== formValues.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      if (formValues.userType === "Donor") {
+        router.push("/dashboardDonor");
+      } else {
+        router.push("/dashboardSeeker");
+      }
+    } else {
+      // Scroll to the first error
+      const firstErrorField = Object.keys(errors).find((key) => errors[key]);
+      if (firstErrorField && firstErrorField !== "general") {
+        document.getElementById(firstErrorField)?.focus();
+      }
+    }
+  };
+
+  // Error message component
+  const ErrorMessage = ({ message }) => {
+    return message ? (
+      <p className="text-red-500 text-sm mt-1 flex items-center justify-start">
+        <FontAwesomeIcon icon={faExclamationCircle} className="mr-1" />{" "}
+        {message}
+      </p>
+    ) : null;
   };
 
   return (
@@ -78,7 +207,15 @@ const Register = () => {
           </h1>
         </div>
 
-        <form className="mt-6">
+        {errors.general && (
+          <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+              <span className="block sm:inline">{errors.general}</span>
+            </div>
+          </div>
+        )}
+
+        <form className="mt-6" onSubmit={handleSubmit}>
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
             <label
               htmlFor="fullName"
@@ -95,9 +232,15 @@ const Register = () => {
               placeholder="Your Full Names"
               id="fullName"
               ref={fullNameRef}
+              value={formValues.fullName}
+              onChange={handleInputChange}
               onMouseEnter={onMouseEnterFullNameRef}
-              className="border border-slate-400 px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg"
+              className={`border ${
+                errors.fullName ? "border-red-500" : "border-slate-400"
+              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg
+              `}
             />
+            <ErrorMessage message={errors.fullName} />
           </div>
 
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
@@ -115,13 +258,18 @@ const Register = () => {
 
             <input
               type="email"
-              name="emailAddress"
+              name="email"
               placeholder="Your Email Address"
               id="emailAddress"
               ref={emailRef}
+              value={formValues.email}
+              onChange={handleInputChange}
               onMouseEnter={onMouseEnterEmailRef}
-              className="border border-slate-400 px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg"
+              className={`border ${
+                errors.email ? "border-red-500" : "border-slate-400"
+              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
             />
+            <ErrorMessage message={errors.email} />
           </div>
 
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
@@ -143,9 +291,14 @@ const Register = () => {
               placeholder="Your Username"
               id="userName"
               ref={userNameRef}
+              value={formValues.userName}
+              onChange={handleInputChange}
               onMouseEnter={onMouseEnterUserNameRef}
-              className="border border-slate-400 px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg"
+              className={`border ${
+                errors.userName ? "border-red-500" : "border-slate-400"
+              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
             />
+            <ErrorMessage message={errors.userName} />
           </div>
 
           <div className="flex flex-col gap-1 md:gap-2 px-4 sm:px-6 md:px-8 lg:px-10 mt-4 md:mt-6 mb-4 md:mb-6">
@@ -163,7 +316,11 @@ const Register = () => {
                 type={showPassword ? "text" : "password"}
                 ref={passwordRef}
                 name="password"
-                className="border border-slate-400 px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg"
+                value={formValues.password}
+                onChange={handleInputChange}
+                className={`border ${
+                  errors.password ? "border-red-500" : "border-slate-400"
+                } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
                 onMouseEnter={onMouseEnterPasswordRef}
                 id="password"
                 placeholder="Your Password"
@@ -179,6 +336,13 @@ const Register = () => {
                 />
               </button>
             </div>
+            <ErrorMessage message={errors.password} />
+            {formValues.password && !errors.password && (
+              <p className="text-green-500 text-sm mt-1 flex items-center">
+                <FontAwesomeIcon icon={faCheckCircle} className="mr-1" />{" "}
+                Password meets requirements
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-1 md:gap-2 px-4 sm:px-6 md:px-8 lg:px-10 mt-4 md:mt-6 mb-4 md:mb-6">
@@ -196,7 +360,11 @@ const Register = () => {
                 type={showConfirmPassword ? "text" : "password"}
                 ref={confirmPasswordRef}
                 name="confirmPassword"
-                className="border border-slate-400 px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg"
+                value={formValues.confirmPassword}
+                onChange={handleInputChange}
+                className={`border ${
+                  errors.confirmPassword ? "border-red-500" : "border-slate-400"
+                } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
                 onMouseEnter={onMouseEnterConfirmPasswordRef}
                 id="confirmPassword"
                 placeholder="Confirm Your Password"
@@ -212,6 +380,15 @@ const Register = () => {
                 />
               </button>
             </div>
+            <ErrorMessage message={errors.confirmPassword} />
+            {formValues.confirmPassword &&
+              formValues.password === formValues.confirmPassword &&
+              !errors.confirmPassword && (
+                <p className="text-green-500 text-sm mt-1 flex items-center">
+                  <FontAwesomeIcon icon={faCheckCircle} className="mr-1" />{" "}
+                  Passwords match
+                </p>
+              )}
           </div>
 
           <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
@@ -224,8 +401,9 @@ const Register = () => {
                   type="radio"
                   name="userType"
                   id="Donor"
-                  defaultChecked
-                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer" 
+                  checked={formValues.userType === "Donor"}
+                  onChange={handleUserTypeChange}
+                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
                 />
                 <label
                   htmlFor="Donor"
@@ -239,6 +417,8 @@ const Register = () => {
                   type="radio"
                   name="userType"
                   id="Seeker"
+                  checked={formValues.userType === "Seeker"}
+                  onChange={handleUserTypeChange}
                   className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
                 />
                 <label
@@ -252,19 +432,19 @@ const Register = () => {
           </fieldset>
 
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6 ">
-            <Link
-              href="/dashboard"
+            <button
+              type="submit"
               className="w-full mt-4 mb-4 py-3 md:py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl md:text-2xl lg:text-3xl font-bold tracking-wide rounded-lg"
             >
               Register
-            </Link>
+            </button>
           </div>
         </form>
 
         <p className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-2 text-center py-2 text-sm md:text-base">
           Already have an account?{" "}
           <Link
-            href="/forgot-password"
+            href="/login"
             className="text-teal-500 font-medium hover:underline"
           >
             Login
