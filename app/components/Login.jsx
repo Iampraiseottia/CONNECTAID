@@ -244,7 +244,7 @@ const Login = () => {
 
           <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
             <legend className="text-xl font-bold tracking-wide">
-              Register As A{" "}
+              Login As A{" "}
             </legend>
             <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
               <div className="flex items-center">

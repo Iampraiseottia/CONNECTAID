@@ -39,6 +39,7 @@ const NewPassword = () => {
   });
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formValues, setFormValues] = useState({ userType: "Donor" }); // Default to Donor
 
   const new_Pass = useRef(null);
   const confirm_new_Pass = useRef(null);
@@ -99,7 +100,11 @@ const NewPassword = () => {
       return;
     }
 
-    router.push("/dashboard");
+    if (formValues.userType === "Donor") {
+      router.push("/dashboard-donor");
+    } else if (formValues.userType === "Seeker") {
+      router.push("/dashboard-seeker");
+    }
   };
 
   const toggleNewPasswordVisibility = () => {
@@ -108,6 +113,10 @@ const NewPassword = () => {
 
   const toggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  const handleUserTypeChange = (e) => {
+    setFormValues({ ...formValues, userType: e.target.value });
   };
 
   return (
@@ -140,17 +149,18 @@ const NewPassword = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true, amount: 0.1 }}
-        className="py-32 flex items-center justify-center"
+        className="py-16 md:py-24 lg:py-32 flex items-center justify-center px-4 min-h-screen"
       >
-        <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
-          <div className="flex items-center justify-center">
+        <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <Image
               src="/icon/logo.png"
-              height={100}
-              width={100}
+              height={80}
+              width={80}
               alt="ConnectAID Logo"
+              className="w-16 h-16 md:w-20 md:h-20"
             />
-            <h1 className="ml-4 text-4xl font-bold tracking-wide">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left">
               ConnectAID
             </h1>
           </div>
@@ -248,6 +258,48 @@ const NewPassword = () => {
                 </motion.p>
               )}
             </div>
+
+            <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-5 sm:mx-20 mt-8 ">
+              <legend className="text-xl font-bold tracking-wide">
+                Login As A{" "}
+              </legend>
+              <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    name="userType"
+                    id="Donor"
+                    value="Donor"
+                    checked={formValues.userType === "Donor"}
+                    onChange={handleUserTypeChange}
+                    className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
+                  />
+                  <label
+                    htmlFor="Donor"
+                    className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  >
+                    Donor
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    type="radio"
+                    name="userType"
+                    id="Seeker"
+                    value="Seeker"
+                    checked={formValues.userType === "Seeker"}
+                    onChange={handleUserTypeChange}
+                    className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
+                  />
+                  <label
+                    htmlFor="Seeker"
+                    className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  >
+                    Seeker
+                  </label>
+                </div>
+              </div>
+            </fieldset>
 
             <button
               className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"
