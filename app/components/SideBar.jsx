@@ -15,7 +15,6 @@ import {
   faAddressCard,
   faIdCard,
   faClipboard,
-  faMe
 } from "@fortawesome/free-solid-svg-icons";
 
 import Metadata from "./Metadata";
@@ -35,6 +34,8 @@ const SideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [expandedSideBar, setExpandedSideBar] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
   const [metadata, setMetadata] = useState({
     title: "Dashboard - ConnectAID Web Application",
     description:
@@ -43,7 +44,7 @@ const SideBar = () => {
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
-  const searchParams = useSearchParams(); 
+  const searchParams = useSearchParams();
   const componentParam = searchParams.get("component");
 
   // Update metadata based on active component
@@ -54,8 +55,8 @@ const SideBar = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      campaigns: {
-        title: "All Donation Campaigns - ConnectAID Web Application",
+      Campaigns: {
+        title: "All Campaigns - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -71,6 +72,11 @@ const SideBar = () => {
       },
       survey: {
         title: "Survey - ConnectAID Web Application",
+        description:
+          "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
+      },
+      MyDonations: {
+        title: "My Donations - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -101,19 +107,28 @@ const SideBar = () => {
   const handleComponentChange = (component) => {
     setActiveComponent(component);
     updateMetadata(component);
-    if (isMobile && expandedSideBar) setExpandedSideBar(false);
+    if ((isMobile || isTablet) && expandedSideBar) setExpandedSideBar(false);
   };
 
   // Handle responsive behavior
   useEffect(() => {
     const handleResize = () => {
-      const mobile = window.innerWidth < 768;
-      setIsMobile(mobile);
+      const width = window.innerWidth;
+      const mobile = width < 768;
+      const tablet = width >= 768 && width < 1024;
+      const desktop = width >= 1024;
 
-      if (mobile && expandedSideBar) {
-        setExpandedSideBar(false);
-      } else if (!mobile && !expandedSideBar) {
+      setIsMobile(mobile);
+      setIsTablet(tablet);
+      setIsDesktop(desktop);
+
+      // On desktop, always keep sidebar expanded
+      if (desktop) {
         setExpandedSideBar(true);
+      }
+      // On mobile, collapse by default
+      else if (mobile) {
+        setExpandedSideBar(false);
       }
     };
 
@@ -148,23 +163,66 @@ const SideBar = () => {
     }
   };
 
+  // Get sidebar width based on device type and state
+  const getSidebarWidth = () => {
+    if (expandedSideBar) {
+      if (isMobile) return "w-4/5";
+      if (isTablet) return "w-[35%]";
+      return "w-1/6";
+    } else {
+      if (isMobile) return "w-0";
+      if (isTablet) return "w-[60px]";
+      return "w-1/6";
+    }
+  };
+
+  // Get content margin based on device type and sidebar state
+  const getContentMargin = () => {
+    if (isMobile) {
+      return expandedSideBar ? "ml-0" : "ml-0";
+    } else if (isTablet) {
+      return expandedSideBar ? "ml-[35%]" : "ml-[70px]";
+    } else { 
+      return "ml-[16.67%]";
+    }
+  };
+
+  // Get content width based on device type and sidebar state
+  const getContentWidth = () => {
+    if (isMobile) {
+      return "100%";
+    } else if (isTablet) {
+      return expandedSideBar ? "calc(100% - 25%)" : "calc(100% - 60px)";
+    } else {
+      return "calc(100% - 16.67%)";
+    }
+  };
+
   return (
     <section className="w-full relative flex">
       <Metadata title={metadata.title} description={metadata.description} />
 
+      {/* Mobile Toggle Button - Always visible on mobile */}
+      {isMobile && (
+        <button
+          onClick={() => setExpandedSideBar((current) => !current)}
+          className="fixed top-4 left-4 z-30 p-2 bg-slate-700 text-white rounded-lg shadow-lg hover:bg-slate-600"
+          aria-label="Toggle Sidebar"
+        >
+          {expandedSideBar ? (
+            <ChevronFirst size={30} />
+          ) : (
+            <ChevronLast size={30} />
+          )}
+        </button>
+      )}
+
       {/* Dashboard Left Section (Side Bar) */}
       <div
-        className={`bg-slate-700 duration-500 fixed z-20 dashboard-sidebar-border h-[100vh] top-0 left-0 border-2 border-slate-700  border-solid text-center text-white text-2xl font-semibold transition-all ease-in-out ${
-          expandedSideBar
-            ? isMobile
-              ? "w-4/5 md:w-1/6 left-0"
-              : "w-1/6 left-0"
-            : isMobile
-            ? "w-[60px] left-0"
-            : "w-[5%] left-0"
-        }`}
+        className={`bg-slate-700 duration-500 fixed z-20 dashboard-sidebar-border h-[100vh] top-0 left-0 border-2 border-slate-700 border-solid text-center text-white text-2xl font-semibold transition-all ease-in-out ${getSidebarWidth()}`}
         style={{
           overflowX: "hidden",
+          overflowY: "auto",
         }}
       >
         <div className="flex items-start justify-evenly flex-row">
@@ -179,38 +237,46 @@ const SideBar = () => {
                 className={`overflow-hidden transition-all ${
                   expandedSideBar
                     ? "w-32 lg:w-32 h-32 mt-4 mr-10"
-                    : "w-14 h-14 mx-auto"
+                    : isTablet
+                    ? "w-14 h-14 mx-auto"
+                    : "w-32 lg:w-32 h-32 mt-4 mr-10"
                 }`}
                 alt="ConnectAID Logo"
               />
               <h1
                 className={`tracking-wider text-4xl font-extrabold overflow-hidden transition-all ${
-                  expandedSideBar ? "w-auto" : "w-0 opacity-0"
+                  expandedSideBar || isDesktop ? "w-auto" : "w-0 opacity-0"
                 }`}
               >
                 ConnectAID
               </h1>
             </div>
           </div>
-          <button
-            onClick={() => setExpandedSideBar((current) => !current)}
-            className="absolute p-1.5 rounded-lg text-[lightseagreen] bg-gray-100 top-7 right-5 hover:cursor-pointer ease-in-out z-10"
-          >
-            {expandedSideBar ? (
-              <ChevronFirst size={30} />
-            ) : (
-              <ChevronLast size={30} />
-            )}
-          </button>
+
+          {/* Toggle button for tablet */}
+          {isTablet && (
+            <button
+              onClick={() => setExpandedSideBar((current) => !current)}
+              className="absolute p-1.5 rounded-lg text-[lightseagreen] bg-gray-100 top-7 right-5 hover:cursor-pointer ease-in-out z-10"
+            >
+              {expandedSideBar ? (
+                <ChevronFirst size={30} />
+              ) : (
+                <ChevronLast size={30} />
+              )}
+            </button>
+          )}
         </div>
 
         <div
           onClick={() => handleComponentChange("dashboardMain")}
           title="Dashboard"
           className={`mb-2 flex items-center px-4 py-2 rounded-lg ease-in-out hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar
+            expandedSideBar || isDesktop
               ? "mt-[19px] justify-start"
-              : "mt-[-30px] justify-center"
+              : isTablet
+              ? "mt-[-30px] justify-center"
+              : ""
           } ${
             activeComponent === "dashboardMain" ? "bg-white text-teal-500" : ""
           }`}
@@ -218,12 +284,14 @@ const SideBar = () => {
           <FontAwesomeIcon
             icon={faHome}
             className={`transition-all ${
-              expandedSideBar ? "h-6 w-6" : "w-6 h-6"
+              expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
             }`}
           />
           <span
             className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar ? "w-auto opacity-100" : "w-0 opacity-0"
+              expandedSideBar || isDesktop
+                ? "w-auto opacity-100"
+                : "w-0 opacity-0"
             }`}
           >
             Dashboard
@@ -234,11 +302,11 @@ const SideBar = () => {
           <div
             title="Complete"
             className={`flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 ease-in-out cursor-pointer transition-all ${
-              expandedSideBar ? "justify-between" : "justify-center"
+              expandedSideBar || isDesktop
+                ? "justify-between"
+                : "justify-center"
             } ${isOpen ? "mb-1" : ""} ${
-              ["about-you", "income", "identity", "survey"].includes(
-                activeComponent
-              )
+              ["about-you", "identity", "survey"].includes(activeComponent)
                 ? "bg-white text-teal-500"
                 : ""
             }`}
@@ -246,16 +314,16 @@ const SideBar = () => {
           >
             <div
               className={`flex items-center ${
-                expandedSideBar ? "" : "justify-center"
+                expandedSideBar || isDesktop ? "" : "justify-center"
               }`}
             >
               <FileText
-                size={expandedSideBar ? 20 : 25}
-                className="transition-all "
+                size={expandedSideBar || isDesktop ? 20 : 25}
+                className="transition-all"
               />
               <span
                 className={`ml-3 transition-all ${
-                  expandedSideBar ? "opacity-100" : "opacity-0 w-0"
+                  expandedSideBar || isDesktop ? "opacity-100" : "opacity-0 w-0"
                 }`}
               >
                 Complete
@@ -264,16 +332,18 @@ const SideBar = () => {
             <ChevronDown
               className={`h-5 w-5 transition-transform ${
                 isOpen ? "rotate-180" : ""
-              } ${expandedSideBar ? "ml-2" : "ml-0"}`}
+              } ${expandedSideBar || isDesktop ? "ml-2" : "hidden"}`}
             />
           </div>
 
           {isOpen && (
-            <ul className="mt-1 w-full rounded-lg overflow-hidden ease-in-out transition-all bg-teal-600">
+            <ul className="mt-1 w-full rounded-lg overflow-hidden ease-in-out transition-all bg-[gray]">
               <li
                 title="About You"
                 className={`py-2 pl-4 pr-4 hover:bg-white ease-in-out hover:text-teal-500 cursor-pointer transition-all ${
-                  expandedSideBar ? "text-left pl-8" : "text-center"
+                  expandedSideBar || isDesktop
+                    ? "text-left pl-8"
+                    : "text-center"
                 } ${
                   activeComponent === "about-you"
                     ? "bg-white text-teal-500"
@@ -284,12 +354,16 @@ const SideBar = () => {
                 <FontAwesomeIcon
                   icon={faAddressCard}
                   className={`transition-all ${
-                    expandedSideBar ? "h-6 w-6 mr-2" : "w-6 h-6 mx-auto"
+                    expandedSideBar || isDesktop
+                      ? "h-6 w-6 mr-2"
+                      : "w-6 h-6 mx-auto"
                   }`}
                 />
                 <span
                   className={`transition-all ${
-                    expandedSideBar ? "inline-block text-[18px]" : "hidden"
+                    expandedSideBar || isDesktop
+                      ? "inline-block text-[18px]"
+                      : "hidden"
                   }`}
                 >
                   {"About You"}
@@ -300,7 +374,9 @@ const SideBar = () => {
                 onClick={() => handleComponentChange("identity")}
                 title="Identity"
                 className={`py-2 pl-4 pr-4 hover:bg-white ease-in-out hover:text-teal-500 cursor-pointer transition-all ${
-                  expandedSideBar ? "text-left pl-8" : "text-center"
+                  expandedSideBar || isDesktop
+                    ? "text-left pl-8"
+                    : "text-center"
                 } ${
                   activeComponent === "identity" ? "bg-white text-teal-500" : ""
                 }`}
@@ -308,12 +384,16 @@ const SideBar = () => {
                 <FontAwesomeIcon
                   icon={faIdCard}
                   className={`transition-all ${
-                    expandedSideBar ? "h-6 w-6 mr-2" : "w-6 h-6 mx-auto"
+                    expandedSideBar || isDesktop
+                      ? "h-6 w-6 mr-2"
+                      : "w-6 h-6 mx-auto"
                   }`}
                 />
                 <span
                   className={`transition-all ${
-                    expandedSideBar ? "inline-block text-[19px]" : "hidden"
+                    expandedSideBar || isDesktop
+                      ? "inline-block text-[19px]"
+                      : "hidden"
                   }`}
                 >
                   Identity
@@ -324,7 +404,9 @@ const SideBar = () => {
                 onClick={() => handleComponentChange("survey")}
                 title="Survey"
                 className={`py-2 pl-4 pr-4 hover:bg-white ease-in-out hover:text-teal-500 cursor-pointer transition-all ${
-                  expandedSideBar ? "text-left pl-8" : "text-center"
+                  expandedSideBar || isDesktop
+                    ? "text-left pl-8"
+                    : "text-center"
                 } ${
                   activeComponent === "survey" ? "bg-white text-teal-500" : ""
                 }`}
@@ -332,12 +414,16 @@ const SideBar = () => {
                 <FontAwesomeIcon
                   icon={faClipboard}
                   className={`transition-all ${
-                    expandedSideBar ? "h-6 w-6 mr-2" : "w-6 h-6 mx-auto"
+                    expandedSideBar || isDesktop
+                      ? "h-6 w-6 mr-2"
+                      : "w-6 h-6 mx-auto"
                   }`}
                 />
                 <span
                   className={`transition-all ${
-                    expandedSideBar ? "inline-block text-[19px]" : "hidden"
+                    expandedSideBar || isDesktop
+                      ? "inline-block text-[19px]"
+                      : "hidden"
                   }`}
                 >
                   Survey
@@ -351,18 +437,22 @@ const SideBar = () => {
           onClick={() => handleComponentChange("MyDonations")}
           title="My Donations"
           className={`mb-2 flex items-center px-4 py-2 ease-in-out rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar ? "justify-start" : "justify-center"
-          } ${activeComponent === "MyDonations" ? "bg-white text-teal-500" : ""}`}
+            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
+          } ${
+            activeComponent === "MyDonations" ? "bg-white text-teal-500" : ""
+          }`}
         >
           <FontAwesomeIcon
             icon={faMoneyBill}
             className={`transition-all ${
-              expandedSideBar ? "h-8 w-8" : "w-6 h-6"
+              expandedSideBar || isDesktop ? "h-8 w-8" : "w-6 h-6"
             }`}
           />
           <span
             className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar ? "w-auto opacity-100" : "w-0 opacity-0"
+              expandedSideBar || isDesktop
+                ? "w-auto opacity-100"
+                : "w-0 opacity-0"
             }`}
           >
             My Donations
@@ -373,65 +463,66 @@ const SideBar = () => {
           onClick={() => handleComponentChange("Campaigns")}
           title="Campaigns"
           className={`mb-2 flex items-center px-4 py-2 ease-in-out rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar ? "justify-start" : "justify-center"
-          } ${
-            activeComponent === "Campaigns" ? "bg-white text-teal-500" : ""
-          }`}
+            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
+          } ${activeComponent === "Campaigns" ? "bg-white text-teal-500" : ""}`}
         >
           <FontAwesomeIcon
             icon={faPeopleGroup}
             className={`transition-all ${
-              expandedSideBar ? "h-7 w-7" : "w-6 h-6"
+              expandedSideBar || isDesktop ? "h-7 w-7" : "w-6 h-6"
             }`}
           />
           <span
             className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar ? "w-auto opacity-100" : "w-0 opacity-0"
+              expandedSideBar || isDesktop
+                ? "w-auto opacity-100"
+                : "w-0 opacity-0"
             }`}
           >
-            Campaigns 
+            Campaigns
           </span>
         </div>
 
-        <div 
+        <div
           onClick={() => handleComponentChange("profile")}
           title="Profile"
           className={`mb-6 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar ? "justify-start" : "justify-center"
+            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
           } ${activeComponent === "profile" ? "bg-white text-teal-500" : ""}`}
         >
           <FontAwesomeIcon
             icon={faUser}
             className={`transition-all ${
-              expandedSideBar ? "h-6 w-6" : "w-6 h-6"
+              expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
             }`}
           />
           <span
             className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar ? "w-auto opacity-100" : "w-0 opacity-0"
+              expandedSideBar || isDesktop
+                ? "w-auto opacity-100"
+                : "w-0 opacity-0"
             }`}
           >
             Profile
           </span>
         </div>
 
-
         <div
           onClick={() => handleComponentChange("logout")}
           title="Logout"
           className={`mb-2 mt-[-20px] flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar ? "justify-start " : "justify-center"
+            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
           } ${activeComponent === "logout" ? "bg-white text-teal-500" : ""}`}
         >
           <FontAwesomeIcon
             icon={faRightFromBracket}
             className={`transition-all ${
-              expandedSideBar ? "h-6 w-6" : "w-6 h-6"
+              expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
             }`}
           />
-          <span 
+          <span
             className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar ? "w-auto " : "w-0"
+              expandedSideBar || isDesktop ? "w-auto" : "w-0"
             }`}
           >
             Logout
@@ -449,15 +540,9 @@ const SideBar = () => {
 
       {/* Dashboard Right Section - Display Each SideBar Header content dynamically */}
       <div
-        className={`transition-all duration-500 min-h-screen ${
-          isMobile ? "ml-[60px]" : expandedSideBar ? "ml-[16.67%]" : "ml-[5%]"
-        }`}
+        className={`transition-all duration-500 min-h-screen ${getContentMargin()}`}
         style={{
-          width: isMobile
-            ? "calc(100% - 60px)"
-            : expandedSideBar
-            ? "calc(100% - 16.67%)"
-            : "calc(100% - 5%)",
+          width: getContentWidth(),
         }}
       >
         {renderContent()}
