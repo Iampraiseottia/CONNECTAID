@@ -162,9 +162,9 @@ const Register = () => {
 
     if (validateForm()) {
       if (formValues.userType === "Donor") {
-        router.push("/dashboardDonor");
+        router.push("/dashboard-donor");
       } else {
-        router.push("/dashboardSeeker");
+        router.push("/dashboard-seeker");
       }
     } else {
       // Scroll to the first error
@@ -193,8 +193,8 @@ const Register = () => {
       viewport={{ once: true, amount: 0.1 }}
       className="py-16 md:py-24 lg:py-32 flex items-center justify-center px-4 min-h-screen"
     >
-      <div className="bg-white w-full max-w-md md:max-w-lg lg:max-w-xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+      <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4"> 
           <Image
             src="/icon/logo.png"
             height={80}

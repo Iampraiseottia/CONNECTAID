@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 
-import SideBar from "../components/SideBar";
+import SideBarSeeker from "../components/SideBarSeeker";
 
 import globalStyle from "../globals.css";
 
-const DashBoard = () => {
+const DashBoardSeeker = () => {
   return (
     <Suspense
       fallback={
@@ -22,9 +22,9 @@ const DashBoard = () => {
         </div>
       }
     >
-      <SideBar />
+      <SideBarSeeker />
     </Suspense>
   );
 };
 
-export default DashBoard;
+export default DashBoardSeeker;

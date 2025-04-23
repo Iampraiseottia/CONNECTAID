@@ -1,10 +1,12 @@
+
+
 import React, { Suspense } from "react";
 
 import SideBar from "../components/SideBar";
 
 import globalStyle from "../globals.css";
 
-const DashBoard = () => {
+const DashBoardDonor = () => {
   return (
     <Suspense
       fallback={
@@ -27,4 +29,4 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default DashBoardDonor;

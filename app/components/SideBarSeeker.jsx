@@ -29,7 +29,7 @@ import DashMain from "./DashMain";
 
 import { FileText, ChevronDown, ChevronFirst, ChevronLast } from "lucide-react";
 
-const SideBar = () => {
+const SideBarSeeker = () => {
   const [activeComponent, setActiveComponent] = useState("dashboardMain");
   const [isOpen, setIsOpen] = useState(true);
   const [expandedSideBar, setExpandedSideBar] = useState(true);
@@ -182,7 +182,7 @@ const SideBar = () => {
       return expandedSideBar ? "ml-0" : "ml-0";
     } else if (isTablet) {
       return expandedSideBar ? "ml-[35%]" : "ml-[70px]";
-    } else {
+    } else { 
       return "ml-[16.67%]";
     }
   };
@@ -455,7 +455,7 @@ const SideBar = () => {
                 : "w-0 opacity-0"
             }`}
           >
-            My Donations
+            My AID
           </span>
         </div>
 
@@ -529,11 +529,10 @@ const SideBar = () => {
           </span>
         </div>
 
-        <p className="bg-white text-teal-500 py-2 text-center absolute bottom-0 left-0 w-full ">
-          *Givers Never Lack 🙏❤️‍🔥*
-        </p>
+      <p className="bg-white text-yellow-500 py-2 text-center absolute bottom-0 left-0 w-full ">*A Grateful Seeker 😊*</p>
 
       </div>
+
 
       {/* Overlay for mobile when sidebar is expanded */}
       {isMobile && expandedSideBar && (
@@ -556,4 +555,4 @@ const SideBar = () => {
   );
 };
 
-export default SideBar;
+export default SideBarSeeker;
