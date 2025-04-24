@@ -84,8 +84,8 @@ const Gallery = () => {
                 <Image
                   src={logo.src}
                   alt={logo.alt}
-                  layout="fill"
-                  objectFit="cover"
+                  fill={true}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             </div>

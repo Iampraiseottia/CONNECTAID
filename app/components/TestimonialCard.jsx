@@ -13,8 +13,8 @@ const TestimonialCard = ({ testimonial, isActive }) => {
             <Image
               src={testimonial.image}
               alt={testimonial.name}
-              layout="fill"
-              objectFit="cover"
+              fill={true}
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div>

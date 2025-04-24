@@ -17,8 +17,8 @@ const Footer = () => {
         <Image
           src="/gallery/footer-graph.png"
           alt="World Map Background"
-          layout="fill"
-          objectFit="contain"
+          fill={true}
+          style={{ objectFit: "cover" }}
           priority
         />
       </div>
@@ -183,8 +183,8 @@ const Footer = () => {
                     <Image
                       src="/project/project-2.png"
                       alt="Charity Project 1"
-                      layout="fill"
-                      objectFit="cover"
+                      fill={true}
+                      style={{ objectFit: "cover" }} 
                     />
                   </Link>
                   <div>
@@ -206,8 +206,8 @@ const Footer = () => {
                     <Image
                       src="/project/project-1.png"
                       alt="Charity Project 2"
-                      layout="fill"
-                      objectFit="cover"
+                      fill={true}
+                      style={{ objectFit: "cover" }}
                     />
                   </Link>
                   <div>

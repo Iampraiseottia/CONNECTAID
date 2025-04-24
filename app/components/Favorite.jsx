@@ -71,8 +71,8 @@ const Favorite = () => {
                 <Image
                   src={logo.src}
                   alt={logo.alt}
-                  layout="fill"
-                  objectFit="contain"
+                  fill={true}
+                  style={{ objectFit: "contain" }} 
                 />
               </div>
             </div>

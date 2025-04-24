@@ -259,7 +259,7 @@ const DonationDetails6 = () => {
                 >
                   <div className="">
                     <Image
-                      src="/gallery/donateList-1.png"
+                      src="/gallery/suffering.png"
                       alt="Donation List main image"
                       width={500}
                       height={500}
@@ -288,20 +288,26 @@ const DonationDetails6 = () => {
                     className="mb-6"
                   >
                     <h4 className="text-2xl font-bold mb-3 mt-2">
-                    Your donation can support those facing extreme hardships and urgent needs!
+                      Your donation can support those facing extreme hardships
+                      and urgent needs!
                     </h4>
                     <p className="text-gray-600 mb-6">
-                      Homelessness is a pressing issue that affects millions of
-                      individuals and families worldwide. The lack of stable
-                      housing not only impacts physical health but also mental
-                      well-being, employment opportunities, and access to
-                      essential services. Your donation can play a crucial role
-                      in providing shelter and support for the homeless, helping
-                      to restore dignity and hope to those in need. Your
-                      donation can be a powerful catalyst for change, providing
-                      shelter and support for the homeless. By understanding the
-                      importance of addressing homelessness, the impact of your
-                      contributions, and how to effectively support initiatives,
+                      In a world where disparities in wealth and access to
+                      resources are stark, many individuals and families face
+                      extreme hardships and urgent needs. These challenges can
+                      stem from various factors, including economic downturns,
+                      natural disasters, health crises, and social injustices.
+                      Your donation can play a crucial role in alleviating these
+                      hardships, providing immediate relief, and fostering
+                      long-term recovery and empowerment. Your donation can be a
+                      powerful tool in supporting those facing extreme hardships
+                      and urgent needs. By contributing to connectAID that
+                      provide immediate relief and long-term support, you can
+                      help individuals and communities overcome challenges and
+                      build a brighter future. Together, we can create a more
+                      equitable and compassionate world where everyone has the
+                      opportunity to thrive. Thank you for considering making a
+                      difference through your generosity!.
                     </p>
 
                     {/* Alert */}
@@ -716,14 +722,18 @@ const DonationDetails6 = () => {
                     <strong>Real Life Story, Real Impact</strong>
                   </b>
                   <br />
-                  James was a 35-year-old man living in a bustling city. He had
-                  a stable job as a mechanic and a small apartment that he
-                  called home. However, life took a drastic turn when he was
-                  involved in a serious car accident that left him unable to
-                  work for several months. The medical bills piled up, and
-                  without a steady income, James quickly fell behind on rent.
-                  Eventually, he was evicted from his apartment and found
-                  himself homeless.
+                  In Nairobi, 10-year-old Juma faced extreme hardships as an
+                  orphan living on the streets, struggling for survival amidst
+                  hunger and danger. His life took a transformative turn when he
+                  encountered a connectAID dedicated to helping
+                  street children. The volunteers provided him with food,
+                  shelter, and access to education, offering him a safe haven
+                  for the first time in years. This support reignited Juma's
+                  hope for a brighter future. Donations from compassionate
+                  individuals play a vital role in making such transformations
+                  possible, not only changing individual lives but also
+                  fostering hope and resilience in vulnerable communities like
+                  Juma's.
                   <br />
                 </p>
 
@@ -732,13 +742,16 @@ const DonationDetails6 = () => {
                 <p className="text-gray-600 mb-6">
                   <b className="mb-2">Struggles on the Streets</b>
                   <br />
-                  For the next six months, James lived on the streets. He faced
-                  numerous challenges, including harsh weather conditions, lack
-                  of access to food, and the constant threat of violence. The
-                  psychological toll of homelessness weighed heavily on him,
-                  leading to feelings of despair and isolation. James struggled
-                  to find resources, often relying on soup kitchens and shelters
-                  for meals and temporary refuge.
+                  In the bustling city of Nairobi, Kenya, countless children
+                  live on the streets, facing unimaginable hardships. Among them
+                  is a 10-year-old boy named Juma. Orphaned at a young age due
+                  to violence in his neighborhood, Juma found himself alone and
+                  vulnerable. He quickly learned to navigate the harsh realities
+                  of street life, scavenging for food and shelter while avoiding
+                  gangs and other dangers. Each day was a struggle for survival,
+                  as he faced hunger, exposure to the elements, and the constant
+                  threat of violence. Juma often went to bed hungry, dreaming of
+                  a better life, but feeling trapped in a cycle of despair.
                 </p>
 
                 <hr className="my-6 border-gray-200" />
@@ -746,12 +759,23 @@ const DonationDetails6 = () => {
                 <p className="text-gray-600 mb-6">
                   <b className="mb-2">Turning Point: Finding Support</b>
                   <br />
-                  One day, while seeking shelter from the rain, James stumbled
-                  upon a local nonprofit organization dedicated to helping the
-                  homeless which is ConnectAID. We provided emergency shelter,
-                  meals, and access to support services. With the help of a
-                  compassionate caseworker, James began to see a glimmer of
-                  hope.
+                  One fateful day, while searching for food in a local market,
+                  Juma encountered a group of volunteers from a non-profit
+                  organization dedicated to helping street children. They were
+                  distributing meals and offering support services. Initially
+                  hesitant, Juma approached them, driven by his hunger and
+                  curiosity. The volunteers welcomed him with open arms,
+                  providing him with a warm meal and a safe space to talk about
+                  his experiences.
+                  <br />
+                  Through this encounter, Juma learned about the organization’s
+                  programs, which included shelter, education, and counseling.
+                  With the encouragement of the volunteers, he took a brave step
+                  and decided to join their shelter program. This decision
+                  marked a turning point in his life. For the first time in
+                  years, Juma felt safe and cared for. He received nutritious
+                  meals, medical care, and access to education, which reignited
+                  his hope for a brighter future.
                 </p>
 
                 <hr className="my-6 border-gray-200" />
@@ -759,73 +783,82 @@ const DonationDetails6 = () => {
                 <h3>Impact of Donations</h3>
 
                 <p className="text-gray-600 mb-6">
-                  <b className="mb-2">Emergency Shelter:</b>
+                  <b className="mb-2">The Ripple Effect of Your Donation</b>
                   <br />
-                  Thanks to donations from the community, connectAID was able to
-                  provide James with a safe place to sleep. This immediate
-                  support allowed him to regain some stability in his life.
+                  The support Juma received was made possible by the generous
+                  donations from individuals and connectAID committed to
+                  making a difference in the lives of vulnerable children. Your
+                  contributions have a profound impact, creating a ripple effect
+                  that extends far beyond the immediate assistance provided.
                 </p>
 
-                <p className="text-gray-600 mb-6">
-                  <b className="mb-2">Access to Healthcare:</b>
-                  <br />
-                  The organization connected James with healthcare services,
-                  where he received treatment for his injuries and mental health
-                  support. This access to care was crucial in helping him
-                  recover physically and emotionally.
-                </p>
+                <ol type="1" className="list-decimal mb-6 ml-8 ">
+                  <li className="text-gray-600 mb-6">
+                    <b className="mb-2">Immediate Relief: </b>
+                    <br />
+                    Donations help connectAID provide essential services such
+                    as food, shelter, and medical care to children like Juma,
+                    ensuring their basic needs are met.
+                  </li>
 
-                <p className="text-gray-600 mb-6">
-                  <b className="mb-2">Job Training Programs:</b>
-                  <br />
-                  With encouragement from his caseworker, James enrolled in a
-                  job training program funded by donations. He learned new
-                  skills and received assistance in job placement. Within a few
-                  months, he secured a position at a local auto repair shop.
-                </p>
+                  <li className="text-gray-600 mb-6">
+                    <b className="mb-2">Education and Empowerment:</b>
+                    <br />
+                    With access to education, children can break the cycle of
+                    poverty. Juma began attending school, where he discovered a
+                    passion for learning. Your donations fund educational
+                    programs, providing resources, school supplies, and trained
+                    teachers.
+                  </li>
 
-                <p className="text-gray-600 mb-6">
-                  <b className="mb-2">Transitional Housing:</b>
-                  <br />
-                  As part of the program, James was offered transitional
-                  housing, which provided him with a stable living environment
-                  while he worked towards permanent housing. This support was
-                  instrumental in helping him rebuild his life.
-                </p>
+                  <li className="text-gray-600 mb-6">
+                    <b className="mb-2">Mental Health Support:</b>
+                    <br />
+                    Many street children suffer from trauma and mental health
+                    issues. Donations enable connectAID to offer counseling
+                    and psychological support, helping children heal and regain
+                    their confidence.
+                  </li>
+
+                  <li className="text-gray-600 mb-6">
+                    <b className="mb-2">Community Development: </b>
+                    <br />
+                    By supporting programs that empower families and
+                    communities, donations help address the root causes of
+                    poverty and homelessness. As Juma’s story spreads, it
+                    inspires others in his community to seek help and support
+                    one another.
+                  </li>
+
+                  <li className="text-gray-600 mb-6">
+                    <b className="mb-2">Long-term Change:</b>
+                    <br />
+                    Your contributions help connectAID advocate for policy
+                    changes that protect the rights of street children and
+                    promote social justice. This creates a safer environment for
+                    future generations.
+                  </li>
+                </ol>
+
                 <hr className="my-6 border-gray-200" />
 
                 <p className="text-gray-600 mb-6">
                   <b className="mb-2">A New Beginning</b>
                   <br />
-                  After several months of hard work and determination, James was
-                  able to move into his own apartment again. He not only
-                  regained his independence but also developed a sense of
-                  community with others who had faced similar challenges. James
-                  became an advocate for the homeless, sharing his story to
-                  raise awareness and encourage others to support local
-                  organizations.
+                  With the support of the connectAID, Juma embarked on a new chapter in his life. No longer living in fear on the streets, he found solace in the shelter, where he was surrounded by caring adults and other children who shared similar experiences. Each day, Juma received nutritious meals that nourished his body and spirit, allowing him to regain his strength.
                 </p>
 
                 <hr className="my-6 border-gray-200" />
 
                 <p className="text-gray-600 mb-6">
-                  <b className="mb-2">
-                    The Ripple Effect of Your Donation
-                  </b>
                   <br />
-                  James's journey from homelessness to stability illustrates the
-                  profound impact that donations can have on individuals in
-                  need. By providing shelter, healthcare, job training, and
-                  transitional housing, the community came together to support
-                  James during his most challenging times.
-                  <br />
-                  His story is a testament to the power of compassion and the
-                  difference that each donation can make. With continued
-                  support, organizations can help more individuals like James
-                  find their way back to stability, dignity, and hope. Your
-                  donation can be the catalyst for change, transforming lives
-                  and creating a ripple effect of positive impact in the
-                  community.
+                  Juma’s journey from the streets to a place of safety and hope
+                  exemplifies the transformative power of your donations. By
+                  supporting connectAID that work tirelessly to uplift
+                  vulnerable children, you are not only changing individual
+                  lives but also fostering a brighter future for entire
+                  communities. Together, we can create a world where every child
+                  has the opportunity to thrive.
                 </p>
               </motion.div>
             </div>
@@ -1053,9 +1086,8 @@ const DonationDetails6 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-1">
-                            Act now, save lives— Donate today and make a
-                            long lasting impacts in lives of people and
-                            communities!
+                            Act now, save lives— Donate today and make a long
+                            lasting impacts in lives of people and communities!
                           </a>
                         </h4>
                       </div>
