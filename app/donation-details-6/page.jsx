@@ -350,7 +350,7 @@ const DonationDetails6 = () => {
                           <h4 className="font-semibold">Goals</h4>
                         </div>
                         <div>
-                          <p className="text-gray-600">15, 100, 000Francs</p>
+                          <p className="text-gray-600">15, 100, 000 Francs</p>
                           <h4 className="font-semibold">Raised</h4>
                         </div>
                       </div>
@@ -725,15 +725,14 @@ const DonationDetails6 = () => {
                   In Nairobi, 10-year-old Juma faced extreme hardships as an
                   orphan living on the streets, struggling for survival amidst
                   hunger and danger. His life took a transformative turn when he
-                  encountered a connectAID dedicated to helping
-                  street children. The volunteers provided him with food,
-                  shelter, and access to education, offering him a safe haven
-                  for the first time in years. This support reignited Juma's
-                  hope for a brighter future. Donations from compassionate
-                  individuals play a vital role in making such transformations
-                  possible, not only changing individual lives but also
-                  fostering hope and resilience in vulnerable communities like
-                  Juma's.
+                  encountered a connectAID dedicated to helping street children.
+                  The volunteers provided him with food, shelter, and access to
+                  education, offering him a safe haven for the first time in
+                  years. This support reignited Juma's hope for a brighter
+                  future. Donations from compassionate individuals play a vital
+                  role in making such transformations possible, not only
+                  changing individual lives but also fostering hope and
+                  resilience in vulnerable communities like Juma's.
                   <br />
                 </p>
 
@@ -786,8 +785,8 @@ const DonationDetails6 = () => {
                   <b className="mb-2">The Ripple Effect of Your Donation</b>
                   <br />
                   The support Juma received was made possible by the generous
-                  donations from individuals and connectAID committed to
-                  making a difference in the lives of vulnerable children. Your
+                  donations from individuals and connectAID committed to making
+                  a difference in the lives of vulnerable children. Your
                   contributions have a profound impact, creating a ripple effect
                   that extends far beyond the immediate assistance provided.
                 </p>
@@ -796,8 +795,8 @@ const DonationDetails6 = () => {
                   <li className="text-gray-600 mb-6">
                     <b className="mb-2">Immediate Relief: </b>
                     <br />
-                    Donations help connectAID provide essential services such
-                    as food, shelter, and medical care to children like Juma,
+                    Donations help connectAID provide essential services such as
+                    food, shelter, and medical care to children like Juma,
                     ensuring their basic needs are met.
                   </li>
 
@@ -815,8 +814,8 @@ const DonationDetails6 = () => {
                     <b className="mb-2">Mental Health Support:</b>
                     <br />
                     Many street children suffer from trauma and mental health
-                    issues. Donations enable connectAID to offer counseling
-                    and psychological support, helping children heal and regain
+                    issues. Donations enable connectAID to offer counseling and
+                    psychological support, helping children heal and regain
                     their confidence.
                   </li>
 
@@ -845,7 +844,34 @@ const DonationDetails6 = () => {
                 <p className="text-gray-600 mb-6">
                   <b className="mb-2">A New Beginning</b>
                   <br />
-                  With the support of the connectAID, Juma embarked on a new chapter in his life. No longer living in fear on the streets, he found solace in the shelter, where he was surrounded by caring adults and other children who shared similar experiences. Each day, Juma received nutritious meals that nourished his body and spirit, allowing him to regain his strength.
+                  With the support of the connectAID, Juma embarked on a new
+                  chapter in his life. No longer living in fear on the streets,
+                  he found solace in the shelter, where he was surrounded by
+                  caring adults and other children who shared similar
+                  experiences. Each day, Juma received nutritious meals that
+                  nourished his body and spirit, allowing him to regain his
+                  strength.
+                  <br />
+                  As he settled into the routine of the shelter, Juma began
+                  attending school for the first time. The joy of learning
+                  ignited a passion within him, and he quickly excelled in his
+                  studies. With the encouragement of his teachers and newfound
+                  friends, Juma discovered his love for reading and mathematics,
+                  dreaming of a future where he could become a teacher and
+                  inspire other children like himself.
+                  <br />
+                  The emotional support he received through counseling helped
+                  Juma process his past trauma, allowing him to heal and build
+                  resilience. He learned to express his feelings and cope with
+                  the challenges he faced, transforming his pain into motivation
+                  for a better life.
+                  <br />
+                  Juma's journey exemplifies the power of second chances. With
+                  each step forward, he not only changed his own destiny but
+                  also became a beacon of hope for others in his community. His
+                  story is a testament to the impact of compassion and support,
+                  proving that even the most difficult beginnings can lead to
+                  brighter futures.
                 </p>
 
                 <hr className="my-6 border-gray-200" />

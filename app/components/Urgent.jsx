@@ -314,11 +314,11 @@ const Urgent = () => {
                 <div className="flex justify-between items-center mt-3 sm:mt-4">
                   <div>
                     <h5 className="font-semibold text-xs sm:text-xl">Goals</h5>
-                    <p className="text-xs sm:text-2xl">$105,000</p>
+                    <p className="text-xs sm:text-2xl">70, 000, 000 Francs</p>
                   </div>
                   <div>
                     <h5 className="font-semibold text-xs sm:text-xl">Raised</h5>
-                    <p className="text-xs sm:text-2xl">$38,000</p>
+                    <p className="text-xs sm:text-2xl">24, 700, 000 Francs</p>
                   </div>
                   <div className="bg-yellow-500 w-12 h-12 rounded-full p-2 sm:p-2 text-center cursor-pointer">
                     <FontAwesomeIcon
