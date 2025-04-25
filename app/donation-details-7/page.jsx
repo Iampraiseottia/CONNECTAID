@@ -259,7 +259,7 @@ const DonationDetails7 = () => {
                 >
                   <div className="">
                     <Image
-                      src="/gallery/suffering.png"
+                      src="/gallery/training.png"
                       alt="Donation List main image"
                       width={500}
                       height={500}

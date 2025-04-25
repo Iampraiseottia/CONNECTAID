@@ -26,7 +26,7 @@ const Past = () => {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
           <div className="w-full"> 
             <BlogCard 
-              imageSrc="/gallery/gallery-20.png"
+              imageSrc="/gallery/pastevent.png"
               date="03 Sept 2024"
               title="Empowering Futures Through Accessible Education for All"
               linkBlog="/past-event-details-1"
@@ -36,7 +36,7 @@ const Past = () => {
           <div className="w-full my-5 sm:my-0">
             <BlogCard  
               linkBlog="/past-event-details-2"
-              imageSrc="/gallery/gallery-11.png"
+              imageSrc="/gallery/medicine2.png"
               date="09 Nov 2024"
               title="Quality Medicine: Empowering a Healthier Community "
               excerpt="Your generous donations enabled us to deliver essential medical care and education, empowering underprivileged persons and communities and ensuring their well-being and good way of living."
@@ -46,7 +46,7 @@ const Past = () => {
           <div className="w-full"> 
             <BlogCard 
                 linkBlog="/past-event-details-3" 
-                imageSrc="/gallery/gallery-13.png"
+                imageSrc="/gallery/food.jpg"
                 date="24 Feb 2025"
                 title="Nourished Communities: The Power of Good Food"
                 excerpt="Your generous donations provided essential nutrition resources, empowering underprivileged and ensuring their growth through improved access to quality food and healthy meals." 
