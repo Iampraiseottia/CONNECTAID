@@ -47,10 +47,10 @@ const Breadcrumb = ({
           </nav>
 
           {/* Page Title */}
-          <h1 className="text-5xl md:text-6xl font-bold mt-7 uppercase tracking-wide">
+          <h1 className="text-3xl md:text-6xl font-bold mt-7 uppercase tracking-wide">
             {description}
           </h1>
-        </div>
+        </div> 
       </div>
 
       {/* Green overlay gradient effect */}

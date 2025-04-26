@@ -195,7 +195,7 @@ const PastEventDetails1 = () => {
                       <h3 className="font-bold text-xl ">Date and Location</h3>
                       <p className="mt-1">
                         The charity event took place on September 03, 2024, at
-                        the Carita's Hall in Check POint, Buea SOuth-west,
+                        the Carita's Hall in Check POint, Buea South-west,
                         Cameroon. The venue was chosen for its accessibility and
                         capacity to accommodate a large audience, including
                         community members, local businesses, educators, and
