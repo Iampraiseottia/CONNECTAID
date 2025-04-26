@@ -11,7 +11,7 @@ import Metadata from "../components/Metadata";
 
 import { motion } from "motion/react";
 
-import { User, MessageSquare, Search, Clock, DollarSign } from "lucide-react";
+import { User, MessageSquare, Clock, DollarSign } from "lucide-react";
 
 import Facebook from "/public/icon/fb.png";
 import Youtube from "/public/icon/youtube.png";
@@ -21,7 +21,7 @@ import LinkedIn from "/public/icon/linkedin.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
-import Breadcrumb from "../components/Breadcrumb";
+import Breadcrumb from "../components/Breadcrumb"; 
 
 const PastEventDetails2 = () => {
   const metadata = {
@@ -56,7 +56,7 @@ const PastEventDetails2 = () => {
         />
       </motion.div>
 
-      {/* Blog Details Section */}
+      {/* Past Event Details Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -394,7 +394,7 @@ const PastEventDetails2 = () => {
                 </div>
               </div>
 
-              {/* Related Blogs Section */}
+              {/* Related Event Section */}
               <div className="mt-12">
                 <motion.h3
                   initial={{ opacity: 0, y: 100 }}
@@ -433,7 +433,7 @@ const PastEventDetails2 = () => {
                         </div>
                         <div className="flex gap-2 items-center">
                           <MessageSquare className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">Medicine</p>
+                          <p className="text-gray-600 text-sm">Education</p>
                         </div>
                       </div>
 
@@ -520,14 +520,13 @@ const PastEventDetails2 = () => {
                       "Food",
                       "Medical",
                       "Education",
-                      "Wireframing",
-                      "Recycline",
-                      "Education",
+                      "Shelter",
+                      "Water",
                     ].map((category, index) => (
                       <li
                         key={category}
                         className={
-                          index === 2 ? "text-teal-700 font-medium" : ""
+                          index === 1 ? "text-teal-700 font-medium" : ""
                         }
                       >
                         <a
@@ -564,7 +563,7 @@ const PastEventDetails2 = () => {
                               fill
                               className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
                             />
-                          </Link>
+                          </Link> 
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">

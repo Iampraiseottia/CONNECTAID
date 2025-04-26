@@ -500,9 +500,8 @@ const PastEventDetails1 = () => {
                       "Food",
                       "Medical",
                       "Education",
-                      "Wireframing",
-                      "Recycline",
-                      "Education",
+                      "Water",
+                      "Shelter",
                     ].map((category, index) => (
                       <li
                         key={category}

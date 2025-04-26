@@ -40,9 +40,9 @@ const Events = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="DONATION"
-          description="DONATION LIST"
-          breadcrumAlt="Donation Hero Background Image"
+          title="EVENTS"
+          description="EVENT LIST"
+          breadcrumAlt="EVENTS Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>

@@ -3,15 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { useState, useRef } from "react";
-
 import globalStyle from "../globals.css";
 
 import Metadata from "../components/Metadata";
 
 import { motion } from "motion/react";
 
-import { User, MessageSquare, Search, Clock, DollarSign } from "lucide-react";
+import { User, MessageSquare, Clock, DollarSign } from "lucide-react";
 
 import Facebook from "/public/icon/fb.png";
 import Youtube from "/public/icon/youtube.png";
@@ -24,6 +22,7 @@ import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
 const PastEventDetails3 = () => {
+  
   const metadata = {
     title:
       "Nourished Communities: The Power of Good Food - ConnectAID Web Application",
@@ -432,9 +431,9 @@ const PastEventDetails3 = () => {
                   {/* ))} */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
-                      <Link href="/past-event-details-3">
+                      <Link href="/past-event-details-1">
                         <Image
-                          src="/gallery/food.jpg"
+                          src="/gallery/pastevent.png"
                           alt="Related blog"
                           fill
                           className="object-cover hover:scale-105 ease-in-out duration-200 "
@@ -449,21 +448,22 @@ const PastEventDetails3 = () => {
                         </div>
                         <div className="flex gap-2 items-center">
                           <MessageSquare className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">Food</p>
+                          <p className="text-gray-600 text-sm">Education</p>
                         </div>
                       </div>
 
                       <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Nourishing Communities: The Power of Good Food
+                        Empowering Futures Through Accessible Education for All
                       </h4>
 
                       <p className="text-gray-600 mb-6 text-sm">
-                        Food sustains life, fosters community, and combats
-                        hunger for a healthier, more equitable world.
+                        Education transforms lives, fostering opportunities and
+                        breaking barriers for under-served communities
+                        worldwide.
                       </p>
 
                       <Link
-                        href="/past-event-details-3"
+                        href="/past-event-details-1"
                         className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
                       >
                         Read More
@@ -494,14 +494,13 @@ const PastEventDetails3 = () => {
                       "Food",
                       "Medical",
                       "Education",
-                      "Wireframing",
-                      "Recycline",
-                      "Education",
+                      "Shelter",
+                      "Water",
                     ].map((category, index) => (
                       <li
                         key={category}
                         className={
-                          index === 2 ? "text-teal-700 font-medium" : ""
+                          index === 0 ? "text-teal-700 font-medium" : ""
                         }
                       >
                         <a
