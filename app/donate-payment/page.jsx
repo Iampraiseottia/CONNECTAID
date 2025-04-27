@@ -8,7 +8,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
-import DonationList from "../components/DonationList";
 
 import { motion } from "motion/react";
 
@@ -24,10 +23,23 @@ const DonatePayment = () => {
   };
 
   const [amount, setAmount] = useState(50);
-  const [selectedPayment, setSelectedPayment] = useState("paypal");
+  const [selectedPayment, setSelectedPayment] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [category, setCategory] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    category: "",
+    terms: "",
+    payment: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const paymentMethods = [
     {
@@ -63,6 +75,7 @@ const DonatePayment = () => {
 
   const handlePaymentMethodClick = (id) => {
     setSelectedPayment(id);
+    setErrors((prev) => ({ ...prev, payment: "" }));
   };
 
   const handleAmountChange = (e) => {
@@ -76,6 +89,49 @@ const DonatePayment = () => {
   const handleCategorySelect = (category) => {
     setCategory(category);
     setDropdownOpen(false);
+    setErrors((prev) => ({ ...prev, category: "" }));
+  };
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+
+    if (!value.trim()) {
+      setErrors((prev) => ({ ...prev, name: "Name is required" }));
+    } else if (value.trim().length < 2) {
+      setErrors((prev) => ({
+        ...prev,
+        name: "Name must be at least 2 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, name: "" }));
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!value.trim()) {
+      setErrors((prev) => ({ ...prev, email: "Email is required" }));
+    } else if (!emailRegex.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid email address",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, email: "" }));
+    }
+  };
+
+  const handleTermsChange = () => {
+    const newValue = !agreeToTerms;
+    setAgreeToTerms(newValue);
+
+    if (newValue) {
+      setErrors((prev) => ({ ...prev, terms: "" }));
+    }
   };
 
   const amountDonate = useRef(null);
@@ -83,15 +139,91 @@ const DonatePayment = () => {
   const emailDonate = useRef(null);
 
   const onMouseEnterAmountDonate = () => {
-    amountDonate.current.focus();
+    if (amountDonate.current) {
+      amountDonate.current.focus();
+    }
   };
 
   const onMouseEnterNameDonate = () => {
-    nameDonate.current.focus();
+    if (nameDonate.current) {
+      nameDonate.current.focus();
+    }
   };
 
   const onMouseEnterEmailDonate = () => {
-    emailDonate.current.focus();
+    if (emailDonate.current) {
+      emailDonate.current.focus();
+    }
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      name: "",
+      email: "",
+      category: "",
+      terms: "",
+      payment: "",
+    };
+
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+      valid = false;
+    } else if (name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+      valid = false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+      valid = false;
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+      valid = false;
+    }
+
+    if (!category) {
+      newErrors.category = "Please select a category";
+      valid = false;
+    }
+
+    if (!selectedPayment) {
+      newErrors.payment = "Please select a payment method";
+      valid = false;
+    }
+
+    if (!agreeToTerms) {
+      newErrors.terms = "You must agree to the terms and privacy policy";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      setIsSubmitting(true);
+
+      console.log("Form submitted successfully", {
+        amount,
+        name,
+        email,
+        category,
+        selectedPayment,
+      });
+
+      // Simulate API call
+      setTimeout(() => {
+        alert("Donation submitted successfully!");
+        setIsSubmitting(false);
+      }, 1000);
+    } else {
+      console.log("Form has errors");
+    }
   };
 
   return (
@@ -151,7 +283,7 @@ const DonatePayment = () => {
             ))}
           </div>
 
-          <form className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {/* Custom Amount */}
               <div className="md:col-span-3 mt-2 ">
@@ -173,43 +305,83 @@ const DonatePayment = () => {
               {/* Name */}
               <div className="mt-2">
                 <label className="block text-lg font-medium text-gray-700 mb-1">
-                  Name
+                  Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                  value={name}
+                  onChange={handleNameChange}
+                  className={`w-full px-3 py-2 border ${
+                    errors.name ? "border-red-500" : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-1 ${
+                    errors.name ? "focus:ring-red-500" : "focus:ring-green-500"
+                  } ${
+                    errors.name
+                      ? "focus:border-red-500"
+                      : "focus:border-green-500"
+                  }`}
                   placeholder="e.g Alex"
                   ref={nameDonate}
                   onMouseEnter={onMouseEnterNameDonate}
                 />
+                {errors.name && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.name}</p>
+                )}
               </div>
 
               {/* Email */}
               <div className="mt-2">
                 <label className="block text-lg font-medium text-gray-700 mb-1">
-                  Email
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                  value={email}
+                  onChange={handleEmailChange}
+                  className={`w-full px-3 py-2 border ${
+                    errors.email ? "border-red-500" : "border-gray-300"
+                  } rounded-md focus:outline-none focus:ring-1 ${
+                    errors.email ? "focus:ring-red-500" : "focus:ring-green-500"
+                  } ${
+                    errors.email
+                      ? "focus:border-red-500"
+                      : "focus:border-green-500"
+                  }`}
                   placeholder="e.g example@gmail.com"
                   ref={emailDonate}
                   onMouseEnter={onMouseEnterEmailDonate}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.email}</p>
+                )}
               </div>
 
               {/* Category */}
               <div className="relative mt-2">
                 <label className="block text-lg font-medium text-gray-700 mb-1">
-                  Select category
+                  Select category <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                   <button
                     type="button"
                     onClick={toggleDropdown}
-                    className="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-left focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500 flex justify-between items-center"
+                    className={`w-full px-3 py-2 bg-white border ${
+                      errors.category ? "border-red-500" : "border-gray-300"
+                    } rounded-md text-left focus:outline-none focus:ring-1 ${
+                      errors.category
+                        ? "focus:ring-red-500"
+                        : "focus:ring-green-500"
+                    } ${
+                      errors.category
+                        ? "focus:border-red-500"
+                        : "focus:border-green-500"
+                    } flex justify-between items-center`}
                   >
-                    <span className="text-gray-900">
+                    <span
+                      className={`${
+                        category ? "text-gray-900" : "text-gray-500"
+                      }`}
+                    >
                       {category || "Please Select Category"}
                     </span>
                     <svg
@@ -242,12 +414,18 @@ const DonatePayment = () => {
                     </div>
                   )}
                 </div>
+                {errors.category && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.category}</p>
+                )}
               </div>
             </div>
 
             {/* Payment Methods */}
-            <div className="mt-2 ">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-6">
+            <div className="mt-2">
+              <label className="block text-lg font-medium text-gray-700 mb-1">
+                Payment Method <span className="text-red-500">*</span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-2">
                 {paymentMethods.map((method) => (
                   <div
                     key={method.id}
@@ -285,6 +463,9 @@ const DonatePayment = () => {
                   </div>
                 ))}
               </div>
+              {errors.payment && (
+                <p className="mt-1 text-red-500 text-sm">{errors.payment}</p>
+              )}
             </div>
 
             {/* Terms Checkbox */}
@@ -294,13 +475,19 @@ const DonatePayment = () => {
                   id="terms"
                   type="checkbox"
                   checked={agreeToTerms}
-                  onChange={() => setAgreeToTerms(!agreeToTerms)}
-                  className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-green-300"
+                  onChange={handleTermsChange}
+                  className={`w-4 h-4 border ${
+                    errors.terms ? "border-red-500" : "border-gray-300"
+                  } rounded bg-gray-50 focus:ring-3 ${
+                    errors.terms ? "focus:ring-red-300" : "focus:ring-green-300"
+                  }`}
                 />
               </div>
               <label
                 htmlFor="terms"
-                className="ml-2 text-lg font-medium text-gray-700"
+                className={`ml-2 text-lg font-medium ${
+                  errors.terms ? "text-red-500" : "text-gray-700"
+                }`}
               >
                 I agree to all the{" "}
                 <a
@@ -318,13 +505,19 @@ const DonatePayment = () => {
                 </a>
               </label>
             </div>
+            {errors.terms && (
+              <p className="-mt-2 text-red-500 text-sm">{errors.terms}</p>
+            )}
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full sm:w-auto mt-2 ease-in-out cursor-pointer px-6 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors"
+              disabled={isSubmitting}
+              className={`w-full sm:w-auto mt-2 ease-in-out cursor-pointer px-6 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors ${
+                isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+              }`}
             >
-              Donate Now
+              {isSubmitting ? "Processing..." : "Donate Now"}
             </button>
           </form>
         </div>
@@ -339,4 +532,4 @@ const DonatePayment = () => {
   );
 };
 
-export default DonatePayment; 
+export default DonatePayment;
