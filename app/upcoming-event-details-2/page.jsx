@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 
 import globalStyle from "../globals.css";
 
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -87,31 +86,6 @@ const UpcomingEventDetail2 = () => {
     { value: timeLeft.seconds, label: "Secs" },
   ];
 
-  const relatedEvents = [
-    {
-      img: "/api/placeholder/150/100",
-      date: "November 28, 2023",
-      title: "How Kids Make Sense of Life Experiences.",
-    },
-    {
-      img: "/api/placeholder/150/100",
-      date: "November 28, 2023",
-      title: "How Kids Make Sense of Life Experiences.",
-    },
-    {
-      img: "/api/placeholder/150/100",
-      date: "November 28, 2023",
-      title: "How Kids Make Sense of Life Experiences.",
-    },
-    {
-      img: "/api/placeholder/150/100",
-      date: "November 28, 2023",
-      title: "How Kids Make Sense of Life Experiences.",
-    },
-  ];
-
-  const tags = ["medical", "Food", "ac", "Election", "Campaign", "Security"];
-
   return (
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
@@ -124,7 +98,7 @@ const UpcomingEventDetail2 = () => {
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.1 }}
         className="w-full"
       >
         <Breadcrumb
@@ -142,7 +116,13 @@ const UpcomingEventDetail2 = () => {
         <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-              <div className="w-full lg:col-span-9">
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="w-full lg:col-span-9"
+              >
                 <div className="flex flex-col sm:flex-row justify-between items-start flex-wrap mb-6 gap-4">
                   {/* Date Time Counter */}
                   <div className="flex gap-2">
@@ -415,7 +395,7 @@ const UpcomingEventDetail2 = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Sidebar */}
               <div className="lg:col-span-3">
