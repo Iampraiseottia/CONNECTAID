@@ -184,7 +184,7 @@ const UpcomingEventDetail1 = () => {
                   <div>
                     <h1 className="text-2xl md:text-3xl font-bold mb-6">
                       Hope for the Homeless: Compassion / Together, we can
-                      change lives! Your generous donations will provide
+                      change lives! ~ Your generous donations will provide
                       shelter, food, and support for those in need. Join us in
                       this vital mission to end homelessness.
                     </h1>
