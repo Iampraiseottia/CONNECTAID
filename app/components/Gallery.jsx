@@ -93,7 +93,7 @@ const Gallery = () => {
     <motion.div
       initial={{ opacity: 0, y: 100 }}
       whileInView={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, delay: 0.5 }}
+      transition={{ duration: 0.3, delay: 0.3 }}
       className="w-full mr-40 bg-white pt-32 relative"
     >
       <div className="sm:w-[100%] w-full overflow-hidden">

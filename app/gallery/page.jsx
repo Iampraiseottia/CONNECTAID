@@ -13,7 +13,6 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-import BlogCard from "../components/BlogCard";
 
 const PictureGallery = () => {
   const metadata = {
@@ -34,7 +33,7 @@ const PictureGallery = () => {
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        viewport={{ once: true, amount: 0.5 }}
+        viewport={{ once: true, amount: 0.1 }}
         className="w-full"
       >
         <Breadcrumb
@@ -53,7 +52,8 @@ const PictureGallery = () => {
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
             className="max-w-3xl mx-auto text-center mb-12"
           >
             <span className="inline-block text-emerald-600 text-3xl font-semibold mb-6 sm:text-5xl">
@@ -68,10 +68,82 @@ const PictureGallery = () => {
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className=""
-          ></motion.div>
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            <div className="space-y-6">
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/water.png"
+                  alt="Gallery Image 1"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/training.png" 
+                  alt="Gallery Image 2"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group"> 
+                <img
+                  src="/gallery/suffering.png"
+                  alt="Gallery Image 3"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/pastevent.png"
+                  alt="Gallery Image 4"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/medicine2.png"
+                  alt="Gallery Image 5"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/food.jpg"
+                  alt="Gallery Image 6"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
+              </div>
+            </div>
+
+            <div className="space-y-6">
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/education.png"
+                  alt="Gallery Image 7"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/donateList-1.png"
+                  alt="Gallery Image 8"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="overflow-hidden rounded-lg shadow-lg group">
+                <img
+                  src="/gallery/africanchildren2.png"
+                  alt="Gallery Image 9"
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
-        
       </section>
 
       {/* Picture Gallery  */}
