@@ -9,6 +9,8 @@ import { useRef, useState, useEffect } from "react";
 
 import { motion } from "motion/react";
 
+import navLogo from '/public/icon/logo.png'
+
 const Hero = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const firstImageRef = useRef(null);
@@ -127,7 +129,7 @@ const Hero = () => {
               <Link href="/">
                 <div className="flex items-center cursor-pointer">
                   <Image
-                    src="/icon/logo.png"
+                    src={navLogo}
                     alt="ConnectAID Logo"
                     width={70}
                     height={60}

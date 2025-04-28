@@ -12,11 +12,24 @@ import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import { Clock, DollarSign } from "lucide-react";
+import { Clock, DollarSign, MessageSquare, User } from "lucide-react";
 
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
+
+import relatedPostImg1 from "/public/gallery/donateList-1.png";
+import relatedPostImg2 from "/public/gallery/gallery-4.png";
+import relatedPostImg3 from "/public/gallery/gallery-20.png";
+import relatedPostImg4 from "/public/urgent/urgent-1.png";
+import relatedPostImg5 from "/public/gallery/donationList-2.png";
+import relatedPostImg6 from "/public/gallery/gallery-1.png";
+import relatedPostImg7 from "/public/gallery/gallery-3.png";
+import relatedPostImg8 from "/public/gallery/gallery-2.png";
+import relatedPostImg9 from "/public/blog/blog-5.png";
+import relatedPostImg10 from "/public/gallery/education.png";
+import relatedPostImg11 from "/public/gallery/gallery-13.png";
+import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails2 = () => {
   const metadata = {
@@ -59,7 +72,7 @@ const DonationDetails2 = () => {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Main Content - Left Section */}
             <div className="w-full lg:w-2/3">
-              {/* Donate Details */} 
+              {/* Donate Details */}
               <div className="rounded-lg shadow-md overflow-hidden mb-12">
                 {/* Hero Image */}
                 <motion.div
@@ -100,10 +113,19 @@ const DonationDetails2 = () => {
                     className="mb-6"
                   >
                     <h4 className="text-2xl font-bold mb-3 mt-2">
-                    Your Support Can Empower Children's Future.
+                      Your Support Can Empower Children's Future.
                     </h4>
                     <p className="text-gray-600 mb-6">
-                    Education is a fundamental human right and a powerful tool for personal and societal transformation. It has the potential to break the cycle of poverty, foster economic growth, and promote social equity. However, many individuals, especially in underserved communities, face significant barriers to accessing quality education. Your support can play a crucial role in empowering these individuals and helping them realize their full potential. Here’s a detailed explanation of how your contributions can make a difference.
+                      Education is a fundamental human right and a powerful tool
+                      for personal and societal transformation. It has the
+                      potential to break the cycle of poverty, foster economic
+                      growth, and promote social equity. However, many
+                      individuals, especially in underserved communities, face
+                      significant barriers to accessing quality education. Your
+                      support can play a crucial role in empowering these
+                      individuals and helping them realize their full potential.
+                      Here’s a detailed explanation of how your contributions
+                      can make a difference.
                     </p>
 
                     {/* Alert */}
@@ -146,7 +168,7 @@ const DonationDetails2 = () => {
                           <h4 className="font-semibold">Goals</h4>
                         </div>
                         <div>
-                          <p className="text-gray-600">6, 126, 750  Francs</p>
+                          <p className="text-gray-600">6, 126, 750 Francs</p>
                           <h4 className="font-semibold">Raised</h4>
                         </div>
                       </div>
@@ -369,6 +391,7 @@ const DonationDetails2 = () => {
                 </div>
                 {/* <p className="text-[]">We love you</p> */}
               </div>
+
               <motion.hr
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -376,6 +399,122 @@ const DonationDetails2 = () => {
                 viewport={{ once: true, amount: 0.1 }}
                 className="my-6 border-gray-200"
               />
+
+              {/* Related Blogs Section */}
+              <div className="mt-12">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
+                  Related Blogs
+                </motion.h3>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
+                  {/* {[1, 2].map((item) => ( */}
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div className="relative h-72">
+                      <Link href="/blog-details-3">
+                        <Image
+                          src="/gallery/food.jpg"
+                          alt="Related blog"
+                          fill
+                          className="object-cover hover:scale-105 ease-in-out duration-200 "
+                        />
+                      </Link>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap gap-4 mb-4 items-center">
+                        <div className="flex gap-2 items-center">
+                          <User className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">By: admin</p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <MessageSquare className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">Food</p>
+                        </div>
+                      </div>
+
+                      <h4 className="text-lg font-bold text-gray-800 mb-3">
+                        Nourishing Communities: The Power of Good and Quality
+                        Food
+                      </h4>
+
+                      <p className="text-gray-600 mb-6 text-sm">
+                        Food sustains life, nurtures community bonds, and fights
+                        hunger, contributing to a healthier and more equitable
+                        world for all.
+                      </p>
+
+                      <Link
+                        href="/blog-details-3"
+                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
+                      >
+                        Read More
+                      </Link> 
+                    </div>
+                  </div>
+                  {/* ))} */}
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div className="relative h-72">
+                      <Link href="/blog-details-1">
+                        <Image
+                          src="/gallery/event-6.png"
+                          alt="Related blog"
+                          fill
+                          className="object-cover hover:scale-105 ease-in-out duration-200 "
+                        />
+                      </Link>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap gap-4 mb-4 items-center">
+                        <div className="flex gap-2 items-center">
+                          <User className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">By: admin</p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <MessageSquare className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">EDUCATION</p>
+                        </div>
+                      </div>
+
+                      <h4 className="text-lg font-bold text-gray-800 mb-3">
+                        Empowering Futures Through Accessible Education for All
+                      </h4>
+
+                      <p className="text-gray-600 mb-6 text-sm">
+                        Education transforms lives, fostering opportunities and
+                        breaking barriers for under-served communities
+                        worldwide.
+                      </p>
+
+                      <Link
+                        href="/blog-details-1"
+                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+
+              <motion.hr
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="my-6 border-gray-200"
+              />
+
               {/* Donation Content */}
               <motion.div
                 initial={{ opacity: 0, y: 100 }}
@@ -389,11 +528,22 @@ const DonationDetails2 = () => {
                     <strong>Real Life Story, Real Impact</strong>
                   </b>
                   <br />
-                  Amina is a 14-year-old girl from a small village in a rural area where access to quality education is limited. Growing up in a family of five, her parents worked tirelessly as farmers, earning just enough to provide for basic needs. Despite their hard work, they struggled to afford school fees, uniforms, and supplies for Amina and her younger siblings. Amina story is just one of many that
-                  illustrate the profound impact your donations can have.
+                  Amina is a 14-year-old girl from a small village in a rural
+                  area where access to quality education is limited. Growing up
+                  in a family of five, her parents worked tirelessly as farmers,
+                  earning just enough to provide for basic needs. Despite their
+                  hard work, they struggled to afford school fees, uniforms, and
+                  supplies for Amina and her younger siblings. Amina story is
+                  just one of many that illustrate the profound impact your
+                  donations can have.
                 </p>
                 <p className="text-gray-600 mb-6">
-                Education is a challenge we can overcome, and with your support, we can build a future where everyone has access to the knowledge and skills they need to succeed. Join us in the mission to empower individuals in our local communities through education. Your contribution can transform lives and foster a stronger, more equitable society for all.
+                  Education is a challenge we can overcome, and with your
+                  support, we can build a future where everyone has access to
+                  the knowledge and skills they need to succeed. Join us in the
+                  mission to empower individuals in our local communities
+                  through education. Your contribution can transform lives and
+                  foster a stronger, more equitable society for all.
                 </p>
 
                 <motion.hr
@@ -406,27 +556,37 @@ const DonationDetails2 = () => {
 
                 <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
                 <p className="text-gray-600 mb-4">
-                By addressing these challenges and working towards these goals, we can empower individuals through education and create a brighter, more equitable future for all. Together, we can make a lasting impact in our communities and they include:
+                  By addressing these challenges and working towards these
+                  goals, we can empower individuals through education and create
+                  a brighter, more equitable future for all. Together, we can
+                  make a lasting impact in our communities and they include:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Access to Quality Education:</b> <br /> Many individuals, especially in underserved communities, face significant barriers to accessing quality education. This includes a lack of schools, inadequate facilities, and insufficient resources.
+                  <b>Access to Quality Education:</b> <br /> Many individuals,
+                  especially in underserved communities, face significant
+                  barriers to accessing quality education. This includes a lack
+                  of schools, inadequate facilities, and insufficient resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Economic Barriers:</b> <br /> The rising costs of education, including tuition, books, and supplies, can be prohibitive for low-income families. Many students are forced to drop out or forgo higher education due to financial constraints.
-
-
+                  <b>Economic Barriers:</b> <br /> The rising costs of
+                  education, including tuition, books, and supplies, can be
+                  prohibitive for low-income families. Many students are forced
+                  to drop out or forgo higher education due to financial
+                  constraints.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Language Barriers: </b> <br /> Non-native speakers may struggle in educational settings where the primary language of instruction is not their first language, making it difficult for them to fully engage and succeed.
-
-
+                  <b>Language Barriers: </b> <br /> Non-native speakers may
+                  struggle in educational settings where the primary language of
+                  instruction is not their first language, making it difficult
+                  for them to fully engage and succeed.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Limited Awareness of Resources:</b> <br /> Many individuals are unaware of the educational resources and support available to them, which can prevent them from seeking help and accessing opportunities.
-
-
+                  <b>Limited Awareness of Resources:</b> <br /> Many individuals
+                  are unaware of the educational resources and support available
+                  to them, which can prevent them from seeking help and
+                  accessing opportunities.
                 </p>
 
                 <motion.hr
@@ -439,35 +599,60 @@ const DonationDetails2 = () => {
 
                 <h4 className="text-xl font-bold mb-3">Our Goals </h4>
                 <p className="text-gray-600 mb-4">
-                  Our goal is to create a community where everyone
-                  has access to good and quality education. We aim to achieve this through
-                  a comprehensive approach that includes:
+                  Our goal is to create a community where everyone has access to
+                  good and quality education. We aim to achieve this through a
+                  comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Increase Access to Education: </b> <br /> Our primary goal is to ensure that all individuals, regardless of their background, have access to quality education. This includes building more schools, providing transportation, and ensuring that educational facilities are equipped with necessary resources.
+                  <b>Increase Access to Education: </b> <br /> Our primary goal
+                  is to ensure that all individuals, regardless of their
+                  background, have access to quality education. This includes
+                  building more schools, providing transportation, and ensuring
+                  that educational facilities are equipped with necessary
+                  resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>Provide Financial Support: </b> <br /> We aim to establish scholarship programs and financial aid initiatives to alleviate the economic burden of education. This will help students cover tuition, books, and other essential expenses.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Enhance Teacher Training and Support: I</b> <br /> We will work to improve teacher training programs and provide ongoing professional development to ensure that educators are well-equipped to meet the needs of their students.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is to create an inclusive educational environment that respects and accommodates the diverse cultural backgrounds of all students. This includes implementing programs that encourage the participation of underrepresented groups.</p>
-
-                  <p className="text-gray-600 mb-4">
-                  <b>Language Support Programs:  I</b> <br />  We will develop language support programs for non-native speakers to help them improve their language skills and succeed in their studies.
-                </p>
-
-
-                <p className="text-gray-600 mb-4">
-                  <b>Raise Awareness and Advocacy:</b> <br />  We aim to increase awareness of available educational resources and support systems within communities. This includes outreach programs, workshops, and partnerships with local organizations to ensure that individuals know how to access the help they need.
+                  <b>Provide Financial Support: </b> <br /> We aim to establish
+                  scholarship programs and financial aid initiatives to
+                  alleviate the economic burden of education. This will help
+                  students cover tuition, books, and other essential expenses.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>Foster Community Engagement: </b> <br />  We will encourage community involvement in education through volunteer opportunities, mentorship programs, and collaborative events that bring together students, educators, and community members.
+                  <b>Enhance Teacher Training and Support: I</b> <br /> We will
+                  work to improve teacher training programs and provide ongoing
+                  professional development to ensure that educators are
+                  well-equipped to meet the needs of their students.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is
+                  to create an inclusive educational environment that respects
+                  and accommodates the diverse cultural backgrounds of all
+                  students. This includes implementing programs that encourage
+                  the participation of underrepresented groups.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Language Support Programs: I</b> <br /> We will develop
+                  language support programs for non-native speakers to help them
+                  improve their language skills and succeed in their studies.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Raise Awareness and Advocacy:</b> <br /> We aim to increase
+                  awareness of available educational resources and support
+                  systems within communities. This includes outreach programs,
+                  workshops, and partnerships with local organizations to ensure
+                  that individuals know how to access the help they need.
+                </p>
+
+                <p className="text-gray-600 mb-4">
+                  <b>Foster Community Engagement: </b> <br /> We will encourage
+                  community involvement in education through volunteer
+                  opportunities, mentorship programs, and collaborative events
+                  that bring together students, educators, and community
+                  members.
                 </p>
 
                 <motion.hr
@@ -504,7 +689,7 @@ const DonationDetails2 = () => {
                       { name: "Food", active: false },
                       { name: "Medical", active: false },
                       { name: "Water", active: false },
-                      { name: "Education", active: true }, 
+                      { name: "Education", active: true },
                     ].map((category, index) => (
                       <li
                         key={index}
@@ -545,7 +730,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-24 relative">
                         <Link href="/upcoming-event-details-1">
                           <Image
-                            src="/gallery/donateList-1.png"
+                            src={relatedPostImg1}
                             alt="Upcoming Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -573,7 +758,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-6">
                           <Image
-                            src="/gallery/gallery-4.png"
+                            src={relatedPostImg2}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -601,7 +786,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-1">
                           <Image
-                            src="/gallery/gallery-20.png"
+                            src={relatedPostImg3}
                             alt="Past Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -629,7 +814,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-5">
                           <Image
-                            src="/gallery/donateList-1.png"
+                            src={relatedPostImg4}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -659,7 +844,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/upcoming-event-details-2">
                           <Image
-                            src="/gallery/donationList-2.png"
+                            src={relatedPostImg5}
                             alt="Upcoming Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -687,7 +872,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-1">
                           <Image
-                            src="/gallery/gallery-1.png"
+                            src={relatedPostImg6}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -701,8 +886,8 @@ const DonationDetails2 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-1">
-                            Empower minds, change futures — Donate today and make a
-                            long lasting impacts in lives of people and
+                            Empower minds, change futures — Donate today and
+                            make a long lasting impacts in lives of people and
                             communities!
                           </a>
                         </h4>
@@ -716,7 +901,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-2">
                           <Image
-                            src="/gallery/gallery-3.png"
+                            src={relatedPostImg7}
                             alt="Past Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -743,7 +928,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-3">
                           <Image
-                            src="/gallery/gallery-2.png"
+                            src={relatedPostImg8}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -771,7 +956,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/upcoming-event-details-2">
                           <Image
-                            src="/blog/blog-5.png"
+                            src={relatedPostImg9}
                             alt="Upcoming Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -799,7 +984,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-2">
                           <Image
-                            src="/gallery/gallery-1.png"
+                            src={relatedPostImg10}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -827,7 +1012,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-3">
                           <Image
-                            src="/gallery/gallery-13.png"
+                            src={relatedPostImg11}
                             alt="Past Event 3"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -854,7 +1039,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-4">
                           <Image
-                            src="/gallery/donationList-2.png"
+                            src={relatedPostImg12}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -885,7 +1070,7 @@ const DonationDetails2 = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 viewport={{ once: true, amount: 0.1 }}
-                className="bg-white rounded-lg shadow-md p-6 mt-12"
+                className="bg-white rounded-lg shadow-md p-6"
               >
                 <h3 className="text-lg font-bold text-gray-800 mb-2">Tags</h3>
 
@@ -904,7 +1089,6 @@ const DonationDetails2 = () => {
                   </span>
                 </div>
               </motion.div>
-
             </div>
           </div>
         </div>

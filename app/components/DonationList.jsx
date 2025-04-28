@@ -4,11 +4,18 @@ import Link from "next/link";
 
 import { Reply } from "lucide-react";
 
+import donationListImg1 from '/public/gallery/gallery-1.png'
+import donationListImg2 from '/public/gallery/gallery-2.png'
+import donationListImg3 from '/public/gallery/gallery-3.png'
+import donationListImg4 from '/public/gallery/donationList-2.png'
+import donationListImg5 from '/public/gallery/donateList-1.png'
+import donationListImg6 from '/public/gallery/gallery-4.png'
+
 const DonationList = () => {
   const donations = [
     {
-      id: 1,
-      image: "/gallery/gallery-1.png",
+      id: 1, 
+      image: donationListImg1,
       category: "FOOD",
       progress: 43.36,
       backgroundColor: "bg-emerald-600", 
@@ -22,7 +29,7 @@ const DonationList = () => {
     },
     {
       id: 2,
-      image: "/gallery/gallery-2.png",
+      image: donationListImg2,
       category: "EDUCATION",
       progress: 60.77,
       backgroundColor: "bg-emerald-600",
@@ -37,7 +44,7 @@ const DonationList = () => {
     },
     {
       id: 3,
-      image: "/gallery/gallery-3.png",
+      image: donationListImg3,
       category: "MEDICAL",
       progress: 18,
       backgroundColor: "bg-emerald-600",
@@ -51,7 +58,7 @@ const DonationList = () => {
     },
     {
       id: 4,
-      image: "/gallery/donationList-2.png",
+      image: donationListImg4,
       category: "WATER",
       progress: 72,
       backgroundColor: "bg-emerald-600",
@@ -65,7 +72,7 @@ const DonationList = () => {
     },
     {
       id: 5,
-      image: "/gallery/donateList-1.png",
+      image: donationListImg5,
       category: "HOMELESS",
       progress: 55,
       backgroundColor: "bg-emerald-600",
@@ -79,7 +86,7 @@ const DonationList = () => {
     },
     {
       id: 6,
-      image: "/gallery/gallery-4.png",
+      image: donationListImg6, 
       category: "EXTREME CASES",
       progress: 22,
       backgroundColor: "bg-emerald-600",
@@ -108,9 +115,9 @@ const DonationList = () => {
                     <Image
                       src={donation.image}
                       alt="Donation campaign"
-                      className="w-full object-cover"
+                      className="w-full object-cover hover:scale-105 ease-in-out duration-300"
                       width={400}
-                      height={250}
+                      height={250} 
                       layout="responsive"
                     />
                   </div>

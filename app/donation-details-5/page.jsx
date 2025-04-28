@@ -18,6 +18,19 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
+import relatedPostImg1 from '/public/gallery/donateList-1.png'
+import relatedPostImg2 from '/public/gallery/gallery-4.png'
+import relatedPostImg3 from '/public/gallery/gallery-20.png'
+import relatedPostImg4 from '/public/urgent/urgent-1.png'
+import relatedPostImg5 from '/public/gallery/donationList-2.png'
+import relatedPostImg6 from '/public/gallery/gallery-1.png'
+import relatedPostImg7 from '/public/gallery/gallery-3.png'
+import relatedPostImg8 from '/public/gallery/gallery-2.png'
+import relatedPostImg9 from '/public/blog/blog-5.png'
+import relatedPostImg10 from '/public/gallery/education.png'
+import relatedPostImg11 from '/public/gallery/gallery-13.png'
+import relatedPostImg12 from '/public/gallery/water.png'
+
 const DonationDetails5 = () => {
   const metadata = {
     title: "Give hope, change lives - ConnectAID Web Application",
@@ -897,7 +910,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-24 relative">
                         <Link href="/upcoming-event-details-1">
                           <Image
-                            src="/gallery/donateList-1.png"
+                            src={relatedPostImg1} 
                             alt="Upcoming Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -925,7 +938,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-6">
                           <Image
-                            src="/gallery/gallery-4.png"
+                            src={relatedPostImg2}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -953,7 +966,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-1">
                           <Image
-                            src="/gallery/gallery-20.png"
+                            src={relatedPostImg3}
                             alt="Past Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -981,7 +994,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-5">
                           <Image
-                            src="/gallery/donateList-1.png"
+                            src={relatedPostImg4}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1011,7 +1024,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/upcoming-event-details-2">
                           <Image
-                            src="/gallery/donationList-2.png"
+                            src={relatedPostImg5}
                             alt="Upcoming Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -1039,7 +1052,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-1">
                           <Image
-                            src="/gallery/gallery-1.png"
+                            src={relatedPostImg6}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1053,8 +1066,8 @@ const DonationDetails5 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-1">
-                            Give hope, change lives— Donate today and make a
-                            long lasting impacts in lives of people and
+                            Empower minds, change futures — Donate today and
+                            make a long lasting impacts in lives of people and
                             communities!
                           </a>
                         </h4>
@@ -1068,7 +1081,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-2">
                           <Image
-                            src="/gallery/gallery-3.png"
+                            src={relatedPostImg7}
                             alt="Past Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -1095,7 +1108,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-3">
                           <Image
-                            src="/gallery/gallery-2.png"
+                            src={relatedPostImg8}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1109,7 +1122,7 @@ const DonationDetails5 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-3">
-                            Give hope, change lives— Your donation can provide
+                            Heal lives, restore hope — Your donation can provide
                             essential medical care to those in need!!
                           </a>
                         </h4>
@@ -1123,7 +1136,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/upcoming-event-details-2">
                           <Image
-                            src="/blog/blog-5.png"
+                            src={relatedPostImg9}
                             alt="Upcoming Event 2"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -1151,7 +1164,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-2">
                           <Image
-                            src="/gallery/gallery-1.png"
+                            src={relatedPostImg10}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1165,8 +1178,8 @@ const DonationDetails5 = () => {
                         </div>
                         <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
                           <a href="/donation-details-2">
-                            Give hope, change lives— Your donation can provide
-                            education and hope to children in need!
+                            Empower minds, change futures — Your donation can
+                            provide education and hope to children in need!
                           </a>
                         </h4>
                       </div>
@@ -1179,7 +1192,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-20 relative">
                         <Link href="/past-event-details-3">
                           <Image
-                            src="/gallery/gallery-13.png"
+                            src={relatedPostImg11}
                             alt="Past Event 3"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
@@ -1206,7 +1219,7 @@ const DonationDetails5 = () => {
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-4">
                           <Image
-                            src="/gallery/donationList-2.png"
+                            src={relatedPostImg12}
                             alt="Donation List 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1237,7 +1250,7 @@ const DonationDetails5 = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 viewport={{ once: true, amount: 0.1 }}
-                className="bg-white rounded-lg shadow-md p-6 mt-12"
+                className="bg-white rounded-lg shadow-md p-6 "
               >
                 <h3 className="text-lg font-bold text-gray-800 mb-2">Tags</h3>
 

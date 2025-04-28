@@ -28,7 +28,7 @@ const Upcoming = () => {
         >
           <div className="w-full">
             <BlogCard
-              linkBlog="/upcoming-event-details-2"
+              linkBlog="/upcoming-event-details-1"
               imageSrc="/gallery/donateList-1.png"
               date="15 June 2025"
               title="Hope for the Homeless: Compassion / Provide Home for the Homeless"
@@ -40,7 +40,7 @@ const Upcoming = () => {
               imageSrc="/gallery/donationList-2.png"
               date="20 Aug 2025"
               title="Empowering Future Generations: Access to Clean Water for Children"
-              linkBlog="/upcoming-event-details-1"
+              linkBlog="/upcoming-event-details-2"
               excerpt="It focuses on providing clean water access, essential for children's health and education, ensuring a sustainable future. Join us in making a vital impact!"
             /> 
           </div>
@@ -48,7 +48,7 @@ const Upcoming = () => {
           <div className="w-full">
             <BlogCard
               linkBlog="/upcoming-event-details-3"
-              imageSrc="/blog/blog-5.png"
+              imageSrc="/gallery/suffering.png"
               date="13 Oct 2025"
               title="Stand Together for Change: Aid Those in Extreme Cases of Need!"
               excerpt="Your donations can transform lives! Help us provide critical resources and support for individuals facing extreme cases and have given up on life. Join us in making a lasting impact!."

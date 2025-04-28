@@ -8,6 +8,9 @@ import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+import navLogo from '/public/icon/logo.png'
+
+
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(
@@ -78,7 +81,7 @@ const Navbar = () => {
             <Link href="/">
               <div className="flex items-center cursor-pointer">
                 <Image
-                  src="/icon/logo.png"
+                  src={navLogo}
                   alt="ConnectAID Logo"
                   width={70}
                   height={60}

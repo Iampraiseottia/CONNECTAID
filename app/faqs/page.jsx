@@ -50,7 +50,7 @@ const FrequentlyAskedQuestions = () => {
       </motion.div>
 
   
-      {/* Our Blog */}
+      {/* Frequently Asked Questions */}
       <FAQs />
 
       {/* Picture Gallery  */}

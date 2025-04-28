@@ -18,7 +18,7 @@ const TeamMember = ({ name, position, image, delay }) => {
             alt={name}
             width={400}
             height={500}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover hover:scale-105 ease-in-out duration-300"
           />
         </div>
         <div className="p-5">
