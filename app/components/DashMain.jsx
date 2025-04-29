@@ -29,13 +29,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 
-
 import NotificationsComponent from "./NotificationsComponent";
 
 const DashMain = ({ setActiveComponent }) => {
-
   const [userStats, setUserStats] = useState({
-    totalDonated: "133, 000",
+    totalDonated: "497, 500",
     campaignsSupported: 27,
     peopleImpacted: 485,
     recentCampaigns: [],
@@ -52,13 +50,13 @@ const DashMain = ({ setActiveComponent }) => {
       { month: "Mar", amount: 10000 },
       { month: "Apr", amount: 70000 },
       { month: "May", amount: 20000 },
-      { month: "Jun", amount: 300000 },
+      { month: "Jun", amount: 30000 },
       { month: "Jul", amount: 15000 },
       { month: "Aug", amount: 85000 },
-      { month: "Sep", amount: 125000 },
+      { month: "Sep", amount: 12500 },
       { month: "Oct", amount: 40000 },
-      { month: "Nov", amount: 500000 },
-      { month: "Doc", amount: 90000 }, 
+      { month: "Nov", amount: 50000 },
+      { month: "Doc", amount: 90000 },
     ];
 
     // Mock recent campaigns
@@ -67,22 +65,36 @@ const DashMain = ({ setActiveComponent }) => {
         id: 1,
         title: "Education for Rural Children",
         category: "Education",
-        amountDonated: 350,
-        date: "2025-04-12",
+        amountDonated: "10, 000",
+        date: "2024-03-12",
       },
       {
         id: 2,
         title: "Medical Supplies for Local Clinic",
         category: "Healthcare",
-        amountDonated: 500,
-        date: "2025-04-05",
+        amountDonated: "70, 000",
+        date: "2024-04-05",
       },
       {
         id: 3,
-        title: "Community Food Bank Drive",
-        category: "Food Security",
-        amountDonated: 250,
-        date: "2025-03-28",
+        title: "Local Community Food Distribution",
+        category: "Food ",
+        amountDonated: "20, 000",
+        date: "2024-05-28",
+      },
+      {
+        id: 4,
+        title: "Clean Water Source For Community",
+        category: "Water",
+        amountDonated: "30, 000",
+        date: "2024-06-18",
+      },
+      {
+        id: 5,
+        title: "Shelter For Homeless",
+        category: "Healthcare",
+        amountDonated: "85, 000",
+        date: "2025-07-09",
       },
     ];
 
@@ -90,15 +102,23 @@ const DashMain = ({ setActiveComponent }) => {
     const mockUpcomingEvents = [
       {
         id: 1,
-        title: "Charity Run for Cancer Research",
-        date: "2025-05-15",
-        time: "8:00 AM",
+        title:
+          "Hope for the Homeless: Compassion / Provide Home for the Homeless",
+        date: "15 June 2025",
+        time: "11:00 AM",
       },
       {
         id: 2,
-        title: "Virtual Fundraiser: Education for All",
-        date: "2025-05-22",
-        time: "7:00 PM",
+        title:
+          "Empowering Future Generations: Access to Clean Water for Children",
+        date: "20 Aug 2025",
+        time: "2:30 PM",
+      },
+      {
+        id: 3,
+        title: "Stand Together for Change: Aid Those in Extreme Cases of Need!",
+        date: "13 Oct 2025",
+        time: "11:30 AM",
       },
     ];
 
@@ -175,7 +195,6 @@ const DashMain = ({ setActiveComponent }) => {
 
   const isSearchActive = searchQuery.trim() !== "";
 
-  // Function to handle navigation safely
   const handleNavigation = (route) => {
     if (typeof setActiveComponent === "function") {
       setActiveComponent(route);
@@ -232,7 +251,7 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           {/* Use the new Notifications Component */}
-          <NotificationsComponent setActiveComponent={setActiveComponent} /> 
+          <NotificationsComponent setActiveComponent={setActiveComponent} />
 
           {/* User Avatar */}
           <div
@@ -360,19 +379,19 @@ const DashMain = ({ setActiveComponent }) => {
         <>
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
               <div className="bg-teal-100 p-3 rounded-full mr-4">
                 <DollarSign size={24} className="text-teal-600" />
               </div>
               <div>
                 <p className="text-gray-500 text-sm">Total Donated</p>
                 <p className="text-2xl font-bold text-slate-800">
-                  ${userStats.totalDonated}
+                  {userStats.totalDonated} Francs
                 </p>
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <Gift size={24} className="text-blue-600" />
               </div>
@@ -384,12 +403,12 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md flex items-center">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
               <div className="bg-purple-100 p-3 rounded-full mr-4">
                 <Users size={24} className="text-purple-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm">People Impacted</p>
+                <p className="text-gray-500 text-sm">People Impacted</p> 
                 <p className="text-2xl font-bold text-slate-800">
                   {userStats.peopleImpacted}
                 </p>
@@ -398,9 +417,9 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           {/* Donation History Chart */}
-          <div className="bg-white p-6 rounded-lg shadow-lg mb-8">
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8">
             <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-              <TrendingUp size={20} className="mr-2 text-teal-600" />
+              <TrendingUp size={20} className="mr-2 text-teal-600 " />
               Your Donation History
             </h2>
             <div className="h-64">
@@ -416,7 +435,7 @@ const DashMain = ({ setActiveComponent }) => {
                   <Legend />
                   <Bar
                     dataKey="amount"
-                    name="Donation Amount ($)"
+                    name="Donation Amount (Francs)"
                     fill="#14b8a6"
                   />
                 </BarChart>
@@ -425,36 +444,36 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           {/* Incomplete Profile Alert */}
-          <div className="mt-8 bg-amber-50 border border-amber-200 p-4 rounded-lg flex items-start">
-            <AlertCircle
+          <div className="mt-10 mb-4 bg-amber-50 border border-amber-200 shadow-md hover:shadow-lg ease-in-out duration-300 p-4 rounded-lg flex items-start"> 
+            <AlertCircle 
               size={24}
               className="text-amber-500 mr-3 mt-0.5 flex-shrink-0"
             />
             <div>
-              <h3 className="font-medium text-amber-800">
+              <h3 className="font-medium text-amber-800"> 
                 Complete Your Profile
               </h3>
               <p className="text-amber-700 mt-1">
-                Please complete your profile to enhance your donation experience
+                Please 🙏 complete your profile to enhance your donation experience
                 and help us match you with campaigns that align with your
                 interests.
               </p>
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   onClick={() => handleNavigation("about-you")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-1 px-3 rounded text-sm font-medium"
+                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out rounded text-[16px] font-medium"
                 >
                   Complete About You
                 </button>
                 <button
                   onClick={() => handleNavigation("identity")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-1 px-3 rounded text-sm font-medium"
-                >
+                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out mx-3 rounded text-sm font-medium"
+                > 
                   Verify Identity
                 </button>
                 <button
                   onClick={() => handleNavigation("survey")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-1 px-3 rounded text-sm font-medium"
+                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out  rounded text-sm font-medium"
                 >
                   Take Survey
                 </button>
@@ -462,9 +481,9 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10 "> 
             {/* Recent Campaigns */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300">
               <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
                 <Heart size={20} className="mr-2 text-teal-600" />
                 Recent Campaigns You've Supported
@@ -488,7 +507,7 @@ const DashMain = ({ setActiveComponent }) => {
                           </div>
                           <div className="text-right">
                             <p className="font-medium text-teal-600">
-                              ${campaign.amountDonated}
+                              {campaign.amountDonated} Francs
                             </p>
                             <p className="text-xs text-gray-500">
                               {campaign.date}
@@ -528,7 +547,7 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
 
             {/* Upcoming Events */}
-            <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300">
               <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
                 <Calendar size={20} className="mr-2 text-teal-600" />
                 Upcoming Events

@@ -12,9 +12,9 @@ import {
   faMoneyBill,
   faUser,
   faRightFromBracket,
-  faAddressCard,
   faIdCard,
   faClipboard,
+  faUserNurse,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Metadata from "./Metadata";
@@ -352,7 +352,7 @@ const SideBar = () => {
                 onClick={() => handleComponentChange("about-you")}
               >
                 <FontAwesomeIcon
-                  icon={faAddressCard}
+                  icon={faUserNurse}
                   className={`transition-all ${
                     expandedSideBar || isDesktop
                       ? "h-6 w-6 mr-2"
