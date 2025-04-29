@@ -532,7 +532,6 @@ const SideBar = () => {
         <p className="bg-white text-teal-500 py-2 text-center absolute bottom-0 left-0 w-full ">
           *Givers Never Lack 🙏❤️‍🔥*
         </p>
-
       </div>
 
       {/* Overlay for mobile when sidebar is expanded */}

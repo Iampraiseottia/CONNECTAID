@@ -20,6 +20,8 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
+import navLogo from '/public/icon/logo.png'
+
 const ForgotPassword = () => {
   const metadata = {
     title: "Forgot Password - ConnectAID Web Application",
@@ -94,7 +96,7 @@ const ForgotPassword = () => {
         <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
           <div className="flex items-center justify-center">
             <Image
-              src="/icon/logo.png"
+              src={navLogo}
               height={100}
               width={100}
               alt="ConnectAID Logo"

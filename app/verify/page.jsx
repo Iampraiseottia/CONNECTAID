@@ -17,6 +17,8 @@ import Metadata from "../components/Metadata";
 import Image from "next/image";
 import Link from "next/link";
 
+import navLogo from '/public/icon/logo.png'
+
 
 const Verify = () => {
   const metadata = {
@@ -116,7 +118,7 @@ const Verify = () => {
         <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
           <div className="flex items-center justify-center">
             <Image
-              src="/icon/logo.png"
+              src={navLogo}
               height={100}
               width={100}
               alt="ConnectAID Logo"

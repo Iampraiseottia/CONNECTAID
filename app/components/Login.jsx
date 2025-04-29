@@ -18,6 +18,9 @@ import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
 import { motion } from "motion/react";
 
+import navLogo from '/public/icon/logo.png'
+
+
 const Login = () => {
   const router = useRouter();
 
@@ -140,7 +143,7 @@ const Login = () => {
       <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
         <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
           <Image
-            src="/icon/logo.png"
+            src={navLogo}
             height={80}
             width={80}
             alt="ConnectAID Logo"
