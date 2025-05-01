@@ -387,7 +387,10 @@ const DashMain = ({ setActiveComponent }) => {
         <>
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
+            <div
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              title="Total Donated"
+            >
               <div className="bg-teal-100 p-3 rounded-full mr-4">
                 <DollarSign size={24} className="text-teal-600" />
               </div>
@@ -399,7 +402,10 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
+            <div
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              title="Campaigns Supported"
+            >
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <Gift size={24} className="text-blue-600" />
               </div>
@@ -411,7 +417,10 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
+            <div
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              title="People Impacted"
+            >
               <div className="bg-purple-100 p-3 rounded-full mr-4">
                 <Users size={24} className="text-purple-600" />
               </div>
