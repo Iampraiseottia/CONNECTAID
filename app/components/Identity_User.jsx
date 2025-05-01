@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+
 import {
   Upload,
   ArrowLeft,
@@ -10,6 +11,8 @@ import {
   AlertTriangle,
   ChevronRight,
 } from "lucide-react";
+
+import { motion } from "motion/react";
 
 const Identity_User = ({ setActiveComponent }) => {
   const [verificationMethod, setVerificationMethod] = useState("");
@@ -67,7 +70,6 @@ const Identity_User = ({ setActiveComponent }) => {
       return;
     }
 
-    
     setProcessing(true);
     setTimeout(() => {
       setProcessing(false);
@@ -79,7 +81,13 @@ const Identity_User = ({ setActiveComponent }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="p-6 bg-gray-50 min-h-screen"
+    >
       <div className="max-w-6xl mx-auto mt-12 ">
         <div className="flex items-center mb-6">
           <button
@@ -375,7 +383,7 @@ const Identity_User = ({ setActiveComponent }) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

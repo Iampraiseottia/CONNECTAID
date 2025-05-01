@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+
+import { motion } from "motion/react";
+
 import { ArrowLeft, CheckCircle, ArrowRight } from "lucide-react";
 
 const Survey_User = ({ setActiveComponent }) => {
@@ -145,16 +148,16 @@ const Survey_User = ({ setActiveComponent }) => {
                         id={`amount-${option}`}
                         name="donationAmount"
                         value={option}
-                        checked={surveyData.donationAmount === option} 
+                        checked={surveyData.donationAmount === option}
                         onChange={handleInputChange}
-                        defaultChecked={option[1]} 
+                        defaultChecked={option[1]}
                         className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
                       />
                       <label
                         htmlFor={`amount-${option}`}
                         className="ml-2 block text-sm text-gray-700"
                       >
-                        {option} 
+                        {option}
                       </label>
                     </div>
                   ))}
@@ -164,7 +167,8 @@ const Survey_User = ({ setActiveComponent }) => {
               {/* Donation Type Preferences */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  What types of donations do you prefer? (Select atleast 4 that apply)
+                  What types of donations do you prefer? (Select atleast 4 that
+                  apply)
                 </label>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {[
@@ -212,7 +216,8 @@ const Survey_User = ({ setActiveComponent }) => {
               {/* Communication Preferences */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  How would you like to receive updates? (Please Select atleast 3 that apply)
+                  How would you like to receive updates? (Please Select atleast
+                  3 that apply)
                 </label>
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {[
@@ -230,8 +235,7 @@ const Survey_User = ({ setActiveComponent }) => {
                         checked={surveyData.communicationPreferences.includes(
                           option
                         )}
-                        defaultChecked={option[0]} 
-
+                        defaultChecked={option[0]}
                         onChange={() =>
                           handleCheckboxChange(
                             "communicationPreferences",
@@ -415,7 +419,13 @@ const Survey_User = ({ setActiveComponent }) => {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="p-6 bg-gray-50 min-h-screen"
+    >
       <div className="max-w-7xl mx-auto mt-12 ">
         <div className="flex items-center mb-6">
           <button
@@ -475,7 +485,7 @@ const Survey_User = ({ setActiveComponent }) => {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

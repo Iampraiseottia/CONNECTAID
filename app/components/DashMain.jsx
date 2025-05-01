@@ -206,15 +206,15 @@ const DashMain = ({ setActiveComponent }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="p-6 bg-gray-50 min-h-screen"
+    >
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.7 }}
-        viewport={{ once: true, amount: 0.05 }}
-        className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 mt-8 md:mb-8 gap-4"
-      >
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 mt-8 md:mb-8 gap-4">
         <div className="pt-2 md:pt-4 w-full md:w-auto">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 break-words flex flex-col md:flex-row">
             <span>Welcome Back!!!,</span>
@@ -304,17 +304,11 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Search Results Section */}
       {isSearchActive && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          viewport={{ once: true, amount: 0.05 }}
-          className="mb-8 bg-white p-6 rounded-lg shadow-md"
-        >
+        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
             <Search size={20} className="mr-2 text-teal-600" />
             Search Results for "{searchQuery}"
@@ -385,20 +379,14 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
           )}
-        </motion.div>
+        </div>
       )}
 
       {/* Only show the regular content when not searching */}
       {!isSearchActive && (
         <>
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            viewport={{ once: true, amount: 0.05 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center">
               <div className="bg-teal-100 p-3 rounded-full mr-4">
                 <DollarSign size={24} className="text-teal-600" />
@@ -434,16 +422,10 @@ const DashMain = ({ setActiveComponent }) => {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Donation History Chart */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            viewport={{ once: true, amount: 0.05 }}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8"
-          >
+          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8">
             <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
               <TrendingUp size={20} className="mr-2 text-teal-600 " />
               Your Donation History
@@ -467,16 +449,10 @@ const DashMain = ({ setActiveComponent }) => {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </motion.div>
+          </div>
 
           {/* Incomplete Profile Alert */}
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            viewport={{ once: true, amount: 0.05 }}
-            className="mt-10 mb-4 bg-amber-50 border border-amber-200 shadow-md hover:shadow-lg ease-in-out duration-300 p-4 rounded-lg flex items-start"
-          >
+          <div className="mt-10 mb-4 bg-amber-50 border border-amber-200 shadow-md hover:shadow-lg ease-in-out duration-300 p-4 rounded-lg flex items-start">
             <AlertCircle
               size={24}
               className="text-amber-500 mr-3 mt-0.5 flex-shrink-0"
@@ -511,15 +487,9 @@ const DashMain = ({ setActiveComponent }) => {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            viewport={{ once: true, amount: 0.05 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10 "
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10 ">
             {/* Recent Campaigns */}
             <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300">
               <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
@@ -621,10 +591,10 @@ const DashMain = ({ setActiveComponent }) => {
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };
 

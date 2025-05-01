@@ -1,7 +1,10 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+
 import { Save, ArrowLeft, CheckCircle } from "lucide-react";
+
+import { motion } from "motion/react";
 
 const About_User = ({ setActiveComponent }) => {
   const [formData, setFormData] = useState({
@@ -258,7 +261,13 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="p-6 bg-gray-50 min-h-screen"
+    >
       <div className="max-w-6xl mx-auto mt-10">
         <div className="flex items-center mb-6">
           <button
@@ -683,7 +692,7 @@ const About_User = ({ setActiveComponent }) => {
           </form>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
