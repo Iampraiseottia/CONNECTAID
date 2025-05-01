@@ -259,7 +259,7 @@ const About_User = ({ setActiveComponent }) => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-4xl mx-auto mt-10">
+      <div className="max-w-6xl mx-auto mt-10">
         <div className="flex items-center mb-6">
           <button
             onClick={() => setActiveComponent("dashboardMain")}
@@ -267,7 +267,7 @@ const About_User = ({ setActiveComponent }) => {
           >
             <ArrowLeft size={20} />
           </button>
-          <h1 className="text-2xl font-bold text-slate-800">About You</h1>
+          <h1 className="text-2xl font-bold text-slate-800">About You </h1>
         </div>
 
         <div className="bg-white shadow-md rounded-lg p-6 mb-8">

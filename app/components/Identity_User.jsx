@@ -80,7 +80,7 @@ const Identity_User = ({ setActiveComponent }) => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="max-w-3xl mx-auto mt-12 ">
+      <div className="max-w-6xl mx-auto mt-12 ">
         <div className="flex items-center mb-6">
           <button
             onClick={() => setActiveComponent("about-you")}
