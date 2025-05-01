@@ -525,7 +525,7 @@ const MyDonations = ({ setActiveComponent }) => {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out">
+          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Total Amount Donated">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -541,7 +541,7 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out">
+          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Completed">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -557,7 +557,7 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out">
+          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Pending">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -573,7 +573,7 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out">
+          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Recurring">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
