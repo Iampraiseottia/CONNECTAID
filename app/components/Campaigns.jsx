@@ -23,7 +23,6 @@ import {
   faPaw,
   faUtensils,
   faHome,
-  faHeart as faHeartSolid,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -36,7 +35,25 @@ const Campaigns = ({ setActiveComponent }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [likedCampaigns, setLikedCampaigns] = useState({});
 
-  // Sample campaign data - in production you would fetch this from your API 
+  // Load liked campaigns from localStorage on component mount
+  useEffect(() => {
+    // Check if we're in a browser environment (for Next.js SSR compatibility)
+    if (typeof window !== "undefined") {
+      const storedLikes = localStorage.getItem("likedCampaigns");
+      if (storedLikes) {
+        try {
+          const parsedLikes = JSON.parse(storedLikes);
+          setLikedCampaigns(parsedLikes);
+        } catch (e) {
+          console.error("Error parsing liked campaigns from localStorage:", e);
+          // Reset localStorage if corrupted
+          localStorage.setItem("likedCampaigns", JSON.stringify({}));
+        }
+      }
+    }
+  }, []);
+
+  // Sample campaign data - in production you would fetch this from your API
   useEffect(() => {
     // Simulate API fetch
     setTimeout(() => {
@@ -150,12 +167,21 @@ const Campaigns = ({ setActiveComponent }) => {
     console.log(`Donating to campaign ${campaignId}`);
   };
 
-  // Handle like button click
+  // Handle like button click and update localStorage
   const handleLike = (campaignId) => {
-    setLikedCampaigns((prev) => ({
-      ...prev,
-      [campaignId]: !prev[campaignId],
-    }));
+    setLikedCampaigns((prev) => {
+      const newLikedState = {
+        ...prev,
+        [campaignId]: !prev[campaignId],
+      };
+
+      // Save to localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("likedCampaigns", JSON.stringify(newLikedState));
+      }
+
+      return newLikedState;
+    });
   };
 
   // Floating Heart Animation Component
@@ -174,7 +200,7 @@ const Campaigns = ({ setActiveComponent }) => {
                   opacity: [0, 1, 0],
                   y: -80,
                   transition: {
-                    duration: 5,
+                    duration: 2, // Changed from 5 to 2 seconds as requested
                     times: [0, 0.1, 1],
                     delay: index * 0.1,
                   },
@@ -364,6 +390,7 @@ const Campaigns = ({ setActiveComponent }) => {
                     <button
                       className="p-2 rounded-full hover:bg-gray-100 relative overflow-visible"
                       onClick={() => handleLike(campaign.id)}
+                      title="Like"
                     >
                       {likedCampaigns[campaign.id] ? (
                         <motion.div
@@ -378,7 +405,10 @@ const Campaigns = ({ setActiveComponent }) => {
                       )}
                       <FloatingHearts campaignId={campaign.id} />
                     </button>
-                    <button className="p-2 rounded-full hover:bg-gray-100">
+                    <button
+                      className="p-2 rounded-full hover:bg-gray-100"
+                      title="Share"
+                    >
                       <Share2 className="h-5 w-5 text-slate-500" />
                     </button>
                   </div>
@@ -400,4 +430,4 @@ const Campaigns = ({ setActiveComponent }) => {
   );
 };
 
-export default Campaigns; 
+export default Campaigns;
