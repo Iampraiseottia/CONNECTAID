@@ -12,10 +12,10 @@ const Blog = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="max-w-3xl mx-auto text-center mb-12"
         >
-          <span className="inline-block text-emerald-600 font-semibold mb-2">
+          <span className="inline-block text-emerald-600 font-semibold mb-2 text-3xl"> 
             Blog
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold">Our Blog & Feeds</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-800 py-3">Our Blog & Feeds</h2>
         </motion.div>
 
         <motion.div

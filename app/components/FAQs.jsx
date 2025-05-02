@@ -75,16 +75,16 @@ const FAQs = () => {
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="font-extrabold text-3xl sm:text-4xl lg:text-5xl mb-4 sm:mb-6 faq1"
+        className="font-extrabold text-3xl sm:text-4xl text-gray-900 dark:text-gray-900 lg:text-5xl mb-4 sm:mb-6 faq1"
       >
-        Any Questions
+        Any Questions 
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="text-lg sm:text-xl mb-6 sm:mb-10 md:w-[60%] faq1"
+        className="text-lg sm:text-xl mb-6 sm:mb-10 md:w-[60%] faq1 text-gray-700 dark:text-gray-700" 
       >
         When deciding which charity to donate to, it's important to do your
         search and find one that aligns with your values and interests.
@@ -98,7 +98,7 @@ const FAQs = () => {
       >
         <div className="w-full lg:w-2/4 mb-10 md:mb-0 -mt-20 md:mt-5 faq1 transition-all ease-in-out">
           <details
-            className="bg-white p-4 sm:p-6 leading-7 mb-2 faq2 faq2"
+            className="bg-white text-gray-700 dark:text-gray-700 p-4 sm:p-6 leading-7 mb-2 faq2 faq2"
             ref={detailsRef[0]}
             onClick={() => handleToggle(0)}
           >
@@ -116,7 +116,7 @@ const FAQs = () => {
           </details>
 
           <details
-            className="bg-white p-4 sm:p-6 leading-7 mb-2 faq2 "
+            className="bg-white text-gray-700 dark:text-gray-700 p-4 sm:p-6 leading-7 mb-2 faq2 "
             ref={detailsRef[1]}
             onClick={() => handleToggle(1)}
           >
@@ -132,7 +132,7 @@ const FAQs = () => {
           </details>
 
           <details
-            className="bg-white p-4 sm:p-6 leading-7 mb-2 faq2 "
+            className="bg-white text-gray-700 dark:text-gray-700 p-4 sm:p-6 leading-7 mb-2 faq2 "
             ref={detailsRef[2]}
             onClick={() => handleToggle(2)}
           >
@@ -151,7 +151,7 @@ const FAQs = () => {
           </details>
 
           <details
-            className="bg-white p-4 sm:p-6 leading-7 faq2"
+            className="bg-white text-gray-700 dark:text-gray-700 p-4 sm:p-6 leading-7 faq2"
             ref={detailsRef[3]}
             onClick={() => handleToggle(3)}
           >

@@ -53,16 +53,16 @@ const Urgent = () => {
             <h3 className="text-center text-teal-700 font-bold tracking-wide text-3xl">
               In urgent cases
             </h3>
-            <p className="text-center text-5xl mt-8 tracking-tight font-semibold mb-10">
+            <p className="text-center text-5xl mt-8 tracking-tight font-semibold mb-10 text-gray-900 dark:text-gray-900 py-1 px-4 ">
               The best way is to find yourself
             </p>
           </div>
-        </motion.div>
+        </motion.div> 
 
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.5 }} 
           className="flex flex-col lg:flex-row justify-center gap-6 responsiveUrgent2"
         >
           {/* Left side - Swiper Slider */}

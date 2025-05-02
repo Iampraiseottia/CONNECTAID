@@ -37,10 +37,10 @@ const Team = () => {
           transition={{ duration: 0.5, delay: 0.5 }}
           className="max-w-3xl mx-auto text-center mb-12"
         >
-          <span className="text-emerald-600 font-semibold block mb-2">
+          <span className="text-emerald-600 font-semibold block mb-2 text-3xl ">
             Expert Team
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 py-2 dark:text-gray-800">
             Meet our amazing team
           </h2>
         </motion.div>

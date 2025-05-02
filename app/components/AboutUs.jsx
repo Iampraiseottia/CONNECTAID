@@ -26,7 +26,7 @@ const AboutUs = () => {
               <span className="text-emerald-600 font-semibold text-2xl">
                 About Us
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold pb-4 mt-2">
+              <h2 className="text-3xl md:text-4xl font-bold pb-4 mt-2 py-1 text-gray-800 dark:text-gray-800">
                 We Are The Best, Efficient and Most Reliable Charity
                 Organization
               </h2>
@@ -60,7 +60,7 @@ const AboutUs = () => {
                   className="bg-white rounded-full h-9 w-9 text-teal-500 flex items-center justify-center mt-2 flex-shrink-0"
                 />
                 <div>
-                  <h4 className="text-xl font-semibold">Donation</h4>
+                  <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-700">Donation</h4>
                   <p className="text-gray-600">
                     Fund programs that help children escape poverty providing
                     vocational training.
@@ -74,7 +74,7 @@ const AboutUs = () => {
                   className="bg-white rounded-full h-9 w-9 text-teal-500 flex items-center justify-center mt-2 flex-shrink-0"
                 />
                 <div>
-                  <h4 className="text-xl font-semibold">Campaigns</h4>
+                  <h4 className="text-xl font-semibold text-gray-700 dark:text-gray-700">Campaigns</h4>
                   <p className="text-gray-600">
                     Fund programs that help children escape poverty providing
                     vocational training.

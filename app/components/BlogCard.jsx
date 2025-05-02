@@ -47,7 +47,7 @@ const BlogCard = ({ imageSrc, date, title, excerpt, linkBlog }) => {
       
       <div className="p-5 leading-8">
         <div className="flex flex-col">
-          <h4 className="text-xl font-bold sm:mt-5 mb-2 hover:text-emerald-600 transition-colors">
+          <h4 className="text-xl font-bold sm:mt-5 mb-2 hover:text-emerald-600 transition-colors text-gray-900 dark:text-gray-900">
             <Link href={linkBlog}>{title}</Link>
           </h4>
           <p className="text-gray-600 mb-4">{excerpt}</p>

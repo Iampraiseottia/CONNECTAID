@@ -24,19 +24,14 @@ const TeamMember = ({ name, position, image, delay }) => {
         <div className="p-5">
           <div className="flex justify-between items-center">
             <div className="flex-1">
-              <h4 className="text-xl font-bold capitalize mb-1">
-                <Link
-                  href="/volunteer-details"
-                  className="hover:text-emerald-600 transition duration-300"
-                >
-                  {name}
-                </Link>
+              <h4 className="text-xl font-bold capitalize mb-1 text-gray-700 dark:text-gray-700">
+                {name}
               </h4>
-              <p className="text-gray-600">{position}</p>
+              <p className="text-gray-600 pb-5">{position}</p>
             </div>
             <div className="relative">
               <button
-                className="p-2 rounded-full hover:bg-gray-100 transition duration-300"
+                className="p-2 rounded-full hover:bg-gray-100 transition duration-300 text-green-700 dark:text-green-700 " 
                 onClick={() => setShowSocial(!showSocial)}
               >
                 <svg
@@ -49,7 +44,7 @@ const TeamMember = ({ name, position, image, delay }) => {
                 </svg>
               </button>
               {showSocial && (
-                <div className="absolute right-0 flex bg-white shadow-md rounded-md z-10">
+                <div className="absolute right-0 flex bg-white shadow-md rounded-md z-10 text-gray-800 dark:text-gray-800">
                   <a
                     href="#"
                     className="p-2 hover:text-emerald-600 transition duration-300"
