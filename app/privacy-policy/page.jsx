@@ -57,7 +57,7 @@ const PrivacyPolicy = () => {
           <div className="bg-white rounded-lg shadow-md p-6 sm:p-8">
             {/* Single Section */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold mb-6 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+              <h2 className="text-2xl font-semibold mb-6 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 Your Privacy Matters
               </h2>
               {/* List Items */}
@@ -110,14 +110,14 @@ const PrivacyPolicy = () => {
 
             {/* Single Section */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 Information We Collect
               </h2> 
               <p className="text-gray-700 mb-6">
                 At ConnectAID, we collect certain information to help facilitate
                 connections between donors and those seeking assistance. We
                 strive to collect only what is necessary to provide our services
-                effectively while respecting your privacy. Our platform is built
+                effectively while respecting your privacy. Our platform is built 
                 on trust, and we take our responsibility to protect your
                 information seriously.
               </p>
@@ -169,7 +169,7 @@ const PrivacyPolicy = () => {
 
             {/* Single Section */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 How We Use Your Information
               </h2>
               <p className="text-gray-700 mb-4">
@@ -192,7 +192,7 @@ const PrivacyPolicy = () => {
 
             {/* Single Section */}
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 Acknowledgement
               </h2>
               <p className="text-gray-700 font-medium">
@@ -206,7 +206,7 @@ const PrivacyPolicy = () => {
 
             {/* Single Section */}
             <div>
-              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+              <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 Contact Us
               </h2>
               <p className="text-gray-700">

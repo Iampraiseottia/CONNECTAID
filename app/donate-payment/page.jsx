@@ -261,7 +261,7 @@ const DonatePayment = () => {
       >
         <div className="bg-white rounded-lg shadow-md p-6 sm:pb-10 ">
           <div className="mb-8 mt-2 ">
-            <h2 className="text-2xl font-semibold relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600">
+            <h2 className="text-2xl font-semibold relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 text-gray-800 dark:text-gray-800">
               Select Your Donation
             </h2>
           </div>
@@ -272,9 +272,9 @@ const DonatePayment = () => {
               <button
                 key={value}
                 onClick={() => handleAmountClick(value)}
-                className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors ${
+                className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors text-gray-700 dark:text-gray-700 ${
                   amount === value
-                    ? "border-green-600 bg-green-50 text-green-600"
+                    ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 "
                     : "border-gray-300 hover:border-green-600 hover:bg-green-50"
                 }`}
               >
@@ -295,7 +295,7 @@ const DonatePayment = () => {
                   min="1"
                   value={amount}
                   onChange={handleAmountChange}
-                  className="w-full px-4 py-3 text-xl border border-gray-300 ease-in-out rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
+                  className="w-full px-4 py-3 text-xl border border-gray-300 dark:bg-white dark:text-gray-800 ease-in-out rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 focus:border-green-500"
                   placeholder="1000 Francs"
                   ref={amountDonate}
                   onMouseEnter={onMouseEnterAmountDonate}
@@ -311,7 +311,7 @@ const DonatePayment = () => {
                   type="text"
                   value={name}
                   onChange={handleNameChange}
-                  className={`w-full px-3 py-2 border ${
+                  className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
                     errors.name ? "border-red-500" : "border-gray-300"
                   } rounded-md focus:outline-none focus:ring-1 ${
                     errors.name ? "focus:ring-red-500" : "focus:ring-green-500"
@@ -338,7 +338,7 @@ const DonatePayment = () => {
                   type="email"
                   value={email}
                   onChange={handleEmailChange}
-                  className={`w-full px-3 py-2 border ${
+                  className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   } rounded-md focus:outline-none focus:ring-1 ${
                     errors.email ? "focus:ring-red-500" : "focus:ring-green-500"
@@ -358,7 +358,7 @@ const DonatePayment = () => {
 
               {/* Category */}
               <div className="relative mt-2">
-                <label className="block text-lg font-medium text-gray-700 mb-1">
+                <label className="block text-lg font-medium text-gray-700 mb-1  dark:text-gray-800">
                   Select category <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
@@ -401,7 +401,7 @@ const DonatePayment = () => {
                   </button>
 
                   {dropdownOpen && (
-                    <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 overflow-auto border border-gray-200">
+                    <div className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 overflow-auto border border-gray-200 text-gray-700 dark:text-gray-700">
                       {categories.map((cat) => (
                         <div
                           key={cat}
@@ -412,10 +412,10 @@ const DonatePayment = () => {
                         </div>
                       ))}
                     </div>
-                  )}
+                  )} 
                 </div>
                 {errors.category && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.category}</p>
+                  <p className="mt-1 text-red-500 text-sm">{errors.category}</p> 
                 )}
               </div>
             </div>
@@ -476,7 +476,7 @@ const DonatePayment = () => {
                   type="checkbox"
                   checked={agreeToTerms}
                   onChange={handleTermsChange}
-                  className={`w-4 h-4 border ${
+                  className={`w-4 h-4 border mt-1 ${
                     errors.terms ? "border-red-500" : "border-gray-300"
                   } rounded bg-gray-50 focus:ring-3 ${
                     errors.terms ? "focus:ring-red-300" : "focus:ring-green-300"
