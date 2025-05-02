@@ -15,7 +15,7 @@ const Upcoming = () => {
           <span className="inline-block text-emerald-600 text-3xl font-semibold mb-6 sm:text-5xl">
             Upcoming Events
           </span>
-          <h2 className="text-2xl md:text-4xl font-bold sm:-ml-[150px] sm:-mr-[130px]">
+          <h2 className="text-2xl md:text-4xl font-bold sm:-ml-[150px] sm:-mr-[130px] text-gray-900 dark:text-gray-900 py-2 ">
             Join us to make a difference 🔥, one event at a time!
           </h2>
         </motion.div>

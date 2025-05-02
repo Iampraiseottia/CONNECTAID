@@ -232,7 +232,7 @@ const ContactUS = () => {
                       placeholder="Alex Jordan"
                       className={`w-full px-4 py-3 border ${
                         errors.fullName ? "border-red-500" : "border-gray-300"
-                      } ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                      } ease-in-out duration-200 rounded-md focus:outline-none dark:bg-white dark:text-gray-800 focus:ring-2 focus:ring-emerald-500`}
                       ref={fullNameRef}
                       onMouseEnter={onMouseEnterFullNameRef}
                       value={formData.fullName}
@@ -258,7 +258,7 @@ const ContactUS = () => {
                       placeholder="Phone"
                       className={`w-full px-4 py-3 border ${
                         errors.phone ? "border-red-500" : "border-gray-300"
-                      } ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                      } ease-in-out duration-200 rounded-md focus:outline-none dark:bg-white dark:text-gray-800 focus:ring-2 focus:ring-emerald-500`}
                       ref={phoneNumberRef}
                       onMouseEnter={onMouseEnterPhoneNumberRefRef}
                       value={formData.phone}
@@ -284,7 +284,7 @@ const ContactUS = () => {
                       placeholder="name@example.com"
                       className={`w-full px-4 py-3 border ${
                         errors.email ? "border-red-500" : "border-gray-300"
-                      } ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                      } ease-in-out duration-200 rounded-md focus:outline-none dark:bg-white dark:text-gray-800 focus:ring-2 focus:ring-emerald-500`}
                       ref={emailAddressRef}
                       onMouseEnter={onMouseEnterEmailAddressRef}
                       value={formData.email}
@@ -310,7 +310,7 @@ const ContactUS = () => {
                       placeholder="Type You message here"
                       className={`w-full px-4 py-3 border ${
                         errors.message ? "border-red-500" : "border-gray-300"
-                      } ease-in-out duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500`}
+                      } ease-in-out duration-200 rounded-md focus:outline-none dark:bg-white dark:text-gray-800 focus:ring-2 focus:ring-emerald-500`}
                       ref={messageRef}
                       onMouseEnter={onMouseEnterMessageRef}
                       value={formData.message}
