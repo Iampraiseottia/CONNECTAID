@@ -13,7 +13,6 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-
 const PictureGallery = () => {
   const metadata = {
     title: "Gallery - ConnectAID Web Application",
@@ -59,7 +58,7 @@ const PictureGallery = () => {
             <span className="inline-block text-emerald-600 text-3xl font-semibold mb-6 sm:text-5xl">
               Picture Gallery
             </span>
-            <h2 className="text-2xl md:text-4xl font-bold sm:-ml-[150px] sm:-mr-[130px]">
+            <h2 className="text-2xl md:text-4xl font-bold sm:-ml-[150px] sm:-mr-[130px] dark:text-slate-800 text-slate-800">
               View our gallery of pictures which cuts across all past events 🔥
             </h2>
           </motion.div>
@@ -81,12 +80,12 @@ const PictureGallery = () => {
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
                 <img
-                  src="/gallery/training.png" 
+                  src="/gallery/training.png"
                   alt="Gallery Image 2"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <div className="overflow-hidden rounded-lg shadow-lg group"> 
+              <div className="overflow-hidden rounded-lg shadow-lg group">
                 <img
                   src="/gallery/suffering.png"
                   alt="Gallery Image 3"
@@ -114,7 +113,7 @@ const PictureGallery = () => {
                 <img
                   src="/gallery/food.jpg"
                   alt="Gallery Image 6"
-                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110" 
+                  className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
             </div>

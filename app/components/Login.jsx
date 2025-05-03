@@ -18,8 +18,7 @@ import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
 import { motion } from "motion/react";
 
-import navLogo from '/public/icon/logo.png'
-
+import navLogo from "/public/icon/logo.png";
 
 const Login = () => {
   const router = useRouter();
@@ -149,7 +148,7 @@ const Login = () => {
             alt="ConnectAID Logo"
             className="w-16 h-16 md:w-20 md:h-20"
           />
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black">
             ConnectAID
           </h1>
         </div>
@@ -166,7 +165,7 @@ const Login = () => {
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
             <label
               htmlFor="emailAddress"
-              className="text-lg md:text-xl font-medium"
+              className="text-lg md:text-xl font-semibold dark:text-slate-900 text-black "
             >
               <FontAwesomeIcon
                 icon={faEnvelope}
@@ -187,7 +186,8 @@ const Login = () => {
               onMouseEnter={onMouseEnterEmailRef}
               className={`border ${
                 errors.email ? "border-red-500" : "border-slate-400"
-              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+              } 
+              px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg dark:bg-white dark:text-black `} 
             />
             <ErrorMessage message={errors.email} />
           </div>
@@ -196,7 +196,10 @@ const Login = () => {
           <div className="mb-6">
             <div className="flex flex-col gap-1 md:gap-2 px-4 sm:px-6 md:px-8 lg:px-10 mt-4 md:mt-6 mb-4 md:mb-6">
               <div className="flex justify-between items-center mb-2">
-                <label htmlFor="password" className="text-lg font-semibold">
+                <label
+                  htmlFor="password"
+                  className="text-lg font-semibold dark:text-slate-900 text-black  md:text-xl "
+                >
                   <FontAwesomeIcon
                     icon={faLock}
                     className="text-teal-500 mr-2"
@@ -219,7 +222,8 @@ const Login = () => {
                   onChange={handleInputChange}
                   className={`border ${
                     errors.password ? "border-red-500" : "border-slate-400"
-                  } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+                  } 
+                  px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg dark:bg-white dark:text-black `}
                   onMouseEnter={onMouseEnterPasswordRef}
                   id="password"
                   placeholder="Your Password"
@@ -246,7 +250,7 @@ const Login = () => {
           </div>
 
           <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
-            <legend className="text-xl font-bold tracking-wide">
+            <legend className="text-xl font-bold tracking-wide dark:text-slate-900 text-black ">
               Login As A{" "}
             </legend>
             <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
@@ -261,7 +265,7 @@ const Login = () => {
                 />
                 <label
                   htmlFor="Donor"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black"
                 >
                   Donor
                 </label>
@@ -277,10 +281,10 @@ const Login = () => {
                 />
                 <label
                   htmlFor="Seeker"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black"
                 >
                   Seeker
-                </label>
+                </label> 
               </div>
             </div>
           </fieldset>
@@ -295,14 +299,14 @@ const Login = () => {
         </form>
 
         {/* Register Link */}
-        <p className="text-center text-sm text-gray-600 mt-6">
+        <p className="text-center text-gray-600 mt-6 text-[16px]">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-teal-600 font-semibold">
+          <Link href="/register" className="text-teal-600 font-semibold hover:text-[16.2px] hover:underline ">
             Register
           </Link>
-        </p>
+        </p> 
 
-        {/* Google Login */}
+        {/* Google Login */} 
         <button
           type="submit"
           className="mt-6 w-[90%] mx-5 sm:mx-10 flex items-center justify-center border-2 border-teal-500 text-black hover:bg-teal-500 hover:text-white transition-all duration-300 py-3 rounded-lg font-semibold text-lg"
@@ -311,7 +315,7 @@ const Login = () => {
             src="/icon/google.png"
             alt="Google Icon"
             width={24}
-            height={24}
+            height={24} 
             className="mr-3"
           />
           Login With Google
