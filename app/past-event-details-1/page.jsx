@@ -520,7 +520,7 @@ const PastEventDetails1 = () => {
                       <li
                         key={category}
                         className={
-                          index === 2 ? "text-teal-700 font-medium" : ""
+                          index === 2 ? "text-teal-700 font-medium" : "dark:text-slate-900 text-black "
                         }
                       >
                         <a
