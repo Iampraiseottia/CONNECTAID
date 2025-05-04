@@ -24,8 +24,7 @@ import {
   faEyeSlash,
 } from "@fortawesome/free-solid-svg-icons";
 
-import navLogo from '/public/icon/logo.png'
-
+import navLogo from "/public/icon/logo.png";
 
 const NewPassword = () => {
   const metadata = {
@@ -140,19 +139,20 @@ const NewPassword = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="FORGOT PASSWORD"
-          description="FORGOT PASSWORD"
+          title="NEW PASSWORD"
+          description="NEW PASSWORD"
           breadcrumAlt=" Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>
 
+      {/* New Password Section */}
       <motion.main
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true, amount: 0.1 }}
-        className="py-16 md:py-24 lg:py-32 flex items-center justify-center px-4 min-h-screen"
+        className="py-6 md:py-8 lg:py-10 flex items-center justify-center px-4 min-h-screen"
       >
         <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
@@ -163,7 +163,7 @@ const NewPassword = () => {
               alt="ConnectAID Logo"
               className="w-16 h-16 md:w-20 md:h-20"
             />
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
               ConnectAID
             </h1>
           </div>
@@ -174,7 +174,7 @@ const NewPassword = () => {
             <div className="ease-in-out transition-all mx-[10%]">
               <label
                 htmlFor="new_pass"
-                className="text-left text-[22px] font-medium tracking-wider"
+                className="text-left text-[22px] font-medium tracking-wider dark:text-slate-900 text-black "
               >
                 New Password:
               </label>
@@ -192,7 +192,7 @@ const NewPassword = () => {
                     errors.newPassword
                       ? "border-red-500 focus:outline-none"
                       : "border-green-500 focus:outline-none"
-                  } py-4 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300 pr-10`}
+                  } py-4 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300 pr-10  dark:text-slate-900`}
                 />
                 <button
                   type="button"
@@ -219,7 +219,7 @@ const NewPassword = () => {
 
               <label
                 htmlFor="confirm_new_Pass"
-                className="text-left text-[22px] font-medium tracking-wider"
+                className="text-left text-[22px] font-medium tracking-wider dark:text-slate-900 text-black "
               >
                 Confirm New Password:
               </label>
@@ -237,7 +237,7 @@ const NewPassword = () => {
                     errors.confirmPassword
                       ? "border-red-500 focus:outline-none"
                       : "border-green-500 focus:outline-none"
-                  } py-4 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300  pr-10`}
+                  } py-4 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300  pr-10  dark:text-slate-900`}
                 />
                 <button
                   type="button"
@@ -263,7 +263,7 @@ const NewPassword = () => {
             </div>
 
             <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-5 sm:mx-20 mt-8 ">
-              <legend className="text-xl font-bold tracking-wide">
+              <legend className="text-xl font-bold tracking-wide  dark:text-slate-900 text-black ">
                 Login As A{" "}
               </legend>
               <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
@@ -275,11 +275,11 @@ const NewPassword = () => {
                     value="Donor"
                     checked={formValues.userType === "Donor"}
                     onChange={handleUserTypeChange}
-                    className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
+                    className="w-4 h-4 md:w-5 md:h-5 accent-green-500 cursor-pointer"
                   />
                   <label
                     htmlFor="Donor"
-                    className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                    className="ml-2 text-base md:text-lg font-medium cursor-pointer  dark:text-slate-900 text-black "
                   >
                     Donor
                   </label>
@@ -292,17 +292,17 @@ const NewPassword = () => {
                     value="Seeker"
                     checked={formValues.userType === "Seeker"}
                     onChange={handleUserTypeChange}
-                    className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
+                    className="w-4 h-4 md:w-5 md:h-5 accent-green-500 cursor-pointer"
                   />
                   <label
                     htmlFor="Seeker"
-                    className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                    className="ml-2 text-base md:text-lg font-medium cursor-pointer  dark:text-slate-900 text-black " 
                   >
                     Seeker
                   </label>
                 </div>
               </div>
-            </fieldset>
+            </fieldset> 
 
             <button
               className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"

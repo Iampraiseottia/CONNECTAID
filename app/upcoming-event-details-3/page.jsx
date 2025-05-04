@@ -196,7 +196,7 @@ const UpcomingEventDetail3 = () => {
                 {/* Main Event Content */}
                 <div className="bg-white rounded-lg shadow-sm">
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold mb-6">
+                    <h1 className="text-2xl md:text-3xl font-bold mb-6 dark:text-slate-900 text-black">
                       Stand Together for Change: Aid Those in Extreme Cases of
                       Need! ~ Your donations can transform lives! Help us
                       provide critical resources and support for individuals
@@ -245,7 +245,7 @@ const UpcomingEventDetail3 = () => {
                         for all.
                       </p>
 
-                      <ul className="space-y-2 mb-6">
+                      <ul className="space-y-2 mb-6 dark:text-slate-900 text-black">
                         <li className="flex gap-2">
                           <strong>Event Type:</strong> Onsite
                         </li>
@@ -440,13 +440,13 @@ const UpcomingEventDetail3 = () => {
                           { name: "Shelter", active: false },
                           { name: "Water", active: false },
                           { name: "Education", active: false },
-                        ].map((category, index) => (
+                        ].map((category, index) => ( 
                           <li
                             key={index}
                             className={`py-2 px-4 rounded transition ${
                               category.active
                                 ? "bg-green-50 text-green-600 font-semibold"
-                                : "hover:bg-gray-50"
+                                : "hover:bg-gray-50 dark:text-slate-900 text-black "
                             }`}
                           >
                             {/* <a href="#" className="flex items-center"> */}

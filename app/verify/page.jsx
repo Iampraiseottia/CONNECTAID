@@ -17,8 +17,7 @@ import Metadata from "../components/Metadata";
 import Image from "next/image";
 import Link from "next/link";
 
-import navLogo from '/public/icon/logo.png'
-
+import navLogo from "/public/icon/logo.png";
 
 const Verify = () => {
   const metadata = {
@@ -101,29 +100,32 @@ const Verify = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="FORGOT PASSWORD"
-          description="FORGOT PASSWORD"
+          title="VERIFY"
+          description="VERIFY"
           breadcrumAlt=" Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>
+
+      {/* Verify Section */}
 
       <motion.main
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true, amount: 0.1 }}
-        className="py-32 flex items-center justify-center"
+        className="py-6 md:py-8 lg:py-10 flex items-center justify-center px-4 min-h-screen"
       >
-        <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
-          <div className="flex items-center justify-center">
+        <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <Image
               src={navLogo}
-              height={100}
-              width={100}
+              height={80}
+              width={80}
               alt="ConnectAID Logo"
+              className="w-16 h-16 md:w-20 md:h-20"
             />
-            <h1 className="ml-4 text-4xl font-bold tracking-wide">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
               ConnectAID
             </h1>
           </div>
@@ -134,20 +136,14 @@ const Verify = () => {
             <div className="ease-in-out transition-all w-full mx-[10%] pt-5">
               <label
                 htmlFor="verification_code"
-                className="text-left text-[22px] font-medium tracking-wider  "
+                className="text-left text-[22px] font-medium tracking-wider dark:text-slate-900 text-black "
               >
                 Verification Codes
               </label>
 
-              {error && (
-                <p 
-                  className="text-red-500 my-3 text-center font-medium"
-                >
-                  {error}
-                </p>
-              )}
+             
 
-              <div className="mt-6 mb-1 flex flex-row justify-center items-center -ml-16 ">
+              <div className="mt-6 mb-1 flex flex-row justify-start items-center ">
                 {[0, 1, 2, 3].map((index) => (
                   <input
                     key={index}
@@ -156,20 +152,30 @@ const Verify = () => {
                     value={codeValues[index]}
                     onChange={(e) => handleCodeChange(index, e)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    onMouseEnter={() => onMouseEnterCode(index)} 
+                    onMouseEnter={() => onMouseEnterCode(index)}
                     inputMode="numeric"
-                    pattern="[0-9]*"
+                    pattern="[0-9]*" 
                     maxLength={1}
                     placeholder={index + 1}
-                    className={`w-[18%] text-center text-base bg-transparent rounded-xl outline-none border-2 ${
-                      codeErrors[index] ? "border-red-500 focus:outline-none" : "border-green-500"
-                    } py-3 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300 ${
-                      index < 3 ? "mr-3" : "" 
-                    }`}
-                  /> 
-                ))}
+                    className={`w-[18%] text-center text-base bg-transparent rounded-xl outline-none border-2 
+                    ${
+                      codeErrors[index]
+                        ? "border-red-500 focus:outline-none "
+                        : "border-green-500"
+                    } 
+                    py-3 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300 
+                    ${index < 3 ? "mr-3" : ""}`}
+                  />
+                ))} 
               </div>
-            </div>
+
+              {error && (
+                <p className="text-red-500 my-3 text-start font-medium">
+                  {error}
+                </p>
+              )}
+
+            </div> 
 
             <button
               className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"
@@ -179,9 +185,12 @@ const Verify = () => {
             </button>
           </form>
 
-          <p className="mx-[10%] mt-4 mb-4 text-center py-2 ">
+          <p className="mx-[10%] mt-4 mb-4 text-center py-2 dark:text-slate-900 text-black text-sm md:text-base text-[16px]  ">
             Go back to{" "}
-            <Link href="/login" className="text-teal-500">
+            <Link
+              href="/login"
+              className="text-teal-500 hover:text-[16.2px] hover:underline font-semibold"
+            >
               Login
             </Link>
           </p>

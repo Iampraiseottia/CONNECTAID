@@ -195,7 +195,7 @@ const UpcomingEventDetail1 = () => {
                 {/* Main Event Content */}
                 <div className="bg-white rounded-lg shadow-sm">
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold mb-6">
+                    <h1 className="text-2xl md:text-3xl font-bold mb-6 dark:text-slate-900 text-black">
                       Hope for the Homeless: Compassion / Together, we can
                       change lives! ~ Your generous donations will provide
                       shelter, food, and support for those in need. Join us in
@@ -244,7 +244,7 @@ const UpcomingEventDetail1 = () => {
                         create a brighter future for everyone in our community.
                       </p>
 
-                      <ul className="space-y-2 mb-6">
+                      <ul className="space-y-2 mb-6 dark:text-slate-900 text-black ">
                         <li className="flex gap-2">
                           <strong>Event Type:</strong> Onsite
                         </li>
@@ -436,7 +436,7 @@ const UpcomingEventDetail1 = () => {
                             className={`py-2 px-4 rounded transition ${
                               category.active
                                 ? "bg-green-50 text-green-600 font-semibold"
-                                : "hover:bg-gray-50"
+                                : "hover:bg-gray-50 dark:text-slate-900 text-black "
                             }`}
                           >
                             {/* <a href="#" className="flex items-center"> */}

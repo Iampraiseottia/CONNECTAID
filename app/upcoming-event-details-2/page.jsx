@@ -196,7 +196,7 @@ const UpcomingEventDetail2 = () => {
                 {/* Main Event Content */}
                 <div className="bg-white rounded-lg shadow-sm">
                   <div>
-                    <h1 className="text-2xl md:text-3xl font-bold mb-6">
+                    <h1 className="text-2xl md:text-3xl font-bold mb-6 dark:text-slate-900 text-black">
                       Empowering Future Generations: Access to Clean Water for
                       Children ~ Providing clean water access, essential for
                       children's health and education, ensuring a sustainable
@@ -246,7 +246,7 @@ const UpcomingEventDetail2 = () => {
                         truly transformative!
                       </p>
 
-                      <ul className="space-y-2 mb-6">
+                      <ul className="space-y-2 mb-6 dark:text-slate-900 text-black">
                         <li className="flex gap-2">
                           <strong>Event Type:</strong> Onsite
                         </li>
@@ -447,7 +447,7 @@ const UpcomingEventDetail2 = () => {
                             className={`py-2 px-4 rounded transition ${
                               category.active
                                 ? "bg-green-50 text-green-600 font-semibold"
-                                : "hover:bg-gray-50"
+                                : "hover:bg-gray-50  dark:text-slate-900 text-black"
                             }`}
                           >
                             {/* <a href="#" className="flex items-center"> */}
