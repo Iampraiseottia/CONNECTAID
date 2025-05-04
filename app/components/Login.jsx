@@ -148,7 +148,7 @@ const Login = () => {
             alt="ConnectAID Logo"
             className="w-16 h-16 md:w-20 md:h-20"
           />
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
             ConnectAID
           </h1>
         </div>

@@ -20,7 +20,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-import navLogo from '/public/icon/logo.png'
+import navLogo from "/public/icon/logo.png";
 
 const ForgotPassword = () => {
   const metadata = {
@@ -29,7 +29,7 @@ const ForgotPassword = () => {
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
-  const emailRef = useRef();
+  const emailRef = useRef(); 
 
   const onMouseEnterEmailRef = () => {
     emailRef.current.focus();
@@ -91,26 +91,30 @@ const ForgotPassword = () => {
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true, amount: 0.1 }}
-        className="py-32 flex items-center justify-center"
+        className="py-6 md:py-8 lg:py-10 flex items-center justify-center px-4 min-h-screen"
       >
-        <div className="  bg-white sm:w-[40%] h-auto shadow-xl py-10">
-          <div className="flex items-center justify-center">
+        <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <Image
               src={navLogo}
-              height={100}
-              width={100}
+              height={80} 
+              width={80}
               alt="ConnectAID Logo"
+              className="w-16 h-16 md:w-20 md:h-20"
             />
-            <h1 className="ml-4 text-4xl font-bold tracking-wide">
-              ConnectAID
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
+              ConnectAID 
             </h1>
-          </div>
+          </div> 
 
           <br />
 
           <form onSubmit={handleSubmit} className="">
             <div className="px-[10%] mt-4 mb-4">
-              <label htmlFor="emailAddress" className="text-xl ">
+              <label
+                htmlFor="emailAddress"
+                className="text-xl dark:text-slate-900 text-black"
+              >
                 <FontAwesomeIcon
                   icon={faEnvelope}
                   className="text-teal-500 mr-2 "
@@ -129,7 +133,7 @@ const ForgotPassword = () => {
                 placeholder="Enter Your Email Address"
                 className={`w-full text-base bg-transparent rounded-xl border-2 ${
                   error ? "border-red-500" : "border-green-500"
-                } py-3 px-4 focus:ring-1 focus:ring-[#0ef] outline-none focus:outline-none duration-300 mt-3 `}
+                } py-3 px-4 focus:ring-1 focus:ring-[#0ef] outline-none focus:outline-none duration-300 mt-3 dark:text-slate-900 `}
               />
 
               {error && (
@@ -140,16 +144,19 @@ const ForgotPassword = () => {
             </div>
 
             <button
-              className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"
+              className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl font-bold tracking-wide w-[80%] sm:text-2xl md:text-3xl"
               type="submit"
             >
               Reset Password
             </button>
           </form>
 
-          <p className="mx-[10%] mt-4 mb-4 text-center py-2 ">
+          <p className="mx-[10%] mt-4 mb-4 text-center py-2 dark:text-slate-900 text-black text-sm md:text-base text-[16px] ">
             Go back to{" "}
-            <Link href="/login" className="text-teal-500">
+            <Link
+              href="/login"
+              className="text-teal-500  hover:text-[16.2px] hover:underline font-semibold"
+            >
               Login
             </Link>
           </p>

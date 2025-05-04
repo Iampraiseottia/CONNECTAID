@@ -20,8 +20,7 @@ import { faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 
 import { motion } from "motion/react";
 
-import navLogo from '/public/icon/logo.png'
-
+import navLogo from "/public/icon/logo.png";
 
 const Register = () => {
   const router = useRouter();
@@ -197,7 +196,7 @@ const Register = () => {
       className="py-16 md:py-24 lg:py-32 flex items-center justify-center px-4 min-h-screen"
     >
       <div className="bg-white w-full max-w-md md:max-w-2xl lg:max-w-3xl h-auto shadow-xl py-6 md:py-8 lg:py-10 rounded-lg">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4"> 
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
           <Image
             src={navLogo}
             height={80}
@@ -205,7 +204,7 @@ const Register = () => {
             alt="ConnectAID Logo"
             className="w-16 h-16 md:w-20 md:h-20"
           />
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
             ConnectAID
           </h1>
         </div>
@@ -222,7 +221,7 @@ const Register = () => {
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
             <label
               htmlFor="fullName"
-              className="text-lg md:text-xl font-medium"
+              className="text-lg md:text-xl font-medium dark:text-slate-900 text-black"
             >
               <FontAwesomeIcon icon={faUser} className="text-teal-500 mr-2" />{" "}
               Full Name
@@ -240,7 +239,8 @@ const Register = () => {
               onMouseEnter={onMouseEnterFullNameRef}
               className={`border ${
                 errors.fullName ? "border-red-500" : "border-slate-400"
-              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg
+              }
+              dark:bg-white dark:text-black px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg
               `}
             />
             <ErrorMessage message={errors.fullName} />
@@ -249,7 +249,7 @@ const Register = () => {
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
             <label
               htmlFor="emailAddress"
-              className="text-lg md:text-xl font-medium"
+              className="text-lg md:text-xl font-medium dark:text-slate-900 text-black"
             >
               <FontAwesomeIcon
                 icon={faEnvelope}
@@ -270,7 +270,8 @@ const Register = () => {
               onMouseEnter={onMouseEnterEmailRef}
               className={`border ${
                 errors.email ? "border-red-500" : "border-slate-400"
-              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+              }
+              dark:bg-white dark:text-black px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
             />
             <ErrorMessage message={errors.email} />
           </div>
@@ -278,7 +279,7 @@ const Register = () => {
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-4">
             <label
               htmlFor="userName"
-              className="text-lg md:text-xl font-medium"
+              className="text-lg md:text-xl font-medium dark:text-slate-900 text-black"
             >
               <FontAwesomeIcon
                 icon={faCircleUser}
@@ -299,7 +300,8 @@ const Register = () => {
               onMouseEnter={onMouseEnterUserNameRef}
               className={`border ${
                 errors.userName ? "border-red-500" : "border-slate-400"
-              } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+              }
+              dark:bg-white dark:text-black px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
             />
             <ErrorMessage message={errors.userName} />
           </div>
@@ -308,7 +310,7 @@ const Register = () => {
             <div className="flex justify-between items-center">
               <label
                 htmlFor="password"
-                className="text-lg md:text-xl font-medium"
+                className="text-lg md:text-xl font-medium dark:text-slate-900 text-black"
               >
                 <FontAwesomeIcon icon={faLock} className="text-teal-500 mr-2" />{" "}
                 Password
@@ -323,7 +325,8 @@ const Register = () => {
                 onChange={handleInputChange}
                 className={`border ${
                   errors.password ? "border-red-500" : "border-slate-400"
-                } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+                }
+                dark:bg-white dark:text-black px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
                 onMouseEnter={onMouseEnterPasswordRef}
                 id="password"
                 placeholder="Your Password"
@@ -352,7 +355,7 @@ const Register = () => {
             <div className="flex justify-between items-center">
               <label
                 htmlFor="confirmPassword"
-                className="text-lg md:text-xl font-medium"
+                className="text-lg md:text-xl font-medium dark:text-slate-900 text-black"
               >
                 <FontAwesomeIcon icon={faLock} className="text-teal-500 mr-2" />{" "}
                 Confirm Password
@@ -367,7 +370,8 @@ const Register = () => {
                 onChange={handleInputChange}
                 className={`border ${
                   errors.confirmPassword ? "border-red-500" : "border-slate-400"
-                } px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
+                }
+                dark:bg-white dark:text-black px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg`}
                 onMouseEnter={onMouseEnterConfirmPasswordRef}
                 id="confirmPassword"
                 placeholder="Confirm Your Password"
@@ -395,7 +399,7 @@ const Register = () => {
           </div>
 
           <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
-            <legend className="text-xl font-bold tracking-wide">
+            <legend className="text-xl font-bold tracking-wide dark:text-slate-900 text-black ">
               Register As A{" "}
             </legend>
             <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
@@ -410,7 +414,7 @@ const Register = () => {
                 />
                 <label
                   htmlFor="Donor"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black "
                 >
                   Donor
                 </label>
@@ -426,7 +430,7 @@ const Register = () => {
                 />
                 <label
                   htmlFor="Seeker"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer"
+                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black "
                 >
                   Seeker
                 </label>
@@ -444,25 +448,25 @@ const Register = () => {
           </div>
         </form>
 
-        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 mb-2 text-center py-2 text-sm md:text-base">
+        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 text-center py-2 text-sm md:text-base text-[16px] dark:text-slate-900 text-black">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-teal-500 font-medium hover:underline"
+            className="text-teal-600 font-medium  hover:text-[16.2px] hover:underline "
           >
             Login
           </Link>
         </p>
 
-        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mt-2 mb-2 text-center py-1 text-sm md:text-base font-medium">
+        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mb-2 text-center py-1 text-sm md:text-base font-medium dark:text-slate-900 text-black">
           OR
         </p>
 
         <div className="px-4 sm:px-6 md:px-8 lg:px-10">
-          <Link
+          <Link 
             href="#"
             target="_blank"
-            className="w-full mt-2 mb-4 py-2 md:py-3 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out duration-200 hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-lg font-medium md:font-bold tracking-wide"
+            className="w-full mt-2 mb-4 py-2 md:py-3 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out duration-200 hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-lg font-medium md:font-bold tracking-wide" 
           >
             <Image
               height={24}
