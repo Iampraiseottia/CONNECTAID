@@ -231,7 +231,7 @@ const Register = () => {
             <input
               type="text"
               name="fullName"
-              placeholder="Your Full Names"
+              placeholder="Your Full Names..."
               id="fullName"
               ref={fullNameRef}
               value={formValues.fullName}

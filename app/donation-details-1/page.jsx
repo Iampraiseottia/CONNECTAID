@@ -300,7 +300,7 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-6"
                   >
-                    <h4 className="text-2xl font-bold mb-3 mt-2">
+                    <h4 className="text-2xl font-bold mb-3 mt-2 dark:text-slate-900 text-black ">
                       Your Little Help Can Heal Their Pains.
                     </h4>
                     <p className="text-gray-600 mb-6">
@@ -348,8 +348,8 @@ const DonationDetails1 = () => {
                       ></div>
                     </div>
 
-                    <div className="flex justify-between items-center mb-6 leading-8">
-                      <div className="flex gap-6">
+                    <div className="flex justify-between items-center mb-6 leading-8 ">
+                      <div className="flex gap-6 dark:text-slate-900 text-black ">
                         <div>
                           <p className="text-gray-600">20, 000, 000 Francs</p>
                           <h4 className="font-semibold">Goals</h4>
@@ -359,7 +359,7 @@ const DonationDetails1 = () => {
                           <h4 className="font-semibold">Raised</h4>
                         </div>
                       </div>
-                      <button className="text-green-600 p-2 border border-green-600 rounded-full hover:bg-green-50">
+                      <button className="text-green-600 p-2  border border-green-600 rounded-full hover:bg-green-50">
                         <svg
                           className="w-5 h-5 transform rotate-180"
                           fill="currentColor"
@@ -384,7 +384,7 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
                       Select Payment Method
                     </h4>
                     <div className="space-y-3 ">
@@ -396,7 +396,7 @@ const DonationDetails1 = () => {
                           value="mtn"
                           checked={selectedPayment === "mtn"}
                           onChange={() => setSelectedPayment("mtn")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600" 
                         />
                         <label
                           htmlFor="mtn-momo"
@@ -413,7 +413,7 @@ const DonationDetails1 = () => {
                           value="orange"
                           checked={selectedPayment === "orange"}
                           onChange={() => setSelectedPayment("orange")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
                         />
                         <label
                           htmlFor="orange-momo"
@@ -433,7 +433,7 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 ">
+                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black  ">
                       Select An Amount From Available Options Below
                     </button>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -465,7 +465,7 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">Payment Details</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Payment Details</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -476,12 +476,12 @@ const DonationDetails1 = () => {
                               errors.mobileNumber
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             name="mobileNumber"
                             id="Mobile_Money_Number"
                             value={formData.mobileNumber}
                             onChange={handleInputChange}
-                            ref={mobileMoneyNumberRef}
+                            ref={mobileMoneyNumberRef} 
                             onMouseEnter={onMouseEnterMobileNUmberRef}
                           />
                           {errors.mobileNumber && (
@@ -500,7 +500,7 @@ const DonationDetails1 = () => {
                               errors.mobileName
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             value={formData.mobileName}
                             onChange={handleInputChange}
                             ref={mobileMoneyNameRef}
@@ -521,7 +521,7 @@ const DonationDetails1 = () => {
                             errors.fullName
                               ? "border-red-500"
                               : "border-gray-300"
-                          } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                          } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                           name="fullName"
                           id="Full_Name"
                           value={formData.fullName}
@@ -546,7 +546,7 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">Address</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Address</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -559,7 +559,7 @@ const DonationDetails1 = () => {
                               errors.email
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             value={formData.email}
                             onChange={handleInputChange}
                             ref={emailAddressRef}
@@ -579,7 +579,7 @@ const DonationDetails1 = () => {
                               errors.region
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             name="region"
                             id="Region"
                             value={formData.region}
@@ -603,7 +603,7 @@ const DonationDetails1 = () => {
                             id="City_Town"
                             className={`w-full px-4 py-2 border ${
                               errors.city ? "border-red-500" : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             value={formData.city}
                             onChange={handleInputChange}
                             ref={cityRef}
@@ -625,7 +625,7 @@ const DonationDetails1 = () => {
                               errors.address
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             value={formData.address}
                             onChange={handleInputChange}
                             ref={homeAddressRef}
@@ -726,7 +726,7 @@ const DonationDetails1 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">Our Challenge </h4>
                 <p className="text-gray-600 mb-4">
                   Hunger is a pervasive issue that affects millions of
                   individuals and families in our communities. Despite the
@@ -768,11 +768,11 @@ const DonationDetails1 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3">Our Goals </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">Our Goals </h4>
                 <p className="text-gray-600 mb-4">
                   Our goal is to create a hunger-free community where everyone
                   has access to nutritious food. We aim to achieve this through
-                  a comprehensive approach that includes:
+                  a comprehensive approach that includes: 
                 </p>
                 <p className="text-gray-600 mb-4">
                   <b>1. Increasing Access to Food:</b> <br /> We will work to
@@ -844,18 +844,18 @@ const DonationDetails1 = () => {
                       Food
                     </li>
 
-                    <li className="py-2 px-4 rounded transition hover:bg-gray-50">
-                      Medical 
+                    <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
+                      Medical dark:text-slate-900 text-black 
                     </li>
 
-                    <li className="py-2 px-4 rounded transition hover:bg-gray-50">
+                    <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
                       Water
                     </li>
 
-                    <li className="py-2 px-4 rounded transition hover:bg-gray-50">
+                    <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
                       Education
                     </li>
-                  </ul>
+                  </ul> 
                 </div>
               </motion.div> 
 
