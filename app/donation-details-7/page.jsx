@@ -18,19 +18,18 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-
-import relatedPostImg1 from '/public/gallery/donateList-1.png'
-import relatedPostImg2 from '/public/gallery/gallery-4.png'
-import relatedPostImg3 from '/public/gallery/gallery-20.png'
-import relatedPostImg4 from '/public/urgent/urgent-1.png'
-import relatedPostImg5 from '/public/gallery/donationList-2.png'
-import relatedPostImg6 from '/public/gallery/gallery-1.png'
-import relatedPostImg7 from '/public/gallery/gallery-3.png'
-import relatedPostImg8 from '/public/gallery/gallery-2.png'
-import relatedPostImg9 from '/public/blog/blog-5.png'
-import relatedPostImg10 from '/public/gallery/education.png'
-import relatedPostImg11 from '/public/gallery/gallery-13.png'
-import relatedPostImg12 from '/public/gallery/water.png'
+import relatedPostImg1 from "/public/gallery/donateList-1.png";
+import relatedPostImg2 from "/public/gallery/gallery-4.png";
+import relatedPostImg3 from "/public/gallery/gallery-20.png";
+import relatedPostImg4 from "/public/urgent/urgent-1.png";
+import relatedPostImg5 from "/public/gallery/donationList-2.png";
+import relatedPostImg6 from "/public/gallery/gallery-1.png";
+import relatedPostImg7 from "/public/gallery/gallery-3.png";
+import relatedPostImg8 from "/public/gallery/gallery-2.png";
+import relatedPostImg9 from "/public/blog/blog-5.png";
+import relatedPostImg10 from "/public/gallery/education.png";
+import relatedPostImg11 from "/public/gallery/gallery-13.png";
+import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails7 = () => {
   const metadata = {
@@ -301,7 +300,7 @@ const DonationDetails7 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-6"
                   >
-                    <h4 className="text-2xl font-bold mb-3 mt-2">
+                    <h4 className="text-2xl font-bold mb-3 mt-2 dark:text-slate-900 text-black">
                       Fund programs that help children escape poverty by
                       providing vocational training.
                     </h4>
@@ -357,7 +356,7 @@ const DonationDetails7 = () => {
                     </div>
 
                     <div className="flex justify-between items-center mb-6 leading-8">
-                      <div className="flex gap-6">
+                      <div className="flex gap-6 dark:text-slate-900 text-black">
                         <div>
                           <p className="text-gray-600">70, 000, 000 Francs</p>
                           <h4 className="font-semibold">Goals</h4>
@@ -394,7 +393,7 @@ const DonationDetails7 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4  dark:text-slate-900 text-black">
                         Select Payment Method
                       </h4>
                       <div className="space-y-3 ">
@@ -406,7 +405,7 @@ const DonationDetails7 = () => {
                             value="mtn"
                             checked={selectedPayment === "mtn"}
                             onChange={() => setSelectedPayment("mtn")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600 "
                           />
                           <label
                             htmlFor="mtn-momo"
@@ -423,7 +422,7 @@ const DonationDetails7 = () => {
                             value="orange"
                             checked={selectedPayment === "orange"}
                             onChange={() => setSelectedPayment("orange")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600 "
                           />
                           <label
                             htmlFor="orange-momo"
@@ -445,7 +444,7 @@ const DonationDetails7 = () => {
                     >
                       <button
                         type="button"
-                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10"
+                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black"
                       >
                         Select An Amount From Available Options Below
                       </button>
@@ -479,7 +478,7 @@ const DonationDetails7 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4  dark:text-slate-900 text-black">
                         Payment Details
                       </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
@@ -492,7 +491,7 @@ const DonationDetails7 = () => {
                                 errors.mobileNumber
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               name="mobileNumber"
                               id="Mobile_Money_Number"
                               value={formData.mobileNumber}
@@ -516,7 +515,7 @@ const DonationDetails7 = () => {
                                 errors.mobileName
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.mobileName}
                               onChange={handleInputChange}
                               ref={mobileMoneyNameRef}
@@ -537,7 +536,7 @@ const DonationDetails7 = () => {
                               errors.fullName
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                             name="fullName"
                             id="Full_Name"
                             value={formData.fullName}
@@ -562,7 +561,9 @@ const DonationDetails7 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">Address</h4>
+                      <h4 className="text-lg font-bold mb-4  dark:text-slate-900 text-black">
+                        Address
+                      </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           <div>
@@ -575,7 +576,7 @@ const DonationDetails7 = () => {
                                 errors.email
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.email}
                               onChange={handleInputChange}
                               ref={emailAddressRef}
@@ -595,7 +596,7 @@ const DonationDetails7 = () => {
                                 errors.region
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               name="region"
                               id="Region"
                               value={formData.region}
@@ -621,7 +622,7 @@ const DonationDetails7 = () => {
                                 errors.city
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.city}
                               onChange={handleInputChange}
                               ref={cityRef}
@@ -643,7 +644,7 @@ const DonationDetails7 = () => {
                                 errors.address
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.address}
                               onChange={handleInputChange}
                               ref={homeAddressRef}
@@ -885,7 +886,7 @@ const DonationDetails7 = () => {
                         className={`py-2 px-4 rounded transition ${
                           category.active
                             ? "bg-green-50 text-green-600 font-semibold"
-                            : "hover:bg-gray-50"
+                            : "hover:bg-gray-50 dark:text-slate-900 text-black"
                         }`}
                       >
                         {/* <a href="#" className="flex items-center"> */}
@@ -900,8 +901,8 @@ const DonationDetails7 = () => {
                 </div>
               </motion.div>
 
-             {/* Related Posts */}
-             <motion.div
+              {/* Related Posts */}
+              <motion.div
                 initial={{ opacity: 0, y: 100 }}
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
@@ -919,7 +920,7 @@ const DonationDetails7 = () => {
                       <div className="flex-shrink-0 w-20 h-24 relative">
                         <Link href="/upcoming-event-details-1">
                           <Image
-                            src={relatedPostImg1} 
+                            src={relatedPostImg1}
                             alt="Upcoming Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1272,7 +1273,7 @@ const DonationDetails7 = () => {
                   </span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                     Medical
-                  </span> 
+                  </span>
                   <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
                     Education
                   </span>

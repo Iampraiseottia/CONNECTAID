@@ -301,7 +301,7 @@ const DonationDetails6 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-6"
                   >
-                    <h4 className="text-2xl font-bold mb-3 mt-2">
+                    <h4 className="text-2xl font-bold mb-3 mt-2 dark:text-slate-900 text-black">
                       Your donation can support those facing extreme hardships
                       and urgent needs!
                     </h4>
@@ -358,7 +358,7 @@ const DonationDetails6 = () => {
                     </div>
 
                     <div className="flex justify-between items-center mb-6 leading-8">
-                      <div className="flex gap-6">
+                      <div className="flex gap-6 dark:text-slate-900 text-black">
                         <div>
                           <p className="text-gray-600">28, 500, 000 Francs</p>
                           <h4 className="font-semibold">Goals</h4>
@@ -395,7 +395,7 @@ const DonationDetails6 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">
                         Select Payment Method
                       </h4>
                       <div className="space-y-3 ">
@@ -446,7 +446,7 @@ const DonationDetails6 = () => {
                     >
                       <button
                         type="button"
-                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10"
+                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black"
                       >
                         Select An Amount From Available Options Below
                       </button>
@@ -480,7 +480,7 @@ const DonationDetails6 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">
                         Payment Details
                       </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
@@ -493,7 +493,7 @@ const DonationDetails6 = () => {
                                 errors.mobileNumber
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               name="mobileNumber"
                               id="Mobile_Money_Number"
                               value={formData.mobileNumber}
@@ -517,7 +517,7 @@ const DonationDetails6 = () => {
                                 errors.mobileName
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.mobileName}
                               onChange={handleInputChange}
                               ref={mobileMoneyNameRef}
@@ -538,7 +538,7 @@ const DonationDetails6 = () => {
                               errors.fullName
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                             name="fullName"
                             id="Full_Name"
                             value={formData.fullName}
@@ -563,7 +563,7 @@ const DonationDetails6 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">Address</h4>
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">Address</h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           <div>
@@ -576,7 +576,7 @@ const DonationDetails6 = () => {
                                 errors.email
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.email}
                               onChange={handleInputChange}
                               ref={emailAddressRef}
@@ -596,7 +596,7 @@ const DonationDetails6 = () => {
                                 errors.region
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               name="region"
                               id="Region"
                               value={formData.region}
@@ -622,7 +622,7 @@ const DonationDetails6 = () => {
                                 errors.city
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.city}
                               onChange={handleInputChange}
                               ref={cityRef}
@@ -644,7 +644,7 @@ const DonationDetails6 = () => {
                                 errors.address
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black`}
                               value={formData.address}
                               onChange={handleInputChange}
                               ref={homeAddressRef}
@@ -936,7 +936,7 @@ const DonationDetails6 = () => {
                         className={`py-2 px-4 rounded transition ${
                           category.active
                             ? "bg-green-50 text-green-600 font-semibold"
-                            : "hover:bg-gray-50"
+                            : "hover:bg-gray-50 dark:text-slate-900 text-black"
                         }`}
                       >
                         {/* <a href="#" className="flex items-center"> */}
