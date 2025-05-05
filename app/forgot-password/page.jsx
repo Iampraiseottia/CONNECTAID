@@ -86,7 +86,7 @@ const ForgotPassword = () => {
         />
       </motion.div>
 
-   Forgot Password 
+   {/* Forgot Password Section  */}
       <motion.main
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}

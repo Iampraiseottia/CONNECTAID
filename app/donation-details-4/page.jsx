@@ -301,7 +301,7 @@ const DonationDetails4 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-6"
                   >
-                    <h4 className="text-2xl font-bold mb-3 mt-2">
+                    <h4 className="text-2xl font-bold mb-3 mt-2 dark:text-slate-900 text-black">
                       Your donation can provide clean water to communities in
                       need!
                     </h4>
@@ -353,7 +353,7 @@ const DonationDetails4 = () => {
                     </div>
 
                     <div className="flex justify-between items-center mb-6 leading-8">
-                      <div className="flex gap-6">
+                      <div className="flex gap-6 dark:text-slate-900 text-black">
                         <div>
                           <p className="text-gray-600">35, 750, 000 Francs</p>
                           <h4 className="font-semibold">Goals</h4>
@@ -390,7 +390,7 @@ const DonationDetails4 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">
                         Select Payment Method
                       </h4>
                       <div className="space-y-3 ">
@@ -402,7 +402,7 @@ const DonationDetails4 = () => {
                             value="mtn"
                             checked={selectedPayment === "mtn"}
                             onChange={() => setSelectedPayment("mtn")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 "
                           />
                           <label
                             htmlFor="mtn-momo"
@@ -419,7 +419,7 @@ const DonationDetails4 = () => {
                             value="orange"
                             checked={selectedPayment === "orange"}
                             onChange={() => setSelectedPayment("orange")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500"
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 "
                           />
                           <label
                             htmlFor="orange-momo"
@@ -475,7 +475,7 @@ const DonationDetails4 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">
                         Payment Details
                       </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
@@ -488,7 +488,7 @@ const DonationDetails4 = () => {
                                 errors.mobileNumber
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               name="mobileNumber"
                               id="Mobile_Money_Number"
                               value={formData.mobileNumber}
@@ -512,7 +512,7 @@ const DonationDetails4 = () => {
                                 errors.mobileName
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               value={formData.mobileName}
                               onChange={handleInputChange}
                               ref={mobileMoneyNameRef}
@@ -533,7 +533,7 @@ const DonationDetails4 = () => {
                               errors.fullName
                                 ? "border-red-500"
                                 : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                             name="fullName"
                             id="Full_Name"
                             value={formData.fullName}
@@ -558,7 +558,7 @@ const DonationDetails4 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4">Address</h4>
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">Address</h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           <div>
@@ -571,7 +571,7 @@ const DonationDetails4 = () => {
                                 errors.email
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               value={formData.email}
                               onChange={handleInputChange}
                               ref={emailAddressRef}
@@ -591,7 +591,7 @@ const DonationDetails4 = () => {
                                 errors.region
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               name="region"
                               id="Region"
                               value={formData.region}
@@ -617,7 +617,7 @@ const DonationDetails4 = () => {
                                 errors.city
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               value={formData.city}
                               onChange={handleInputChange}
                               ref={cityRef}
@@ -639,7 +639,7 @@ const DonationDetails4 = () => {
                                 errors.address
                                   ? "border-red-500"
                                   : "border-gray-300"
-                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500`}
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
                               value={formData.address}
                               onChange={handleInputChange}
                               ref={homeAddressRef}
@@ -768,14 +768,14 @@ const DonationDetails4 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">Our Challenge </h4>
                 <p className="text-gray-600 mb-4">
                   While the impact of providing clean water to communities in
                   need is profound, several challenges can arise in the process
                   of implementing water projects. Understanding these challenges
                   is crucial for developing effective strategies to overcome
                   them. Here are some of the key challenges faced in clean water
-                  initiatives:
+                  initiatives: 
                 </p>
                 <p className="text-gray-600 mb-4">
                   <b>1. Infrastructure Limitations</b> <br />
@@ -842,7 +842,7 @@ const DonationDetails4 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3">Our Goals </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">Our Goals </h4>
                 <p className="text-gray-600 mb-4">
                   Setting clear and achievable goals is essential for the
                   success of clean water initiatives. These goals should focus
@@ -974,10 +974,10 @@ const DonationDetails4 = () => {
                         className={`py-2 px-4 rounded transition ${
                           category.active
                             ? "bg-green-50 text-green-600 font-semibold"
-                            : "hover:bg-gray-50"
+                            : "hover:bg-gray-50 dark:text-slate-900 text-black "
                         }`}
                       >
-                        {/* <a href="#" className="flex items-center"> */}
+                        {/* <a href="#" className="flex items-center"> */} 
                         {category.active && (
                           <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
                         )}
