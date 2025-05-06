@@ -197,7 +197,7 @@ const DonationDetails2 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
                       Select Payment Method
                     </h4>
                     <div className="space-y-3 ">
@@ -209,7 +209,7 @@ const DonationDetails2 = () => {
                           value="mtn"
                           checked={selectedPayment === "mtn"}
                           onChange={() => setSelectedPayment("mtn")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600 "
                         />
                         <label
                           htmlFor="mtn-momo"
@@ -226,7 +226,7 @@ const DonationDetails2 = () => {
                           value="orange"
                           checked={selectedPayment === "orange"}
                           onChange={() => setSelectedPayment("orange")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500"
+                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
                         />
                         <label
                           htmlFor="orange-momo"
@@ -246,7 +246,7 @@ const DonationDetails2 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 ">
+                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black">
                       Select An Amount From Available Options Below
                     </button>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -278,13 +278,13 @@ const DonationDetails2 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">Payment Details</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Payment Details</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <input
                           type="text"
                           placeholder="Mobile Money Number e.g +237 686 529 762*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                           name="Mobile_Money_Number"
                           id="Mobile_Money_Number"
                         />
@@ -293,13 +293,13 @@ const DonationDetails2 = () => {
                           name="Mobile_Money_Name"
                           id="Mobile_Money_Name"
                           placeholder="Mobile Money Name e.g Alex Jordan*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                         />
                       </div>
                       <input
                         type="text"
                         placeholder="Your Full Name*"
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                         name="Full_Name"
                         id="Full_Name"
                       />
@@ -314,7 +314,7 @@ const DonationDetails2 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4">Address</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Address</h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <input
@@ -322,12 +322,12 @@ const DonationDetails2 = () => {
                           placeholder="Email Address e.g name@gmail.com*"
                           name="Email_Address"
                           id="Email_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                         />
                         <input
                           type="text"
                           placeholder="Region e.g South-west*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                           name="Region"
                           id="Region"
                         />
@@ -338,14 +338,14 @@ const DonationDetails2 = () => {
                           placeholder="City/Town e.g Limbe*"
                           name="City_Town"
                           id="City_Town"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                         />
                         <input
                           type="text"
                           placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
                           name="Home_Address"
                           id="Home_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
                         />
                       </div>
                     </div>
@@ -365,7 +365,7 @@ const DonationDetails2 = () => {
                         type="checkbox"
                         checked={agreedToTerms}
                         onChange={() => setAgreedToTerms(!agreedToTerms)}
-                        className="w-4 h-4 text-green-600 focus:ring-green-500"
+                        className="w-4 h-4 text-green-600 focus:ring-green-500 dark:bg-white dark:text-black"
                       />
                       <label htmlFor="terms" className="ml-2 text-gray-700">
                         I agree with the Terms Of service
@@ -696,7 +696,7 @@ const DonationDetails2 = () => {
                         className={`py-2 px-4 rounded transition ${
                           category.active
                             ? "bg-green-50 text-green-600 font-semibold"
-                            : "hover:bg-gray-50"
+                            : "hover:bg-gray-50 dark:text-slate-900 text-black"
                         }`}
                       >
                         {/* <a href="#" className="flex items-center"> */}

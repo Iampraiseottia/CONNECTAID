@@ -570,7 +570,7 @@ const BlogDetails3 = () => {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="Alex Jordan"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
                           ref={fullNameRef}
                           onMouseEnter={onMouseEnterFullNameRef}
                         />
@@ -588,7 +588,7 @@ const BlogDetails3 = () => {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="name@example.com"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
                           ref={emailAddressRef}
                           onMouseEnter={onMouseEnterEmailAddressRef}
                         />
@@ -608,7 +608,7 @@ const BlogDetails3 = () => {
                         onChange={(e) => setComment(e.target.value)}
                         placeholder="Type Keyword"
                         rows={4}
-                        className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
                         ref={commentRef}
                         onMouseEnter={onMouseEnterCommentRef}
                       />
@@ -823,7 +823,7 @@ const BlogDetails3 = () => {
                     <input
                       type="search"
                       placeholder="Enter Your Keyword"
-                      className="w-full p-3 pr-10 border border-gray-300 outline-none rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                      className="w-full p-3 pr-10 border border-gray-300 outline-none rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
                       ref={searchRef}
                       onMouseEnter={onMouseEnterSearchRef}
                     />
@@ -857,7 +857,7 @@ const BlogDetails3 = () => {
                       <li
                         key={category}
                         className={
-                          index === 0 ? "text-teal-700 font-medium" : ""
+                          index === 0 ? "text-teal-700 font-medium" : "dark:text-slate-900 text-black "
                         }
                       >
                         <a

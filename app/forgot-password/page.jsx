@@ -114,7 +114,7 @@ const ForgotPassword = () => {
             <div className="px-[10%] mt-4 mb-4">
               <label
                 htmlFor="emailAddress"
-                className="text-xl dark:text-slate-900 text-black"
+                className="text-xl dark:text-slate-900 text-black "
               >
                 <FontAwesomeIcon
                   icon={faEnvelope}
