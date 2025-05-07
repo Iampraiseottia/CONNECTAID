@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { motion } from "motion/react";
 
-import { ArrowLeft, CheckCircle, ArrowRight } from "lucide-react";
+import { ArrowLeft, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
 
 const Survey_User = ({ setActiveComponent }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,6 +20,7 @@ const Survey_User = ({ setActiveComponent }) => {
     additionalComments: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,10 +36,42 @@ const Survey_User = ({ setActiveComponent }) => {
         return { ...prev, [field]: [...current, value] };
       }
     });
+
+    if (field === "donationPreferences") {
+      setErrors((prev) => ({ ...prev, donationPreferences: null }));
+    }
+
+    if (field === "communicationPreferences") {
+      setErrors((prev) => ({ ...prev, communicationPreferences: null }));
+    }
+  };
+
+  const validateStep = (step) => {
+    const newErrors = {};
+
+    if (step === 1) {
+      if (surveyData.donationPreferences.length < 4) {
+        newErrors.donationPreferences =
+          "Please select at least 4 donation preferences";
+      }
+    }
+
+
+    if (step === 2) {
+      if (surveyData.communicationPreferences.length < 3) { 
+        newErrors.communicationPreferences =
+          "Please select at least 3 donation preferences";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const nextStep = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+    }
   };
 
   const prevStep = () => {
@@ -47,6 +80,8 @@ const Survey_User = ({ setActiveComponent }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Final validation could be added here if needed
 
     // Simulate submission
     setSubmitted(true);
@@ -116,7 +151,7 @@ const Survey_User = ({ setActiveComponent }) => {
                           checked={surveyData.donationFrequency === option}
                           onChange={handleInputChange}
                           defaultChecked={option[1]}
-                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
+                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-green-500 "
                         />
                         <label
                           htmlFor={`frequency-${option}`}
@@ -151,7 +186,7 @@ const Survey_User = ({ setActiveComponent }) => {
                         checked={surveyData.donationAmount === option}
                         onChange={handleInputChange}
                         defaultChecked={option[1]}
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-green-500 "
                       />
                       <label
                         htmlFor={`amount-${option}`}
@@ -200,6 +235,12 @@ const Survey_User = ({ setActiveComponent }) => {
                     </div>
                   ))}
                 </div>
+                {errors.donationPreferences && (
+                  <div className="mt-2 flex items-center text-red-600">
+                    <AlertCircle size={16} className="mr-1" />
+                    <p className="text-sm">{errors.donationPreferences}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -253,7 +294,13 @@ const Survey_User = ({ setActiveComponent }) => {
                     </div>
                   ))}
                 </div>
-              </div>
+                {errors.communicationPreferences && (
+                  <div className="mt-2 flex items-center text-red-600">
+                    <AlertCircle size={16} className="mr-1" />
+                    <p className="text-sm">{errors.communicationPreferences}</p>
+                  </div>
+                )}
+              </div> 
 
               {/* Tax Receipt Preferences */}
               <div>
@@ -274,7 +321,7 @@ const Survey_User = ({ setActiveComponent }) => {
                         value={option}
                         checked={surveyData.taxReceipts === option}
                         onChange={handleInputChange}
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-green-500 "
                       />
                       <label
                         htmlFor={`tax-${option}`}
@@ -287,7 +334,7 @@ const Survey_User = ({ setActiveComponent }) => {
                 </div>
               </div>
 
-              {/* How they heard about platform */}
+              {/* How they heard about ConnectAID */}
               <div>
                 <label
                   htmlFor="howHeard"
@@ -300,18 +347,19 @@ const Survey_User = ({ setActiveComponent }) => {
                   name="howHeard"
                   value={surveyData.howHeard}
                   onChange={handleInputChange}
-                  className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md"
-                >
-                  <option value="">Select an option</option>
+                  className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md dark:bg-white dark:text-black dark:border-gray-400 dark:border-2 dark:focus:ring-teal-500 dark:focus:border-teal-500"
+                > 
+                  <option value="">Select an option</option> 
                   <option value="Social Media">Social Media</option>
                   <option value="Friend/Family">Friend/Family</option>
-                  <option value="Search Engine">Search Engine</option>
+                  <option value="Search Engine">Search Engine</option> 
                   <option value="News Article">News Article</option>
                   <option value="Advertisement">Advertisement</option>
                   <option value="Charity Event">Charity Event</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
+              
             </div>
           </div>
         );

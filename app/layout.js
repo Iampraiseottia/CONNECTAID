@@ -12,10 +12,6 @@ export const metadata = {
     title: 'ConnectAID Web Application',
     description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
   },
-  '/home': {
-    title: 'ConnectAID Web Application',
-    description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
-  },
   icons: {
     icon: [
       '/favicon.ico',
