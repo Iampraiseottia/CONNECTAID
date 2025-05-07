@@ -199,10 +199,10 @@ const SideBar = () => {
   };
 
   return (
-    <section className="w-full relative flex">
-      <Metadata title={metadata.title} description={metadata.description} />
+    <section className="w-full relative flex dark:bg-white bg-white">
+      <Metadata title={metadata.title} description={metadata.description} /> 
 
-      {/* Mobile Toggle Button - Always visible on mobile */}
+      {/* Mobile Toggle Button - Always visible on mobile */} 
       {isMobile && (
         <button
           onClick={() => setExpandedSideBar((current) => !current)}
@@ -219,7 +219,8 @@ const SideBar = () => {
 
       {/* Dashboard Left Section (Side Bar) */}
       <div
-        className={`bg-slate-700 duration-500 fixed z-20 dashboard-sidebar-border h-[100vh] top-0 left-0 border-2 border-slate-700 border-solid text-center text-white text-2xl font-semibold transition-all ease-in-out ${getSidebarWidth()}`}
+        className={`bg-slate-700 duration-500 fixed z-20 dashboard-sidebar-border h-[100vh] top-0 left-0 border-2 border-slate-700 border-solid text-center text-white text-2xl font-semibold transition-all ease-in-out 
+          ${getSidebarWidth()}`}
         style={{
           overflowX: "hidden",
           overflowY: "auto",

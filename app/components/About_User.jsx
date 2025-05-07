@@ -308,7 +308,7 @@ const About_User = ({ setActiveComponent }) => {
                   onChange={handleChange}
                   className={`w-full border ${
                     errors.fullName ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.fullName && formData.fullName.trim().length >= 7
                       ? "border-green-500 focus:ring-green-500"
@@ -321,7 +321,7 @@ const About_User = ({ setActiveComponent }) => {
                 )}
               </div>
 
-              {/* Date of Birth */}
+              {/* Date of Birth */} 
               <div>
                 <label
                   htmlFor="dateOfBirth"
@@ -339,7 +339,7 @@ const About_User = ({ setActiveComponent }) => {
                   onChange={handleChange}
                   className={`w-full border ${
                     errors.dateOfBirth ? "border-red-500" : "border-gray-500"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 ease-in-out dark:bg-white dark:text-black 
                   ${
                     formData.dateOfBirth &&
                     formData.dateOfBirth.trim().length >= 8
@@ -365,15 +365,15 @@ const About_User = ({ setActiveComponent }) => {
                 </label>
                 <select
                   id="gender"
-                  name="gender"
+                  name="gender" 
                   value={formData.gender}
                   ref={genderRef}
                   onMouseEnter={onMouseEnterGender}
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.gender ? "border-red-500" : "border-gray-300"
-                  } border-gray-300 rounded-md px-3 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500  ease-in-out`}
-                >
+                    errors.gender ? "border-red-500" : "border-gray-400"
+                  } border-gray-300 rounded-md px-3 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500  ease-in-out dark:bg-white dark:text-black`}
+                > 
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -411,7 +411,7 @@ const About_User = ({ setActiveComponent }) => {
                   
                   ${
                     errors.phoneNumber ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   `}
                 />
                 {errors.phoneNumber && (
@@ -450,7 +450,7 @@ const About_User = ({ setActiveComponent }) => {
                   onChange={handleChange}
                   className={`w-full border ${
                     errors.address ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.address && formData.address.trim().length >= 7
                       ? "border-green-500 focus:ring-green-500"
@@ -481,7 +481,7 @@ const About_User = ({ setActiveComponent }) => {
                   onChange={handleChange}
                   className={`w-full border ${
                     errors.city ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.city && formData.city.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
@@ -512,7 +512,7 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Your State/Province/Region e.g South-West "
                   className={`w-full border ${
                     errors.state ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.state && formData.state.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
@@ -543,7 +543,7 @@ const About_User = ({ setActiveComponent }) => {
                   onChange={handleChange}
                   className={`w-full border ${
                     errors.zipCode ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.zipCode && formData.zipCode.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
@@ -574,7 +574,7 @@ const About_User = ({ setActiveComponent }) => {
                   onMouseEnter={onMouseEnterCountry}
                   className={`w-full border ${
                     errors.country ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
                   ${
                     formData.country && formData.country.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
@@ -607,7 +607,7 @@ const About_User = ({ setActiveComponent }) => {
                 className={`w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500
                   ${
                     errors.bio ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black 
                   ${
                     formData.bio && formData.bio.trim().length >= 20
                       ? "border-green-500 focus:ring-green-500"
