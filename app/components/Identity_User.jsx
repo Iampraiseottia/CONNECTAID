@@ -16,6 +16,7 @@ import { motion } from "motion/react";
 
 const Identity_User = ({ setActiveComponent }) => {
   const [verificationMethod, setVerificationMethod] = useState("");
+  const [birthCertificateFile, setBirthCertificateFile] = useState(null); 
   const [idFiles, setIdFiles] = useState([]);
   const [selfieFile, setSelfieFile] = useState(null);
   const [errors, setErrors] = useState({});
@@ -25,6 +26,13 @@ const Identity_User = ({ setActiveComponent }) => {
   const handleVerificationMethodChange = (method) => {
     setVerificationMethod(method);
     setErrors({});
+  };
+
+  const handleBCUpload = (e) => {
+    if (e.target.files[0]) {
+      setBirthCertificateFile(e.target.files[0]);
+      setErrors((prev) => ({ ...prev, birthCertificateFile: null }));
+    }
   };
 
   const handleIdUpload = (e) => {
@@ -50,8 +58,13 @@ const Identity_User = ({ setActiveComponent }) => {
     }
 
     if (verificationMethod === "idVerification") {
+      if (!birthCertificateFile) {
+        newErrors.birthCertificateFile =
+          "Please upload your Birth Certificate document";
+      }
       if (idFiles.length === 0) {
-        newErrors.idFiles = "Please upload your identification document";
+        newErrors.idFiles =
+          "Please upload any identification document e.g Passport, Driver's License etc.";
       }
       if (!selfieFile) {
         newErrors.selfieFile = "Please upload a selfie";
@@ -157,48 +170,67 @@ const Identity_User = ({ setActiveComponent }) => {
                         license, or ID card) and a selfie for verification.
                       </p>
                     </div>
-
-                    <div
-                      className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                        verificationMethod === "emailVerification"
-                          ? "border-teal-500 bg-teal-50"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
-                      onClick={() =>
-                        handleVerificationMethodChange("emailVerification")
-                      }
-                    >
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
-                          id="emailVerification"
-                          name="verificationMethod"
-                          checked={verificationMethod === "emailVerification"}
-                          onChange={() => {}}
-                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
-                        />
-                        <label
-                          htmlFor="emailVerification"
-                          className="ml-3 block text-sm font-medium text-gray-700"
-                        >
-                          Email Verification (Limited Features)
-                        </label>
-                      </div>
-                      <p className="mt-1 text-sm text-gray-500 ml-7">
-                        Verify via email. Note: This option provides limited
-                        access to platform features.
-                      </p>
-                    </div>
                   </div>
                   {errors.verificationMethod && (
                     <p className="mt-2 text-sm text-red-600">
-                      {errors.verificationMethod}
+                      {errors.verificationMethod} 
                     </p>
                   )}
                 </div>
 
                 {verificationMethod === "idVerification" && (
                   <div className="space-y-6">
+                    {/* Upload Birth Certificate  */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Upload Birth Certificate
+                      </label>
+                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md border-gray-300 hover:border-gray-400 transition-colors">
+                        <div className="space-y-1 text-center">
+                          <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                          <div className="flex text-sm text-gray-600">
+                            <label
+                              htmlFor="birth-certificate-upload"
+                              className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none"
+                            >
+                              <span>Upload a Birth Certificate</span>
+                              <input
+                                id="birth-certificate-upload"
+                                name="birth-certificate-upload"
+                                type="file"
+                                className="sr-only"
+                                accept="image/*"
+                                onChange={handleBCUpload}
+                              />
+                            </label>
+                            <p className="pl-1">or drag and drop</p>
+                          </div>
+                          <p className="text-xs text-gray-500">
+                            PNG, JPG up to 7MB
+                          </p>
+                        </div>
+                      </div>
+                      {birthCertificateFile && (
+                        <div className="mt-2">
+                          <p className="text-sm text-green-600 flex items-center">
+                            <CheckCircle className="h-4 w-4 mr-1" />
+                            Birth Certificate uploaded:{" "}
+                            {birthCertificateFile.name}
+                          </p>
+                        </div>
+                      )}
+                      {errors.birthCertificateFile && (
+                        <p className="mt-2 text-sm text-red-600">
+                          {errors.birthCertificateFile}
+                        </p>
+                      )}
+                      <p className="mt-2 text-xs text-gray-500">
+                        Please ensure your face is clearly visible, well-lit,
+                        and you are not wearing sunglasses or a hat.
+                      </p>
+                    </div>
+
+                    {/* Upload ID Document */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Upload ID Document
@@ -248,6 +280,7 @@ const Identity_User = ({ setActiveComponent }) => {
                       </p>
                     </div>
 
+                    {/* Upload Selfie */}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Upload Selfie

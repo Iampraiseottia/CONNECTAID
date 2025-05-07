@@ -474,8 +474,6 @@ body.dark {
 
 
 
-
-
 /* Date Indicator Picker*/
 #dateOfBirth::-webkit-calendar-picker-indicator {
   filter: invert(0.7);
