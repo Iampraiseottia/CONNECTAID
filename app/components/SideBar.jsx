@@ -51,12 +51,12 @@ const SideBar = () => {
   const updateMetadata = (component) => {
     const metadataMap = {
       dashboardMain: {
-        title: "Dashboard - ConnectAID Web Application",
+        title: "Donor Dashboard - ConnectAID Web Application", 
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       Campaigns: {
-        title: "All Campaigns - ConnectAID Web Application",
+        title: "All Campaigns - ConnectAID Web Application", 
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },

@@ -51,7 +51,7 @@ const SideBarSeeker = () => {
   const updateMetadata = (component) => {
     const metadataMap = {
       dashboardMain: {
-        title: "Dashboard - ConnectAID Web Application",
+        title: "Seeker Dashboard - ConnectAID Web Application",  
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
