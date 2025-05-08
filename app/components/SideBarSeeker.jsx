@@ -18,14 +18,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Metadata from "./Metadata";
-import About_User from "./About_User";
-import Identity_User from "./Identity_User";
-import Survey_User from "./Survey_User";
-import Campaigns from "./Campaigns";
-import MyDonations from "./MyDonations";
-import User_Profile from "./User_Profile";
+import About_Seeker from "./About_Seeker";
+import Identity_Seeker from "./Identity_Seeker";
+import Survey_Seeker from "./Survey_Seeker";
+import Campaigns_Seeker from "./Campaigns_Seeker";
+import MyAID from "./MyAID";
+import Seeker_Profile from "./Seeker_Profile";
 import Logout from "../logout/page";
-import DashMain from "./DashMain";
+import DashMainSeeker from "./DashMainSeeker";
 
 import { FileText, ChevronDown, ChevronFirst, ChevronLast } from "lucide-react";
 
@@ -55,7 +55,7 @@ const SideBarSeeker = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      Campaigns: {
+      Campaigns_Seeker: {
         title: "All Campaigns - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
@@ -75,8 +75,8 @@ const SideBarSeeker = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      MyDonations: {
-        title: "My Donations - ConnectAID Web Application",
+      MyAID: {
+        title: "My AID - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -141,29 +141,27 @@ const SideBarSeeker = () => {
   const renderContent = () => {
     switch (activeComponent) {
       case "dashboardMain":
-        return <DashMain setActiveComponent={setActiveComponent} />;
-      case "MyDonations":
-        return <MyDonations setActiveComponent={setActiveComponent} />;
+        return <DashMainSeeker setActiveComponent={setActiveComponent} />;
+      case "MyAID":
+        return <MyAID setActiveComponent={setActiveComponent} />;
       case "about-you":
-        return <About_User setActiveComponent={setActiveComponent} />;
+        return <About_Seeker setActiveComponent={setActiveComponent} />;
       case "identity":
-        return <Identity_User setActiveComponent={setActiveComponent} />;
+        return <Identity_Seeker setActiveComponent={setActiveComponent} />;
       case "survey":
-        return <Survey_User setActiveComponent={setActiveComponent} />;
-      case "Campaigns":
-        return <Campaigns setActiveComponent={setActiveComponent} />;
+        return <Survey_Seeker setActiveComponent={setActiveComponent} />;
+      case "Campaigns_Seeker":
+        return <Campaigns_Seeker setActiveComponent={setActiveComponent} />;
       case "profile":
-        return <User_Profile setActiveComponent={setActiveComponent} />;
-      case "PaymentSetting":
-        return <PaymentSetting setActiveComponent={setActiveComponent} />;
+        return <Seeker_Profile setActiveComponent={setActiveComponent} />;
       case "logout":
         return <Logout />;
       default:
-        return <DashMain />;
+        return <DashMainSeeker />;
     }
   };
 
-  // Get sidebar width based on device type and state
+  // Get sidebar width based on device type and state 
   const getSidebarWidth = () => {
     if (expandedSideBar) {
       if (isMobile) return "w-4/5";
@@ -176,7 +174,7 @@ const SideBarSeeker = () => {
     }
   };
 
-  // Get content margin based on device type and sidebar state
+  // Get content margin based on device type and sidebar state 
   const getContentMargin = () => {
     if (isMobile) {
       return expandedSideBar ? "ml-0" : "ml-0";
@@ -187,7 +185,6 @@ const SideBarSeeker = () => {
     }
   };
 
-  // Get content width based on device type and sidebar state
   const getContentWidth = () => {
     if (isMobile) {
       return "100%";
@@ -199,7 +196,7 @@ const SideBarSeeker = () => {
   };
 
   return (
-    <section className="w-full relative flex">
+    <section className="w-full relative flex dark:bg-white bg-white"> 
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Mobile Toggle Button - Always visible on mobile */}
@@ -434,12 +431,12 @@ const SideBarSeeker = () => {
         </div>
 
         <div
-          onClick={() => handleComponentChange("MyDonations")}
+          onClick={() => handleComponentChange("MyAID")}
           title="My Donations"
           className={`mb-2 flex items-center px-4 py-2 ease-in-out rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
             expandedSideBar || isDesktop ? "justify-start" : "justify-center"
           } ${
-            activeComponent === "MyDonations" ? "bg-white text-teal-500" : ""
+            activeComponent === "MyAID" ? "bg-white text-teal-500" : ""
           }`}
         >
           <FontAwesomeIcon
@@ -460,11 +457,11 @@ const SideBarSeeker = () => {
         </div>
 
         <div
-          onClick={() => handleComponentChange("Campaigns")}
-          title="Campaigns"
+          onClick={() => handleComponentChange("Campaigns_Seeker")}
+          title="Campaigns_Seeker"
           className={`mb-2 flex items-center px-4 py-2 ease-in-out rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
             expandedSideBar || isDesktop ? "justify-start" : "justify-center"
-          } ${activeComponent === "Campaigns" ? "bg-white text-teal-500" : ""}`}
+          } ${activeComponent === "Campaigns_Seeker" ? "bg-white text-teal-500" : ""}`}
         >
           <FontAwesomeIcon
             icon={faPeopleGroup}
@@ -479,7 +476,7 @@ const SideBarSeeker = () => {
                 : "w-0 opacity-0"
             }`}
           >
-            Campaigns
+            Campaigns_Seeker
           </span>
         </div>
 
@@ -542,13 +539,13 @@ const SideBarSeeker = () => {
         ></div>
       )}
 
-      {/* Dashboard Right Section - Display Each SideBar Header content dynamically */}
+      {/* Dashboard Right Section - Display Each SideBar Header content dynamically */}  
       <div
         className={`transition-all duration-500 min-h-screen ${getContentMargin()}`}
         style={{
           width: getContentWidth(),
         }}
-      >
+      > 
         {renderContent()}
       </div>
     </section>

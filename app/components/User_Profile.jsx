@@ -102,7 +102,7 @@ const User_Profile = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
       viewport={{ once: true, amount: 0.1 }}
-      className="p-6 bg-gray-50 min-h-screen mt-12 "
+      className="p-6 bg-gray-50 min-h-screen pt-12 "
     >
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-slate-800 mb-2">My Profile</h1>

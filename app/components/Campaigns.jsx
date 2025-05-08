@@ -368,13 +368,13 @@ const Campaigns = ({ setActiveComponent }) => {
                   <span className="font-medium">
                     {campaign.raised.toLocaleString()} Francs raised
                   </span>
-                  <span>of Francs{campaign.goal.toLocaleString()}</span>
+                  <span> {campaign.goal.toLocaleString()} Francs</span>
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
                   <div className="flex items-center">
                     <Users className="h-4 w-4 mr-1" />
-                    <span>{campaign.supporters} supporters</span>
+                    <span>{campaign.supporters} supporters</span> 
                   </div>
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-1" />
