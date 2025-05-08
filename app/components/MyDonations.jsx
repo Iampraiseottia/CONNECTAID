@@ -8,7 +8,6 @@ import {
   Clock,
   RefreshCw,
   Calendar,
-  Building,
   DollarSign,
   Tag,
   FileText,
@@ -20,6 +19,10 @@ import {
   AlertCircle,
   Search,
 } from "lucide-react";
+
+import { motion } from "motion/react";
+
+import globalStyle from "../globals.css";
 
 const MyDonations = ({ setActiveComponent }) => {
   const [donations, setDonations] = useState([]);
@@ -263,8 +266,16 @@ const MyDonations = ({ setActiveComponent }) => {
       }
     };
 
+    // View Receipt Content
+
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.3 }}
+        viewport={{ once: true, amount: 0.05 }}
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      >
         <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-full overflow-auto">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -293,7 +304,7 @@ const MyDonations = ({ setActiveComponent }) => {
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">ID</h3>
-                    <p className="text-lg font-semibold">{donation.id}</p>
+                    <p className="text-lg font-semibold dark:text-black text-black ">{donation.id}</p>
                   </div>
                 </div>
                 <div className="flex items-start">
@@ -302,7 +313,7 @@ const MyDonations = ({ setActiveComponent }) => {
                   </div>
                   <div>
                     <h3 className="text-sm font-medium text-gray-500">Date</h3>
-                    <p className="text-lg font-semibold">
+                    <p className="text-lg font-semibold dark:text-black text-black ">
                       {formatDate(donation.date)}
                     </p>
                   </div>
@@ -315,7 +326,7 @@ const MyDonations = ({ setActiveComponent }) => {
                     <h3 className="text-sm font-medium text-gray-500">
                       Amount
                     </h3>
-                    <p className="text-lg font-semibold">
+                    <p className="text-lg font-semibold dark:text-black text-black ">
                       {donation.amount} Francs
                     </p>
                   </div>
@@ -328,7 +339,7 @@ const MyDonations = ({ setActiveComponent }) => {
                     <h3 className="text-sm font-medium text-gray-500">
                       Category
                     </h3>
-                    <p className="text-lg font-semibold">{donation.category}</p>
+                    <p className="text-lg font-semibold dark:text-black text-black ">{donation.category}</p>
                   </div>
                 </div>
               </div>
@@ -353,20 +364,20 @@ const MyDonations = ({ setActiveComponent }) => {
                     </h4>
                     <p className="text-gray-800">{donation.organization}</p>
                   </div>
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium text-gray-500">
-                      Status
-                    </h4>
-                    <div className="flex items-center mt-1">
-                      <span
-                        className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
-                        ${
-                          donation.status === "completed"
-                            ? "bg-green-100 text-green-800"
-                            : donation.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-blue-100 text-blue-800"
-                        }`}
+                  <div className="mb-4 flex justify-start align-middle mt-2 ">
+                    <h4 className="text-sm font-medium text-gray-500 mt-4"> 
+                      Status: 
+                    </h4> 
+                    <div className="flex items-center mt-1 ml-4 ">
+                      <span 
+                        className={`px-7 py-3 inline-flex text-[16px] leading-5 font-semibold rounded-full 
+                        ${ 
+                          donation.status === "completed" 
+                            ? "bg-green-100 text-green-800 hover:bg-green-200 hover:text-green-900 ease-in-out transition-colors"
+                            : donation.status === "pending" 
+                            ? "bg-yellow-100 text-yellow-800 hover:bg-yellow-200 hover:text-yellow-900 ease-in-out transition-colors" 
+                            : "bg-blue-100 text-blue-800 hover:bg-blue-200 hover:text-blue-900 ease-in-out transition-colors"
+                        }`} 
                       >
                         {donation.status.charAt(0).toUpperCase() +
                           donation.status.slice(1)}
@@ -506,12 +517,20 @@ const MyDonations = ({ setActiveComponent }) => {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   };
 
+  // Main My DOnation Content
+
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="p-6 bg-gray-50 min-h-screen"
+    >
       <div className="max-w-7xl mx-auto mt-12">
         <div className="flex items-center mb-6">
           <button
@@ -525,7 +544,10 @@ const MyDonations = ({ setActiveComponent }) => {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Total Amount Donated">
+          <div
+            className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out"
+            title="Total Amount Donated"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -541,7 +563,10 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Completed">
+          <div
+            className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out"
+            title="Completed"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -557,7 +582,10 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Pending">
+          <div
+            className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out"
+            title="Pending"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -573,7 +601,10 @@ const MyDonations = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out" title="Recurring">
+          <div
+            className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow ease-in-out"
+            title="Recurring"
+          >
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-500">
@@ -600,7 +631,7 @@ const MyDonations = ({ setActiveComponent }) => {
                   placeholder="Search donations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500"
+                  className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black "
                 />
                 <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
@@ -682,7 +713,7 @@ const MyDonations = ({ setActiveComponent }) => {
                         onChange={(e) =>
                           setDateRange({ ...dateRange, from: e.target.value })
                         }
-                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm dark:bg-white dark:text-black"
                       />
                     </div>
                     <div>
@@ -695,7 +726,7 @@ const MyDonations = ({ setActiveComponent }) => {
                         onChange={(e) =>
                           setDateRange({ ...dateRange, to: e.target.value })
                         }
-                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm dark:bg-white dark:text-black"
                       />
                     </div>
                   </div>
@@ -719,7 +750,7 @@ const MyDonations = ({ setActiveComponent }) => {
                             min: e.target.value,
                           })
                         }
-                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm dark:bg-white dark:text-black"
                       />
                     </div>
                     <div>
@@ -735,7 +766,7 @@ const MyDonations = ({ setActiveComponent }) => {
                             max: e.target.value,
                           })
                         }
-                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm"
+                        className="w-full border border-gray-300 rounded-md px-3 py-1.5 text-sm dark:bg-white dark:text-black"
                       />
                     </div>
                   </div>
@@ -879,12 +910,12 @@ const MyDonations = ({ setActiveComponent }) => {
         {/* Modal for donation details */}
         {showDetailModal && (
           <DonationDetailModal
-            donation={selectedDonation} 
+            donation={selectedDonation}
             onClose={closeDonationDetail}
           />
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
