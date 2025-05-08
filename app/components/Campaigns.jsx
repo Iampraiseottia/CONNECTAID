@@ -8,7 +8,6 @@ import {
   Heart,
   Share2,
   Calendar,
-  DollarSign,
   Users,
 } from "lucide-react";
 
@@ -35,9 +34,7 @@ const Campaigns = ({ setActiveComponent }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [likedCampaigns, setLikedCampaigns] = useState({});
 
-  // Load liked campaigns from localStorage on component mount
   useEffect(() => {
-    // Check if we're in a browser environment (for Next.js SSR compatibility)
     if (typeof window !== "undefined") {
       const storedLikes = localStorage.getItem("likedCampaigns");
       if (storedLikes) {
@@ -46,7 +43,7 @@ const Campaigns = ({ setActiveComponent }) => {
           setLikedCampaigns(parsedLikes);
         } catch (e) {
           console.error("Error parsing liked campaigns from localStorage:", e);
-          // Reset localStorage if corrupted
+          
           localStorage.setItem("likedCampaigns", JSON.stringify({}));
         }
       }
@@ -186,7 +183,7 @@ const Campaigns = ({ setActiveComponent }) => {
 
   // Floating Heart Animation Component
   const FloatingHearts = ({ campaignId }) => {
-    const hearts = [1, 2, 3, 4, 5]; // Create 5 floating hearts
+    const hearts = [1, 2, 3, 4, 5]; 
 
     return (
       <AnimatePresence>
@@ -200,7 +197,7 @@ const Campaigns = ({ setActiveComponent }) => {
                   opacity: [0, 1, 0],
                   y: -80,
                   transition: {
-                    duration: 2, // Changed from 5 to 2 seconds as requested
+                    duration: 2, 
                     times: [0, 0.1, 1],
                     delay: index * 0.1,
                   },
@@ -244,7 +241,7 @@ const Campaigns = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 min-h-screen"
+      className="p-6 bg-gray-50 min-h-screen mt-14"
     >
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-slate-800 mb-2">
@@ -262,7 +259,7 @@ const Campaigns = ({ setActiveComponent }) => {
           <div className="relative w-full md:w-1/2">
             <input
               type="text"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
               placeholder="Search campaigns..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -274,7 +271,7 @@ const Campaigns = ({ setActiveComponent }) => {
             <Filter className="h-5 w-5 text-gray-500" />
             <span className="text-gray-600">Filter:</span>
             <select
-              className="border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
+              className="border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black dark:border-gray-500 dark:focus:ring-teal-500"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
             >
@@ -288,7 +285,7 @@ const Campaigns = ({ setActiveComponent }) => {
         </div>
       </div>
 
-      {/* Category Pills */}
+      {/* Category Pills */} 
       <div className="mb-8 overflow-x-auto">
         <div className="flex space-x-2 pb-2">
           {categories.map((category) => (
@@ -417,7 +414,6 @@ const Campaigns = ({ setActiveComponent }) => {
                     onClick={() => handleDonate(campaign.id)}
                     className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
                   >
-                    <DollarSign className="h-4 w-4 inline mr-1" />
                     Donate Now
                   </button>
                 </div>
