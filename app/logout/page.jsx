@@ -1,10 +1,15 @@
 "use client";
+
+import { motion } from "motion/react";
+
 import React, { useEffect, useState } from "react";
+
 import { LogOut, AlertTriangle, CheckCircle } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 const Logout = () => {
-  const [status, setStatus] = useState("confirming"); // confirming, processing, success, error
+  const [status, setStatus] = useState("confirming"); 
   const router = useRouter();
 
   const handleLogout = () => {
@@ -31,11 +36,14 @@ const Logout = () => {
   };
 
   const cancelLogout = () => {
-    router.back(); // Go back to previous page
+    router.back(); 
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <motion.div initial={{ opacity: 0, y: 100 }}
+    whileInView={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.5, delay: 0.5 }}
+    viewport={{ once: true, amount: 0.1 }} className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-md p-8 max-w-md w-full">
         {status === "confirming" && (
           <>
@@ -113,7 +121,7 @@ const Logout = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

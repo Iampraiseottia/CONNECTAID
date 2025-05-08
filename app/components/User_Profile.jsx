@@ -1,5 +1,10 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
+
+import globalStyle from "../globals.css";
+
+import { motion } from "motion/react";
 
 import {
   Camera,
@@ -16,7 +21,6 @@ import {
 } from "lucide-react";
 
 const User_Profile = ({ setActiveComponent }) => {
-  // Mock user data - in production, this would come from your authentication system
   const [userData, setUserData] = useState({
     name: "Ottia Praise",
     email: "ottia@gmail.com.com",
@@ -93,9 +97,15 @@ const User_Profile = ({ setActiveComponent }) => {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen mt-12 ">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
+      viewport={{ once: true, amount: 0.1 }}
+      className="p-6 bg-gray-50 min-h-screen mt-12 "
+    >
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">My Profile</h1> 
+        <h1 className="text-3xl font-bold text-slate-800 mb-2">My Profile</h1>
         <p className="text-slate-600">
           Manage your personal information and preferences
         </p>
@@ -253,7 +263,7 @@ const User_Profile = ({ setActiveComponent }) => {
                     name="name"
                     value={editedData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                   />
                 ) : (
                   <p className="text-slate-800">{userData.name}</p>
@@ -274,7 +284,7 @@ const User_Profile = ({ setActiveComponent }) => {
                         name="email"
                         value={editedData.email}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                       />
                     ) : (
                       <p className="text-slate-800">{userData.email}</p>
@@ -284,7 +294,7 @@ const User_Profile = ({ setActiveComponent }) => {
 
                 {/* Phone */}
                 <div className="w-full md:w-1/2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1"> 
                     Phone Number
                   </label>
                   <div className="flex items-center">
@@ -295,7 +305,7 @@ const User_Profile = ({ setActiveComponent }) => {
                         name="phone"
                         value={editedData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                       />
                     ) : (
                       <p className="text-slate-800">{userData.phone}</p>
@@ -317,7 +327,7 @@ const User_Profile = ({ setActiveComponent }) => {
                       name="address"
                       value={editedData.address}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                     />
                   ) : (
                     <p className="text-slate-800">{userData.address}</p>
@@ -338,7 +348,7 @@ const User_Profile = ({ setActiveComponent }) => {
                       name="dob"
                       value={editedData.dob}
                       onChange={handleInputChange}
-                      className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                     />
                   ) : (
                     <p className="text-slate-800">
@@ -363,7 +373,7 @@ const User_Profile = ({ setActiveComponent }) => {
                     value={editedData.bio}
                     onChange={handleInputChange}
                     rows="4"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
                   ></textarea>
                 ) : (
                   <p className="text-slate-600">{userData.bio}</p>
@@ -456,7 +466,7 @@ const User_Profile = ({ setActiveComponent }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
