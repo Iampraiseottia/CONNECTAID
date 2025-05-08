@@ -196,7 +196,7 @@ const SideBarSeeker = () => {
   };
 
   return (
-    <section className="w-full relative flex dark:bg-white bg-white"> 
+    <section className="w-full relative flex dark:bg-gray-900 bg-white">
       <Metadata title={metadata.title} description={metadata.description} />
 
       {/* Mobile Toggle Button - Always visible on mobile */}

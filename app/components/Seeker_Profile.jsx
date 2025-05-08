@@ -6,4 +6,4 @@ const Seeker_Profile = () => {
   )
 }
 
-export default Seeker_Profile
+export default Seeker_Profile;
