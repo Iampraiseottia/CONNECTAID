@@ -43,6 +43,7 @@ const DashMain = ({ setActiveComponent }) => {
   });
 
   const [donationData, setDonationData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
 
   // Simulate fetching data
   useEffect(() => {
@@ -124,12 +125,16 @@ const DashMain = ({ setActiveComponent }) => {
       },
     ];
 
-    setDonationData(mockDonationData);
-    setUserStats((prev) => ({
-      ...prev,
-      recentCampaigns: mockRecentCampaigns,
-      upcomingEvents: mockUpcomingEvents,
-    }));
+    // Simulate loading delay 
+    setTimeout(() => {
+      setDonationData(mockDonationData);
+      setUserStats((prev) => ({
+        ...prev,
+        recentCampaigns: mockRecentCampaigns,
+        upcomingEvents: mockUpcomingEvents,
+      }));
+      setIsLoading(false);
+    }, 1000);
   }, []);
 
   // Dark Mode
@@ -204,6 +209,15 @@ const DashMain = ({ setActiveComponent }) => {
       console.warn("Navigation function is not available");
     }
   };
+
+  // Loading State UI
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>
+      </div>
+    );
+  }
 
   return (
     <motion.div

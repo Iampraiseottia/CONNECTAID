@@ -18,8 +18,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import Metadata from "./Metadata";
-import About_Seeker from "./About_Seeker";
-import Identity_Seeker from "./Identity_Seeker";
+import About_User from "./About_User";
+import Identity_User from "./Identity_User";
 import Survey_Seeker from "./Survey_Seeker";
 import Campaigns_Seeker from "./Campaigns_Seeker";
 import MyAID from "./MyAID";
@@ -143,15 +143,15 @@ const SideBarSeeker = () => {
       case "dashboardMain":
         return <DashMainSeeker setActiveComponent={setActiveComponent} />;
       case "MyAID":
-        return <MyAID setActiveComponent={setActiveComponent} />;
+        return <MyAID setActiveComponent={setActiveComponent} />; 
       case "about-you":
-        return <About_Seeker setActiveComponent={setActiveComponent} />;
+        return <About_User setActiveComponent={setActiveComponent} />;
       case "identity":
-        return <Identity_Seeker setActiveComponent={setActiveComponent} />;
+        return <Identity_User setActiveComponent={setActiveComponent} />;
       case "survey":
         return <Survey_Seeker setActiveComponent={setActiveComponent} />;
       case "Campaigns_Seeker":
-        return <Campaigns_Seeker setActiveComponent={setActiveComponent} />;
+        return <Campaigns_Seeker setActiveComponent={setActiveComponent} />; 
       case "profile":
         return <Seeker_Profile setActiveComponent={setActiveComponent} />;
       case "logout":
