@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-
 import { Save, ArrowLeft, CheckCircle } from "lucide-react";
-
 import { motion } from "motion/react";
 
 const About_User = ({ setActiveComponent }) => {
@@ -193,72 +191,33 @@ const About_User = ({ setActiveComponent }) => {
     setSaved(true);
     setTimeout(() => {
       setSaved(false);
-
       setActiveComponent("identity");
     }, 2000);
   };
 
-  // Ref Auto
-
+  // Refs for auto-focus
   const fullNameRef = useRef();
-
-  const onMouseEnterFullName = () => {
-    fullNameRef.current.focus();
-  };
-
   const dateOfBirthRef = useRef();
-
-  const onMouseEnterDateOfBirth = () => {
-    dateOfBirthRef.current.focus();
-  };
-
   const genderRef = useRef();
-
-  const onMouseEnterGender = () => {
-    genderRef.current.focus();
-  };
-
   const phoneNumberRef = useRef();
-
-  const onMouseEnterPhoneNumber = () => {
-    phoneNumberRef.current.focus();
-  };
-
   const homeAddressRef = useRef();
-
-  const onMouseEnterHomeAddress = () => {
-    homeAddressRef.current.focus();
-  };
-
   const cityRef = useRef();
-
-  const onMouseEnterCity = () => {
-    cityRef.current.focus();
-  };
-
   const regionRef = useRef();
-
-  const onMouseEnterRegion = () => {
-    regionRef.current.focus();
-  };
-
   const zipCodeRef = useRef();
-
-  const onMouseEnterZipCode = () => {
-    zipCodeRef.current.focus();
-  };
-
   const countryRef = useRef();
-
-  const onMouseEnterCountry = () => {
-    countryRef.current.focus();
-  };
-
   const bioRef = useRef();
 
-  const onMouseEnterBio = () => {
-    bioRef.current.focus();
-  };
+  // Focus handlers
+  const onMouseEnterFullName = () => fullNameRef.current.focus();
+  const onMouseEnterDateOfBirth = () => dateOfBirthRef.current.focus();
+  const onMouseEnterGender = () => genderRef.current.focus();
+  const onMouseEnterPhoneNumber = () => phoneNumberRef.current.focus();
+  const onMouseEnterHomeAddress = () => homeAddressRef.current.focus();
+  const onMouseEnterCity = () => cityRef.current.focus();
+  const onMouseEnterRegion = () => regionRef.current.focus();
+  const onMouseEnterZipCode = () => zipCodeRef.current.focus();
+  const onMouseEnterCountry = () => countryRef.current.focus();
+  const onMouseEnterBio = () => bioRef.current.focus();
 
   return (
     <motion.div
@@ -266,21 +225,23 @@ const About_User = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 min-h-screen"
+      className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen"
     >
       <div className="max-w-6xl mx-auto mt-10">
         <div className="flex items-center mb-6">
           <button
             onClick={() => setActiveComponent("dashboardMain")}
-            className="mr-4 p-2 rounded-full hover:bg-gray-200 transition-colors"
+            className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-white"
           >
             <ArrowLeft size={20} />
           </button>
-          <h1 className="text-2xl font-bold text-slate-800">About You </h1>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+            About You
+          </h1>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-          <p className="text-gray-600 mb-6">
+        <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-8">
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
             Please provide your personal information to help us better
             understand who you are. This information will help us match you with
             campaigns that align with your interests so you can impact those in
@@ -288,12 +249,12 @@ const About_User = ({ setActiveComponent }) => {
           </p>
 
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 mt-3 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 mt-3">
               {/* Full Name */}
               <div>
                 <label
                   htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Full Name *
                 </label>
@@ -307,25 +268,27 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Your Full Name"
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.fullName ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.fullName
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.fullName && formData.fullName.trim().length >= 7
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
-                  } 
-                  `}
+                      : "focus:ring-gray-500 focus:outline-none"
+                  }`}
                 />
                 {errors.fullName && (
                   <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
                 )}
               </div>
 
-              {/* Date of Birth */} 
+              {/* Date of Birth */}
               <div>
                 <label
                   htmlFor="dateOfBirth"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Date of Birth *
                 </label>
@@ -338,15 +301,17 @@ const About_User = ({ setActiveComponent }) => {
                   value={formData.dateOfBirth}
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.dateOfBirth ? "border-red-500" : "border-gray-500"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 ease-in-out dark:bg-white dark:text-black 
+                    errors.dateOfBirth
+                      ? "border-red-500"
+                      : "border-gray-500 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 ease-in-out 
+                  dark:bg-gray-700 dark:text-white
                   ${
                     formData.dateOfBirth &&
                     formData.dateOfBirth.trim().length >= 8
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
-                  } 
-                  `}
+                      : "focus:ring-gray-500 focus:outline-none"
+                  }`}
                 />
                 {errors.dateOfBirth && (
                   <p className="mt-1 text-sm text-red-500">
@@ -359,21 +324,24 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="gender"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Gender
                 </label>
                 <select
                   id="gender"
-                  name="gender" 
+                  name="gender"
                   value={formData.gender}
                   ref={genderRef}
                   onMouseEnter={onMouseEnterGender}
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.gender ? "border-red-500" : "border-gray-400"
-                  } border-gray-300 rounded-md px-3 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500  ease-in-out dark:bg-white dark:text-black`}
-                > 
+                    errors.gender
+                      ? "border-red-500"
+                      : "border-gray-400 dark:border-gray-600"
+                  } rounded-md px-3 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500 ease-in-out 
+                  dark:bg-gray-700 dark:text-white`}
+                >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
@@ -388,7 +356,7 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="phoneNumber"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Phone Number *
                 </label>
@@ -406,27 +374,28 @@ const About_User = ({ setActiveComponent }) => {
                     formData.phoneNumber &&
                     /^\+237[0-9]{9}$/.test(formData.phoneNumber.trim())
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
                   } 
-                  
                   ${
-                    errors.phoneNumber ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
-                  `}
+                    errors.phoneNumber
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`}
                 />
                 {errors.phoneNumber && (
                   <p className="mt-1 text-sm text-red-500">
                     {errors.phoneNumber}
                   </p>
                 )}
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                   Format: +237 followed by 9 digits (e.g., +237672528362)
                 </p>
               </div>
             </div>
 
             {/* Address Section */}
-            <h2 className="text-lg font-medium text-slate-800 mb-4">
+            <h2 className="text-lg font-medium text-slate-800 dark:text-white mb-4">
               Address Information
             </h2>
 
@@ -435,7 +404,7 @@ const About_User = ({ setActiveComponent }) => {
               <div className="md:col-span-2">
                 <label
                   htmlFor="address"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Home Address *
                 </label>
@@ -449,13 +418,16 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Your House Address"
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.address ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.address
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.address && formData.address.trim().length >= 7
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
-                  } `}
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
+                  }`}
                 />
                 {errors.address && (
                   <p className="mt-1 text-sm text-red-500">{errors.address}</p>
@@ -466,7 +438,7 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="city"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   City *
                 </label>
@@ -480,12 +452,15 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Your City e.g Buea"
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.city ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.city
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.city && formData.city.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
                   }`}
                 />
                 {errors.city && (
@@ -497,7 +472,7 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="state"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   State/Province/Region *
                 </label>
@@ -509,14 +484,17 @@ const About_User = ({ setActiveComponent }) => {
                   onMouseEnter={onMouseEnterRegion}
                   value={formData.state}
                   onChange={handleChange}
-                  placeholder="Your State/Province/Region e.g South-West "
+                  placeholder="Your State/Province/Region e.g South-West"
                   className={`w-full border ${
-                    errors.state ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.state
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.state && formData.state.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
                   }`}
                 />
                 {errors.state && (
@@ -528,7 +506,7 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="zipCode"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   ZIP/Postal Code *
                 </label>
@@ -542,12 +520,15 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Zip Code"
                   onChange={handleChange}
                   className={`w-full border ${
-                    errors.zipCode ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.zipCode
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.zipCode && formData.zipCode.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
                   }`}
                 />
                 {errors.zipCode && (
@@ -559,7 +540,7 @@ const About_User = ({ setActiveComponent }) => {
               <div>
                 <label
                   htmlFor="country"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
                 >
                   Country *
                 </label>
@@ -573,12 +554,15 @@ const About_User = ({ setActiveComponent }) => {
                   ref={countryRef}
                   onMouseEnter={onMouseEnterCountry}
                   className={`w-full border ${
-                    errors.country ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black
+                    errors.country
+                      ? "border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
                   ${
                     formData.country && formData.country.trim().length >= 4
                       ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
                   }`}
                 />
                 {errors.country && (
@@ -591,7 +575,7 @@ const About_User = ({ setActiveComponent }) => {
             <div className="mb-6">
               <label
                 htmlFor="bio"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
                 About Yourself
               </label>
@@ -604,27 +588,29 @@ const About_User = ({ setActiveComponent }) => {
                 onChange={handleChange}
                 rows="4"
                 placeholder="Tell us a bit about yourself and why you're interested in donating..."
-                className={`w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500
-                  ${
-                    errors.bio ? "border-red-500" : "border-gray-300"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out dark:bg-white dark:text-black 
-                  ${
-                    formData.bio && formData.bio.trim().length >= 20
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 focus:ring-gray-500 focus:outline-none"
-                  }`}
+                className={`w-full border ${
+                  errors.bio
+                    ? "border-red-500"
+                    : "border-gray-300 dark:border-gray-600"
+                } rounded-md px-3 py-2 focus:outline-none focus:ring-2 
+                dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
+                ${
+                  formData.bio && formData.bio.trim().length >= 20
+                    ? "border-green-500 focus:ring-green-500"
+                    : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
+                }`}
               ></textarea>
-              {errors.country && (
+              {errors.bio && (
                 <p className="mt-1 text-sm text-red-500">{errors.bio}</p>
               )}
             </div>
 
             {/* Interests */}
             <div className="mb-8">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Areas of Interest *
               </label>
-              <p className="text-sm text-gray-500 mb-3">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
                 Select causes you're interested in supporting (select at least
                 6):
               </p>
@@ -640,11 +626,11 @@ const About_User = ({ setActiveComponent }) => {
                       id={`interest-${interest}`}
                       checked={formData.interests.includes(interest)}
                       onChange={() => handleInterestChange(interest)}
-                      className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 dark:border-gray-600 rounded"
                     />
                     <label
                       htmlFor={`interest-${interest}`}
-                      className="ml-2 text-sm text-gray-700"
+                      className="ml-2 text-sm text-gray-700 dark:text-gray-300"
                     >
                       {interest}
                     </label>
@@ -659,7 +645,7 @@ const About_User = ({ setActiveComponent }) => {
                   className={`text-sm ${
                     formData.interests.length >= 6
                       ? "text-green-500"
-                      : "text-gray-500"
+                      : "text-gray-500 dark:text-gray-400"
                   }`}
                 >
                   {formData.interests.length}/6 areas selected
@@ -670,10 +656,10 @@ const About_User = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            <div className="flex justify-center mt-2 mb-4 ">
+            <div className="flex justify-center mt-2 mb-4">
               <button
                 type="submit"
-                className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center transition-colors"
                 disabled={saved}
               >
                 {saved ? (
@@ -696,4 +682,4 @@ const About_User = ({ setActiveComponent }) => {
   );
 };
 
-export default About_User;
+export default About_User; 
