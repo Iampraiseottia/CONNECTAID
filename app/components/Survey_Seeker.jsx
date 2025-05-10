@@ -141,7 +141,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {["One-time", "Monthly", "Quarterly", "Ongoing"].map(
                     (option) => (
-                      <div key={option} className="flex items-center">
+                      <div key={option} className="flex items-center ">
                         <input
                           type="radio"
                           id={`frequency-${option}`}
@@ -154,7 +154,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                         />
                         <label
                           htmlFor={`frequency-${option}`}
-                          className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                          className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                         >
                           {option}
                         </label>
@@ -176,7 +176,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                     "100,000 francs - 900,000 francs",
                     "900,000+ francs",
                   ].map((option) => (
-                    <div key={option} className="flex items-center">
+                    <div key={option} className="flex items-center ">
                       <input
                         type="radio"
                         id={`amount-${option}`}
@@ -189,7 +189,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                       />
                       <label
                         htmlFor={`amount-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                       >
                         {option}
                       </label>
@@ -204,7 +204,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                   What types of assistance do you need? (Select at least 4 that
                   apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
                   {[
                     "Direct financial support",
                     "Educational assistance",
@@ -213,7 +213,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                     "Local community resources",
                     "Healthcare assistance",
                   ].map((option) => (
-                    <div key={option} className="flex items-center">
+                    <div key={option} className="flex items-center ">
                       <input
                         type="checkbox"
                         id={`preference-${option}`}
@@ -223,11 +223,11 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                         onChange={() =>
                           handleCheckboxChange("assistancePreferences", option)
                         }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded hover:cursor-pointer ease-in-out "
                       />
                       <label
                         htmlFor={`preference-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                       >
                         {option}
                       </label>
@@ -259,7 +259,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                   How would you like to receive updates? (Please select at least
                   3 that apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
                   {[
                     "Email updates",
                     "Text message notifications",
@@ -268,7 +268,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                     "Through social worker",
                     "No updates needed",
                   ].map((option) => (
-                    <div key={option} className="flex items-center">
+                    <div key={option} className="flex items-center ">
                       <input
                         type="checkbox"
                         id={`communication-${option}`}
@@ -282,11 +282,11 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                             option
                           )
                         }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded hover:cursor-pointer ease-in-out "
                       />
                       <label
                         htmlFor={`communication-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                       >
                         {option}
                       </label>
@@ -294,7 +294,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                   ))}
                 </div>
                 {errors.communicationPreferences && (
-                  <div className="mt-2 flex items-center text-red-600">
+                  <div className="mt-2 flex items-center text-red-600"> 
                     <AlertCircle size={16} className="mr-1" />
                     <p className="text-sm">{errors.communicationPreferences}</p>
                   </div>
@@ -306,13 +306,13 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Do you need help with documentation for assistance?
                 </label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 ">
                   {[
                     "Yes, always",
                     "Only for complex applications",
                     "No, I can manage documentation",
                   ].map((option) => (
-                    <div key={option} className="flex items-center">
+                    <div key={option} className="flex items-center ">
                       <input
                         type="radio"
                         id={`doc-${option}`}
@@ -324,7 +324,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                       />
                       <label
                         htmlFor={`doc-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                       >
                         {option}
                       </label>
@@ -378,7 +378,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                   What circumstances led you to seek assistance? (Select all
                   that apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
                   {[
                     "Unexpected medical expenses",
                     "Loss of employment",
@@ -389,7 +389,7 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                     "Ongoing chronic condition",
                     "Transitional life situation",
                   ].map((option) => (
-                    <div key={option} className="flex items-center">
+                    <div key={option} className="flex items-center ">
                       <input
                         type="checkbox"
                         id={`motivation-${option}`}
@@ -397,11 +397,11 @@ const Survey_Seeker = ({ setActiveComponent }) => {
                         onChange={() =>
                           handleCheckboxChange("motivations", option)
                         }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded hover:cursor-pointer ease-in-out "
                       />
                       <label
                         htmlFor={`motivation-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                        className="ml-2 block text-sm text-gray-700 dark:text-gray-300 hover:cursor-pointer ease-in-out "
                       >
                         {option}
                       </label>
