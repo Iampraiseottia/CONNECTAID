@@ -102,11 +102,13 @@ const User_Profile = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
       viewport={{ once: true, amount: 0.1 }}
-      className="p-6 bg-gray-50 min-h-screen pt-12 "
+      className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-12"
     >
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">My Profile</h1>
-        <p className="text-slate-600">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-100 mb-2">
+          My Profile
+        </h1>
+        <p className="text-slate-600 dark:text-slate-400">
           Manage your personal information and preferences
         </p>
       </div>
@@ -115,8 +117,8 @@ const User_Profile = ({ setActiveComponent }) => {
         <div
           className={`mb-4 p-4 rounded-lg ${
             saveMessage.type === "success"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
+              ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200"
+              : "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
           }`}
         >
           {saveMessage.text}
@@ -126,7 +128,7 @@ const User_Profile = ({ setActiveComponent }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left column - Profile picture and stats */}
         <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700/30 p-6 mb-6">
             <div className="flex flex-col items-center">
               <div className="relative mb-4">
                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-teal-500">
@@ -140,7 +142,7 @@ const User_Profile = ({ setActiveComponent }) => {
                   <Camera size={18} />
                 </button>
               </div>
-              <h2 className="text-2xl font-bold text-slate-800 mb-1 flex items-center">
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-1 flex items-center">
                 {userData.name}
                 {userData.verificationStatus === "verified" && (
                   <span className="ml-2 text-teal-500" title="Verified Donor">
@@ -148,8 +150,10 @@ const User_Profile = ({ setActiveComponent }) => {
                   </span>
                 )}
               </h2>
-              <p className="text-gray-500 mb-4">Verified Donor</p>
-              <p className="text-sm text-center text-gray-600 mb-4">
+              <p className="text-gray-500 dark:text-gray-400 mb-4">
+                Verified Donor
+              </p>
+              <p className="text-sm text-center text-gray-600 dark:text-gray-400 mb-4">
                 Member since{" "}
                 {new Date(userData.joinDate).toLocaleDateString("en-US", {
                   month: "long",
@@ -158,8 +162,8 @@ const User_Profile = ({ setActiveComponent }) => {
               </p>
             </div>
 
-            <div className="border-t pt-4">
-              <h3 className="font-semibold text-slate-700 mb-3">
+            <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+              <h3 className="font-semibold text-slate-700 dark:text-slate-300 mb-3">
                 Donation Summary
               </h3>
               <div className="grid grid-cols-1 gap-4">
@@ -168,8 +172,10 @@ const User_Profile = ({ setActiveComponent }) => {
                     key={index}
                     className="flex justify-between items-center"
                   >
-                    <span className="text-gray-600">{stat.label}:</span>
-                    <span className="font-medium text-slate-800">
+                    <span className="text-gray-600 dark:text-gray-400">
+                      {stat.label}:
+                    </span>
+                    <span className="font-medium text-slate-800 dark:text-slate-200">
                       {stat.value}
                     </span>
                   </div>
@@ -178,12 +184,16 @@ const User_Profile = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="font-semibold text-slate-700 mb-4">Preferences</h3>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700/30 p-6">
+            <h3 className="font-semibold text-slate-700 dark:text-slate-300 mb-4">
+              Preferences
+            </h3>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-gray-600">Email Notifications</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Email Notifications
+                </span>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -191,12 +201,14 @@ const User_Profile = ({ setActiveComponent }) => {
                     checked={notifications}
                     onChange={() => setNotifications(!notifications)}
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
+                  <div className="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:after:border-gray-600 peer-checked:bg-teal-500"></div>
                 </label>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-gray-600">Monthly Newsletter</span>
+                <span className="text-gray-600 dark:text-gray-400">
+                  Monthly Newsletter
+                </span>
                 <label className="relative inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -204,7 +216,7 @@ const User_Profile = ({ setActiveComponent }) => {
                     checked={newsletter}
                     onChange={() => setNewsletter(!newsletter)}
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-500"></div>
+                  <div className="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 dark:peer-focus:ring-teal-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:after:border-gray-600 peer-checked:bg-teal-500"></div>
                 </label>
               </div>
             </div>
@@ -213,15 +225,15 @@ const User_Profile = ({ setActiveComponent }) => {
 
         {/* Right column - Profile details */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700/30 p-6 mb-6">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-semibold text-slate-800">
+              <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100">
                 Personal Information
               </h3>
               {!isEditing ? (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="flex items-center text-teal-500 hover:text-teal-600"
+                  className="flex items-center text-teal-500 hover:text-teal-600 dark:hover:text-teal-400"
                 >
                   <Edit size={18} className="mr-1" />
                   Edit
@@ -230,18 +242,18 @@ const User_Profile = ({ setActiveComponent }) => {
                 <div className="flex space-x-2">
                   <button
                     onClick={handleCancel}
-                    className="flex items-center text-gray-500 hover:text-gray-600"
+                    className="flex items-center text-gray-500 hover:text-gray-600 dark:text-gray-400 dark:hover:text-gray-300"
                   >
                     <X size={18} className="mr-1" />
                     Cancel
                   </button>
                   <button
                     onClick={handleSave}
-                    className="flex items-center text-teal-500 hover:text-teal-600"
+                    className="flex items-center text-teal-500 hover:text-teal-600 dark:hover:text-teal-400"
                     disabled={loading}
                   >
                     {loading ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-teal-500 mr-1"></div>
+                      <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-teal-500 dark:border-teal-400 mr-1"></div>
                     ) : (
                       <Save size={18} className="mr-1" />
                     )}
@@ -254,7 +266,7 @@ const User_Profile = ({ setActiveComponent }) => {
             <div className="space-y-6">
               {/* Full Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Full Name
                 </label>
                 {isEditing ? (
@@ -263,52 +275,64 @@ const User_Profile = ({ setActiveComponent }) => {
                     name="name"
                     value={editedData.name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                   />
                 ) : (
-                  <p className="text-slate-800">{userData.name}</p>
+                  <p className="text-slate-800 dark:text-slate-200">
+                    {userData.name}
+                  </p>
                 )}
               </div>
 
               {/* Email */}
               <div className="flex flex-col md:flex-row md:space-x-4">
                 <div className="w-full md:w-1/2 mb-4 md:mb-0">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Email Address
                   </label>
                   <div className="flex items-center">
-                    <Mail size={16} className="text-gray-400 mr-2" />
+                    <Mail
+                      size={16}
+                      className="text-gray-400 dark:text-gray-500 mr-2"
+                    />
                     {isEditing ? (
                       <input
                         type="email"
                         name="email"
                         value={editedData.email}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                       />
                     ) : (
-                      <p className="text-slate-800">{userData.email}</p>
+                      <p className="text-slate-800 dark:text-slate-200">
+                        {userData.email}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 {/* Phone */}
                 <div className="w-full md:w-1/2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1"> 
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Phone Number
                   </label>
                   <div className="flex items-center">
-                    <Phone size={16} className="text-gray-400 mr-2" />
+                    <Phone
+                      size={16}
+                      className="text-gray-400 dark:text-gray-500 mr-2"
+                    />
                     {isEditing ? (
                       <input
                         type="tel"
                         name="phone"
                         value={editedData.phone}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                       />
                     ) : (
-                      <p className="text-slate-800">{userData.phone}</p>
+                      <p className="text-slate-800 dark:text-slate-200">
+                        {userData.phone}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -316,42 +340,50 @@ const User_Profile = ({ setActiveComponent }) => {
 
               {/* Address */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Address
                 </label>
                 <div className="flex items-center">
-                  <MapPin size={16} className="text-gray-400 mr-2" />
+                  <MapPin
+                    size={16}
+                    className="text-gray-400 dark:text-gray-500 mr-2"
+                  />
                   {isEditing ? (
                     <input
                       type="text"
                       name="address"
                       value={editedData.address}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                     />
                   ) : (
-                    <p className="text-slate-800">{userData.address}</p>
+                    <p className="text-slate-800 dark:text-slate-200">
+                      {userData.address}
+                    </p>
                   )}
                 </div>
               </div>
 
               {/* Date of Birth */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Date of Birth
                 </label>
                 <div className="flex items-center">
-                  <Calendar size={16} className="text-gray-400 mr-2" />
+                  <Calendar
+                    size={16}
+                    className="text-gray-400 dark:text-gray-500 mr-2"
+                  />
                   {isEditing ? (
                     <input
                       type="date"
                       name="dob"
                       value={editedData.dob}
                       onChange={handleInputChange}
-                      className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                      className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                     />
                   ) : (
-                    <p className="text-slate-800">
+                    <p className="text-slate-800 dark:text-slate-200">
                       {new Date(userData.dob).toLocaleDateString("en-US", {
                         month: "long",
                         day: "numeric",
@@ -364,7 +396,7 @@ const User_Profile = ({ setActiveComponent }) => {
 
               {/* Bio */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Bio
                 </label>
                 {isEditing ? (
@@ -373,29 +405,31 @@ const User_Profile = ({ setActiveComponent }) => {
                     value={editedData.bio}
                     onChange={handleInputChange}
                     rows="4"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
                   ></textarea>
                 ) : (
-                  <p className="text-slate-600">{userData.bio}</p>
+                  <p className="text-slate-600 dark:text-slate-400">
+                    {userData.bio}
+                  </p>
                 )}
               </div>
             </div>
           </div>
 
           {/* Verification Status */}
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h3 className="text-xl font-semibold text-slate-800 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700/30 p-6 mb-6">
+            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">
               Verification Status
             </h3>
-            <div className="flex items-center p-4 rounded-lg bg-teal-50 border border-teal-200">
+            <div className="flex items-center p-4 rounded-lg bg-teal-50 dark:bg-teal-900/30 border border-teal-200 dark:border-teal-900">
               {userData.verificationStatus === "verified" ? (
                 <>
                   <CheckSquare size={24} className="text-teal-500 mr-3" />
                   <div>
-                    <h4 className="font-medium text-teal-700">
+                    <h4 className="font-medium text-teal-700 dark:text-teal-300">
                       Your account is verified
                     </h4>
-                    <p className="text-sm text-teal-600">
+                    <p className="text-sm text-teal-600 dark:text-teal-400">
                       Your identity has been verified and you have full access
                       to all features.
                     </p>
@@ -405,15 +439,15 @@ const User_Profile = ({ setActiveComponent }) => {
                 <>
                   <XCircle size={24} className="text-amber-500 mr-3" />
                   <div>
-                    <h4 className="font-medium text-amber-700">
+                    <h4 className="font-medium text-amber-700 dark:text-amber-300">
                       Verification pending
                     </h4>
-                    <p className="text-sm text-amber-600">
+                    <p className="text-sm text-amber-600 dark:text-amber-400">
                       Please complete the identity verification process to
                       access all features.
                     </p>
                     <button
-                      className="mt-2 text-sm bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600"
+                      className="mt-2 text-sm bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700"
                       onClick={() => setActiveComponent("identity")}
                     >
                       Complete Verification
@@ -425,11 +459,11 @@ const User_Profile = ({ setActiveComponent }) => {
           </div>
 
           {/* Preferred Categories */}
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-slate-800 mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-700/30 p-6">
+            <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4">
               Preferred Categories
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
               Select categories you're interested in supporting. We'll highlight
               relevant campaigns for you.
             </p>
@@ -449,8 +483,8 @@ const User_Profile = ({ setActiveComponent }) => {
                   key={category}
                   className={`inline-flex items-center px-4 py-2 rounded-full cursor-pointer transition-colors ${
                     userData.preferredCategories.includes(category)
-                      ? "bg-teal-500 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-teal-500 text-white dark:bg-teal-600"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                   }`}
                 >
                   <input
