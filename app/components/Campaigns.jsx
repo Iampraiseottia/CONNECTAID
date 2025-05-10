@@ -2,14 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import {
-  Search,
-  Filter,
-  Heart,
-  Share2,
-  Calendar,
-  Users,
-} from "lucide-react";
+import { Search, Filter, Heart, Share2, Calendar, Users } from "lucide-react";
 
 import { motion, AnimatePresence } from "motion/react";
 
@@ -43,7 +36,7 @@ const Campaigns = ({ setActiveComponent }) => {
           setLikedCampaigns(parsedLikes);
         } catch (e) {
           console.error("Error parsing liked campaigns from localStorage:", e);
-          
+
           localStorage.setItem("likedCampaigns", JSON.stringify({}));
         }
       }
@@ -183,7 +176,7 @@ const Campaigns = ({ setActiveComponent }) => {
 
   // Floating Heart Animation Component
   const FloatingHearts = ({ campaignId }) => {
-    const hearts = [1, 2, 3, 4, 5]; 
+    const hearts = [1, 2, 3, 4, 5];
 
     return (
       <AnimatePresence>
@@ -197,7 +190,7 @@ const Campaigns = ({ setActiveComponent }) => {
                   opacity: [0, 1, 0],
                   y: -80,
                   transition: {
-                    duration: 2, 
+                    duration: 2,
                     times: [0, 0.1, 1],
                     delay: index * 0.1,
                   },
@@ -241,37 +234,37 @@ const Campaigns = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 min-h-screen mt-14"
+      className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-14"
     >
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 mb-2">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
           Active Campaigns
         </h1>
-        <p className="text-slate-600">
+        <p className="text-slate-600 dark:text-gray-300">
           Browse through current campaigns and support causes that matter to
           you.
         </p>
       </div>
 
       {/* Search and Filter Bar */}
-      <div className="mb-8 bg-white p-4 rounded-lg shadow-md">
+      <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
         <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
           <div className="relative w-full md:w-1/2">
             <input
               type="text"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
               placeholder="Search campaigns..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-300" />
           </div>
 
           <div className="flex items-center gap-2 text-sm w-full md:w-auto">
-            <Filter className="h-5 w-5 text-gray-500" />
-            <span className="text-gray-600">Filter:</span>
+            <Filter className="h-5 w-5 text-gray-500 dark:text-gray-300" />
+            <span className="text-gray-600 dark:text-gray-300">Filter:</span>
             <select
-              className="border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-white dark:text-black dark:border-gray-500 dark:focus:ring-teal-500"
+              className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
               value={filter}
               onChange={(e) => setFilter(e.target.value)}
             >
@@ -285,7 +278,7 @@ const Campaigns = ({ setActiveComponent }) => {
         </div>
       </div>
 
-      {/* Category Pills */} 
+      {/* Category Pills */}
       <div className="mb-8 overflow-x-auto">
         <div className="flex space-x-2 pb-2">
           {categories.map((category) => (
@@ -294,7 +287,7 @@ const Campaigns = ({ setActiveComponent }) => {
               className={`flex items-center px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
                 filter === category.id
                   ? "bg-teal-500 text-white"
-                  : "bg-white text-slate-700 hover:bg-gray-100"
+                  : "bg-white dark:bg-gray-700 text-slate-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
               }`}
               onClick={() => setFilter(category.id)}
             >
@@ -311,14 +304,14 @@ const Campaigns = ({ setActiveComponent }) => {
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
         </div>
       ) : error ? (
-        <div className="text-center p-8 bg-red-50 rounded-lg">
-          <p className="text-red-600">
+        <div className="text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg">
+          <p className="text-red-600 dark:text-red-400">
             Error loading campaigns. Please try again later.
           </p>
         </div>
       ) : filteredCampaigns.length === 0 ? (
-        <div className="text-center p-8 bg-gray-50 rounded-lg">
-          <p className="text-gray-600">
+        <div className="text-center p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <p className="text-gray-600 dark:text-gray-300">
             No campaigns found matching your criteria.
           </p>
         </div>
@@ -327,7 +320,7 @@ const Campaigns = ({ setActiveComponent }) => {
           {filteredCampaigns.map((campaign) => (
             <div
               key={campaign.id}
-              className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
             >
               <div className="relative">
                 <img
@@ -335,23 +328,23 @@ const Campaigns = ({ setActiveComponent }) => {
                   alt={campaign.title}
                   className="w-full h-48 object-cover"
                 />
-                <span className="absolute top-4 right-4 bg-white/90 text-teal-600 px-3 py-1 rounded-full text-sm font-medium">
+                <span className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 text-teal-600 dark:text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
                   <FontAwesomeIcon icon={campaign.icon} className="mr-1" />
                   {campaign.categoryName}
                 </span>
               </div>
 
               <div className="p-5">
-                <h3 className="text-xl font-bold text-slate-800 mb-2">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
                   {campaign.title}
                 </h3>
-                <p className="text-slate-600 mb-4 line-clamp-2">
+                <p className="text-slate-600 dark:text-gray-300 mb-4 line-clamp-2">
                   {campaign.description}
                 </p>
 
                 {/* Progress bar */}
                 <div className="mb-2">
-                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                     <div
                       className="bg-teal-500 h-2.5 rounded-full"
                       style={{
@@ -364,17 +357,17 @@ const Campaigns = ({ setActiveComponent }) => {
                   </div>
                 </div>
 
-                <div className="flex justify-between text-sm text-slate-700 mb-4">
+                <div className="flex justify-between text-sm text-slate-700 dark:text-gray-300 mb-4">
                   <span className="font-medium">
                     {campaign.raised.toLocaleString()} Francs raised
                   </span>
                   <span> {campaign.goal.toLocaleString()} Francs</span>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-slate-500 mb-4">
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mb-4">
                   <div className="flex items-center">
                     <Users className="h-4 w-4 mr-1" />
-                    <span>{campaign.supporters} supporters</span> 
+                    <span>{campaign.supporters} supporters</span>
                   </div>
                   <div className="flex items-center">
                     <Calendar className="h-4 w-4 mr-1" />
@@ -385,7 +378,7 @@ const Campaigns = ({ setActiveComponent }) => {
                 <div className="flex justify-between items-center mt-4 relative">
                   <div className="flex space-x-2">
                     <button
-                      className="p-2 rounded-full hover:bg-gray-100 relative overflow-visible"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 relative overflow-visible"
                       onClick={() => handleLike(campaign.id)}
                       title="Like"
                     >
@@ -398,15 +391,15 @@ const Campaigns = ({ setActiveComponent }) => {
                           <Heart className="h-5 w-5 text-red-500 fill-red-500" />
                         </motion.div>
                       ) : (
-                        <Heart className="h-5 w-5 text-slate-500" />
+                        <Heart className="h-5 w-5 text-slate-500 dark:text-gray-400" />
                       )}
                       <FloatingHearts campaignId={campaign.id} />
                     </button>
                     <button
-                      className="p-2 rounded-full hover:bg-gray-100"
+                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                       title="Share"
                     >
-                      <Share2 className="h-5 w-5 text-slate-500" />
+                      <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
                     </button>
                   </div>
 
