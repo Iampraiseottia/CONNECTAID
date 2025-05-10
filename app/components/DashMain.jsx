@@ -26,9 +26,6 @@ import {
   Menu,
 } from "lucide-react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-
 import NotificationsComponent from "./NotificationsComponent";
 
 import { motion } from "motion/react";
@@ -43,7 +40,7 @@ const DashMain = ({ setActiveComponent }) => {
   });
 
   const [donationData, setDonationData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   // Simulate fetching data
   useEffect(() => {
@@ -59,7 +56,7 @@ const DashMain = ({ setActiveComponent }) => {
       { month: "Sep", amount: 12500 },
       { month: "Oct", amount: 40000 },
       { month: "Nov", amount: 50000 },
-      { month: "Doc", amount: 90000 },
+      { month: "Dec", amount: 90000 },
     ];
 
     // Mock recent campaigns
@@ -125,7 +122,7 @@ const DashMain = ({ setActiveComponent }) => {
       },
     ];
 
-    // Simulate loading delay 
+    // Simulate loading delay
     setTimeout(() => {
       setDonationData(mockDonationData);
       setUserStats((prev) => ({
@@ -136,20 +133,6 @@ const DashMain = ({ setActiveComponent }) => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  // Dark Mode
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const savedMode = localStorage.getItem("darkMode");
-      return savedMode === "true";
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    document.body.classList.toggle("dark", isDarkMode);
-    localStorage.setItem("darkMode", isDarkMode);
-  }, [isDarkMode]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -213,7 +196,7 @@ const DashMain = ({ setActiveComponent }) => {
   // Loading State UI
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen w-full">
+      <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>
       </div>
     );
@@ -225,13 +208,15 @@ const DashMain = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 min-h-screen"
+      className="p-6 min-h-screen bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100"
     >
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 mt-8 md:mb-8 gap-4">
         <div className="pt-2 md:pt-4 w-full md:w-auto">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 break-words flex flex-col md:flex-row">
-            <span>Welcome Back!!!,</span>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold break-words flex flex-col md:flex-row">
+            <span className="text-gray-800 dark:text-gray-100">
+              Welcome Back!!!,
+            </span>
             <span className="text-[lightseagreen] text-[28px] md:text-[36px] lg:text-[42px] pl-1">
               Ottia Praise
             </span>
@@ -242,9 +227,9 @@ const DashMain = ({ setActiveComponent }) => {
         <div className="md:hidden w-full flex justify-end">
           <button
             onClick={toggleMenu}
-            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
           >
-            <Menu size={24} />
+            <Menu size={24} className="text-gray-700 dark:text-gray-200" />
           </button>
         </div>
 
@@ -262,9 +247,7 @@ const DashMain = ({ setActiveComponent }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search campaigns or events..."
-              className={`px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border border-gray-300 duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-              }`}
+              className="px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border bg-white border-gray-300 text-gray-900 focus:ring-teal-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-teal-500 duration-200 ease-in-out focus:outline-none focus:ring-2"
             />
             <Search
               className="absolute left-3 top-2.5 text-gray-400"
@@ -283,47 +266,13 @@ const DashMain = ({ setActiveComponent }) => {
           >
             OP
           </div>
-
-          {/* Light and Dark Mode */}
-          <div
-            onClick={() => setIsDarkMode((prevMode) => !prevMode)}
-            title="Modes"
-            className={`w-24 h-10 rounded-full bg-teal-500 justify-between flex items-center ${
-              isDarkMode ? "bg-white" : "bg-lightseagreen"
-            } transition-colors duration-300 cursor-pointer`}
-          >
-            <div
-              className={`w-[49%] h-full flex items-center justify-center rounded-full transition-transform duration-300 ${
-                isDarkMode ? "translate-x-full bg-white" : "bg-teal-500"
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faMoon}
-                className={`w-7 h-7 ${
-                  isDarkMode ? "text-lightseagreen" : "text-white"
-                }`}
-              />
-            </div>
-            <div
-              className={`w-[49%] mr-1 h-full flex items-center justify-center rounded-full transition-transform duration-300 ${
-                isDarkMode ? "bg-teal-500" : "bg-white"
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faSun}
-                className={`w-7 h-7 ${
-                  isDarkMode ? "text-white" : "text-teal-500"
-                }`}
-              />
-            </div>
-          </div>
         </div>
       </div>
 
       {/* Search Results Section */}
       {isSearchActive && (
-        <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
+        <div className="mb-8 p-6 rounded-lg shadow-md bg-white dark:bg-gray-800 dark:border dark:border-gray-700">
+          <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
             <Search size={20} className="mr-2 text-teal-600" />
             Search Results for "{searchQuery}"
           </h2>
@@ -331,7 +280,7 @@ const DashMain = ({ setActiveComponent }) => {
           {/* No results message */}
           {searchResults.campaigns.length === 0 &&
             searchResults.events.length === 0 && (
-              <p className="text-gray-500 text-center py-4">
+              <p className="text-center py-4 text-gray-500 dark:text-gray-400">
                 No results found. Try a different search term.
               </p>
             )}
@@ -339,19 +288,21 @@ const DashMain = ({ setActiveComponent }) => {
           {/* Campaign Search Results */}
           {searchResults.campaigns.length > 0 && (
             <div className="mb-6">
-              <h3 className="font-medium text-slate-800 mb-3">Campaigns</h3>
+              <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
+                Campaigns
+              </h3>
               <div className="space-y-4">
                 {searchResults.campaigns.map((campaign) => (
                   <div
                     key={campaign.id}
-                    className="border-b pb-4 last:border-0"
+                    className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
                   >
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-medium text-slate-800">
+                        <h3 className="font-medium text-slate-800 dark:text-gray-200">
                           {campaign.title}
                         </h3>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                           {campaign.category}
                         </p>
                       </div>
@@ -359,7 +310,9 @@ const DashMain = ({ setActiveComponent }) => {
                         <p className="font-medium text-teal-600">
                           ${campaign.amountDonated}
                         </p>
-                        <p className="text-xs text-gray-500">{campaign.date}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {campaign.date}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -371,20 +324,31 @@ const DashMain = ({ setActiveComponent }) => {
           {/* Event Search Results */}
           {searchResults.events.length > 0 && (
             <div>
-              <h3 className="font-medium text-slate-800 mb-3">Events</h3>
+              <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
+                Events
+              </h3>
               <div className="space-y-4">
                 {searchResults.events.map((event) => (
-                  <div key={event.id} className="border-b pb-4 last:border-0">
-                    <h3 className="font-medium text-slate-800">
+                  <div
+                    key={event.id}
+                    className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
+                  >
+                    <h3 className="font-medium text-slate-800 dark:text-gray-200">
                       {event.title}
                     </h3>
                     <div className="flex items-center mt-1">
-                      <Calendar size={16} className="text-gray-500 mr-1" />
-                      <span className="text-sm text-gray-500 mr-3">
+                      <Calendar
+                        size={16}
+                        className="mr-1 text-gray-500 dark:text-gray-400"
+                      />
+                      <span className="text-sm mr-3 text-gray-500 dark:text-gray-400">
                         {event.date}
                       </span>
-                      <Clock size={16} className="text-gray-500 mr-1" />
-                      <span className="text-sm text-gray-500">
+                      <Clock
+                        size={16}
+                        className="mr-1 text-gray-500 dark:text-gray-400"
+                      />
+                      <span className="text-sm text-gray-500 dark:text-gray-400">
                         {event.time}
                       </span>
                     </div>
@@ -402,45 +366,51 @@ const DashMain = ({ setActiveComponent }) => {
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
               title="Total Donated"
             >
               <div className="bg-teal-100 p-3 rounded-full mr-4">
                 <DollarSign size={24} className="text-teal-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm">Total Donated</p>
-                <p className="text-2xl font-bold text-slate-800">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Total Donated
+                </p>
+                <p className="text-2xl font-bold text-slate-800 dark:text-gray-100">
                   {userStats.totalDonated} Francs
                 </p>
               </div>
             </div>
 
             <div
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
               title="Campaigns Supported"
             >
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <Gift size={24} className="text-blue-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm">Campaigns Supported</p>
-                <p className="text-2xl font-bold text-slate-800">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Campaigns Supported
+                </p>
+                <p className="text-2xl font-bold text-slate-800 dark:text-gray-100">
                   {userStats.campaignsSupported}
                 </p>
               </div>
             </div>
 
             <div
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center"
+              className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
               title="People Impacted"
             >
               <div className="bg-purple-100 p-3 rounded-full mr-4">
                 <Users size={24} className="text-purple-600" />
               </div>
               <div>
-                <p className="text-gray-500 text-sm">People Impacted</p>
-                <p className="text-2xl font-bold text-slate-800">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  People Impacted
+                </p>
+                <p className="text-2xl font-bold text-slate-800 dark:text-gray-100">
                   {userStats.peopleImpacted}
                 </p>
               </div>
@@ -448,9 +418,9 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           {/* Donation History Chart */}
-          <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8">
-            <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
-              <TrendingUp size={20} className="mr-2 text-teal-600 " />
+          <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8 bg-white dark:bg-gray-800">
+            <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
+              <TrendingUp size={20} className="mr-2 text-teal-600" />
               Your Donation History
             </h2>
             <div className="h-64">
@@ -459,11 +429,25 @@ const DashMain = ({ setActiveComponent }) => {
                   data={donationData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
+                  <CartesianGrid strokeDasharray="3 3" strokeOpacity={0.5} />
+                  <XAxis
+                    dataKey="month"
+                    stroke="#6b7280"
+                    className="dark:text-gray-400"
+                  />
+                  <YAxis stroke="#6b7280" className="dark:text-gray-400" />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "var(--tooltip-bg, #ffffff)",
+                      borderColor: "var(--tooltip-border, #e5e7eb)",
+                      color: "var(--tooltip-text, #111827)",
+                    }}
+                  />
+                  <Legend
+                    wrapperStyle={{
+                      color: "var(--legend-text, #111827)",
+                    }}
+                  />
                   <Bar
                     dataKey="amount"
                     name="Donation Amount (Francs)"
@@ -475,16 +459,16 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           {/* Incomplete Profile Alert */}
-          <div className="mt-10 mb-4 bg-amber-50 border border-amber-200 shadow-md hover:shadow-lg ease-in-out duration-300 p-4 rounded-lg flex items-start">
+          <div className="mt-10 mb-4 p-4 rounded-lg flex items-start shadow-md hover:shadow-lg ease-in-out duration-300 bg-amber-50 border border-amber-200 dark:bg-amber-900 dark:border-amber-800">
             <AlertCircle
               size={24}
-              className="text-amber-500 mr-3 mt-0.5 flex-shrink-0"
+              className="mr-3 mt-0.5 flex-shrink-0 text-amber-500 dark:text-amber-300"
             />
             <div>
-              <h3 className="font-medium text-amber-800">
+              <h3 className="font-medium text-amber-800 dark:text-amber-200">
                 Complete Your Profile
               </h3>
-              <p className="text-amber-700 mt-1">
+              <p className="mt-1 text-amber-700 dark:text-amber-300">
                 Please 🙏 complete your profile to enhance your donation
                 experience and help us match you with campaigns that align with
                 your interests.
@@ -492,19 +476,19 @@ const DashMain = ({ setActiveComponent }) => {
               <div className="mt-4 flex flex-wrap gap-2">
                 <button
                   onClick={() => handleNavigation("about-you")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out rounded text-[16px] font-medium"
+                  className="py-3 px-5 ease-in-out rounded text-[16px] font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
                 >
                   Complete About You
                 </button>
                 <button
                   onClick={() => handleNavigation("identity")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out mx-3 rounded text-sm font-medium"
+                  className="py-3 px-5 ease-in-out mx-3 rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
                 >
                   Verify Identity
                 </button>
                 <button
                   onClick={() => handleNavigation("survey")}
-                  className="bg-amber-100 hover:bg-amber-200 text-amber-800 py-3 px-5 ease-in-out  rounded text-sm font-medium"
+                  className="py-3 px-5 ease-in-out rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
                 >
                   Take Survey
                 </button>
@@ -512,10 +496,10 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10 ">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
             {/* Recent Campaigns */}
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300">
-              <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
+            <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
+              <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Heart size={20} className="mr-2 text-teal-600" />
                 Recent Campaigns You've Supported
               </h2>
@@ -525,14 +509,14 @@ const DashMain = ({ setActiveComponent }) => {
                     {userStats.recentCampaigns.map((campaign) => (
                       <div
                         key={campaign.id}
-                        className="border-b pb-4 last:border-0"
+                        className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
                       >
                         <div className="flex justify-between items-start">
                           <div>
-                            <h3 className="font-medium text-slate-800">
+                            <h3 className="font-medium text-slate-800 dark:text-gray-200">
                               {campaign.title}
                             </h3>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                               {campaign.category}
                             </p>
                           </div>
@@ -540,7 +524,7 @@ const DashMain = ({ setActiveComponent }) => {
                             <p className="font-medium text-teal-600">
                               {campaign.amountDonated} Francs
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                               {campaign.date}
                             </p>
                           </div>
@@ -549,14 +533,14 @@ const DashMain = ({ setActiveComponent }) => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-center py-4">
+                  <p className="text-center py-4 text-gray-500 dark:text-gray-400">
                     No recent campaign donations
                   </p>
                 )}
 
                 <button
                   onClick={() => handleNavigation("Campaigns")}
-                  className="mt-4 text-teal-600 hover:text-teal-800 font-medium flex items-center"
+                  className="mt-4 font-medium flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
                 >
                   View all campaigns
                   <svg
@@ -578,8 +562,8 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
 
             {/* Upcoming Events */}
-            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300">
-              <h2 className="text-xl font-semibold text-slate-800 mb-4 flex items-center">
+            <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
+              <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Calendar size={20} className="mr-2 text-teal-600" />
                 Upcoming Events
               </h2>
@@ -589,18 +573,24 @@ const DashMain = ({ setActiveComponent }) => {
                     {userStats.upcomingEvents.map((event) => (
                       <div
                         key={event.id}
-                        className="border-b pb-4 last:border-0"
+                        className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
                       >
-                        <h3 className="font-medium text-slate-800">
+                        <h3 className="font-medium text-slate-800 dark:text-gray-200">
                           {event.title}
                         </h3>
                         <div className="flex items-center mt-1">
-                          <Calendar size={16} className="text-gray-500 mr-1" />
-                          <span className="text-sm text-gray-500 mr-3">
+                          <Calendar
+                            size={16}
+                            className="mr-1 text-gray-500 dark:text-gray-400"
+                          />
+                          <span className="text-sm mr-3 text-gray-500 dark:text-gray-400">
                             {event.date}
                           </span>
-                          <Clock size={16} className="text-gray-500 mr-1" />
-                          <span className="text-sm text-gray-500">
+                          <Clock
+                            size={16}
+                            className="mr-1 text-gray-500 dark:text-gray-400"
+                          />
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
                             {event.time}
                           </span>
                         </div>
@@ -608,7 +598,7 @@ const DashMain = ({ setActiveComponent }) => {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 text-center py-4">
+                  <p className="text-center py-4 text-gray-500 dark:text-gray-400">
                     No upcoming events
                   </p>
                 )}

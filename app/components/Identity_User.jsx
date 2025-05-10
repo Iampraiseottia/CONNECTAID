@@ -15,8 +15,10 @@ import {
 import { motion } from "motion/react";
 
 const Identity_User = ({ setActiveComponent }) => {
-  const [verificationMethod, setVerificationMethod] = useState("");
-  const [birthCertificateFile, setBirthCertificateFile] = useState(null); 
+
+  const [verificationMethod, setVerificationMethod] =
+    useState("idVerification");
+  const [birthCertificateFile, setBirthCertificateFile] = useState(null);
   const [idFiles, setIdFiles] = useState([]);
   const [selfieFile, setSelfieFile] = useState(null);
   const [errors, setErrors] = useState({});
@@ -99,31 +101,31 @@ const Identity_User = ({ setActiveComponent }) => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 min-h-screen"
+      className="p-6 min-h-screen bg-gray-50 dark:bg-gray-900"
     >
-      <div className="max-w-6xl mx-auto mt-12 ">
+      <div className="max-w-6xl mx-auto mt-12">
         <div className="flex items-center mb-6">
           <button
             onClick={() => setActiveComponent("about-you")}
-            className="mr-4 p-2 rounded-full hover:bg-gray-200 transition-colors"
+            className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} className="text-black dark:text-white" />
           </button>
-          <h1 className="text-2xl font-bold text-slate-800">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
             Identity Verification
           </h1>
         </div>
 
-        <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+        <div className="shadow-md rounded-lg p-6 mb-8 bg-white dark:bg-gray-800">
           {!submitted ? (
             <div>
-              <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+              <div className="border-l-4 p-4 mb-6 bg-blue-50 border-blue-500 dark:bg-blue-900/30">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <AlertCircle className="h-5 w-5 text-blue-500" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-blue-700 dark:text-blue-300">
                       Identity verification helps us prevent fraud and ensures
                       the security of our platform. All your information is
                       encrypted and protected.
@@ -134,7 +136,7 @@ const Identity_User = ({ setActiveComponent }) => {
 
               <form onSubmit={handleSubmit}>
                 <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
                     Select Verification Method
                   </label>
 
@@ -142,8 +144,8 @@ const Identity_User = ({ setActiveComponent }) => {
                     <div
                       className={`border rounded-lg p-4 cursor-pointer transition-all ${
                         verificationMethod === "idVerification"
-                          ? "border-teal-500 bg-teal-50"
-                          : "border-gray-300 hover:border-gray-400"
+                          ? "border-teal-500 bg-teal-50 dark:border-teal-500 dark:bg-teal-900/30"
+                          : "border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500"
                       }`}
                       onClick={() =>
                         handleVerificationMethodChange("idVerification")
@@ -160,12 +162,12 @@ const Identity_User = ({ setActiveComponent }) => {
                         />
                         <label
                           htmlFor="idVerification"
-                          className="ml-3 block text-sm font-medium text-gray-700"
+                          className="ml-3 block text-sm font-medium text-gray-700 dark:text-gray-300"
                         >
                           ID Verification
                         </label>
                       </div>
-                      <p className="mt-1 text-sm text-gray-500 ml-7">
+                      <p className="mt-1 text-sm ml-7 text-gray-500 dark:text-gray-400">
                         Upload a government-issued ID (passport, driver's
                         license, or ID card) and a selfie for verification.
                       </p>
@@ -173,7 +175,7 @@ const Identity_User = ({ setActiveComponent }) => {
                   </div>
                   {errors.verificationMethod && (
                     <p className="mt-2 text-sm text-red-600">
-                      {errors.verificationMethod} 
+                      {errors.verificationMethod}
                     </p>
                   )}
                 </div>
@@ -182,16 +184,16 @@ const Identity_User = ({ setActiveComponent }) => {
                   <div className="space-y-6">
                     {/* Upload Birth Certificate  */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
                         Upload Birth Certificate
                       </label>
-                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md border-gray-300 hover:border-gray-400 transition-colors">
+                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500">
                         <div className="space-y-1 text-center">
-                          <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                          <div className="flex text-sm text-gray-600">
+                          <Upload className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+                          <div className="flex text-sm text-gray-600 dark:text-gray-400">
                             <label
                               htmlFor="birth-certificate-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none"
+                              className="relative cursor-pointer rounded-md font-medium bg-white text-teal-600 hover:text-teal-500 dark:bg-gray-800 dark:text-teal-400 dark:hover:text-teal-300 focus-within:outline-none"
                             >
                               <span>Upload a Birth Certificate</span>
                               <input
@@ -224,7 +226,7 @@ const Identity_User = ({ setActiveComponent }) => {
                           {errors.birthCertificateFile}
                         </p>
                       )}
-                      <p className="mt-2 text-xs text-gray-500">
+                      <p className="mt-2 text-xs text-gray-500 dark:text-gray-300 dark:font-medium dark:text-opacity-90 ">
                         Please ensure your face is clearly visible, well-lit,
                         and you are not wearing sunglasses or a hat.
                       </p>
@@ -232,16 +234,16 @@ const Identity_User = ({ setActiveComponent }) => {
 
                     {/* Upload ID Document */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
                         Upload ID Document
                       </label>
-                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md border-gray-300 hover:border-gray-400 transition-colors">
+                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500">
                         <div className="space-y-1 text-center">
-                          <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                          <div className="flex text-sm text-gray-600">
+                          <Upload className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+                          <div className="flex text-sm text-gray-600 dark:text-gray-400">
                             <label
                               htmlFor="id-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none"
+                              className="relative cursor-pointer rounded-md font-medium bg-white text-teal-600 hover:text-teal-500 dark:bg-gray-800 dark:text-teal-400 dark:hover:text-teal-300 focus-within:outline-none"
                             >
                               <span>Upload a file</span>
                               <input
@@ -274,7 +276,7 @@ const Identity_User = ({ setActiveComponent }) => {
                           {errors.idFiles}
                         </p>
                       )}
-                      <p className="mt-2 text-xs text-gray-500">
+                      <p className="mt-2 text-xs text-gray-500 dark:text-gray-300 dark:font-medium dark:text-opacity-90 ">
                         Please ensure your ID is valid, not expired, and all
                         information is clearly visible.
                       </p>
@@ -282,16 +284,16 @@ const Identity_User = ({ setActiveComponent }) => {
 
                     {/* Upload Selfie */}
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
                         Upload Selfie
                       </label>
-                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md border-gray-300 hover:border-gray-400 transition-colors">
+                      <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500">
                         <div className="space-y-1 text-center">
-                          <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                          <div className="flex text-sm text-gray-600">
+                          <Upload className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+                          <div className="flex text-sm text-gray-600 dark:text-gray-400">
                             <label
                               htmlFor="selfie-upload"
-                              className="relative cursor-pointer bg-white rounded-md font-medium text-teal-600 hover:text-teal-500 focus-within:outline-none"
+                              className="relative cursor-pointer rounded-md font-medium bg-white text-teal-600 hover:text-teal-500 dark:bg-gray-800 dark:text-teal-400 dark:hover:text-teal-300 focus-within:outline-none"
                             >
                               <span>Upload a selfie</span>
                               <input
@@ -323,7 +325,7 @@ const Identity_User = ({ setActiveComponent }) => {
                           {errors.selfieFile}
                         </p>
                       )}
-                      <p className="mt-2 text-xs text-gray-500">
+                      <p className="mt-2 text-xs text-gray-500 dark:text-gray-300 dark:font-medium dark:text-opacity-90 ">
                         Please ensure your face is clearly visible, well-lit,
                         and you are not wearing sunglasses or a hat.
                       </p>
@@ -332,13 +334,13 @@ const Identity_User = ({ setActiveComponent }) => {
                 )}
 
                 {verificationMethod === "emailVerification" && (
-                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+                  <div className="border-l-4 p-4 mb-6 bg-yellow-50 border-yellow-400 dark:bg-yellow-900/30 dark:border-yellow-600">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <AlertTriangle className="h-5 w-5 text-yellow-400" />
+                        <AlertTriangle className="h-5 w-5 text-yellow-400 dark:text-yellow-600" />
                       </div>
                       <div className="ml-3">
-                        <p className="text-sm text-yellow-700">
+                        <p className="text-sm text-yellow-700 dark:text-yellow-300">
                           Email verification provides limited access. For full
                           access to all features, including higher donation
                           limits, please choose ID verification.
@@ -351,9 +353,9 @@ const Identity_User = ({ setActiveComponent }) => {
                 <div className="flex justify-end mt-8">
                   <button
                     type="submit"
-                    className={`flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 ${
+                    className={`flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
                       processing ? "opacity-75 cursor-not-allowed" : ""
-                    }`}
+                    } bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 dark:bg-teal-700 dark:hover:bg-teal-600 dark:focus:ring-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2`}
                     disabled={processing}
                   >
                     {processing ? (
@@ -392,20 +394,20 @@ const Identity_User = ({ setActiveComponent }) => {
             </div>
           ) : (
             <div className="text-center py-6">
-              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                <CheckCircle className="h-6 w-6 text-green-600" />
+              <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900">
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="mt-3 text-lg font-medium text-gray-900">
+              <h3 className="mt-3 text-lg font-medium text-gray-900 dark:text-white">
                 Verification Submitted
               </h3>
-              <p className="mt-2 text-sm text-gray-500">
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
                 Your verification has been successfully submitted. You will be
                 automatically redirected to the next step.
               </p>
               <div className="mt-5 flex justify-center">
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 dark:bg-teal-700 dark:hover:bg-teal-600 dark:focus:ring-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2"
                   onClick={() => setActiveComponent("survey")}
                 >
                   Continue to Survey
