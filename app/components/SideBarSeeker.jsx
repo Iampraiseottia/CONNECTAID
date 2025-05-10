@@ -458,7 +458,7 @@ const SideBarSeeker = () => {
 
         <div
           onClick={() => handleComponentChange("Campaigns_Seeker")}
-          title="Campaigns_Seeker"
+          title="Campaigns Seeker"
           className={`mb-2 flex items-center px-4 py-2 ease-in-out rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
             expandedSideBar || isDesktop ? "justify-start" : "justify-center"
           } ${activeComponent === "Campaigns_Seeker" ? "bg-white text-teal-500" : ""}`}
@@ -476,7 +476,7 @@ const SideBarSeeker = () => {
                 : "w-0 opacity-0"
             }`}
           >
-            Campaigns_Seeker
+            Campaigns 
           </span>
         </div>
 
