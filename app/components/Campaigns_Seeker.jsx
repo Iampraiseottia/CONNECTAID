@@ -1,14 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
+import NewRequest from "../components/NewRequest";
+
 import {
   Search,
   Plus,
   Eye,
   UserCheck,
   X,
-  ChevronLeft,
-  ChevronRight,
   Filter,
   Star,
   Calendar,
@@ -178,6 +179,7 @@ const Campaigns_Seeker = () => {
     requirements: "",
     contact: "",
     goals: "",
+    location: "",
   });
 
   // State for past campaign details
@@ -230,6 +232,7 @@ const Campaigns_Seeker = () => {
       category: "",
       description: "",
       requirements: "",
+      location: "",
       contact: "",
       goals: "",
     });
@@ -317,6 +320,7 @@ const Campaigns_Seeker = () => {
     }));
   };
 
+ 
   return (
     <div className="min-h-screen p-4 pt-20 mb-10 ">
       <div className="max-w-6xl mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
@@ -355,7 +359,7 @@ const Campaigns_Seeker = () => {
           <input
             type="text"
             placeholder="Search campaigns by title, organizer, category, or location..."
-            className="pl-10 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+            className="pl-10 w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 ease-in-out mt-1 transition-all"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -488,7 +492,7 @@ const Campaigns_Seeker = () => {
           </table>
         </div>
 
-        {/* Pagination
+        {/* Pagination  */}
         {filteredCampaigns.length > itemsPerPage && (
           <div className="flex justify-between items-center mt-6">
             <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -520,7 +524,7 @@ const Campaigns_Seeker = () => {
               </button>
             </div>
           </div> 
-        )} */}
+        )}
 
         {/* Past Campaigns Section */}
         <div className="mt-20 mb-4">
@@ -668,11 +672,11 @@ const Campaigns_Seeker = () => {
       {/* Create Campaign Form Modal */}
       {showForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[92vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                 Create New Campaign
-              </h2>
+              </h2> 
               <button
                 onClick={() => setShowForm(false)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
@@ -681,130 +685,8 @@ const Campaigns_Seeker = () => {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Title"
-                    value={newCampaign.title}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
-                  />
-                </div>
+            <NewRequest />
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Date
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={newCampaign.date}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Category
-                  </label>
-                  <select
-                    name="category"
-                    value={newCampaign.category}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  >
-                    <option value="">Select a category</option>
-                    {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Goals
-                  </label>
-                  <input
-                    type="text"
-                    name="Goals"
-                    placeholder="Campaign Goals"
-                    value={newCampaign.goals}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md dark:placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                    Contact Email
-                  </label>
-                  <input
-                    type="email"
-                    name="contact"
-                    value={newCampaign.contact}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Description
-                </label>
-                <textarea
-                  name="description"
-                  value={newCampaign.description}
-                  onChange={handleInputChange}
-                  required
-                  rows="3"
-                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                ></textarea>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                  Requirements
-                </label>
-                <textarea
-                  name="requirements"
-                  value={newCampaign.requirements}
-                  onChange={handleInputChange}
-                  rows="2"
-                  className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                ></textarea>
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowForm(false)}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                >
-                  Create Campaign
-                </button>
-              </div>
-            </form>
           </div>
         </div>
       )}
