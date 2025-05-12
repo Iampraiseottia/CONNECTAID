@@ -15,11 +15,13 @@ import {
   faIdCard,
   faClipboard,
   faUserNurse,
+  faChartSimple
 } from "@fortawesome/free-solid-svg-icons";
 
-import Metadata from "./Metadata";
+import Metadata from "./Metadata"; 
 import About_User from "./About_User";
 import Identity_User from "./Identity_User";
+import TrackDonation from "./TrackDonation";
 import Survey_User from "./Survey_User";
 import Campaigns from "./Campaigns";
 import MyDonations from "./MyDonations";
@@ -67,6 +69,11 @@ const SideBar = () => {
       },
       identity: {
         title: "Identity Verification - ConnectAID Web Application",
+        description:
+          "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
+      },
+      TrackDonation: {
+        title: "Track Your Donations - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -147,9 +154,11 @@ const SideBar = () => {
       case "about-you":
         return <About_User setActiveComponent={setActiveComponent} />;
       case "identity":
-        return <Identity_User setActiveComponent={setActiveComponent} />;
+        return <Identity_User setActiveComponent={setActiveComponent} />; 
       case "survey":
         return <Survey_User setActiveComponent={setActiveComponent} />;
+        case "TrackDonation":
+        return <TrackDonation setActiveComponent={setActiveComponent} />;
       case "Campaigns":
         return <Campaigns setActiveComponent={setActiveComponent} />;
       case "profile":
@@ -483,6 +492,32 @@ const SideBar = () => {
             Campaigns
           </span>
         </div>
+
+
+        <div
+          onClick={() => handleComponentChange("TrackDonation")}
+          title="TrackDonation"
+          className={`mb-2 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
+            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
+          } ${activeComponent === "TrackDonation" ? "bg-white text-teal-500" : ""}`}
+        >
+          <FontAwesomeIcon
+            icon={faChartSimple}
+            className={`transition-all ${
+              expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
+            }`}
+          /> 
+          <span
+            className={`ml-3 overflow-hidden transition-all ${
+              expandedSideBar || isDesktop
+                ? "w-auto opacity-100"
+                : "w-0 opacity-0"
+            }`}
+          >
+            Track Donations
+          </span>
+        </div>
+
 
         <div
           onClick={() => handleComponentChange("profile")}
