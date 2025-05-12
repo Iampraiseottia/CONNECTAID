@@ -44,7 +44,6 @@ const MyDonations = ({ setActiveComponent }) => {
     "Poverty Alleviation",
     "Children",
     "Environment",
-    "Animal Welfare",
     "Humanitarian",
   ];
 
