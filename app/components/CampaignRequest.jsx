@@ -6,7 +6,7 @@ import { Upload, CheckCircle, AlertCircle } from "lucide-react";
 
 import { useRouter } from "next/navigation";
 
-const NewRequest = () => {
+const CampaignRequest = () => {
   const router = useRouter();
   const categories = [
     "Education",
@@ -191,7 +191,7 @@ const NewRequest = () => {
 
   const redirectToCampaigns = () => {
     
-    router.push("/dashboard-seeker?component=MyAID"); 
+    router.push("/dashboard-donor?component=MyDonations"); 
 
   };
 
@@ -543,4 +543,4 @@ const NewRequest = () => {
   );
 };
 
-export default NewRequest;
+export default CampaignRequest;
