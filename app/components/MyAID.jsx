@@ -92,7 +92,6 @@ const MyAID = ({ setActiveComponent }) => {
           campaignImage: AID2,
           alt: "AID Image 2",
         },
-        
         {
           id: "AID-2025-004",
           campaign: "Monthly Children's Hospital Support",

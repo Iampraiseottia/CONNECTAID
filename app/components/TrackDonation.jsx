@@ -129,16 +129,16 @@ const TrackDonation = () => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="container mx-auto p-6 bg-gray-50 min-h-screen pt-20"
+      className="container mx-auto p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
-      <h1 className="sm:text-5xl text-3xl font-bold text-center mb-8 text-green-700">
+      <h1 className="sm:text-5xl text-3xl font-bold text-center mb-8 text-green-700 dark:text-green-500">
         Your Donation Impact
       </h1>
 
       <div className="grid md:grid-cols-2 gap-6">
         {/* Donation List */}
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
             Donation History
           </h2>
           {donations.map((donation) => (
@@ -147,25 +147,31 @@ const TrackDonation = () => {
               onClick={() => handleDonationSelect(donation)}
               className={`cursor-pointer p-4 mb-4 rounded-lg border transition-colors ${
                 selectedDonation?.id === donation.id
-                  ? "bg-blue-100 border-blue-300"
-                  : "hover:bg-gray-100 border-gray-200"
+                  ? "bg-blue-100 border-blue-300 dark:bg-blue-900 dark:border-blue-700"
+                  : "hover:bg-gray-100 border-gray-200 dark:hover:bg-gray-700 dark:border-gray-700"
               }`}
             >
               <div className="flex justify-between items-center">
                 <div>
                   <div className="flex items-center">
-                    <DollarSign className="mr-2 text-green-600" size={20} />
-                    <span className="font-semibold text-gray-800">
+                    <DollarSign
+                      className="mr-2 text-green-600 dark:text-green-400"
+                      size={20}
+                    />
+                    <span className="font-semibold text-gray-800 dark:text-gray-200">
                       {donation.amount} Francs
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                     {donation.campaign}
                   </p>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="mr-2 text-red-500" size={20} />
-                  <span className="text-sm text-gray-700">
+                  <MapPin
+                    className="mr-2 text-red-500 dark:text-red-400"
+                    size={20}
+                  />
+                  <span className="text-sm text-gray-700 dark:text-gray-300">
                     {donation.location}
                   </span>
                 </div>
@@ -175,65 +181,99 @@ const TrackDonation = () => {
         </div>
 
         {/* Donation Impact Details */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           {selectedDonation ? (
             <div>
-              <h2 className="text-2xl font-bold mb-4 text-blue-700">
+              <h2 className="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-400">
                 Impact Details
               </h2>
               <div className="space-y-4">
                 <div className="flex items-center">
-                  <Heart className="mr-3 text-red-500" size={24} />
+                  <Heart
+                    className="mr-3 text-red-500 dark:text-red-400"
+                    size={24}
+                  />
                   <div>
-                    <p className="font-semibold text-gray-800">Campaign</p>
-                    <p className="text-gray-600">{selectedDonation.campaign}</p>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      Campaign
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {selectedDonation.campaign}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <MapPin className="mr-3 text-green-500" size={24} />
+                  <MapPin
+                    className="mr-3 text-green-500 dark:text-green-400"
+                    size={24}
+                  />
                   <div>
-                    <p className="font-semibold text-gray-800">Location</p>
-                    <p className="text-gray-600">{selectedDonation.location}</p>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      Location
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {selectedDonation.location}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <CheckCircle className="mr-3 text-blue-500" size={24} />
+                  <CheckCircle
+                    className="mr-3 text-blue-500 dark:text-blue-400"
+                    size={24}
+                  />
                   <div>
-                    <p className="font-semibold text-gray-800">Impact</p>
-                    <p className="text-gray-600">{selectedDonation.impact}</p>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      Impact
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {selectedDonation.impact}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="mr-3 text-purple-500" size={24} />
+                  <Clock
+                    className="mr-3 text-purple-500 dark:text-purple-400"
+                    size={24}
+                  />
                   <div>
-                    <p className="font-semibold text-gray-800">Donation Date</p>
-                    <p className="text-gray-600">
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      Donation Date
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-400">
                       {formatDate(selectedDonation.date)}
                     </p>
                   </div>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-gray-800">
+                  <p className="font-semibold text-gray-800 dark:text-gray-200">
                     Donation Details
                   </p>
-                  <div className="bg-gray-100 p-4 rounded-lg">
+                  <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-700">Amount:</span>
-                      <span className="font-semibold">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Amount:
+                      </span>
+                      <span className="font-semibold dark:text-gray-200">
                         {selectedDonation.amount} Francs
                       </span>
                     </div>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-700">Organization:</span>
-                      <span>{selectedDonation.organization}</span>
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Organization:
+                      </span>
+                      <span className="dark:text-gray-200">
+                        {selectedDonation.organization}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700">Status:</span>
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Status:
+                      </span>
                       <span
                         className={`font-semibold ${
                           selectedDonation.status === "completed"
-                            ? "text-green-600"
-                            : ""
+                            ? "text-green-600 dark:text-green-400"
+                            : "dark:text-gray-200"
                         }`}
                       >
                         {selectedDonation.status.charAt(0).toUpperCase() +
@@ -243,21 +283,25 @@ const TrackDonation = () => {
                   </div>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-gray-800">Description</p>
-                  <p className="text-gray-600 italic">
+                  <p className="font-semibold text-gray-800 dark:text-gray-200">
+                    Description
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400 italic">
                     {selectedDonation.description}
                   </p>
                 </div>
                 <div className="mt-4">
-                  <p className="font-semibold text-gray-800">Beneficiaries</p>
-                  <p className="text-gray-600">
+                  <p className="font-semibold text-gray-800 dark:text-gray-200">
+                    Beneficiaries
+                  </p>
+                  <p className="text-gray-600 dark:text-gray-400">
                     {selectedDonation.beneficiaries}
                   </p>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="text-center text-gray-500 py-10">
+            <div className="text-center text-gray-500 dark:text-gray-400 py-10">
               <p>Select a donation to view its impact details</p>
             </div>
           )}
