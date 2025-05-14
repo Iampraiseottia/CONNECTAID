@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 import NewRequest from "../components/NewRequest";
 
@@ -18,7 +18,6 @@ import {
 } from "lucide-react";
 
 import { motion } from "motion/react";
-
 
 const Campaigns_Seeker = () => {
   // State for campaigns data
@@ -82,7 +81,7 @@ const Campaigns_Seeker = () => {
       id: 5,
       title: "Community Garden Project",
       organizer: "Green Thumb Society",
-      location: "Westside Park",
+      location: "West Side Park",
       date: "2025-06-05",
       category: "Environmental",
       participants: 15,
@@ -172,18 +171,6 @@ const Campaigns_Seeker = () => {
   const [showForm, setShowForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
-  const [newCampaign, setNewCampaign] = useState({
-    title: "",
-    organizer: "",
-    location: "",
-    date: "",
-    category: "",
-    description: "",
-    requirements: "",
-    contact: "",
-    goals: "",
-    location: "",
-  });
 
   // State for past campaign details
   const [showPastDetails, setShowPastDetails] = useState(false);
@@ -213,33 +200,6 @@ const Campaigns_Seeker = () => {
     setTimeout(() => {
       setNotification(null);
     }, 5000);
-  };
-
-  // Handle form input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewCampaign((prev) => ({ ...prev, [name]: value }));
-  };
-
-  // Handle form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const id =
-      campaigns.length > 0 ? Math.max(...campaigns.map((c) => c.id)) + 1 : 1;
-    setCampaigns([...campaigns, { ...newCampaign, id, participants: 0 }]);
-    setNewCampaign({
-      title: "",
-      organizer: "",
-      location: "",
-      date: "",
-      category: "",
-      description: "",
-      requirements: "",
-      location: "",
-      contact: "",
-      goals: "",
-    });
-    setShowForm(false);
   };
 
   // Handle join campaign
@@ -299,7 +259,6 @@ const Campaigns_Seeker = () => {
     indexOfFirstItem,
     indexOfLastItem
   );
-  const totalPages = Math.ceil(filteredCampaigns.length / itemsPerPage);
 
   // For past campaigns pagination
   const [pastCampaignsPage, setPastCampaignsPage] = useState(1);
@@ -310,7 +269,6 @@ const Campaigns_Seeker = () => {
     indexOfFirstPastItem,
     indexOfLastPastItem
   );
-  const totalPastPages = Math.ceil(pastCampaigns.length / pastCampaignsPerPage);
 
   // Joining Campaign
   const [joinedCampaignIds, setJoinedCampaignIds] = useState({});
@@ -323,12 +281,14 @@ const Campaigns_Seeker = () => {
     }));
   };
 
- 
   return (
-    <motion.div   initial={{ opacity: 0, y: 100 }}
-    whileInView={{ y: 0, opacity: 1 }} 
-    transition={{ duration: 0.7, delay: 0.7 }}
-    viewport={{ once: true, amount: 0.05 }} className="min-h-screen p-4 pt-20 mb-10 ">
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.7 }}
+      viewport={{ once: true, amount: 0.05 }}
+      className="min-h-screen p-4 pt-20 mb-10 "
+    >
       <div className="max-w-6xl mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
         {notification && (
           <div className="mb-4 p-3 bg-green-100 border border-green-300 text-green-800 rounded-md flex items-center shadow-sm">
@@ -498,8 +458,6 @@ const Campaigns_Seeker = () => {
           </table>
         </div>
 
-       
-
         {/* Past Campaigns Section */}
         <div className="mt-20 mb-4">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center">
@@ -602,22 +560,23 @@ const Campaigns_Seeker = () => {
               </tbody>
             </table>
           </div>
-
-          
         </div>
       </div>
 
       {/* Create Campaign Form Modal */}
       {showForm && (
-        <motion.div   initial={{ opacity: 0, y: 100 }}
-        whileInView={{ y: 0, opacity: 1 }} 
-        transition={{ duration: 0.5, delay: 0.5 }}
-        viewport={{ once: true, amount: 0.05 }} className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          viewport={{ once: true, amount: 0.05 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        >
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[92vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                 Create New Campaign
-              </h2> 
+              </h2>
               <button
                 onClick={() => setShowForm(false)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
@@ -627,7 +586,6 @@ const Campaigns_Seeker = () => {
             </div>
 
             <NewRequest />
-
           </div>
         </motion.div>
       )}
