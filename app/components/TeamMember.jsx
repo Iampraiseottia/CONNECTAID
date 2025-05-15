@@ -17,12 +17,12 @@ const TeamMember = ({ name, position, image, delay }) => {
             src={image}
             alt={name}
             width={400}
-            height={500}
-            className="w-full h-auto object-cover hover:scale-105 ease-in-out duration-300"
+            height={400}
+            className="w-full h-[400px] object-cover hover:scale-105 ease-in-out duration-300"
           />
         </div>
         <div className="p-5">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center"> 
             <div className="flex-1">
               <h4 className="text-xl font-bold capitalize mb-1 text-gray-700 dark:text-gray-700">
                 {name}

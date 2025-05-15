@@ -115,7 +115,7 @@ const BlogDetails1 = () => {
                 >
                   <div className="">
                     <Image
-                      src="/gallery/event-6.png"
+                      src="/gallery/pastevent.png"
                       alt="Blog main image"
                       width={500}
                       height={500}
@@ -124,13 +124,11 @@ const BlogDetails1 = () => {
                     />
                   </div>
                   <div className="absolute top-0 left-0">
-                    <Image
-                      src="/gallery/brush-bg-two.png"
-                      alt="Brush background"
-                      width={200}
-                      height={100}
-                      className="w-full h-auto"
-                    />
+                    <div className=" bg-emerald-600 text-white p-3 text-center rounded">
+                      <p className="text-xl font-bold tracking-wide ">
+                        03 September 2024
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
 
@@ -161,8 +159,8 @@ const BlogDetails1 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
                     >
-                      Empowering Futures Through Accessible and Quality
-                      Education for All
+                      Empowering Futures Through Accessible Education for All: A
+                      Charity Event Overview
                     </motion.h1>
 
                     <motion.p
@@ -172,10 +170,16 @@ const BlogDetails1 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="text-gray-600 mb-6"
                     >
-                      Education has the power to transform lives, creating
-                      opportunities and dismantling barriers for under-served
-                      communities across the globe, ultimately fostering growth,
-                      empowerment, and a brighter future for all.
+                      Education is a fundamental right that lays the foundation
+                      for a brighter future. However, millions of children
+                      around the world still lack access to quality education
+                      due to various barriers, including poverty, geographical
+                      location, and social inequality. To address this pressing
+                      issue, a charity event titled "Empowering Futures Through
+                      Accessible Education for All" was organized to raise
+                      awareness and funds for educational initiatives aimed at
+                      providing underprivileged children with the opportunities
+                      they deserve.
                     </motion.p>
 
                     <motion.hr
@@ -185,78 +189,6 @@ const BlogDetails1 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="my-6 border-gray-200"
                     />
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-gray-600 mb-6"
-                    >
-                      Education serves as a catalyst for change, equipping
-                      individuals with essential skills and knowledge. By
-                      providing access to quality learning, it empowers
-                      under-served communities to pursue better job
-                      opportunities and improve their living conditions.
-                    </motion.p>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="text-gray-600 mb-6"
-                    >
-                      We understand that there are many organizations seeking
-                      support, and we appreciate your consideration of
-                      [Organization Name]. We assure you that your donation will
-                      be used wisely and effectively to support the children.
-                      Through education, individuals gain confidence and
-                      critical thinking abilities, enabling them to advocate for
-                      themselves and their communities. This empowerment fosters
-                      social mobility, allowing people to break free from cycles
-                      of poverty and inequality.
-                    </motion.p>
-
-                    <motion.hr
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="my-6 border-gray-200"
-                    />
-
-                    {/* Quote Section */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 100 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.5 }}
-                      viewport={{ once: true, amount: 0.1 }}
-                      className="bg-gray-50 p-6 my-8 rounded-lg relative"
-                    >
-                      <div className="absolute top-6 left-6 text-gray-200">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="76"
-                          height="54"
-                          viewBox="0 0 76 54"
-                          fill="none"
-                          className="w-16 h-16 text-gray-300"
-                        >
-                          <path
-                            d="M67.1429 32.4V30.4H65.1429H54.2857C49.3919 30.4 45.4286 26.4424 45.4286 21.6V10.8C45.4286 5.95763 49.3919 2 54.2857 2H65.1429C70.0366 2 74 5.95763 74 10.8V16.2V21.6V33.75C74 43.8236 65.7956 52 55.6429 52H54.2857C52.3776 52 50.8571 50.4724 50.8571 48.6C50.8571 46.7276 52.3776 45.2 54.2857 45.2H55.6429C61.9794 45.2 67.1429 40.0789 67.1429 33.75V32.4ZM23.7143 32.4V30.4H21.7143H10.8571C5.96336 30.4 2 26.4424 2 21.6V10.8C2 5.95763 5.96336 2 10.8571 2H21.7143C26.6081 2 30.5714 5.95763 30.5714 10.8V16.2V21.6V33.75C30.5714 43.8236 22.367 52 12.2143 52H10.8571C8.94907 52 7.42857 50.4724 7.42857 48.6C7.42857 46.7276 8.94907 45.2 10.8571 45.2H12.2143C18.5509 45.2 23.7143 40.0789 23.7143 33.75V32.4Z"
-                            stroke="#090E0D"
-                            strokeWidth="4"
-                          />
-                        </svg>
-                      </div>
-                      <h4 className="text-xl font-semibold text-gray-800 pl-20 pt-4">
-                        Contributing to educational charities is an impactful
-                        way to make a difference in the world and assist those
-                        in need. There are various educational causes to
-                        support, from local programs to global initiatives.
-                      </h4>
-                    </motion.div>
 
                     {/* Multiple Images */}
                     <motion.div
@@ -268,8 +200,8 @@ const BlogDetails1 = () => {
                     >
                       <div className="w-full md:w-1/2">
                         <Image
-                          src="/blog/blog-multi-1.png"
-                          alt="Blog image 1"
+                          src="/gallery/africanchildren.png"
+                          alt="Events Picture image 1"
                           width={400}
                           height={300}
                           className="w-full h-auto rounded-lg"
@@ -277,8 +209,8 @@ const BlogDetails1 = () => {
                       </div>
                       <div className="w-full md:w-1/2">
                         <Image
-                          src="/blog/blog-multi-2.png"
-                          alt="Blog image 2"
+                          src="/gallery/africanchildren2.png"
+                          alt="Events Picture image 2"
                           width={400}
                           height={300}
                           className="w-full h-auto rounded-lg"
@@ -286,54 +218,134 @@ const BlogDetails1 = () => {
                       </div>
                     </motion.div>
 
-                    {/* Donation Content */}
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
+
                     <motion.div
                       initial={{ opacity: 0, y: 100 }}
                       whileInView={{ y: 0, opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.5 }}
                       viewport={{ once: true, amount: 0.1 }}
-                      className="mt-8"
+                      className="text-gray-700 mb-6"
                     >
-                      <h4 className="text-xl font-bold text-gray-800 mb-4">
-                        Donation
-                      </h4>
-                      <p className="text-gray-600 mb-6">
-                        A significant number of these children are also deprived
-                        of educational opportunities, which perpetuates the
-                        cycle of poverty and limits their potential for a
-                        brighter future. Education is a key driver of social and
-                        economic development. It equips individuals with the
-                        knowledge and skills necessary to improve their
-                        circumstances and contribute to society. Unfortunately,
-                        many children around the globe are denied access to
-                        quality education due to financial constraints,
-                        geographical barriers, or systemic inequalities. By
-                        donating to educational charities and initiatives, you
-                        can help bridge this gap and provide children with the
-                        opportunities they deserve.
+                      <h3 className="font-bold text-2xl ">Event Overview</h3>{" "}
+                      <br />
+                      <h3 className="font-bold text-xl ">Date and Location</h3>
+                      <p className="mt-1">
+                        The charity event took place on September 03, 2024, at
+                        the Carita's Hall in Check POint, Buea South-west,
+                        Cameroon. The venue was chosen for its accessibility and
+                        capacity to accommodate a large audience, including
+                        community members, local businesses, educators, and
+                        philanthropists.
                       </p>
-
-                      <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>Empowering Future Generations.</li>
-                        <li>Breaking the Cycle of Poverty</li>
-                        <li>Promoting Equality and Inclusively</li>
-                      </ul>
-
-                      <hr className="my-6 border-gray-200" />
-
-                      <p className="text-gray-600 mb-6">
-                        The impact of education donations extends far beyond the
-                        classroom. Here are some of the transformative effects
-                        that your contributions can help achieve:
+                      <br />
+                      <h3 className="font-bold text-xl ">Objectives</h3>
+                      <p className="mt-1">
+                        The primary objectives of the event were:
                       </p>
-
-                      <ul className="list-disc pl-6 mb-6 text-gray-600 space-y-2">
-                        <li>Improved Literacy Rates.</li>
-                        <li>Access to Technology</li>
-                        <li>Community Development</li>
+                      <ul>
+                        <li> Distribution of School Items </li>
+                        <li>Give Scholarships </li>
+                        <li>Engage the Community </li>
                       </ul>
+                      <br />
+                      <h3 className="font-bold text-xl ">Event Activities</h3>
+                      <h3 className="font-bold text-xl ">
+                        1. Keynote Speakers
+                      </h3>
+                      <p>
+                        The event featured inspiring keynote speakers, including
+                        educators, community leaders, and advocates for
+                        children's rights. They shared personal stories and
+                        insights about the transformative power of education and
+                        the urgent need for accessible learning opportunities.
+                        Their speeches resonated with the audience, emphasizing
+                        the importance of collective action in addressing
+                        educational disparities.
+                      </p>
+                      <br />
+                      <h3 className="font-bold text-xl ">
+                        2. Panel Discussions
+                      </h3>
+                      <p className="mt-1">
+                        A series of panel discussions were held, focusing on
+                        various topics related to education, such as:
+                      </p>
+                      <ul className="ml-7 leading-8 ">
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Innovative Approaches to Learning:
+                          </span>{" "}
+                          Exploring new teaching methods and technologies that
+                          can enhance learning experiences for children.{" "}
+                        </li>
 
-                      <hr className="my-6 border-gray-200" />
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            The Role of Community in Education:
+                          </span>{" "}
+                          Discussing how local communities can support schools
+                          and students through mentorship, resources, and
+                          advocacy.
+                        </li>
+
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Breaking Barriers:
+                          </span>{" "}
+                          Addressing the challenges faced by marginalized groups
+                          in accessing education and strategies to overcome
+                          these obstacles.
+                        </li>
+                      </ul>
+                      <br />
+                      <h3 className="font-bold text-xl ">
+                        3. Distribution of School Items and Scholarships
+                      </h3>
+                      <p>
+                        A significant highlight of the event was the
+                        distribution of school items and scholarships to
+                        children in need. Attendees witnessed the joy on the
+                        faces of the recipients as they received essential
+                        school supplies, including backpacks, notebooks, pens,
+                        and educational materials. Additionally, scholarships
+                        were awarded to deserving students, providing them with
+                        the financial support necessary to pursue their
+                        education without the burden of financial constraints.
+                        This direct impact reinforced the event's mission of
+                        empowering futures through accessible education.
+                      </p>
+                      <br />
+                      <h3 className="font-bold text-xl ">4. Entertainment</h3>
+                      <p>
+                        To create an engaging atmosphere, the event included
+                        performances by locals, and student groups. These
+                        performances not only entertained the audience but also
+                        showcased the talent and creativity of young
+                        individuals, reinforcing the event's theme of empowering
+                        futures through education.
+                      </p>
+                      <br />
+                      <p>
+                        The "Empowering Futures Through Accessible Education for
+                        All" charity event was a resounding success, bringing
+                        together community members, educators, and advocates to
+                        support a vital cause. By giving out grants , fostering
+                        community engagement, and increasing awareness, the
+                        event made significant strides toward ensuring that
+                        every child has access to quality education. The
+                        distribution of school items and scholarships directly
+                        impacted the lives of many children.
+                      </p>
                     </motion.div>
                   </div>
 
@@ -343,7 +355,7 @@ const BlogDetails1 = () => {
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8"
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8 "
                   >
                     <div className="flex items-center flex-wrap gap-2">
                       <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
@@ -415,7 +427,7 @@ const BlogDetails1 = () => {
                   viewport={{ once: true, amount: 0.1 }}
                   className="text-xl font-bold text-gray-800 mb-6"
                 >
-                  Related Blogs
+                  Related Past Events
                 </motion.h3>
 
                 <motion.div
@@ -430,7 +442,7 @@ const BlogDetails1 = () => {
                     <div className="relative h-72">
                       <Link href="/blog-details-2">
                         <Image
-                          src="/blog/blog-6.png"
+                          src="/gallery/medicine2.png"
                           alt="Related blog"
                           fill
                           className="object-cover hover:scale-105 ease-in-out duration-200 "
@@ -450,7 +462,7 @@ const BlogDetails1 = () => {
                       </div>
 
                       <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Transforming Lives Through Accessible Medical Care
+                        Quality Medicine: Empowering a Healthier Community
                       </h4>
 
                       <p className="text-gray-600 mb-6 text-sm">
@@ -471,7 +483,7 @@ const BlogDetails1 = () => {
                     <div className="relative h-72">
                       <Link href="/blog-details-3">
                         <Image
-                          src="/gallery/Childfoodhelp.jpg"
+                          src="/gallery/food.jpg"
                           alt="Related blog"
                           fill
                           className="object-cover hover:scale-105 ease-in-out duration-200 "
@@ -500,7 +512,7 @@ const BlogDetails1 = () => {
                       </p>
 
                       <Link
-                        href="/blog-details-3"
+                        href="/past-event-details-3"
                         className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
                       >
                         Read More
@@ -599,35 +611,29 @@ const BlogDetails1 = () => {
               </div>
 
               {/* Comments List */}
-              <div className="mt-16">
-                <motion.h3
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="text-xl font-bold text-gray-800 mb-6"
-                >
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="mt-16"
+              >
+                <h3 className="text-xl font-bold text-gray-800 mb-6">
                   04 Comment
-                </motion.h3>
+                </h3>
 
                 {/* {[1, 2, 3, 4].map((comment) => ( */}
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="mb-6"
-                >
+                <div className="mb-6">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
                         src={`/gallery/comment-1.png`}
                         alt="Commenter"
                         width={60}
-                        height={60}
-                        className="rounded-full"
-                      />
-                    </div>
+                        height={65}
+                        className="rounded-full h-[65px]"
+                      /> 
+                    </div> 
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <p className="font-semibold text-gray-800">
@@ -652,29 +658,23 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </motion.div>
+                </div>
                 {/* ))} */}
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="mb-6"
-                >
+                <div className="mb-6">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
-                        src={`/gallery/comment-5.png`}
+                        src={`/gallery/comment-3.png`}
                         alt="Commenter"
-                        width={60}
-                        height={60}
-                        className="rounded-full"
+                        width={70} 
+                        height={70} 
+                        className="rounded-full h-[70px]"
                       />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <p className="font-semibold text-gray-800">
-                          Serena Morgan
+                          Awung Caroline
                         </p>
                         <p className="text-sm text-gray-500">
                           Sep 17, 2024 At 11.00 pm
@@ -682,7 +682,7 @@ const BlogDetails1 = () => {
                       </div>
                       <p className="text-gray-600 mb-3">
                         Great insights on the transformative power of education!
-                        I never realized how impactful donations could be. I’m
+                        I never realized how impactful donations could be. I’m 
                         motivated to contribute to educational causes after
                         reading this.
                       </p>
@@ -695,19 +695,13 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="mb-6"
-                >
+                <div className="mb-6">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
-                        src={`/gallery/comment-3.png`}
+                        src={`/gallery/comment-2.png`}
                         alt="Commenter"
                         width={60}
                         height={60}
@@ -734,40 +728,34 @@ const BlogDetails1 = () => {
                         className="text-teal-600 hover:text-teal-700 text-sm font-medium"
                       >
                         Reply
-                      </a>
+                      </a> 
                     </div>
-                  </div>
+                  </div> 
                   <hr className="my-6 border-gray-200" />
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="mb-6"
-                >
+                <div className="mb-6">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <Image
-                        src={`/gallery/comment-2.png`}
+                        src={`/gallery/comment-4.png`}
                         alt="Commenter"
                         width={60}
                         height={60}
-                        className="rounded-full"
+                        className="rounded-full "
                       />
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <p className="font-semibold text-gray-800">
-                          Nicole Brown
+                          Nkum Ryan
                         </p>
                         <p className="text-sm text-gray-500">
                           Dec 28, 2024 At 7.00 am
                         </p>
                       </div>
                       <p className="text-gray-600 mb-3">
-                        I highlights the urgent need for educational support. I
+                        I highlights the urgent need for educational support. 
                         appreciate the practical suggestions for donating and
                         volunteering. Together, we can make a real difference!
                       </p>
@@ -780,8 +768,8 @@ const BlogDetails1 = () => {
                     </div>
                   </div>
                   <hr className="my-6 border-gray-200" />
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             </div>
 
             {/* Sidebar */}
@@ -835,7 +823,9 @@ const BlogDetails1 = () => {
                       <li
                         key={category}
                         className={
-                          index === 2 ? "text-teal-700 font-medium" : "dark:text-slate-900 text-black "
+                          index === 4
+                            ? "text-teal-700 font-medium"
+                            : "dark:text-slate-900 text-black "
                         }
                       >
                         <a
@@ -919,33 +909,7 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
 
-                    <div className="">
-                      <div className="flex gap-3">
-                        <div className="flex-shrink-0 w-20 h-20 relative">
-                          <Link href="/past-event-details-1">
-                            <Image
-                              src={relatedPostImg3}
-                              alt="Past Event 1"
-                              fill
-                              className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                            />
-                          </Link>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                            <Clock className="w-3 h-3 text-teal-500 " />
-                            <span>September 03, 2024</span>
-                          </div>
-                          <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                            <a href="/past-event-details-1">
-                              Empowering Futures Through Accessible Education
-                              for All
-                            </a>
-                          </h4>
-                        </div>
-                      </div>
-                      <hr className="my-4 border-gray-200" />
-                    </div>
+                    
 
                     <div className="">
                       <div className="flex gap-3">
@@ -1034,32 +998,7 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
 
-                    <div className="">
-                      <div className="flex gap-3">
-                        <div className="flex-shrink-0 w-20 h-20 relative">
-                          <Link href="/past-event-details-2">
-                            <Image
-                              src={relatedPostImg7}
-                              alt="Past Event 2"
-                              fill
-                              className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                            />
-                          </Link>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                            <Clock className="w-3 h-3 text-teal-500 " />
-                            <span>November 09, 2024</span>
-                          </div>
-                          <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                            <a href="/past-event-details-2">
-                              Quality Medicine: Empowering a Healthier Community
-                            </a>
-                          </h4>
-                        </div>
-                      </div>
-                      <hr className="my-4 border-gray-200" />
-                    </div>
+                 
 
                     <div className="">
                       <div className="flex gap-3">
@@ -1145,32 +1084,6 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
 
-                    <div className="">
-                      <div className="flex gap-3">
-                        <div className="flex-shrink-0 w-20 h-20 relative">
-                          <Link href="/past-event-details-3">
-                            <Image
-                              src={relatedPostImg11}
-                              alt="Past Event 3"
-                              fill
-                              className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                            />
-                          </Link>
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                            <Clock className="w-3 h-3 text-teal-500 " />
-                            <span>February 24, 2024</span>
-                          </div>
-                          <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                            <a href="/past-event-details-3">
-                              Nourished Communities: The Power of Good Food
-                            </a>
-                          </h4>
-                        </div>
-                      </div>
-                      <hr className="my-4 border-gray-200" />
-                    </div>
 
                     <div className="">
                       <div className="flex gap-3">

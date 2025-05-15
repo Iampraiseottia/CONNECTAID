@@ -9,7 +9,6 @@ import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 import Upcoming from "../components/Upcoming";
-import Past from "../components/Past";
 
 import { motion } from "motion/react";
 
@@ -17,7 +16,7 @@ import Metadata from "../components/Metadata";
 
 const Events = () => {
   const metadata = {
-    title: "Events - ConnectAID Web Application",
+    title: "Upcoming Charity Events - ConnectAID Web Application",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
@@ -40,18 +39,16 @@ const Events = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="EVENTS"
-          description="EVENT LIST"
+          title="UPCOMING EVENTS"
+          description="UPCOMING EVENT LIST"
           breadcrumAlt="EVENTS Hero Background Image"
-          breadcrumbImage="/gallery/breadcrumb-1.png"
+          breadcrumbImage="/gallery/breadcrumb-1.png" 
         />
       </motion.div>
 
       {/* Upcoming Events */}
       <Upcoming />
 
-      {/* Upcoming Events */}
-      <Past />
 
       {/* Picture Gallery  */}
       <Gallery />
