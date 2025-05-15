@@ -1,46 +1,45 @@
 "use client";
 
-import globalStyle from "../globals.css";
-
-import { useState } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
+
+import { useState, useRef } from "react";
+
+import globalStyle from "../globals.css";
+
+import Metadata from "../components/Metadata";
+
+import { motion } from "motion/react";
+
+import { User, MessageSquare, Clock, DollarSign } from "lucide-react";
+
+import Facebook from "/public/icon/fb.png";
+import Youtube from "/public/icon/youtube.png";
+import Instagram from "/public/icon/ig.png";
+import LinkedIn from "/public/icon/linkedin.png";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import { Clock, DollarSign, MessageSquare, User } from "lucide-react";
-
-import { motion } from "motion/react";
-
-import Metadata from "../components/Metadata";
-
 import relatedPostImg1 from "/public/gallery/donateList-1.png";
 import relatedPostImg2 from "/public/gallery/gallery-4.png";
-import relatedPostImg3 from "/public/gallery/gallery-20.png";
 import relatedPostImg4 from "/public/urgent/urgent-1.png";
 import relatedPostImg5 from "/public/gallery/donationList-2.png";
 import relatedPostImg6 from "/public/gallery/gallery-1.png";
-import relatedPostImg7 from "/public/gallery/gallery-3.png";
 import relatedPostImg8 from "/public/gallery/gallery-2.png";
 import relatedPostImg9 from "/public/blog/blog-5.png";
 import relatedPostImg10 from "/public/gallery/education.png";
-import relatedPostImg11 from "/public/gallery/gallery-13.png";
 import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails2 = () => {
   const metadata = {
-    title: "Empower minds, change futures - ConnectAID Web Application",
+    title:
+      "Quality Medicine: Empowering a Healthier Community - ConnectAID Web Application",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
-
-  const [selectedPayment, setSelectedPayment] = useState("mtn");
-  const [selectedAmount, setSelectedAmount] = useState(1000);
-  const [agreedToTerms, setAgreedToTerms] = useState(true);
 
   return (
     <main className="bg-[#f9f9f9]">
@@ -60,21 +59,20 @@ const DonationDetails2 = () => {
         <Breadcrumb
           homeTitle="HOME"
           homeSlug="/"
-          title="EDUCATION"
-          description="Empower minds, change futures"
+          title="MEDICINE"
+          description="Quality Medicine: Empowering a Healthier Community"
           breadcrumAlt="Hero Background Image"
           breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>
 
+      {/* Past Event Details Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row gap-6">
-            {/* Main Content - Left Section */}
-            <div className="w-full lg:w-2/3">
-              {/* Donate Details */}
-              <div className="rounded-lg shadow-md overflow-hidden mb-12">
-                {/* Hero Image */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-9">
+              <div className="rounded-lg overflow-hidden shadow-md">
+                {/* Blog Main Image */}
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}
                   whileInView={{ y: 0, opacity: 1 }}
@@ -84,7 +82,7 @@ const DonationDetails2 = () => {
                 >
                   <div className="">
                     <Image
-                      src="/gallery/education.png"
+                      src="/gallery/medicine2.png"
                       alt="Blog main image"
                       width={500}
                       height={500}
@@ -93,323 +91,329 @@ const DonationDetails2 = () => {
                     />
                   </div>
                   <div className="absolute top-0 left-0">
-                    <Image
-                      src="/gallery/brush.png"
-                      alt="Brush background"
-                      width={200}
-                      height={100}
-                      className="w-full h-auto"
-                    />
+                    <div className=" bg-emerald-600 text-white p-3 text-center rounded">
+                      <p className="text-xl font-bold tracking-wide ">
+                        09 November 2024
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
 
-                {/* Donation Content */}
-                <div className="p-6 md:p-8">
+                {/* Blog Info */}
+                <div className="p-6 bg-white">
+                  <div className="mb-6">
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-wrap gap-4 mb-5 items-center"
+                    >
+                      <div className="flex gap-2 items-center">
+                        <User className="w-5 h-5 text-gray-700" />
+                        <p className="text-gray-600 text-sm">By: admin</p>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <MessageSquare className="w-5 h-5 text-gray-700" />
+                        <p className="text-gray-600 text-sm">Medicine</p>
+                      </div>
+                    </motion.div>
+
+                    <motion.h1
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-2xl md:text-3xl font-bold text-gray-800 mb-4"
+                    >
+                      Quality Medicine: Empowering a Healthier Community: A
+                      Charity Event Overview
+                    </motion.h1>
+
+                    <motion.p
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-600 mb-6"
+                    >
+                      Access to quality healthcare is a fundamental human right,
+                      yet many communities around the world face significant
+                      barriers to receiving adequate medical care. To address
+                      these challenges, a charity event titled "Quality
+                      Medicine: Empowering a Healthier Community" was organized
+                      to raise awareness and funds for healthcare initiatives
+                      aimed at improving access to quality medicine and health
+                      services.
+                    </motion.p>
+
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
+
+                    {/* Multiple Images */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="flex flex-col md:flex-row gap-5 my-8"
+                    >
+                      <div className="w-full md:w-1/2">
+                        <Image
+                          src="/gallery/medicine.png"
+                          alt="Events Picture image 1"
+                          width={400}
+                          height={300}
+                          className="w-full h-auto rounded-lg"
+                        />
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <Image
+                          src="/gallery/medicine3.png"
+                          alt="Events Picture image 2"
+                          width={400}
+                          height={300}
+                          className="w-full h-auto rounded-lg"
+                        />
+                      </div>
+                    </motion.div>
+
+                    <motion.hr
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="my-6 border-gray-200"
+                    />
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                      viewport={{ once: true, amount: 0.1 }}
+                      className="text-gray-700 mb-6"
+                    >
+                      <h3 className="font-bold text-2xl ">Event Overview</h3>{" "}
+                      <br />
+                      <h3 className="font-bold text-xl ">Date and Location</h3>
+                      <p className="mt-1">
+                        The charity event took place on November 09, 2024, at
+                        the Bingo General Hospital Mutengene, South-west,
+                        Cameroon. The venue was selected for its central
+                        location and capacity to accommodate a diverse audience,
+                        including healthcare professionals, community members,
+                        local businesses, and philanthropists..
+                      </p>
+                      <br />
+                      <h3 className="font-bold text-xl ">Objectives</h3>
+                      <p className="mt-1">
+                        The primary objectives of the event were:
+                      </p>
+                      <ul>
+                        <li> Funds medical bills for patients </li>
+                        <li>Donate medicine and other equipments </li>
+                        <li>Engage the Community </li>
+                      </ul>
+                      <br />
+                      <h3 className="font-bold text-xl ">Event Activities</h3>
+                      <h3 className="font-bold text-xl ">
+                        1. Keynote Speakers
+                      </h3>
+                      <p>
+                        The event featured a lineup of esteemed keynote
+                        speakers, including healthcare professionals, public
+                        health advocates, and community leaders. They shared
+                        their insights on the importance of quality healthcare
+                        and the challenges faced by underserved populations.
+                        Their powerful stories and experiences resonated with
+                        the audience, emphasizing the need for collective action
+                        to improve health outcomes in the community.
+                      </p>
+                      <br />
+                      <h3 className="font-bold text-xl ">
+                        2. Panel Discussions
+                      </h3>
+                      <p className="mt-1">
+                        A series of panel discussions were held, focusing on
+                        various topics related to healthcare access, such as:
+                      </p>
+                      <ul className="ml-7 leading-8 ">
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Barriers to Healthcare:
+                          </span>{" "}
+                          Exploring the social, economic, and systemic barriers
+                          that prevent individuals from accessing quality
+                          medical care.
+                        </li>
+
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Innovative Solutions:
+                          </span>{" "}
+                          Discussing successful programs and initiatives that
+                          have improved healthcare access in underserved
+                          communities.
+                        </li>
+
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            The Role of Community Health Workers:
+                          </span>{" "}
+                          Highlighting the vital role that community health
+                          workers play in bridging the gap between healthcare
+                          providers and the community
+                        </li>
+                      </ul>
+                      <br />
+                      <h3 className="font-bold text-xl ">
+                        3. Health Screenings and Services
+                      </h3>
+                      <p>
+                        A significant highlight of the event was the provision
+                        of free health screenings and services to attendees.
+                        Local healthcare providers offered services such as:
+                      </p>
+                      <ul className="ml-7 leading-8 ">
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Blood Pressure and Glucose Testing:
+                          </span>{" "}
+                          Attendees received free screenings to assess their
+                          blood pressure and glucose levels, with follow-up
+                          consultations available for those in need.
+                        </li>
+
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Health Education Workshops:
+                          </span>{" "}
+                          Informative workshops were conducted on topics such as
+                          nutrition, chronic disease management, and preventive
+                          care, empowering attendees with knowledge to make
+                          informed health decisions.
+                        </li>
+
+                        <li>
+                          {" "}
+                          <span className="font-bold">
+                            Vaccination Clinics:
+                          </span>{" "}
+                          On-site vaccination clinics were set up to provide
+                          essential immunizations to children and adults,
+                          ensuring that community members had access to
+                          preventive healthcare.
+                        </li>
+                      </ul>
+                      <br />
+                      <h3 className="font-bold text-xl ">4. Entertainment</h3>
+                      <p>
+                        To create an engaging atmosphere, the event included
+                        performances by locals, and student groups. These
+                        performances not only entertained the audience but also
+                        conveyed important health messages, reinforcing the
+                        event's theme of empowering a healthier community.
+                      </p>
+                      <br />
+                      <p>
+                        The "Quality Medicine: Empowering a Healthier Community"
+                        charity event was a resounding success, bringing
+                        together community members, healthcare professionals,
+                        and advocates to support a vital cause. By funds, and
+                        fostering community engagement.
+                      </p>
+                    </motion.div>
+                  </div>
+
+                  {/* Blog Info Tags and Share */}
                   <motion.div
                     initial={{ opacity: 0, y: 100 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    className="mb-6"
+                    className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mt-8 "
                   >
-                    <h4 className="text-2xl font-bold mb-3 mt-2">
-                      Your Support Can Empower Children's Future.
-                    </h4>
-                    <p className="text-gray-600 mb-6">
-                      Education is a fundamental human right and a powerful tool
-                      for personal and societal transformation. It has the
-                      potential to break the cycle of poverty, foster economic
-                      growth, and promote social equity. However, many
-                      individuals, especially in underserved communities, face
-                      significant barriers to accessing quality education. Your
-                      support can play a crucial role in empowering these
-                      individuals and helping them realize their full potential.
-                      Here’s a detailed explanation of how your contributions
-                      can make a difference.
-                    </p>
+                    <div className="flex items-center flex-wrap gap-2">
+                      <span className="px-4 py-2 bg-teal-600 text-white rounded-full text-sm">
+                        Medicine
+                      </span>
+                      <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                        Food
+                      </span>
+                      <span className="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                        Education
+                      </span>
+                    </div>
 
-                    {/* Alert */}
-                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 flex items-start mb-6">
-                      <div className="text-yellow-500 mr-3">
-                        <svg
-                          className="w-6 h-6"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
+                    <div className="flex items-center gap-4">
+                      <p className="text-gray-700 font-medium">Share:</p>
+                      <div className="flex gap-2">
+                        <Link
+                          href="#"
+                          className="bg-white p-2 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
                         >
-                          <path
-                            fillRule="evenodd"
-                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-gray-800">Notice:</h4>
-                        <p className="text-gray-600">
-                          Be The Source Of Someone's Joy Today. Please Ensure to
-                          DONATE something 🥺
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                      <div
-                        className="bg-green-600 h-2.5 rounded-full mt-4"
-                        style={{ width: "60.36%" }}
-                      ></div>
-                    </div>
-
-                    <div className="flex justify-between items-center mb-6 leading-8">
-                      <div className="flex gap-6">
-                        <div>
-                          <p className="text-gray-600">10, 000, 000 Francs</p>
-                          <h4 className="font-semibold">Goals</h4>
-                        </div>
-                        <div>
-                          <p className="text-gray-600">6, 126, 750 Francs</p>
-                          <h4 className="font-semibold">Raised</h4>
-                        </div>
-                      </div>
-                      <button className="text-green-600 p-2 border border-green-600 rounded-full hover:bg-green-50">
-                        <svg
-                          className="w-5 h-5 transform rotate-180"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
+                          <Image
+                            src={Facebook}
+                            alt="Facebook Icon"
+                            className="text-white h-9 w-9"
+                          />
+                        </Link>
+                        <Link
+                          href="#"
+                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
                         >
-                          <path
-                            fillRule="evenodd"
-                            d="M7.707 3.293a1 1 0 010 1.414L5.414 7H11a7 7 0 017 7v2a1 1 0 11-2 0v-2a5 5 0 00-5-5H5.414l2.293 2.293a1 1 0 11-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                            clipRule="evenodd"
-                          ></path>
-                        </svg>
-                      </button>
-                    </div>
-                  </motion.div>
-
-                  {/* Payment Method */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
-                      Select Payment Method
-                    </h4>
-                    <div className="space-y-3 ">
-                      <div className="flex items-center">
-                        <input
-                          id="mtn-momo"
-                          type="radio"
-                          name="mtn-momo"
-                          value="mtn"
-                          checked={selectedPayment === "mtn"}
-                          onChange={() => setSelectedPayment("mtn")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600 "
-                        />
-                        <label
-                          htmlFor="mtn-momo"
-                          className="ml-2 text-gray-700"
+                          <Image
+                            src={Youtube}
+                            alt="Youtube Icon"
+                            className="text-white h-6 w-6"
+                          />
+                        </Link>
+                        <Link
+                          href="#"
+                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
                         >
-                          MTN Mobile Money
-                        </label>
-                      </div>
-                      <div className="flex items-center">
-                        <input
-                          id="orange-momo"
-                          type="radio"
-                          name="payment"
-                          value="orange"
-                          checked={selectedPayment === "orange"}
-                          onChange={() => setSelectedPayment("orange")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
-                        />
-                        <label
-                          htmlFor="orange-momo"
-                          className="ml-2 text-gray-700"
+                          <Image
+                            src={Instagram}
+                            alt="Instagram Icon"
+                            className="text-white h-6 w-6"
+                          />
+                        </Link>
+                        <Link
+                          href="#"
+                          className="bg-white p-3 flex justify-center items-center rounded-full hover:scale-105 transition-all ease-in-out hover:cursor-pointer"
                         >
-                          ORANGE Mobile Money
-                        </label>
+                          <Image
+                            src={LinkedIn}
+                            alt="Linked Icon"
+                            className="text-white h-6 w-6"
+                          />
+                        </Link>
                       </div>
                     </div>
-                  </motion.div>
-
-                  {/* Amount */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <button className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black">
-                      Select An Amount From Available Options Below
-                    </button>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                      {[
-                        500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
-                        5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
-                        9500, 10000, 50000, 100000, 500000, 1000000,
-                      ].map((amount) => (
-                        <button
-                          key={amount}
-                          onClick={() => setSelectedAmount(amount)}
-                          className={`py-2 px-4 rounded border ${
-                            selectedAmount === amount
-                              ? "bg-green-600 text-white border-green-600"
-                              : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                          }`}
-                        >
-                          {amount} Frs
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-
-                  {/* Details */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Payment Details</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="Mobile Money Number e.g +237 686 529 762*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                          name="Mobile_Money_Number"
-                          id="Mobile_Money_Number"
-                        />
-                        <input
-                          type="text"
-                          name="Mobile_Money_Name"
-                          id="Mobile_Money_Name"
-                          placeholder="Mobile Money Name e.g Alex Jordan*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                        />
-                      </div>
-                      <input
-                        type="text"
-                        placeholder="Your Full Name*"
-                        className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                        name="Full_Name"
-                        id="Full_Name"
-                      />
-                    </div>
-                  </motion.div>
-
-                  {/* Address */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Address</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="email"
-                          placeholder="Email Address e.g name@gmail.com*"
-                          name="Email_Address"
-                          id="Email_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Region e.g South-west*"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                          name="Region"
-                          id="Region"
-                        />
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <input
-                          type="text"
-                          placeholder="City/Town e.g Limbe*"
-                          name="City_Town"
-                          id="City_Town"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
-                          name="Home_Address"
-                          id="Home_Address"
-                          className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black"
-                        />
-                      </div>
-                    </div>
-                  </motion.div>
-
-                  {/* Terms */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-20 "
-                  >
-                    <div className="flex items-center ">
-                      <input
-                        id="terms"
-                        type="checkbox"
-                        checked={agreedToTerms}
-                        onChange={() => setAgreedToTerms(!agreedToTerms)}
-                        className="w-4 h-4 text-green-600 focus:ring-green-500 dark:bg-white dark:text-black"
-                      />
-                      <label htmlFor="terms" className="ml-2 text-gray-700">
-                        I agree with the Terms Of service
-                      </label>
-                    </div>
-                  </motion.div>
-
-                  {/* Action Buttons */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="flex flex-wrap gap-4 -mt-10 mb-10 "
-                  >
-                    <button className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition">
-                      Donate Now
-                    </button>
-                    <button className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition">
-                      Total Donation: ${selectedAmount}
-                    </button>
                   </motion.div>
                 </div>
-                {/* <p className="text-[]">We love you</p> */}
               </div>
 
-              <motion.hr
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                viewport={{ once: true, amount: 0.1 }}
-                className="my-6 border-gray-200"
-              />
-
-              {/* Related Blogs Section */}
+              {/* Related Event Section */}
               <div className="mt-12">
                 <motion.h3
                   initial={{ opacity: 0, y: 100 }}
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.5 }}
                   viewport={{ once: true, amount: 0.1 }}
-                  className="text-xl font-bold text-gray-800 mb-6"
+                  className="text-xl font-bold text-gray-800 mb-6 mt-10 "
                 >
-                  Related Blogs
+                  Related Past Events
                 </motion.h3>
 
                 <motion.div
@@ -420,6 +424,48 @@ const DonationDetails2 = () => {
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
                   {/* {[1, 2].map((item) => ( */}
+                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div className="relative h-72">
+                      <Link href="/blog-details-1">
+                        <Image
+                          src="/gallery/pastevent.png"
+                          alt="Related blog"
+                          fill
+                          className="object-cover hover:scale-105 ease-in-out duration-200 "
+                        />
+                      </Link>
+                    </div>
+                    <div className="p-6">
+                      <div className="flex flex-wrap gap-4 mb-4 items-center">
+                        <div className="flex gap-2 items-center">
+                          <User className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">By: admin</p>
+                        </div>
+                        <div className="flex gap-2 items-center">
+                          <MessageSquare className="w-4 h-4 text-gray-700" />
+                          <p className="text-gray-600 text-sm">Education</p>
+                        </div>
+                      </div>
+
+                      <h4 className="text-lg font-bold text-gray-800 mb-3">
+                        Empowering Futures Through Accessible Education for All
+                      </h4>
+
+                      <p className="text-gray-600 mb-6 text-sm">
+                        Education transforms lives, fostering opportunities and
+                        breaking barriers for under-served communities
+                        worldwide.
+                      </p>
+
+                      <Link
+                        href="/blog-details-1"
+                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </div>
+                  {/* ))} */}
                   <div className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-72">
                       <Link href="/blog-details-3">
@@ -444,60 +490,16 @@ const DonationDetails2 = () => {
                       </div>
 
                       <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Nourishing Communities: The Power of Good and Quality
-                        Food
+                        Nourishing Communities: The Power of Good Food
                       </h4>
 
                       <p className="text-gray-600 mb-6 text-sm">
-                        Food sustains life, nurtures community bonds, and fights
-                        hunger, contributing to a healthier and more equitable
-                        world for all.
+                        Food sustains life, fosters community, and combats
+                        hunger for a healthier, more equitable world.
                       </p>
 
                       <Link
                         href="/blog-details-3"
-                        className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
-                      >
-                        Read More
-                      </Link> 
-                    </div>
-                  </div>
-                  {/* ))} */}
-                  <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div className="relative h-72">
-                      <Link href="/blog-details-1">
-                        <Image
-                          src="/gallery/event-6.png"
-                          alt="Related blog"
-                          fill
-                          className="object-cover hover:scale-105 ease-in-out duration-200 "
-                        />
-                      </Link>
-                    </div>
-                    <div className="p-6">
-                      <div className="flex flex-wrap gap-4 mb-4 items-center">
-                        <div className="flex gap-2 items-center">
-                          <User className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">By: admin</p>
-                        </div>
-                        <div className="flex gap-2 items-center">
-                          <MessageSquare className="w-4 h-4 text-gray-700" />
-                          <p className="text-gray-600 text-sm">EDUCATION</p>
-                        </div>
-                      </div>
-
-                      <h4 className="text-lg font-bold text-gray-800 mb-3">
-                        Empowering Futures Through Accessible Education for All
-                      </h4>
-
-                      <p className="text-gray-600 mb-6 text-sm">
-                        Education transforms lives, fostering opportunities and
-                        breaking barriers for under-served communities
-                        worldwide.
-                      </p>
-
-                      <Link
-                        href="/blog-details-1"
                         className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
                       >
                         Read More
@@ -506,210 +508,48 @@ const DonationDetails2 = () => {
                   </div>
                 </motion.div>
               </div>
-
-              <motion.hr
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                viewport={{ once: true, amount: 0.1 }}
-                className="my-6 border-gray-200"
-              />
-
-              {/* Donation Content */}
-              <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                viewport={{ once: true, amount: 0.1 }}
-                className="mb-12"
-              >
-                <p className="text-gray-600 mb-4">
-                  <b>
-                    <strong>Real Life Story, Real Impact</strong>
-                  </b>
-                  <br />
-                  Amina is a 14-year-old girl from a small village in a rural
-                  area where access to quality education is limited. Growing up
-                  in a family of five, her parents worked tirelessly as farmers,
-                  earning just enough to provide for basic needs. Despite their
-                  hard work, they struggled to afford school fees, uniforms, and
-                  supplies for Amina and her younger siblings. Amina story is
-                  just one of many that illustrate the profound impact your
-                  donations can have.
-                </p>
-                <p className="text-gray-600 mb-6">
-                  Education is a challenge we can overcome, and with your
-                  support, we can build a future where everyone has access to
-                  the knowledge and skills they need to succeed. Join us in the
-                  mission to empower individuals in our local communities
-                  through education. Your contribution can transform lives and
-                  foster a stronger, more equitable society for all.
-                </p>
-
-                <motion.hr
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="my-6 border-gray-200"
-                />
-
-                <h4 className="text-xl font-bold mb-3">Our Challenge </h4>
-                <p className="text-gray-600 mb-4">
-                  By addressing these challenges and working towards these
-                  goals, we can empower individuals through education and create
-                  a brighter, more equitable future for all. Together, we can
-                  make a lasting impact in our communities and they include:
-                </p>
-                <p className="text-gray-600 mb-4">
-                  <b>Access to Quality Education:</b> <br /> Many individuals,
-                  especially in underserved communities, face significant
-                  barriers to accessing quality education. This includes a lack
-                  of schools, inadequate facilities, and insufficient resources.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  <b>Economic Barriers:</b> <br /> The rising costs of
-                  education, including tuition, books, and supplies, can be
-                  prohibitive for low-income families. Many students are forced
-                  to drop out or forgo higher education due to financial
-                  constraints.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Language Barriers: </b> <br /> Non-native speakers may
-                  struggle in educational settings where the primary language of
-                  instruction is not their first language, making it difficult
-                  for them to fully engage and succeed.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Limited Awareness of Resources:</b> <br /> Many individuals
-                  are unaware of the educational resources and support available
-                  to them, which can prevent them from seeking help and
-                  accessing opportunities.
-                </p>
-
-                <motion.hr
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="my-6 border-gray-200"
-                />
-
-                <h4 className="text-xl font-bold mb-3">Our Goals </h4>
-                <p className="text-gray-600 mb-4">
-                  Our goal is to create a community where everyone has access to
-                  good and quality education. We aim to achieve this through a
-                  comprehensive approach that includes:
-                </p>
-                <p className="text-gray-600 mb-4">
-                  <b>Increase Access to Education: </b> <br /> Our primary goal
-                  is to ensure that all individuals, regardless of their
-                  background, have access to quality education. This includes
-                  building more schools, providing transportation, and ensuring
-                  that educational facilities are equipped with necessary
-                  resources.
-                </p>
-                <p className="text-gray-600 mb-4">
-                  <b>Provide Financial Support: </b> <br /> We aim to establish
-                  scholarship programs and financial aid initiatives to
-                  alleviate the economic burden of education. This will help
-                  students cover tuition, books, and other essential expenses.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Enhance Teacher Training and Support: I</b> <br /> We will
-                  work to improve teacher training programs and provide ongoing
-                  professional development to ensure that educators are
-                  well-equipped to meet the needs of their students.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Promote Inclusivity and Diversity: </b> <br /> Our goal is
-                  to create an inclusive educational environment that respects
-                  and accommodates the diverse cultural backgrounds of all
-                  students. This includes implementing programs that encourage
-                  the participation of underrepresented groups.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Language Support Programs: I</b> <br /> We will develop
-                  language support programs for non-native speakers to help them
-                  improve their language skills and succeed in their studies.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Raise Awareness and Advocacy:</b> <br /> We aim to increase
-                  awareness of available educational resources and support
-                  systems within communities. This includes outreach programs,
-                  workshops, and partnerships with local organizations to ensure
-                  that individuals know how to access the help they need.
-                </p>
-
-                <p className="text-gray-600 mb-4">
-                  <b>Foster Community Engagement: </b> <br /> We will encourage
-                  community involvement in education through volunteer
-                  opportunities, mentorship programs, and collaborative events
-                  that bring together students, educators, and community
-                  members.
-                </p>
-
-                <motion.hr
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="my-6 border-gray-200"
-                />
-              </motion.div>
             </div>
 
-            {/* Sidebar - Right Section */}
-            <div className="w-full lg:w-1/3">
-              {/* Category */}
-              <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                viewport={{ once: true, amount: 0.1 }}
-                className="mb-8"
-              >
-                <div className="flex justify-between items-center mb-4">
-                  <p className="text-gray-600 font-medium">Category List</p>
-                  <div className="flex space-x-1">
-                    <div className="h-1 w-6 bg-green-600 rounded"></div>
-                    <div className="h-1 w-6 bg-gray-200 rounded"></div>
-                  </div>
-                </div>
+            {/* Sidebar */}
+            <div className="lg:col-span-3">
+              <div className="space-y-8">
+                {/* Category List */}
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
+                  <h3 className="text-lg font-bold text-gray-800 mb-2">
+                    Category List
+                  </h3>
 
-                <div className="bg-white rounded-lg shadow-sm p-4">
                   <ul className="space-y-2">
-                    {[
-                      { name: "Food", active: false },
-                      { name: "Medical", active: false },
-                      { name: "Water", active: false },
-                      { name: "Education", active: true },
-                    ].map((category, index) => (
-                      <li
-                        key={index}
-                        className={`py-2 px-4 rounded transition ${
-                          category.active
-                            ? "bg-green-50 text-green-600 font-semibold"
-                            : "hover:bg-gray-50 dark:text-slate-900 text-black"
-                        }`}
-                      >
-                        {/* <a href="#" className="flex items-center"> */}
-                        {category.active && (
-                          <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
-                        )}
-                        {category.name}
-                        {/* </a> */}
-                      </li>
-                    ))}
+                    {["Food", "Medical", "Education", "Shelter", "Water"].map(
+                      (category, index) => (
+                        <li
+                          key={category}
+                          className={
+                            index === 1
+                              ? "text-teal-700 font-medium"
+                              : "dark:text-slate-900 text-black "
+                          }
+                        >
+                          <a
+                            href="/blog-details-1"
+                            className="hover:text-teal-600 hover:text-[17px] ease-in-out transition-colors"
+                          >
+                            {category}
+                          </a>
+                        </li>
+                      )
+                    )}
                   </ul>
-                </div>
-              </motion.div>
+                </motion.div>
+              </div>
+
+              <br />
 
               {/* Related Posts */}
               <motion.div
@@ -717,7 +557,7 @@ const DonationDetails2 = () => {
                 whileInView={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
                 viewport={{ once: true, amount: 0.1 }}
-                className="bg-white rounded-lg shadow-md p-6"
+                className="bg-white rounded-lg shadow-md p-6" 
               >
                 Global
                 <h3 className="text-lg font-bold text-gray-800 mb-2">
@@ -774,34 +614,6 @@ const DonationDetails2 = () => {
                           <a href="/donation-details-6">
                             Act now, save lives—your donation can support those
                             facing extreme hardships and urgent needs!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-1">
-                          <Image
-                            src={relatedPostImg3}
-                            alt="Past Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>September 03, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-1">
-                            Empowering Futures Through Accessible Education for
-                            All
                           </a>
                         </h4>
                       </div>
@@ -898,33 +710,6 @@ const DonationDetails2 = () => {
 
                   <div className="">
                     <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-2">
-                          <Image
-                            src={relatedPostImg7}
-                            alt="Past Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>November 09, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-2">
-                            Quality Medicine: Empowering a Healthier Community
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-3">
                           <Image
@@ -1009,33 +794,6 @@ const DonationDetails2 = () => {
 
                   <div className="">
                     <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-3">
-                          <Image
-                            src={relatedPostImg11}
-                            alt="Past Event 3"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>February 24, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-3">
-                            Nourished Communities: The Power of Good Food
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-4">
                           <Image
@@ -1063,6 +821,8 @@ const DonationDetails2 = () => {
                   </div>
                 </div>
               </motion.div>
+
+              <br />
 
               {/* Tags */}
               <motion.div

@@ -1142,13 +1142,13 @@ const BlogDetails1 = () => {
                 <div className="bg-white rounded-lg shadow-md p-6 text-center">
                   <div className="w-20 h-20 mx-auto mb-4 relative">
                     <Image
-                      src="/gallery/user.png"
+                      src="/team/cute.jpg"
                       alt="Author"
                       fill
                       className="rounded-full object-cover"
                     />
                   </div>
-                  <h4 className="font-bold text-gray-800 mb-2">Jonny Sophia</h4>
+                  <h4 className="font-bold text-gray-800 mb-2">Ottia Praise</h4>
                   <p className="text-gray-600 mb-4">
                     Hi! amazing people. I`m the author of this blog.
                   </p>
