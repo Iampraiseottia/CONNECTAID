@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import NewRequest from "../components/NewRequest";
 
@@ -90,80 +90,6 @@ const Campaigns_Seeker = () => {
       requirements:
         "Physical activity required, bring your own gloves if possible",
       contact: "garden@greenthumb.org",
-    },
-  ]);
-
-  // Past campaigns data with success metrics
-  const [pastCampaigns, setPastCampaigns] = useState([
-    {
-      id: 101,
-      title: "Winter Clothing Collection",
-      organizer: "Helping Hands",
-      date: "2025-01-10",
-      category: "Food & Supplies",
-      participants: 32,
-      successRate: 98,
-      impactScore: 9.5,
-      peopleHelped: 156,
-      description:
-        "Collected winter clothing for local homeless shelters during the coldest months of the year.",
-      image: "/api/placeholder/400/300",
-    },
-    {
-      id: 102,
-      title: "City Park Restoration",
-      organizer: "Green Earth",
-      date: "2025-02-15",
-      category: "Environmental",
-      participants: 45,
-      successRate: 92,
-      impactScore: 8.7,
-      peopleHelped: 1200,
-      description:
-        "Restored park areas damaged by recent storms, planted new trees and cleaned public spaces.",
-      image: "/api/placeholder/400/300",
-    },
-    {
-      id: 103,
-      title: "Senior Digital Literacy",
-      organizer: "Tech For All",
-      date: "2025-03-01",
-      category: "Education",
-      participants: 18,
-      successRate: 95,
-      impactScore: 9.2,
-      peopleHelped: 72,
-      description:
-        "Taught basic computer and internet skills to seniors to help them stay connected.",
-      image: "/api/placeholder/400/300",
-    },
-    {
-      id: 104,
-      title: "Children's Hospital Fun Day",
-      organizer: "Smile Foundation",
-      date: "2025-03-20",
-      category: "Healthcare",
-      participants: 25,
-      successRate: 100,
-      impactScore: 9.8,
-      peopleHelped: 48,
-      description:
-        "Organized games and activities for children undergoing long-term treatment.",
-      image: "/api/placeholder/400/300",
-    },
-    {
-      id: 105,
-      title: "Flood Relief Effort",
-      organizer: "Crisis Response",
-      date: "2025-04-05",
-      category: "Crisis Relief",
-      participants: 60,
-      successRate: 97,
-      impactScore: 9.9,
-      peopleHelped: 320,
-      description:
-        "Provided emergency supplies and assistance to families affected by spring flooding.",
-      image: "/api/placeholder/400/300",
     },
   ]);
 
@@ -260,16 +186,6 @@ const Campaigns_Seeker = () => {
     indexOfLastItem
   );
 
-  // For past campaigns pagination
-  const [pastCampaignsPage, setPastCampaignsPage] = useState(1);
-  const pastCampaignsPerPage = 5;
-  const indexOfLastPastItem = pastCampaignsPage * pastCampaignsPerPage;
-  const indexOfFirstPastItem = indexOfLastPastItem - pastCampaignsPerPage;
-  const currentPastCampaigns = pastCampaigns.slice(
-    indexOfFirstPastItem,
-    indexOfLastPastItem
-  );
-
   // Joining Campaign
   const [joinedCampaignIds, setJoinedCampaignIds] = useState({});
 
@@ -280,6 +196,39 @@ const Campaigns_Seeker = () => {
       [campaignId]: true,
     }));
   };
+
+  // Fetching Past Successful Event Data from Postgres
+
+  const [pastEvents, setPastEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch past events
+  useEffect(() => {
+    async function fetchPastEvents() {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/pastEvents");
+
+        if (!response.ok) {
+          throw new Error(`API responded with status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setPastEvents(data.events || []);
+      } catch (err) {
+        console.error("Error fetching past events:", err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchPastEvents();
+  }, []);
+
+  if (error)
+    return <div className="text-center p-10 text-red-500">Error: {error}</div>;
 
   return (
     <motion.div
@@ -468,98 +417,111 @@ const Campaigns_Seeker = () => {
             Review our previous campaigns and their impact on the community
           </p>
 
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
-              <thead className="bg-gray-100 dark:bg-gray-700">
-                <tr>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    Campaign
-                  </th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell">
-                    Date
-                  </th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
-                    Category
-                  </th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    Success Rate
-                  </th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    Impact Score
-                  </th>
-                  <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
-                    Details
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                {currentPastCampaigns.map((campaign) => (
-                  <tr
-                    key={campaign.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
-                      {campaign.title}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
-                      {campaign.date}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
-                      <span
-                        className="px-2 py-1 text-xs font-semibold rounded-full 
-                        bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
-                      >
-                        {campaign.category}
-                      </span>
-                    </td>
-                    <td className="py-4 px-4 text-sm">
-                      <div className="flex items-center">
-                        <div className="w-full bg-gray-200 rounded-full h-2 mr-2 dark:bg-gray-700">
-                          <div
-                            className="bg-green-600 h-2 rounded-full"
-                            style={{ width: `${campaign.successRate}%` }}
-                          ></div>
-                        </div>
-                        <span className="text-gray-700 dark:text-gray-200">
-                          {campaign.successRate}%
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            size={16}
-                            className={`${
-                              i < Math.floor(campaign.impactScore / 2)
-                                ? "text-yellow-400"
-                                : "text-gray-300 dark:text-gray-600"
-                            }`}
-                            fill={
-                              i < Math.floor(campaign.impactScore / 2)
-                                ? "currentColor"
-                                : "none"
-                            }
-                          />
-                        ))}
-                        <span className="ml-2">{campaign.impactScore}/10</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-4 text-sm">
-                      <button
-                        onClick={() => handleViewPastDetails(campaign)}
-                        className="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-md hover:bg-indigo-200 flex items-center gap-1 dark:bg-indigo-900 dark:text-indigo-300 dark:hover:bg-indigo-800"
-                      >
-                        <Eye size={14} />
-                        <span className="hidden sm:inline">View Impact</span>
-                      </button>
-                    </td>
+          {isLoading ? (
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500 flex justify-center items-center text-center"></div>
+          ) : error ? (
+            <p className="text-red-500">
+              Error loading Past Successful Events: {error}
+            </p>
+          ) : pastEvents.length === 0 ? (
+            <p>No Past Events Found.</p>
+          ) : (
+            <motion.div  initial={{ opacity: 0, y: 100 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            viewport={{ once: true, amount: 0.05 }} className="overflow-x-auto">
+              <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+                <thead className="bg-gray-100 dark:bg-gray-700">
+                  <tr>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                      Campaign
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell">
+                      Date
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
+                      Category
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                      Success Rate
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                      Impact Score
+                    </th>
+                    <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                      Details
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                  {pastEvents.map((event) => (
+                    <tr
+                      key={event.id}
+                      className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                    >
+                      <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
+                        {event.campaigns}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
+                        {new Date(event.date).toLocaleDateString()}
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
+                        <span
+                          className="px-2 py-1 text-xs font-semibold rounded-full 
+                        bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
+                        >
+                          {event.category}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 text-sm">
+                        <div className="flex items-center">
+                          <div className="w-full bg-gray-200 rounded-full h-2 mr-2 dark:bg-gray-700">
+                            <div
+                              className="bg-green-600 h-2 rounded-full"
+                              style={{ width: `${event.success_rate}%` }}
+                            ></div>
+                          </div>
+                          <span className="text-gray-700 dark:text-gray-200">
+                            {event.success_rate}%
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={16}
+                              className={`${
+                                i < Math.floor(event.impact_score / 2)
+                                  ? "text-yellow-400"
+                                  : "text-gray-300 dark:text-gray-600"
+                              }`}
+                              fill={
+                                i < Math.floor(event.impact_score / 2)
+                                  ? "currentColor"
+                                  : "none"
+                              }
+                            />
+                          ))}
+                          <span className="ml-2">{event.impact_score}/10</span>
+                        </div>
+                      </td>
+                      <td className="py-4 px-4 text-sm">
+                        <button
+                          onClick={() => handleViewPastDetails(event)}
+                          className="px-3 py-1 bg-indigo-100 text-indigo-600 rounded-md hover:bg-indigo-200 flex items-center gap-1 dark:bg-indigo-900 dark:text-indigo-300 dark:hover:bg-indigo-800"
+                        >
+                          <Eye size={14} />
+                          <span className="hidden sm:inline">View Impact</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          )}
         </div>
       </div>
 
