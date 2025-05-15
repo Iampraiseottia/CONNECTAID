@@ -36,7 +36,7 @@ const ConnectAID_App = () => {
   const [isHoveredSupport, setIsHoveredSupport] = useState(false);
   const [isHoveredEducation, setIsHoveredEducation] = useState(false);
   const [isHoveredDonations, setIsHoveredDonations] = useState(false);
-  const [isHoveredRequest, setIsHoveredRequest] = useState(false);
+  const [isHoveredCommunity, setIsHoveredCommunity] = useState(false);
 
   return (
     <main className="bg-[#f7f7f7]">
@@ -122,19 +122,19 @@ const ConnectAID_App = () => {
             </p>
           </div>
 
-          {/* Request Card */}
+          {/* Community Card */}
           <div
             className={`rounded-xl text-center shadow-md py-5 px-4 transition-all  ease-in-out h-full 
-            ${isHoveredRequest ? "bg-teal-600 shadow-xl" : "bg-white"}`}
-            onMouseEnter={() => setIsHoveredRequest(true)}
-            onMouseLeave={() => setIsHoveredRequest(false)}
+            ${isHoveredCommunity ? "bg-teal-600 shadow-xl" : "bg-white"}`}
+            onMouseEnter={() => setIsHoveredCommunity(true)}
+            onMouseLeave={() => setIsHoveredCommunity(false)}
           >
             <div className="flex justify-center">
               <FontAwesomeIcon
                 icon={faHandsHoldingChild}
                 className={`text-xl mb-4 mt-2 w-[50px] h-[50px] rounded-full p-4 transition-all  
                 ${
-                  isHoveredRequest
+                  isHoveredCommunity
                     ? "bg-white text-teal-600"
                     : "bg-teal-600 text-white"
                 }`}
@@ -142,18 +142,15 @@ const ConnectAID_App = () => {
             </div>
             <h1
               className={`mb-4 text-2xl md:text-3xl font-bold tracking-wide transition-colors  
-            ${isHoveredRequest ? "text-white" : "text-black"}`}
+            ${isHoveredCommunity ? "text-white" : "text-black"}`}
             >
-              Request
+              Community
             </h1>
             <p
               className={`mb-3 text-sm md:text-base px-3 transition-colors  
-            ${isHoveredRequest ? "text-white" : "text-slate-700"}`}
+            ${isHoveredCommunity ? "text-white" : "text-slate-700"}`}
             >
-              ConnectAID encourages you to submit your valid requests for
-              assistance. We ensure that your cry for assistance in a difficult
-              situation 🥺 is put to rest. We're here to support you every step
-              of the way!
+              Community bonds ⚧️ are vital for fostering support and resilience. By donating to help others, we strengthen these connections, promote empathy, and create a collective impact that uplifts everyone in need.
             </p>
           </div>
 

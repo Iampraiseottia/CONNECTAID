@@ -511,7 +511,7 @@ const Hero = () => {
             </p>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 lg:mb-10">
-              Donate to children & senior citizens of Cameroon
+              Donate to children & senior citizens of Cameroon 🇨🇲
             </h1>
 
             <p className="text-gray-300 mb-6 md:mb-8 lg:mb-10 text-sm sm:text-base md:text-lg max-w-2xl mr-2">

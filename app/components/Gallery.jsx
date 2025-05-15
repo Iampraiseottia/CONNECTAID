@@ -18,7 +18,6 @@ import galleryPic11 from "/public/gallery/medicine.jpg";
 import galleryPic12 from "/public/gallery/endHunger.png";
 import galleryPic13 from "/public/gallery/donationList-2.png";
 import galleryPic14 from "/public/gallery/gallery-3.png";
-import galleryPic15 from "/public/urgent/urgent-2.png";
 import galleryPic16 from "/public/urgent/urgent-1.png";
 import galleryPic17 from "/public/urgent/urgent-6.png";
 import galleryPic18 from "/public/gallery/gallery-11.png";
@@ -44,7 +43,6 @@ const Gallery = () => {
     { src: galleryPic12, alt: "Gallery Image 12" },
     { src: galleryPic13, alt: "Gallery Image 13" },
     { src: galleryPic14, alt: "Gallery Image 14" },
-    { src: galleryPic15, alt: "Gallery Image 15" },
     { src: galleryPic16, alt: "Gallery Image 16" },
     { src: galleryPic17, alt: "Gallery Image 17" },
     { src: galleryPic18, alt: "Gallery Image 18" },

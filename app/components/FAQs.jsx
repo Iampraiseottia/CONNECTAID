@@ -77,14 +77,14 @@ const FAQs = () => {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="font-extrabold text-3xl sm:text-4xl text-gray-900 dark:text-gray-900 lg:text-5xl mb-4 sm:mb-6 faq1"
       >
-        Any Questions 
+        Any Questions
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="text-lg sm:text-xl mb-6 sm:mb-10 md:w-[60%] faq1 text-gray-700 dark:text-gray-700" 
+        className="text-lg sm:text-xl mb-6 sm:mb-10 md:w-[60%] faq1 text-gray-700 dark:text-gray-700"
       >
         When deciding which charity to donate to, it's important to do your
         search and find one that aligns with your values and interests.
@@ -106,12 +106,11 @@ const FAQs = () => {
               What percentage of my donation goes directly to the cause?
             </summary>
             <p className="mt-2 ml-4 sm:ml-11 text-[18px]">
-              On average, 92% of donations made through our platform go directly
-              to the charitable programs. We maintain a standard 5% platform fee
+              On average, 97% of donations made through our platform go directly
+              to the charitable programs. We maintain a standard 3% platform fee
               to cover operational costs, payment processing, and security
-              measures. The remaining 3% covers payment processing fees.
-              However, you can always opt to cover these fees yourself, ensuring
-              100% of your intended donation reaches the charity.
+              measures. However, most of the time, 100% of your donations goes
+              to the intended recipients
             </p>
           </details>
 
@@ -121,7 +120,7 @@ const FAQs = () => {
             onClick={() => handleToggle(1)}
           >
             <summary className="font-semibold text-lg sm:text-xl cursor-pointer">
-              How can I track the impact of my donations and volunteering?
+              How can I track the impact of my donations?
             </summary>
             <p className="mt-2 ml-4 sm:ml-11 text-[18px]">
               Our impact dashboard provides real-time updates on how your
@@ -156,14 +155,13 @@ const FAQs = () => {
             onClick={() => handleToggle(3)}
           >
             <summary className="font-semibold text-lg sm:text-xl cursor-pointer">
-              Can I create fundraising campaigns for important causes?
+              How can Can I register my case?
             </summary>
             <p className="mt-2 ml-4 sm:ml-11 text-[18px]">
-              Absolutely, you can create fundraising campaigns for a variety of
-              important causes. Our platform allows you to personalize your
-              campaign to reflect the cause. However, please note that all
-              campaigns must be verified by our admins to ensure their
-              legitimacy before they go live.
+              Registration is done in 2 phases. Firstly, physical or on-line
+              registration of your case(community). After this is done a
+              thorough verification and validation is done. Lastly, after that
+              your case would be uploaded and read to receive your donations.
             </p>
           </details>
         </div>
