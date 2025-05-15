@@ -418,10 +418,13 @@ const Campaigns_Seeker = () => {
           </p>
 
           {isLoading ? (
-            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500 flex justify-center items-center text-center"></div>
+            <div className="flex justify-center items-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-Cteal-500 text-center"></div>
+            </div>
+            
           ) : error ? (
             <p className="text-red-500">
-              Error loading Past Successful Events: {error}
+              Error loading Past Successful Events: {error} 
             </p>
           ) : pastEvents.length === 0 ? (
             <p>No Past Events Found.</p>

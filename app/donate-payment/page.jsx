@@ -30,6 +30,7 @@ const DonatePayment = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [errors, setErrors] = useState({
     name: "",
@@ -37,6 +38,7 @@ const DonatePayment = () => {
     category: "",
     terms: "",
     payment: "",
+    phoneNumber: ""
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -93,6 +95,8 @@ const DonatePayment = () => {
   };
 
   const handleNameChange = (e) => {
+
+
     const value = e.target.value;
     setName(value);
 
@@ -107,6 +111,28 @@ const DonatePayment = () => {
       setErrors((prev) => ({ ...prev, name: "" }));
     }
   };
+
+
+
+  const handlePhoneNumberChange = (e) => {
+
+    const value = e.target.value;
+    setPhoneNumber(value);
+
+    const phoneNumberRegex = /^\+237[0-9]{9}$/;
+    if (!value.trim()) {
+      setErrors((prev) => ({ ...prev, phoneNumber: "Phone NUmber is required" }));
+    } else if (!phoneNumberRegex.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        phoneNumber: "Please enter a valid phone number as defined in the format below",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, phoneNumber: "" }));
+    }
+  };
+
+
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -137,6 +163,15 @@ const DonatePayment = () => {
   const amountDonate = useRef(null);
   const nameDonate = useRef(null);
   const emailDonate = useRef(null);
+  const phoneNumberDonate = useRef(null);
+
+
+  const onMouseEnterPhoneNumber = () => {
+    if (phoneNumber.current) {
+      phoneNumber.current.focus();
+    }
+  };
+
 
   const onMouseEnterAmountDonate = () => {
     if (amountDonate.current) {
@@ -164,14 +199,28 @@ const DonatePayment = () => {
       category: "",
       terms: "",
       payment: "",
+      phoneNumber: ""
     };
 
     if (!name.trim()) {
-      newErrors.name = "Name is required";
+      newErrors.name = "Full Name is required";
       valid = false;
     } else if (name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters";
+      newErrors.name = "Full Name must be at least 2 characters";
       valid = false;
+    }
+
+
+    if (!phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone number is required";
+      valid = false;
+    } else {
+      const phoneRegex = /^\+237[0-9]{9}$/;
+      if (!phoneRegex.test(phoneNumber.trim())) {
+        newErrors.phoneNumber =
+          "Phone Number must be in format +237 followed by 9 digits";
+        valid = false;
+      }
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -302,25 +351,61 @@ const DonatePayment = () => {
                 />
               </div>
 
+
+              {/* Phone NUmber */}
+              <div className="md:col-span-3 mt-2 ">
+                <label className="block text-lg font-medium text-gray-700 mb-2">
+                  Phone Number:
+                </label>
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={phoneNumber}
+                  onMouseEnter={onMouseEnterPhoneNumber}
+                  placeholder="+237XXXXXXXXX"
+                  ref={phoneNumberDonate}
+                  onChange={handlePhoneNumberChange}
+                  className={`w-full border outline-none ease-in-out
+                  ${
+                    errors.phoneNumber &&
+                    /^\+237[0-9]{9}$/.test(errors.phoneNumber.trim())
+                      ? "border-green-500 focus:ring-green-500"
+                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
+                  } 
+                  rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
+                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`} 
+                />
+                {errors.phoneNumber && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.phoneNumber}
+                  </p>
+                )}
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  Format: +237 followed by 9 digits (e.g., +237672528362) 
+                </p>
+              </div>
+
+
               {/* Name */}
               <div className="mt-2">
                 <label className="block text-lg font-medium text-gray-700 mb-1">
-                  Name <span className="text-red-500">*</span>
+                  Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={handleNameChange}
                   className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
-                    errors.name ? "border-red-500" : "border-gray-300"
+                    errors.phoneNumber ? "border-red-500" : "border-gray-300"
                   } rounded-md focus:outline-none focus:ring-1 ${
-                    errors.name ? "focus:ring-red-500" : "focus:ring-green-500"
+                    errors.phoneNumber ? "focus:ring-red-500" : "focus:ring-green-500"
                   } ${
-                    errors.name
+                    errors.phoneNumber
                       ? "focus:border-red-500"
                       : "focus:border-green-500"
                   }`}
-                  placeholder="e.g Alex"
+                  placeholder="e.g Mbong Alex Tabeng"
                   ref={nameDonate}
                   onMouseEnter={onMouseEnterNameDonate}
                 />

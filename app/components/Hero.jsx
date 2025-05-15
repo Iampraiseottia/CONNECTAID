@@ -9,7 +9,7 @@ import { useRef, useState, useEffect } from "react";
 
 import { motion } from "motion/react";
 
-import navLogo from '/public/icon/logo.png'
+import navLogo from "/public/icon/logo.png";
 
 const Hero = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -511,13 +511,15 @@ const Hero = () => {
             </p>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 lg:mb-10">
-              Donate to children & senior citizens
+              Donate to children & senior citizens of Cameroon
             </h1>
 
             <p className="text-gray-300 mb-6 md:mb-8 lg:mb-10 text-sm sm:text-base md:text-lg max-w-2xl mr-2">
-              Involves donating one's body after death for medical research,
-              education, or anatomical dissection. Body donation plays a crucial
-              role in advancing medical science
+              Involves donating to aids and campaigns which includes medical
+              cases, education, drinking water, shelters, extreme cases and
+              especially food supplies to those in desperate need in all parts
+              and regions of cameroon. Play a crucial role in impacting fellow
+              citizen/humans life and bring light in to their worlds.
             </p>
 
             <div className="flex flex-wrap gap-3 md:gap-4">
@@ -531,7 +533,7 @@ const Hero = () => {
                 href="/register"
                 className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition"
               >
-                Join ConnectAID
+                Register To Vee All Your Donations
               </Link>
             </div>
           </div>
