@@ -18,19 +18,18 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-
-import relatedPostImg1 from '/public/gallery/donateList-1.png'
-import relatedPostImg2 from '/public/gallery/gallery-4.png'
-import relatedPostImg3 from '/public/gallery/gallery-20.png'
-import relatedPostImg4 from '/public/urgent/urgent-1.png'
-import relatedPostImg5 from '/public/gallery/donationList-2.png'
-import relatedPostImg6 from '/public/gallery/gallery-1.png'
-import relatedPostImg7 from '/public/gallery/gallery-3.png'
-import relatedPostImg8 from '/public/gallery/gallery-2.png'
-import relatedPostImg9 from '/public/blog/blog-5.png'
-import relatedPostImg10 from '/public/gallery/education.png'
-import relatedPostImg11 from '/public/gallery/gallery-13.png'
-import relatedPostImg12 from '/public/gallery/water.png'
+import relatedPostImg1 from "/public/gallery/donateList-1.png";
+import relatedPostImg2 from "/public/gallery/gallery-4.png";
+import relatedPostImg3 from "/public/gallery/gallery-20.png";
+import relatedPostImg4 from "/public/urgent/urgent-1.png";
+import relatedPostImg5 from "/public/gallery/donationList-2.png";
+import relatedPostImg6 from "/public/gallery/gallery-1.png";
+import relatedPostImg7 from "/public/gallery/gallery-3.png";
+import relatedPostImg8 from "/public/gallery/gallery-2.png";
+import relatedPostImg9 from "/public/blog/blog-5.png";
+import relatedPostImg10 from "/public/gallery/education.png";
+import relatedPostImg11 from "/public/gallery/gallery-13.png";
+import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails4 = () => {
   const metadata = {
@@ -558,7 +557,9 @@ const DonationDetails4 = () => {
                       viewport={{ once: true, amount: 0.1 }}
                       className="mb-8"
                     >
-                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">Address</h4>
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">
+                        Address
+                      </h4>
                       <div className="bg-gray-50 p-4 rounded-lg">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                           <div>
@@ -731,7 +732,7 @@ const DonationDetails4 = () => {
                     <strong>Real Life Story, Real Impact</strong>
                   </b>
                   <br />
-                  In Sierra Leone, the Forikolo Community faced severe water
+                  In Garoua, Communities faced severe water
                   scarcity, relying on contaminated sources that led to frequent
                   illness. Thanks to generous donations, a clean water well was
                   constructed, transforming lives. Fatmata Conteh, a local
@@ -742,23 +743,7 @@ const DonationDetails4 = () => {
                   fostering hope and resilience.
                   <br />
                 </p>
-                <p className="text-gray-600 mb-6">
-                  In India, the village of Kurumpeta experienced a significant
-                  transformation through access to clean water, thanks to
-                  community-led initiatives supported by donations. Sasmita, a
-                  dedicated farm laborer, spent years struggling to collect
-                  water from a distant river, facing dangers from wildlife and
-                  the risk of contamination. Her daily routine was exhausting
-                  and left little time for her family or education.
-                  <br />
-                  With the support of organizations focused on sustainable water
-                  solutions, Kurumpeta was able to install a reliable water
-                  system that brought clean water directly to homes. This change
-                  was monumental for Sasmita and her neighbors. No longer did
-                  they have to embark on perilous journeys to fetch water;
-                  instead, they could focus on their health, education, and
-                  economic opportunities.
-                </p>
+                
 
                 <motion.hr
                   initial={{ opacity: 0, y: 100 }}
@@ -768,14 +753,16 @@ const DonationDetails4 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">Our Challenge </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">
+                  Our Challenge{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   While the impact of providing clean water to communities in
                   need is profound, several challenges can arise in the process
                   of implementing water projects. Understanding these challenges
                   is crucial for developing effective strategies to overcome
                   them. Here are some of the key challenges faced in clean water
-                  initiatives: 
+                  initiatives:
                 </p>
                 <p className="text-gray-600 mb-4">
                   <b>1. Infrastructure Limitations</b> <br />
@@ -842,7 +829,9 @@ const DonationDetails4 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">Our Goals </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black">
+                  Our Goals{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   Setting clear and achievable goals is essential for the
                   success of clean water initiatives. These goals should focus
@@ -977,7 +966,7 @@ const DonationDetails4 = () => {
                             : "hover:bg-gray-50 dark:text-slate-900 text-black "
                         }`}
                       >
-                        {/* <a href="#" className="flex items-center"> */} 
+                        {/* <a href="#" className="flex items-center"> */}
                         {category.active && (
                           <span className="w-2 h-2 bg-green-600 rounded-full mr-2"></span>
                         )}
@@ -1008,7 +997,7 @@ const DonationDetails4 = () => {
                       <div className="flex-shrink-0 w-20 h-24 relative">
                         <Link href="/upcoming-event-details-1">
                           <Image
-                            src={relatedPostImg1} 
+                            src={relatedPostImg1}
                             alt="Upcoming Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -1052,34 +1041,6 @@ const DonationDetails4 = () => {
                           <a href="/donation-details-6">
                             Act now, save lives—your donation can support those
                             facing extreme hardships and urgent needs!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-1">
-                          <Image
-                            src={relatedPostImg3}
-                            alt="Past Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>September 03, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-1">
-                            Empowering Futures Through Accessible Education for
-                            All
                           </a>
                         </h4>
                       </div>
@@ -1176,33 +1137,6 @@ const DonationDetails4 = () => {
 
                   <div className="">
                     <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-2">
-                          <Image
-                            src={relatedPostImg7}
-                            alt="Past Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>November 09, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-2">
-                            Quality Medicine: Empowering a Healthier Community
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-3">
                           <Image
@@ -1278,33 +1212,6 @@ const DonationDetails4 = () => {
                           <a href="/donation-details-2">
                             Empower minds, change futures — Your donation can
                             provide education and hope to children in need!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-3">
-                          <Image
-                            src={relatedPostImg11}
-                            alt="Past Event 3"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>February 24, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-3">
-                            Nourished Communities: The Power of Good Food
                           </a>
                         </h4>
                       </div>

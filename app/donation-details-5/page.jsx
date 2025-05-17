@@ -20,11 +20,9 @@ import Metadata from "../components/Metadata";
 
 import relatedPostImg1 from "/public/gallery/donateList-1.png";
 import relatedPostImg2 from "/public/gallery/gallery-4.png";
-import relatedPostImg3 from "/public/gallery/gallery-20.png";
 import relatedPostImg4 from "/public/urgent/urgent-1.png";
 import relatedPostImg5 from "/public/gallery/donationList-2.png";
 import relatedPostImg6 from "/public/gallery/gallery-1.png";
-import relatedPostImg7 from "/public/gallery/gallery-3.png";
 import relatedPostImg8 from "/public/gallery/gallery-2.png";
 import relatedPostImg9 from "/public/blog/blog-5.png";
 import relatedPostImg10 from "/public/gallery/education.png";
@@ -732,7 +730,7 @@ const DonationDetails5 = () => {
                     <strong>Real Life Story, Real Impact</strong>
                   </b>
                   <br />
-                  James was a 35-year-old man living in a bustling city. He had
+                  James was a 35-year-old man living in a baffousam city. He had
                   a stable job as a mechanic and a small apartment that he
                   called home. However, life took a drastic turn when he was
                   involved in a serious car accident that left him unable to
@@ -961,33 +959,6 @@ const DonationDetails5 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-1">
-                          <Image
-                            src={relatedPostImg3}
-                            alt="Past Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>September 03, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-1">
-                            Empowering Futures Through Accessible Education for
-                            All
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
 
                   <div className="">
                     <div className="flex gap-3">
@@ -1076,32 +1047,6 @@ const DonationDetails5 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-2">
-                          <Image
-                            src={relatedPostImg7}
-                            alt="Past Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>November 09, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-2">
-                            Quality Medicine: Empowering a Healthier Community
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
 
                   <div className="">
                     <div className="flex gap-3">
@@ -1187,32 +1132,7 @@ const DonationDetails5 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-3">
-                          <Image
-                            src={relatedPostImg11}
-                            alt="Past Event 3"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>February 24, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-3">
-                            Nourished Communities: The Power of Good Food
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
+                  
 
                   <div className="">
                     <div className="flex gap-3">
