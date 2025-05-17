@@ -396,7 +396,7 @@ const DonationDetails1 = () => {
                           value="mtn"
                           checked={selectedPayment === "mtn"}
                           onChange={() => setSelectedPayment("mtn")}
-                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600" 
+                          className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
                         />
                         <label
                           htmlFor="mtn-momo"
@@ -465,7 +465,9 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Payment Details</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                      Payment Details
+                    </h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -481,7 +483,7 @@ const DonationDetails1 = () => {
                             id="Mobile_Money_Number"
                             value={formData.mobileNumber}
                             onChange={handleInputChange}
-                            ref={mobileMoneyNumberRef} 
+                            ref={mobileMoneyNumberRef}
                             onMouseEnter={onMouseEnterMobileNUmberRef}
                           />
                           {errors.mobileNumber && (
@@ -546,7 +548,9 @@ const DonationDetails1 = () => {
                     viewport={{ once: true, amount: 0.1 }}
                     className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">Address</h4>
+                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                      Address
+                    </h4>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -726,7 +730,9 @@ const DonationDetails1 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">Our Challenge </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">
+                  Our Challenge{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   Hunger is a pervasive issue that affects millions of
                   individuals and families in our communities. Despite the
@@ -768,11 +774,13 @@ const DonationDetails1 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">Our Goals </h4>
+                <h4 className="text-xl font-bold mb-3 dark:text-slate-900 text-black ">
+                  Our Goals{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   Our goal is to create a hunger-free community where everyone
                   has access to nutritious food. We aim to achieve this through
-                  a comprehensive approach that includes: 
+                  a comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
                   <b>1. Increasing Access to Food:</b> <br /> We will work to
@@ -845,7 +853,7 @@ const DonationDetails1 = () => {
                     </li>
 
                     <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
-                      Medical dark:text-slate-900 text-black 
+                      Medical
                     </li>
 
                     <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
@@ -855,9 +863,9 @@ const DonationDetails1 = () => {
                     <li className="py-2 px-4 rounded transition hover:bg-gray-50 dark:text-slate-900 text-black ">
                       Education
                     </li>
-                  </ul> 
+                  </ul>
                 </div>
-              </motion.div> 
+              </motion.div>
 
               {/* Related Posts */}
               <motion.div
@@ -922,34 +930,6 @@ const DonationDetails1 = () => {
                           <a href="/donation-details-6">
                             Act now, save lives—your donation can support those
                             facing extreme hardships and urgent needs!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-1">
-                          <Image
-                            src={relatedPostImg3}
-                            alt="Past Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>September 03, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-1">
-                            Empowering Futures Through Accessible Education for
-                            All
                           </a>
                         </h4>
                       </div>
@@ -1046,33 +1026,6 @@ const DonationDetails1 = () => {
 
                   <div className="">
                     <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-2">
-                          <Image
-                            src={relatedPostImg7}
-                            alt="Past Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>November 09, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-2">
-                            Quality Medicine: Empowering a Healthier Community
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
                         <Link href="/donation-details-3">
                           <Image
@@ -1148,33 +1101,6 @@ const DonationDetails1 = () => {
                           <a href="/donation-details-2">
                             Empower minds, change futures — Your donation can
                             provide education and hope to children in need!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-3">
-                          <Image
-                            src={relatedPostImg11}
-                            alt="Past Event 3"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>February 24, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-3">
-                            Nourished Communities: The Power of Good Food
                           </a>
                         </h4>
                       </div>
