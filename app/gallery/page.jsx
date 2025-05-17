@@ -6,7 +6,6 @@ import globalStyle from "../globals.css";
 
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
 import { motion } from "motion/react";
@@ -145,8 +144,7 @@ const PictureGallery = () => {
         </div>
       </section>
 
-      {/* Picture Gallery  */}
-      <Gallery />
+    
 
       {/* Footer  */}
       <Footer />

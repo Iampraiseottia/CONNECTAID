@@ -187,6 +187,7 @@ const Navbar = () => {
                   "/upcoming-event-details-2",
                   "/upcoming-event-details-3",
                   "/gallery",
+                  "/donation-details-7",
                   "/privacy-policy",
                   "/terms-conditions",
                 ])
@@ -244,8 +245,10 @@ const Navbar = () => {
                 >
                   Donation Details
                 </Link>
+
+                
                 {/* Nested dropdown for Login */}
-                <div className="relative group/login">
+                {/* <div className="relative group/login">
                   <div
                     className={`py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer 
                   ${
@@ -292,7 +295,9 @@ const Navbar = () => {
                       Forgot Password
                     </Link>
                   </div>
-                </div>
+                </div> */}
+
+
                 <Link
                   href="/blog-details-1"
                   className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
@@ -468,6 +473,7 @@ const Navbar = () => {
                     "/upcoming-event-details-2",
                     "/upcoming-event-details-3",
                     "/gallery",
+                    "/donation-details-7",
                     "/privacy-policy",
                     "/terms-conditions",
                   ])
@@ -537,7 +543,9 @@ const Navbar = () => {
                 >
                   Donation Details
                 </Link>
-                <div className="relative">
+
+
+                {/* <div className="relative">
                   <button
                     onClick={() =>
                       document
@@ -594,7 +602,8 @@ const Navbar = () => {
                       Forgot Password
                     </Link>
                   </div>
-                </div>
+                </div> */}
+
 
                 <Link
                   href="/blog-details-1"

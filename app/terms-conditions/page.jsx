@@ -72,10 +72,7 @@ const TermsConditions = () => {
                   ConnectAID provides a platform for facilitating charitable
                   connections and does not itself provide direct aid or monetary
                   support. We act as an intermediary to help Seekers find
-                  appropriate Donors and vice versa. The platform includes
-                  features such as needs posting, donor matching, direct
-                  messaging, and donation tracking to facilitate these
-                  connections.
+                  appropriate Donors and vice versa.
                 </p>
               </div>
 

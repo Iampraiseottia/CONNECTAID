@@ -226,7 +226,7 @@ const Hero = () => {
                     Donation Details
                   </Link>
 
-                  {/* Nested dropdown for Login */}
+                  {/* Nested dropdown for Login
                   <div className="relative group/login">
                     <div className="py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer">
                       <p>Login</p>
@@ -252,7 +252,9 @@ const Hero = () => {
                         Forgot Password
                       </Link>
                     </div>
-                  </div>
+                  </div> */}
+
+
                   <Link
                     href="/blog-details-1"
                     className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide"
@@ -394,7 +396,7 @@ const Hero = () => {
                     Donate Pay
                   </Link>
 
-                  <div className="relative">
+                  {/* <div className="relative">
                     <button
                       onClick={() =>
                         document
@@ -428,7 +430,7 @@ const Hero = () => {
                         Forgot Password
                       </Link>
                     </div>
-                  </div>
+                  </div> */}
 
                   <Link
                     href="/blog-details-1"
