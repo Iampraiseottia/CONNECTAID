@@ -36,7 +36,6 @@ const Register = () => {
     userName: "",
     password: "",
     confirmPassword: "",
-    userType: "Donor",
   });
 
   const [errors, setErrors] = useState({
@@ -156,13 +155,13 @@ const Register = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      router.push("/dashboard");
+      router.push(`/email-verification?email=${encodeURIComponent(formValues.email)}`);
     } else {
       // Scroll to the first error
       const firstErrorField = Object.keys(errors).find((key) => errors[key]);
       if (firstErrorField && firstErrorField !== "general") {
         document.getElementById(firstErrorField)?.focus();
-      }
+      } 
     }
   };
 

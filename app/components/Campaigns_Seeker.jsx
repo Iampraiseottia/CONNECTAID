@@ -406,7 +406,7 @@ const Campaigns_Seeker = () => {
             </tbody>
           </table>
         </div>
-
+q
         {/* Past Campaigns Section */}
         <div className="mt-20 mb-4">
           <h2 className="text-xl font-bold text-gray-800 dark:text-white flex items-center">
