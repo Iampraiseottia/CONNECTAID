@@ -419,7 +419,7 @@ const Campaigns_Seeker = () => {
 
           {isLoading ? (
             <div className="flex justify-center items-center">
-              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-Cteal-500 text-center"></div>
+              <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500 text-center"></div>
             </div>
             
           ) : error ? (

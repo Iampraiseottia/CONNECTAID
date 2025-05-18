@@ -90,13 +90,6 @@ const Register = () => {
     }
   };
 
-  const handleUserTypeChange = (e) => {
-    setFormValues({
-      ...formValues,
-      userType: e.target.id,
-    });
-  };
-
   const validateForm = () => {
     let isValid = true;
     const newErrors = { ...errors };
@@ -163,11 +156,7 @@ const Register = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      if (formValues.userType === "Donor") {
-        router.push("/dashboard-donor");
-      } else {
-        router.push("/dashboard-seeker");
-      }
+      router.push("/dashboard");
     } else {
       // Scroll to the first error
       const firstErrorField = Object.keys(errors).find((key) => errors[key]);
@@ -208,6 +197,62 @@ const Register = () => {
             ConnectAID
           </h1>
         </div>
+
+        <br />
+
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6 mb-5">
+          <Link
+            href="#"
+            className="w-full mt-2 mb-4 py-2 md:py-4 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out transition-all hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-xl font-medium md:font-bold tracking-wide"
+          >
+            <Image
+              height={24}
+              width={24}
+              src="/icon/google.png"
+              className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6"
+              alt="Google logo"
+            />
+            <span>Sign In With Google</span>
+          </Link>
+        </div>
+
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6">
+          <Link
+            href="#"
+            className="w-full mt-2 mb-4 py-2 md:py-4 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out transition-all hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-xl font-medium md:font-bold tracking-wide"
+          >
+            <Image
+              height={24}
+              width={24}
+              src="/icon/apple.png"
+              className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6 "
+              alt="Apple logo"
+            />
+            <span>Sign In With Apple</span> 
+          </Link>
+        </div>
+
+        <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6 mb-5">
+          <Link
+            href="#"
+            className="w-full mt-2 mb-4 py-2 md:py-4 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out transition-all hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-xl font-medium md:font-bold tracking-wide"
+          >
+            <Image
+              height={24}
+              width={24}
+              src="/icon/fb2.png"
+              className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6"
+              alt="Google logo"
+            />
+            <span>Sign In With Facebook</span> 
+          </Link>
+        </div>
+
+        <br />
+
+        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mb-2 text-center py-1 text-xs md:text-2xl font-medium dark:text-slate-900 text-black">
+          OR
+        </p>
 
         {errors.general && (
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6">
@@ -398,46 +443,6 @@ const Register = () => {
               )}
           </div>
 
-          <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
-            <legend className="text-xl font-bold tracking-wide dark:text-slate-900 text-black ">
-              Register As A{" "}
-            </legend>
-            <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="userType"
-                  id="Donor"
-                  checked={formValues.userType === "Donor"}
-                  onChange={handleUserTypeChange}
-                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
-                />
-                <label
-                  htmlFor="Donor"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black "
-                >
-                  Donor
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="userType"
-                  id="Seeker"
-                  checked={formValues.userType === "Seeker"}
-                  onChange={handleUserTypeChange}
-                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
-                />
-                <label
-                  htmlFor="Seeker"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black "
-                >
-                  Seeker
-                </label>
-              </div>
-            </div>
-          </fieldset>
-
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6 ">
             <button
               type="submit"
@@ -457,27 +462,6 @@ const Register = () => {
             Login
           </Link>
         </p>
-
-        <p className="px-4 sm:px-6 md:px-8 lg:px-10 mb-2 text-center py-1 text-sm md:text-base font-medium dark:text-slate-900 text-black">
-          OR
-        </p>
-
-        <div className="px-4 sm:px-6 md:px-8 lg:px-10">
-          <Link 
-            href="#"
-            target="_blank"
-            className="w-full mt-2 mb-4 py-2 md:py-3 flex justify-center items-center bg-transparent border-2 border-teal-500 text-black ease-in-out duration-200 hover:bg-teal-500 hover:text-white hover:rounded-2xl rounded-lg text-base md:text-lg font-medium md:font-bold tracking-wide" 
-          >
-            <Image
-              height={24}
-              width={24}
-              src="/icon/google.png"
-              className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6"
-              alt="Google logo"
-            />
-            <span>Sign In With Google</span>
-          </Link>
-        </div>
       </div>
     </motion.main>
   );

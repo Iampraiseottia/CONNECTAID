@@ -535,7 +535,7 @@ const Hero = () => {
                 href="/register"
                 className="bg-transparent font-semibold border border-teal-600 hover:opacity-80 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition"
               >
-                Register To Vee All Your Donations
+                Register To View All Your Donations
               </Link>
             </div>
           </div>
