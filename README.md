@@ -19,12 +19,8 @@ This disconnect can result in unfulfilled needs and wasted resources, preventing
 
 2. List: A list containing a current and on-going donation campaigns.
 
-3. Request Submission: Submission of new donation campaigns.
+3. Search and Filtering: Advance search and filter mechanism based on various categories and keywords.
 
-4. Search and Filtering: Advance search and filter mechanism based on various categories and keywords.
+4. Enhanced Security: Email and Phone verification, upload of national document alongside your photo, 2FA, request limiting, transaction verification and secure data handling.
 
-5. Enhanced Security: Email and Phone verification, upload of national document alongside your photo, 2FA, request limiting, transaction verification and secure data handling.
-
-6. Impact Tracking: Donors can track the impact of their donations and receive feedbacks.
-
-
+5. Impact Tracking: Donors can track the impact of their donations and receive feedbacks.
