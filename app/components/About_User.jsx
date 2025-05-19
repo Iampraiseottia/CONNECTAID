@@ -1,7 +1,9 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { Save, ArrowLeft, CheckCircle } from "lucide-react";
+import React, { useRef, useState, useEffect } from "react";
+
+import { Save, ArrowLeft, CheckCircle, Edit, X } from "lucide-react";
+
 import { motion } from "motion/react";
 
 const About_User = ({ setActiveComponent }) => {
@@ -13,7 +15,6 @@ const About_User = ({ setActiveComponent }) => {
     address: "",
     city: "",
     state: "",
-    zipCode: "",
     country: "",
     bio: "",
     interests: [],
@@ -21,6 +22,18 @@ const About_User = ({ setActiveComponent }) => {
 
   const [errors, setErrors] = useState({});
   const [saved, setSaved] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(true);
+  const [dataExists, setDataExists] = useState(false);
+
+  // Load saved data on component mount
+  useEffect(() => {
+    const savedUserData = localStorage.getItem("userData");
+    if (savedUserData) {
+      setFormData(JSON.parse(savedUserData));
+      setDataExists(true);
+      setIsEditMode(false);
+    }
+  }, []);
 
   const interestOptions = [
     "Education",
@@ -31,21 +44,17 @@ const About_User = ({ setActiveComponent }) => {
     "Environment",
     "Housing",
     "Community Development",
-    "Arts & Culture",
   ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Special handling for phone number to ensure it follows the format
     if (name === "phoneNumber") {
-      // If the first character isn't +, add it automatically
       let newValue = value;
       if (value && !value.startsWith("+")) {
         newValue = "+" + value;
       }
 
-      // Only allow + and numbers in the phone field
       newValue = newValue.replace(/[^\+0-9]/g, "");
 
       setFormData((prevData) => ({
@@ -68,6 +77,8 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   const handleInterestChange = (interest) => {
+    if (!isEditMode) return;
+
     setFormData((prevData) => {
       if (prevData.interests.includes(interest)) {
         return {
@@ -84,17 +95,13 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   const validate = () => {
-    let isValid = true;
-
-    const newErrors = {};
+    let newErrors = {};
 
     if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
     else if (formData.fullName.trim().length < 7) {
       newErrors.fullName = "Full Name must be at least 7 characters";
-      isValid = false;
     } else if (formData.fullName.trim().length > 38) {
       newErrors.fullName = "Full Name must not exceed 37 characters";
-      isValid = false;
     }
 
     if (!formData.dateOfBirth)
@@ -104,75 +111,53 @@ const About_User = ({ setActiveComponent }) => {
 
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
-      isValid = false;
     } else {
       const phoneRegex = /^\+237[0-9]{9}$/;
       if (!phoneRegex.test(formData.phoneNumber.trim())) {
         newErrors.phoneNumber =
           "Phone Number must be in format +237 followed by 9 digits";
-        isValid = false;
       }
     }
 
     if (!formData.address.trim()) newErrors.address = "Address is required";
     else if (formData.address.trim().length < 7) {
       newErrors.address = "Home Address must be at least 7 characters";
-      isValid = false;
     } else if (formData.address.trim().length > 38) {
       newErrors.address = "Home Address must not exceed 37 characters";
-      isValid = false;
     }
 
     if (!formData.city.trim()) newErrors.city = "City is required";
     else if (formData.city.trim().length < 4) {
       newErrors.city = "City must be at least 4 characters";
-      isValid = false;
     } else if (formData.city.trim().length > 20) {
       newErrors.city = "City must not exceed 20 characters";
-      isValid = false;
     }
 
     if (!formData.state.trim())
       newErrors.state = "State/Province/Region is required";
     else if (formData.state.trim().length < 4) {
       newErrors.state = "State/Province/Region must be at least 4 characters";
-      isValid = false;
     } else if (formData.state.trim().length > 20) {
       newErrors.state = "State/Province/Region must not exceed 20 characters";
-      isValid = false;
     }
 
-    if (!formData.zipCode.trim())
-      newErrors.zipCode = "ZIP/Postal code is required";
-    else if (formData.zipCode.trim().length < 4) {
-      newErrors.zipCode = "Zip Code must be at least 4 characters";
-      isValid = false;
-    } else if (formData.zipCode.trim().length > 6) {
-      newErrors.zipCode = "Zip Code must not exceed 6 characters";
-      isValid = false;
-    }
 
     if (!formData.country.trim()) newErrors.country = "Country is required";
     else if (formData.country.trim().length < 4) {
       newErrors.country = "Country must be at least 4 characters";
-      isValid = false;
     } else if (formData.country.trim().length > 40) {
       newErrors.country = "Country must not exceed 40 characters";
-      isValid = false;
     }
 
     if (!formData.bio.trim()) newErrors.bio = "About Yourself is required";
     else if (formData.bio.trim().length < 21) {
       newErrors.bio = "bio must be at least 20 characters";
-      isValid = false;
-    } else if (formData.bio.trim().length > 60) {
+    } else if (formData.bio.trim().length > 2060) {
       newErrors.bio = "bio must not exceed 60 characters";
-      isValid = false;
     }
 
-    if (formData.interests.length < 6) {
-      newErrors.interests = "Please select at least 6 areas of interest";
-      isValid = false;
+    if (formData.interests.length < 4) {
+      newErrors.interests = "Please select at least 4 areas of interest";
     }
 
     return newErrors;
@@ -187,15 +172,33 @@ const About_User = ({ setActiveComponent }) => {
       return;
     }
 
-    // Simulate saving data
+    // Save data to localStorage
+    localStorage.setItem("userData", JSON.stringify(formData));
+
     setSaved(true);
+    setDataExists(true);
+
     setTimeout(() => {
       setSaved(false);
-      setActiveComponent("identity");
+      setIsEditMode(false);
     }, 2000);
   };
 
-  // Refs for auto-focus
+  const handleEdit = () => {
+    setIsEditMode(true);
+  };
+
+  const handleCancel = () => {
+    // Retrieve the saved data again
+    const savedUserData = localStorage.getItem("userData");
+    if (savedUserData) {
+      setFormData(JSON.parse(savedUserData));
+      setErrors({});
+    }
+    setIsEditMode(false);
+  };
+
+
   const fullNameRef = useRef();
   const dateOfBirthRef = useRef();
   const genderRef = useRef();
@@ -207,17 +210,42 @@ const About_User = ({ setActiveComponent }) => {
   const countryRef = useRef();
   const bioRef = useRef();
 
-  // Focus handlers
-  const onMouseEnterFullName = () => fullNameRef.current.focus();
-  const onMouseEnterDateOfBirth = () => dateOfBirthRef.current.focus();
-  const onMouseEnterGender = () => genderRef.current.focus();
-  const onMouseEnterPhoneNumber = () => phoneNumberRef.current.focus();
-  const onMouseEnterHomeAddress = () => homeAddressRef.current.focus();
-  const onMouseEnterCity = () => cityRef.current.focus();
-  const onMouseEnterRegion = () => regionRef.current.focus();
-  const onMouseEnterZipCode = () => zipCodeRef.current.focus();
-  const onMouseEnterCountry = () => countryRef.current.focus();
-  const onMouseEnterBio = () => bioRef.current.focus();
+
+  const onMouseEnterFullName = () => isEditMode && fullNameRef.current.focus();
+  const onMouseEnterDateOfBirth = () =>
+    isEditMode && dateOfBirthRef.current.focus();
+  const onMouseEnterGender = () => isEditMode && genderRef.current.focus();
+  const onMouseEnterPhoneNumber = () =>
+    isEditMode && phoneNumberRef.current.focus();
+  const onMouseEnterHomeAddress = () =>
+    isEditMode && homeAddressRef.current.focus();
+  const onMouseEnterCity = () => isEditMode && cityRef.current.focus();
+  const onMouseEnterRegion = () => isEditMode && regionRef.current.focus();
+  const onMouseEnterZipCode = () => isEditMode && zipCodeRef.current.focus();
+  const onMouseEnterCountry = () => isEditMode && countryRef.current.focus();
+  const onMouseEnterBio = () => isEditMode && bioRef.current.focus();
+
+  // Common class for inputs
+  const getInputClass = (fieldName, minLength = null) => {
+    const baseClass = `w-full rounded-md px-3 py-2 ${
+      isEditMode
+        ? "border focus:outline-none focus:ring-2 dark:bg-gray-700"
+        : "border-none bg-transparent dark:bg-transparent"
+    } dark:text-white dark:placeholder-gray-400`;
+
+    if (!isEditMode) return baseClass;
+
+    const hasError = errors[fieldName];
+    const value = formData[fieldName];
+    const isValid =
+      value &&
+      (minLength ? value.trim().length >= minLength : true) &&
+      !hasError;
+
+    if (hasError) return `${baseClass} border-red-500`;
+    if (isValid) return `${baseClass} border-green-500 focus:ring-green-500`;
+    return `${baseClass} border-gray-500 dark:border-gray-600 focus:ring-gray-500`;
+  };
 
   return (
     <motion.div
@@ -228,16 +256,39 @@ const About_User = ({ setActiveComponent }) => {
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen"
     >
       <div className="max-w-6xl mx-auto mt-10">
-        <div className="flex items-center mb-6">
-          <button
-            onClick={() => setActiveComponent("dashboardMain")}
-            className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-white"
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-            About You
-          </h1>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center">
+            <button
+              onClick={() => setActiveComponent("dashboardMain")}
+              className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-white"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              About You
+            </h1>
+          </div>
+
+          {dataExists && (
+            <div>
+              {isEditMode ? (
+                <button
+                  onClick={handleCancel}
+                  className="mr-4 p-2 rounded-full text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-gray-300"
+                >
+                  <X size={20} />
+                </button>
+              ) : (
+                <button
+                  onClick={handleEdit}
+                  className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white font-medium py-2 px-4 rounded-md flex items-center transition-colors"
+                >
+                  <Edit size={18} className="mr-2" />
+                  Edit
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-8">
@@ -267,19 +318,10 @@ const About_User = ({ setActiveComponent }) => {
                   ref={fullNameRef}
                   placeholder="Your Full Name"
                   onChange={handleChange}
-                  className={`w-full border ${
-                    errors.fullName
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.fullName && formData.fullName.trim().length >= 7
-                      ? "border-green-500 focus:ring-green-500"
-                      : "focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("fullName", 7)}
+                  readOnly={!isEditMode}
                 />
-                {errors.fullName && (
+                {errors.fullName && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
                 )}
               </div>
@@ -300,20 +342,10 @@ const About_User = ({ setActiveComponent }) => {
                   onMouseEnter={onMouseEnterDateOfBirth}
                   value={formData.dateOfBirth}
                   onChange={handleChange}
-                  className={`w-full border ${
-                    errors.dateOfBirth
-                      ? "border-red-500"
-                      : "border-gray-500 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-500 ease-in-out 
-                  dark:bg-gray-700 dark:text-white
-                  ${
-                    formData.dateOfBirth &&
-                    formData.dateOfBirth.trim().length >= 8
-                      ? "border-green-500 focus:ring-green-500"
-                      : "focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("dateOfBirth", 8)}
+                  readOnly={!isEditMode}
                 />
-                {errors.dateOfBirth && (
+                {errors.dateOfBirth && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">
                     {errors.dateOfBirth}
                   </p>
@@ -328,26 +360,34 @@ const About_User = ({ setActiveComponent }) => {
                 >
                   Gender
                 </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  ref={genderRef}
-                  onMouseEnter={onMouseEnterGender}
-                  onChange={handleChange}
-                  className={`w-full border ${
-                    errors.gender
-                      ? "border-red-500"
-                      : "border-gray-400 dark:border-gray-600"
-                  } rounded-md px-3 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500 ease-in-out 
-                  dark:bg-gray-700 dark:text-white`}
-                >
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-
-                {errors.gender && (
+                {isEditMode ? (
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    ref={genderRef}
+                    onMouseEnter={onMouseEnterGender}
+                    onChange={handleChange}
+                    className={`w-full border ${
+                      errors.gender
+                        ? "border-red-500"
+                        : "border-gray-400 dark:border-gray-600"
+                    } rounded-md px-3 py-4 focus:outline-none focus:ring-2 focus:ring-teal-500 ease-in-out 
+                    dark:bg-gray-700 dark:text-white`}
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                ) : (
+                  <div className="px-3 py-2 dark:text-white">
+                    {formData.gender
+                      ? formData.gender.charAt(0).toUpperCase() +
+                        formData.gender.slice(1)
+                      : ""}
+                  </div>
+                )}
+                {errors.gender && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.gender}</p>
                 )}
               </div>
@@ -369,28 +409,19 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="+237XXXXXXXXX"
                   ref={phoneNumberRef}
                   onChange={handleChange}
-                  className={`w-full border outline-none ease-in-out
-                  ${
-                    formData.phoneNumber &&
-                    /^\+237[0-9]{9}$/.test(formData.phoneNumber.trim())
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  } 
-                  ${
-                    errors.phoneNumber
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`}
+                  className={getInputClass("phoneNumber")}
+                  readOnly={!isEditMode}
                 />
-                {errors.phoneNumber && (
+                {errors.phoneNumber && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">
                     {errors.phoneNumber}
                   </p>
                 )}
-                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                  Format: +237 followed by 9 digits (e.g., +237672528362)
-                </p>
+                {isEditMode && (
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Format: +237 followed by 9 digits (e.g., +237672528362)
+                  </p>
+                )}
               </div>
             </div>
 
@@ -400,8 +431,9 @@ const About_User = ({ setActiveComponent }) => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
               {/* Home Address */}
-              <div className="md:col-span-2">
+              <div>
                 <label
                   htmlFor="address"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
@@ -417,19 +449,10 @@ const About_User = ({ setActiveComponent }) => {
                   value={formData.address}
                   placeholder="Your House Address"
                   onChange={handleChange}
-                  className={`w-full border ${
-                    errors.address
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.address && formData.address.trim().length >= 7
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("address", 7)}
+                  readOnly={!isEditMode}
                 />
-                {errors.address && (
+                {errors.address && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.address}</p>
                 )}
               </div>
@@ -451,19 +474,10 @@ const About_User = ({ setActiveComponent }) => {
                   value={formData.city}
                   placeholder="Your City e.g Buea"
                   onChange={handleChange}
-                  className={`w-full border ${
-                    errors.city
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.city && formData.city.trim().length >= 4
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("city", 4)}
+                  readOnly={!isEditMode}
                 />
-                {errors.city && (
+                {errors.city && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.city}</p>
                 )}
               </div>
@@ -485,56 +499,16 @@ const About_User = ({ setActiveComponent }) => {
                   value={formData.state}
                   onChange={handleChange}
                   placeholder="Your State/Province/Region e.g South-West"
-                  className={`w-full border ${
-                    errors.state
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.state && formData.state.trim().length >= 4
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("state", 4)}
+                  readOnly={!isEditMode}
                 />
-                {errors.state && (
+                {errors.state && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.state}</p>
                 )}
               </div>
 
               {/* ZIP/Postal Code */}
-              <div>
-                <label
-                  htmlFor="zipCode"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
-                >
-                  ZIP/Postal Code *
-                </label>
-                <input
-                  type="text"
-                  id="zipCode"
-                  name="zipCode"
-                  ref={zipCodeRef}
-                  onMouseEnter={onMouseEnterZipCode}
-                  value={formData.zipCode}
-                  placeholder="Zip Code"
-                  onChange={handleChange}
-                  className={`w-full border ${
-                    errors.zipCode
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.zipCode && formData.zipCode.trim().length >= 4
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  }`}
-                />
-                {errors.zipCode && (
-                  <p className="mt-1 text-sm text-red-500">{errors.zipCode}</p>
-                )}
-              </div>
+             
 
               {/* Country */}
               <div>
@@ -553,19 +527,10 @@ const About_User = ({ setActiveComponent }) => {
                   placeholder="Your Country"
                   ref={countryRef}
                   onMouseEnter={onMouseEnterCountry}
-                  className={`w-full border ${
-                    errors.country
-                      ? "border-red-500"
-                      : "border-gray-300 dark:border-gray-600"
-                  } rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                  ${
-                    formData.country && formData.country.trim().length >= 4
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  }`}
+                  className={getInputClass("country", 4)}
+                  readOnly={!isEditMode}
                 />
-                {errors.country && (
+                {errors.country && isEditMode && (
                   <p className="mt-1 text-sm text-red-500">{errors.country}</p>
                 )}
               </div>
@@ -588,19 +553,10 @@ const About_User = ({ setActiveComponent }) => {
                 onChange={handleChange}
                 rows="4"
                 placeholder="Tell us a bit about yourself and why you're interested in donating..."
-                className={`w-full border ${
-                  errors.bio
-                    ? "border-red-500"
-                    : "border-gray-300 dark:border-gray-600"
-                } rounded-md px-3 py-2 focus:outline-none focus:ring-2 
-                dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-                ${
-                  formData.bio && formData.bio.trim().length >= 20
-                    ? "border-green-500 focus:ring-green-500"
-                    : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                }`}
+                className={getInputClass("bio", 20)}
+                readOnly={!isEditMode}
               ></textarea>
-              {errors.bio && (
+              {errors.bio && isEditMode && (
                 <p className="mt-1 text-sm text-red-500">{errors.bio}</p>
               )}
             </div>
@@ -610,71 +566,111 @@ const About_User = ({ setActiveComponent }) => {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                 Areas of Interest *
               </label>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
-                Select causes you're interested in supporting (select at least
-                6):
-              </p>
+              {isEditMode && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                  Select causes you're interested in supporting (select at least
+                  4):
+                </p>
+              )}
               <div
                 className={`grid grid-cols-2 md:grid-cols-3 gap-3 ${
-                  errors.interests ? "border border-red-500 rounded-md p-2" : ""
+                  errors.interests && isEditMode
+                    ? "border border-red-500 rounded-md p-2"
+                    : ""
                 }`}
               >
                 {interestOptions.map((interest) => (
-                  <div key={interest} className="flex items-center">
-                    <input
-                      type="checkbox"
-                      id={`interest-${interest}`}
-                      checked={formData.interests.includes(interest)}
-                      onChange={() => handleInterestChange(interest)}
-                      className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 dark:border-gray-600 rounded"
-                    />
+                  <div
+                    key={interest}
+                    className={`flex items-center ${
+                      !isEditMode && formData.interests.includes(interest)
+                        ? "text-teal-600 dark:text-teal-400"
+                        : ""
+                    }`}
+                  >
+                    {isEditMode ? (
+                      <input
+                        type="checkbox"
+                        id={`interest-${interest}`}
+                        checked={formData.interests.includes(interest)}
+                        onChange={() => handleInterestChange(interest)}
+                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 dark:border-gray-600 rounded"
+                      />
+                    ) : (
+                      formData.interests.includes(interest) && (
+                        <CheckCircle
+                          size={16}
+                          className="text-teal-600 dark:text-teal-400"
+                        />
+                      )
+                    )}
                     <label
                       htmlFor={`interest-${interest}`}
-                      className="ml-2 text-sm text-gray-700 dark:text-gray-300"
+                      className={`ml-2 text-sm ${
+                        !isEditMode && formData.interests.includes(interest)
+                          ? "text-teal-600 dark:text-teal-400 font-medium"
+                          : "text-gray-700 dark:text-gray-300"
+                      }`}
                     >
                       {interest}
                     </label>
                   </div>
                 ))}
               </div>
-              {errors.interests && (
+              {errors.interests && isEditMode && (
                 <p className="mt-1 text-sm text-red-500">{errors.interests}</p>
               )}
-              <div className="mt-2 flex items-center">
-                <span
-                  className={`text-sm ${
-                    formData.interests.length >= 6
-                      ? "text-green-500"
-                      : "text-gray-500 dark:text-gray-400"
-                  }`}
-                >
-                  {formData.interests.length}/6 areas selected
-                </span>
-                {formData.interests.length >= 6 && (
-                  <CheckCircle size={16} className="ml-2 text-green-500" />
-                )}
-              </div>
+              {isEditMode && (
+                <div className="mt-2 flex items-center">
+                  <span
+                    className={`text-sm ${
+                      formData.interests.length >= 6
+                        ? "text-green-500"
+                        : "text-gray-500 dark:text-gray-400"
+                    }`}
+                  >
+                    {formData.interests.length}/6 areas selected
+                  </span>
+                  {formData.interests.length >= 6 && (
+                    <CheckCircle size={16} className="ml-2 text-green-500" />
+                  )}
+                </div>
+              )}
             </div>
 
-            <div className="flex justify-center mt-2 mb-4">
-              <button
-                type="submit"
-                className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center transition-colors"
-                disabled={saved}
-              >
-                {saved ? (
-                  <>
-                    <CheckCircle size={18} className="mr-2" />
-                    Saved
-                  </>
-                ) : (
-                  <>
-                    <Save size={18} className="mr-2" />
-                    Save & Continue
-                  </>
-                )}
-              </button>
-            </div>
+            {isEditMode && (
+              <div className="flex justify-center mt-2 mb-4">
+                <button
+                  type="submit"
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center transition-colors"
+                  disabled={saved}
+                >
+                  {saved ? (
+                    <>
+                      <CheckCircle size={18} className="mr-2" />
+                      Saved
+                    </>
+                  ) : (
+                    <>
+                      <Save size={18} className="mr-2" />
+                      {dataExists ? "Update Information" : "Save & Continue"}
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
+            {!isEditMode && dataExists && (
+              <div className="flex justify-center mt-2 mb-4">
+                <button
+                  type="button"
+                  onClick={() => setActiveComponent("identity")}
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md transition-colors"
+                >
+                  Continue
+                </button>
+              </div>
+            )}
           </form>
         </div>
       </div>
@@ -682,4 +678,4 @@ const About_User = ({ setActiveComponent }) => {
   );
 };
 
-export default About_User; 
+export default About_User;
