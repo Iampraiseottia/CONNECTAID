@@ -25,7 +25,6 @@ import TrackDonation from "./TrackDonation";
 import Survey_User from "./Survey_User";
 import Campaigns from "./Campaigns";
 import MyDonations from "./MyDonations";
-import User_Profile from "./User_Profile";
 import Logout from "../logout/page";
 import DashMain from "./DashMain";
 
@@ -63,12 +62,12 @@ const SideBar = () => {
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       "about-you": {
-        title: "About You - ConnectAID Web Application",
+        title: "About You ~ Profile - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       identity: {
-        title: "Identity Verification - ConnectAID Web Application",
+        title: "Identity Verification ~ Profile  - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -78,7 +77,7 @@ const SideBar = () => {
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       survey: {
-        title: "Survey - ConnectAID Web Application",
+        title: "Survey ~ Profile  - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -87,11 +86,7 @@ const SideBar = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      profile: {
-        title: "User Profile - ConnectAID Web Application",
-        description:
-          "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
-      },
+      
       logout: {
         title: "Logout - ConnectAID Web Application",
         description:
@@ -161,8 +156,6 @@ const SideBar = () => {
         return <TrackDonation setActiveComponent={setActiveComponent} />;
       case "Campaigns":
         return <Campaigns setActiveComponent={setActiveComponent} />;
-      case "profile":
-        return <User_Profile setActiveComponent={setActiveComponent} />;
       case "PaymentSetting":
         return <PaymentSetting setActiveComponent={setActiveComponent} />;
       case "logout":
@@ -497,7 +490,7 @@ const SideBar = () => {
         <div
           onClick={() => handleComponentChange("TrackDonation")}
           title="TrackDonation"
-          className={`mb-2 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
+          className={`mb-5 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
             expandedSideBar || isDesktop ? "justify-start" : "justify-center"
           } ${activeComponent === "TrackDonation" ? "bg-white text-teal-500" : ""}`}
         >
@@ -519,29 +512,6 @@ const SideBar = () => {
         </div>
 
 
-        <div
-          onClick={() => handleComponentChange("profile")}
-          title="Profile"
-          className={`mb-6 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
-            expandedSideBar || isDesktop ? "justify-start" : "justify-center"
-          } ${activeComponent === "profile" ? "bg-white text-teal-500" : ""}`}
-        >
-          <FontAwesomeIcon
-            icon={faUser}
-            className={`transition-all ${
-              expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
-            }`}
-          />
-          <span
-            className={`ml-3 overflow-hidden transition-all ${
-              expandedSideBar || isDesktop
-                ? "w-auto opacity-100"
-                : "w-0 opacity-0"
-            }`}
-          >
-            Profile
-          </span>
-        </div>
 
         <div
           onClick={() => handleComponentChange("logout")}
