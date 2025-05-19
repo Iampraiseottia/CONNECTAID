@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 import { motion } from "motion/react";
 
-import { ArrowLeft, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle, ArrowRight, AlertCircle, Edit3 } from "lucide-react";
 
 const Survey_User = ({ setActiveComponent }) => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,6 +21,21 @@ const Survey_User = ({ setActiveComponent }) => {
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [hasStoredData, setHasStoredData] = useState(false);
+
+  // Load data from localStorage on component mount
+  useEffect(() => {
+    const storedSurveyData = localStorage.getItem('surveyData');
+    if (storedSurveyData) {
+      const parsedData = JSON.parse(storedSurveyData);
+      setSurveyData(parsedData);
+      setHasStoredData(true);
+      setIsEditMode(false);
+    } else {
+      setIsEditMode(true);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,16 +65,16 @@ const Survey_User = ({ setActiveComponent }) => {
     const newErrors = {};
 
     if (step === 1) {
-      if (surveyData.donationPreferences.length < 4) {
+      if (surveyData.donationPreferences.length < 2) {
         newErrors.donationPreferences =
-          "Please select at least 4 donation preferences";
+          "Please select at least 2 donation preferences";
       }
     }
 
     if (step === 2) {
-      if (surveyData.communicationPreferences.length < 3) {
+      if (surveyData.communicationPreferences.length < 1) {
         newErrors.communicationPreferences =
-          "Please select at least 3 communication preferences";
+          "Please select at least 1 communication preferences";
       }
     }
 
@@ -77,12 +92,23 @@ const Survey_User = ({ setActiveComponent }) => {
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
 
+  const handleSaveAndContinue = () => {
+    if (validateStep(currentStep)) {
+      // Save to localStorage
+      localStorage.setItem('surveyData', JSON.stringify(surveyData));
+      setHasStoredData(true);
+      setIsEditMode(false);
+    }
+  };
+
+  const handleEdit = () => {
+    setIsEditMode(true);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Final validation could be added here if needed
-
-    // Simulate submission
+    // Save to localStorage before submitting
+    localStorage.setItem('surveyData', JSON.stringify(surveyData));
     setSubmitted(true);
     setTimeout(() => {
       setActiveComponent("dashboardMain");
@@ -123,6 +149,31 @@ const Survey_User = ({ setActiveComponent }) => {
     );
   };
 
+  const renderDisplayValue = (label, value) => {
+    return (
+      <div className="mb-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
+          {label}
+        </label>
+        <div className="text-sm text-gray-900 dark:text-gray-100">
+          {Array.isArray(value) ? (
+            value.length > 0 ? (
+              <ul className="list-disc list-inside space-y-1">
+                {value.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <span className="text-gray-500 dark:text-gray-400">None selected</span>
+            )
+          ) : (
+            value || <span className="text-gray-500 dark:text-gray-400">Not specified</span>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -138,30 +189,37 @@ const Survey_User = ({ setActiveComponent }) => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   How often do you prefer to donate?
                 </label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {["One-time", "Monthly", "Quarterly", "Annually"].map(
-                    (option) => (
-                      <div key={option} className="flex items-center ">
-                        <input
-                          type="radio"
-                          id={`frequency-${option}`}
-                          name="donationFrequency"
-                          value={option}
-                          checked={surveyData.donationFrequency === option}
-                          onChange={handleInputChange}
-                          defaultChecked={option[1]}
-                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
-                        />
-                        <label
-                          htmlFor={`frequency-${option}`}
-                          className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
-                        >
-                          {option}
-                        </label>
-                      </div>
-                    )
-                  )}
-                </div>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.donationFrequency}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                    {["One-time", "Monthly", "Quarterly", "Annually"].map(
+                      (option) => (
+                        <div key={option} className="flex items-center ">
+                          <input
+                            type="radio"
+                            id={`frequency-${option}`}
+                            name="donationFrequency"
+                            value={option}
+                            checked={surveyData.donationFrequency === option}
+                            onChange={handleInputChange}
+                            className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
+                          />
+                          <label
+                            htmlFor={`frequency-${option}`}
+                            className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      )
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Donation Amount */}
@@ -169,76 +227,100 @@ const Survey_User = ({ setActiveComponent }) => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   What is your typical donation amount?
                 </label>
-                <div className="grid grid-cols-1 gap-3 sm:grid-cols-4 ">
-                  {[
-                    "1, 000 francs - 10, 000 francs ",
-                    "11, 000 francs - 100, 000 francs",
-                    "100, 000 francs - 900, 000 francs",
-                    "900, 000+ francs",
-                  ].map((option) => (
-                    <div key={option} className="flex items-center ">
-                      <input
-                        type="radio"
-                        id={`amount-${option}`}
-                        name="donationAmount"
-                        value={option}
-                        checked={surveyData.donationAmount === option}
-                        onChange={handleInputChange}
-                        defaultChecked={option[1]}
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
-                      />
-                      <label
-                        htmlFor={`amount-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
-                      >
-                        {option}
-                      </label>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.donationAmount}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-4 ">
+                    {[
+                      "1, 000 francs - 10, 000 francs ",
+                      "11, 000 francs - 100, 000 francs",
+                      "100, 000 francs - 900, 000 francs",
+                      "900, 000+ francs",
+                    ].map((option) => (
+                      <div key={option} className="flex items-center ">
+                        <input
+                          type="radio"
+                          id={`amount-${option}`}
+                          name="donationAmount"
+                          value={option}
+                          checked={surveyData.donationAmount === option}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
+                        />
+                        <label
+                          htmlFor={`amount-${option}`}
+                          className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Donation Type Preferences */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
-                  What types of donations do you prefer? (Select atleast 4 that
+                  What types of donations do you prefer? (Select atleast 2 that
                   apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
-                  {[
-                    "Direct financial support to individuals",
-                    "Children Fund Aids",
-                    "Emergency relief",
-                    "Long-term development projects",
-                    "Local community initiatives",
-                    "International aid",
-                  ].map((option) => (
-                    <div key={option} className="flex items-center ">
-                      <input
-                        type="checkbox"
-                        id={`preference-${option}`}
-                        checked={surveyData.donationPreferences.includes(
-                          option
-                        )}
-                        onChange={() =>
-                          handleCheckboxChange("donationPreferences", option)
-                        }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
-                      />
-                      <label
-                        htmlFor={`preference-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out  "
-                      >
-                        {option}
-                      </label>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.donationPreferences.length > 0 ? (
+                        <ul className="list-disc list-inside space-y-1">
+                          {surveyData.donationPreferences.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span className="text-gray-500 dark:text-gray-400">None selected</span>
+                      )}
                     </div>
-                  ))}
-                </div>
-                {errors.donationPreferences && (
-                  <div className="mt-2 flex items-center text-red-600 dark:text-red-400">
-                    <AlertCircle size={16} className="mr-1" />
-                    <p className="text-sm">{errors.donationPreferences}</p>
                   </div>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
+                      {[
+                        "Direct financial support to individuals",
+                        "Children Fund Aids",
+                        "Extreme Cases",
+                        "Medical AIDs",
+                        "Local community initiatives",
+                      ].map((option) => (
+                        <div key={option} className="flex items-center ">
+                          <input
+                            type="checkbox"
+                            id={`preference-${option}`}
+                            checked={surveyData.donationPreferences.includes(
+                              option
+                            )}
+                            onChange={() =>
+                              handleCheckboxChange("donationPreferences", option)
+                            }
+                            className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
+                          />
+                          <label
+                            htmlFor={`preference-${option}`}
+                            className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out  "
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    {errors.donationPreferences && (
+                      <div className="mt-2 flex items-center text-red-600 dark:text-red-400">
+                        <AlertCircle size={16} className="mr-1" />
+                        <p className="text-sm">{errors.donationPreferences}</p>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -257,47 +339,63 @@ const Survey_User = ({ setActiveComponent }) => {
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   How would you like to receive updates? (Please Select atleast
-                  3 that apply)
+                  1 that apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
-                  {[
-                    "Email newsletters",
-                    "Text message updates",
-                    "Mobile Number notifications",
-                    "Direct mail",
-                    "Social media",
-                    "No updates, please",
-                  ].map((option) => (
-                    <div key={option} className="flex items-center ">
-                      <input
-                        type="checkbox"
-                        id={`communication-${option}`}
-                        checked={surveyData.communicationPreferences.includes(
-                          option
-                        )}
-                        defaultChecked={option[0]}
-                        onChange={() =>
-                          handleCheckboxChange(
-                            "communicationPreferences",
-                            option
-                          )
-                        }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
-                      />
-                      <label
-                        htmlFor={`communication-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
-                      >
-                        {option}
-                      </label>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.communicationPreferences.length > 0 ? (
+                        <ul className="list-disc list-inside space-y-1">
+                          {surveyData.communicationPreferences.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span className="text-gray-500 dark:text-gray-400">None selected</span>
+                      )}
                     </div>
-                  ))}
-                </div>
-                {errors.communicationPreferences && (
-                  <div className="mt-2 flex items-center text-red-600 dark:text-red-400">
-                    <AlertCircle size={16} className="mr-1" />
-                    <p className="text-sm">{errors.communicationPreferences}</p>
                   </div>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
+                      {[
+                        "Email newsletters",
+                        "Text message updates",
+                        "Mobile Number notifications",
+                        "Social media",
+                        "No updates, please",
+                      ].map((option) => (
+                        <div key={option} className="flex items-center ">
+                          <input
+                            type="checkbox"
+                            id={`communication-${option}`}
+                            checked={surveyData.communicationPreferences.includes(
+                              option
+                            )}
+                            onChange={() =>
+                              handleCheckboxChange(
+                                "communicationPreferences",
+                                option
+                              )
+                            }
+                            className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
+                          />
+                          <label
+                            htmlFor={`communication-${option}`}
+                            className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
+                          >
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                    {errors.communicationPreferences && (
+                      <div className="mt-2 flex items-center text-red-600 dark:text-red-400">
+                        <AlertCircle size={16} className="mr-1" />
+                        <p className="text-sm">{errors.communicationPreferences}</p>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
 
@@ -306,31 +404,39 @@ const Survey_User = ({ setActiveComponent }) => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   Do you require receipts for your donations?
                 </label>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 ">
-                  {[
-                    "Yes, always",
-                    "Only for larger donations",
-                    "No, not necessary",
-                  ].map((option) => (
-                    <div key={option} className="flex items-center ">
-                      <input
-                        type="radio"
-                        id={`tax-${option}`}
-                        name="taxReceipts"
-                        value={option}
-                        checked={surveyData.taxReceipts === option}
-                        onChange={handleInputChange}
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
-                      />
-                      <label
-                        htmlFor={`tax-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
-                      >
-                        {option}
-                      </label>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.taxReceipts}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 ">
+                    {[
+                      "Yes, always",
+                      "Only for larger donations",
+                      "No, not necessary",
+                    ].map((option) => (
+                      <div key={option} className="flex items-center ">
+                        <input
+                          type="radio"
+                          id={`tax-${option}`}
+                          name="taxReceipts"
+                          value={option}
+                          checked={surveyData.taxReceipts === option}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 accent-teal-500 dark:accent-teal-400 dark:border-gray-600"
+                        />
+                        <label
+                          htmlFor={`tax-${option}`}
+                          className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* How they heard about ConnectAID */}
@@ -341,22 +447,30 @@ const Survey_User = ({ setActiveComponent }) => {
                 >
                   How did you hear about ConnectAID?
                 </label>
-                <select
-                  id="howHeard"
-                  name="howHeard"
-                  value={surveyData.howHeard}
-                  onChange={handleInputChange}
-                  className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-teal-500 dark:focus:border-teal-500"
-                >
-                  <option value="">Select an option</option>
-                  <option value="Social Media">Social Media</option>
-                  <option value="Friend/Family">Friend/Family</option>
-                  <option value="Search Engine">Search Engine</option>
-                  <option value="News Article">News Article</option>
-                  <option value="Advertisement">Advertisement</option>
-                  <option value="Charity Event">Charity Event</option>
-                  <option value="Other">Other</option>
-                </select>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.howHeard || <span className="text-gray-500 dark:text-gray-400">Not specified</span>}
+                    </div>
+                  </div>
+                ) : (
+                  <select
+                    id="howHeard"
+                    name="howHeard"
+                    value={surveyData.howHeard}
+                    onChange={handleInputChange}
+                    className="mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-teal-500 dark:focus:border-teal-500"
+                  >
+                    <option value="">Select an option</option>
+                    <option value="Social Media">Social Media</option>
+                    <option value="Friend/Family">Friend/Family</option>
+                    <option value="Search Engine">Search Engine</option>
+                    <option value="News Article">News Article</option>
+                    <option value="Advertisement">Advertisement</option>
+                    <option value="Charity Event">Charity Event</option>
+                    <option value="Other">Other</option>
+                  </select>
+                )}
               </div>
             </div>
           </div>
@@ -375,36 +489,52 @@ const Survey_User = ({ setActiveComponent }) => {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                   What motivates you to donate? (Select all that apply)
                 </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
-                  {[
-                    "Personal connection to cause",
-                    "Religious or spiritual beliefs",
-                    "Desire to help others",
-                    "Tax benefits",
-                    "Social responsibility",
-                    "Setting an example for others",
-                    "Being part of a community effort",
-                    "Seeing direct impact of donations",
-                  ].map((option) => (
-                    <div key={option} className="flex items-center ">
-                      <input
-                        type="checkbox"
-                        id={`motivation-${option}`}
-                        checked={surveyData.motivations.includes(option)}
-                        onChange={() =>
-                          handleCheckboxChange("motivations", option)
-                        }
-                        className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
-                      />
-                      <label
-                        htmlFor={`motivation-${option}`}
-                        className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
-                      >
-                        {option}
-                      </label>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100">
+                      {surveyData.motivations.length > 0 ? (
+                        <ul className="list-disc list-inside space-y-1">
+                          {surveyData.motivations.map((item, index) => (
+                            <li key={index}>{item}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <span className="text-gray-500 dark:text-gray-400">None selected</span>
+                      )}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 ">
+                    {[
+                      "Personal connection to cause",
+                      "Religious or spiritual beliefs",
+                      "Desire to help others",
+                      "Tax benefits",
+                      "Social responsibility",
+                      "Setting an example for others",
+                      "Being part of a community effort",
+                      "Seeing direct impact of donations",
+                    ].map((option) => (
+                      <div key={option} className="flex items-center ">
+                        <input
+                          type="checkbox"
+                          id={`motivation-${option}`}
+                          checked={surveyData.motivations.includes(option)}
+                          onChange={() =>
+                            handleCheckboxChange("motivations", option)
+                          }
+                          className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded dark:border-gray-600 dark:bg-gray-700 hover:cursor-pointer ease-in-out "
+                        />
+                        <label
+                          htmlFor={`motivation-${option}`}
+                          className="ml-2 block text-sm text-gray-700 dark:text-gray-200 hover:cursor-pointer ease-in-out "
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Additional Comments */}
@@ -416,15 +546,23 @@ const Survey_User = ({ setActiveComponent }) => {
                   Is there anything else you'd like to share about your donation
                   preferences or experiences?
                 </label>
-                <textarea
-                  id="additionalComments"
-                  name="additionalComments"
-                  rows="4"
-                  value={surveyData.additionalComments}
-                  onChange={handleInputChange}
-                  className="shadow-sm focus:ring-teal-500 focus:border-teal-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600"
-                  placeholder="Share your thoughts here..."
-                ></textarea>
+                {!isEditMode && hasStoredData ? (
+                  <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-md border">
+                    <div className="text-sm text-gray-900 dark:text-gray-100 whitespace-pre-wrap">
+                      {surveyData.additionalComments || <span className="text-gray-500 dark:text-gray-400">No additional comments</span>}
+                    </div>
+                  </div>
+                ) : (
+                  <textarea
+                    id="additionalComments"
+                    name="additionalComments"
+                    rows="4"
+                    value={surveyData.additionalComments}
+                    onChange={handleInputChange}
+                    className="shadow-sm focus:ring-teal-500 focus:border-teal-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md dark:bg-gray-800 dark:text-white dark:border-gray-600"
+                    placeholder="Share your thoughts here..."
+                  ></textarea>
+                )}
               </div>
             </div>
           </div>
@@ -473,16 +611,29 @@ const Survey_User = ({ setActiveComponent }) => {
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen"
     >
       <div className="max-w-7xl mx-auto mt-12 ">
-        <div className="flex items-center mb-6">
-          <button
-            onClick={() => setActiveComponent("identity")}
-            className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-gray-200"
-          >
-            <ArrowLeft size={20} />
-          </button>
-          <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
-            Donor Survey
-          </h1>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center">
+            <button
+              onClick={() => setActiveComponent("identity")}
+              className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-gray-200"
+            >
+              <ArrowLeft size={20} />
+            </button>
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-white">
+              Donor Survey
+            </h1>
+          </div>
+          
+          {/* Edit Button - only show when there's stored data and not in edit mode */}
+          {hasStoredData && !isEditMode && (
+            <button
+              onClick={handleEdit}
+              className="inline-flex items-center px-3 py-2 border border-gray-300 dark:border-gray-600 shadow-sm text-sm font-medium rounded-md text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 dark:focus:ring-offset-gray-800"
+            >
+              <Edit3 size={16} className="mr-2" />
+              Edit
+            </button>
+          )}
         </div>
 
         <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-8">

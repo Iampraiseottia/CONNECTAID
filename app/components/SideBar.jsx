@@ -15,10 +15,10 @@ import {
   faIdCard,
   faClipboard,
   faUserNurse,
-  faChartSimple
+  faChartSimple,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Metadata from "./Metadata"; 
+import Metadata from "./Metadata";
 import About_User from "./About_User";
 import Identity_User from "./Identity_User";
 import TrackDonation from "./TrackDonation";
@@ -52,12 +52,12 @@ const SideBar = () => {
   const updateMetadata = (component) => {
     const metadataMap = {
       dashboardMain: {
-        title: "Donor Dashboard - ConnectAID Web Application", 
+        title: "Donor Dashboard - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       Campaigns: {
-        title: "All Campaigns - ConnectAID Web Application", 
+        title: "All Campaigns - ConnectAID Web Application",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -86,7 +86,7 @@ const SideBar = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      
+
       logout: {
         title: "Logout - ConnectAID Web Application",
         description:
@@ -149,10 +149,10 @@ const SideBar = () => {
       case "about-you":
         return <About_User setActiveComponent={setActiveComponent} />;
       case "identity":
-        return <Identity_User setActiveComponent={setActiveComponent} />; 
+        return <Identity_User setActiveComponent={setActiveComponent} />;
       case "survey":
         return <Survey_User setActiveComponent={setActiveComponent} />;
-        case "TrackDonation":
+      case "TrackDonation":
         return <TrackDonation setActiveComponent={setActiveComponent} />;
       case "Campaigns":
         return <Campaigns setActiveComponent={setActiveComponent} />;
@@ -202,9 +202,9 @@ const SideBar = () => {
 
   return (
     <section className="w-full relative flex dark:bg-gray-900 bg-white ">
-      <Metadata title={metadata.title} description={metadata.description} /> 
+      <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Mobile Toggle Button - Always visible on mobile */} 
+      {/* Mobile Toggle Button - Always visible on mobile */}
       {isMobile && (
         <button
           onClick={() => setExpandedSideBar((current) => !current)}
@@ -486,20 +486,21 @@ const SideBar = () => {
           </span>
         </div>
 
-
         <div
           onClick={() => handleComponentChange("TrackDonation")}
           title="TrackDonation"
           className={`mb-5 flex items-center px-4 py-2 rounded-lg hover:bg-white hover:text-teal-500 cursor-pointer transition-all ${
             expandedSideBar || isDesktop ? "justify-start" : "justify-center"
-          } ${activeComponent === "TrackDonation" ? "bg-white text-teal-500" : ""}`}
+          } ${
+            activeComponent === "TrackDonation" ? "bg-white text-teal-500" : ""
+          }`}
         >
           <FontAwesomeIcon
             icon={faChartSimple}
             className={`transition-all ${
               expandedSideBar || isDesktop ? "h-6 w-6" : "w-6 h-6"
             }`}
-          /> 
+          />
           <span
             className={`ml-3 overflow-hidden transition-all ${
               expandedSideBar || isDesktop
@@ -510,8 +511,6 @@ const SideBar = () => {
             Track Donations
           </span>
         </div>
-
-
 
         <div
           onClick={() => handleComponentChange("logout")}
