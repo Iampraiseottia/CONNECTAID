@@ -154,10 +154,6 @@ const TrackDonation = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <div className="flex items-center">
-                    <DollarSign
-                      className="mr-2 text-green-600 dark:text-green-400"
-                      size={20}
-                    />
                     <span className="font-semibold text-gray-800 dark:text-gray-200">
                       {donation.amount} Francs
                     </span>

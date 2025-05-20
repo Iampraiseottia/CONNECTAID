@@ -10,7 +10,6 @@ import {
   faHome,
   faPeopleGroup,
   faMoneyBill,
-  faUser,
   faRightFromBracket,
   faIdCard,
   faClipboard,
