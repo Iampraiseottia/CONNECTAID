@@ -5,15 +5,14 @@ import React, { useState, useEffect } from "react";
 import {
   Search,
   Filter,
-  Heart,
   Share2,
   Calendar,
   Users,
-  Plus,
   X,
+  Eye,
 } from "lucide-react";
 
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -27,7 +26,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-
 
 const Campaigns = ({ setActiveComponent }) => {
   const [campaigns, setCampaigns] = useState([]);
@@ -76,7 +74,7 @@ const Campaigns = ({ setActiveComponent }) => {
         },
         {
           id: 2,
-          title: "Educational Support for Underprivileged Children",
+          title: "Educational Support for Children",
           description:
             "Support education initiatives for children in low-income areas by providing school supplies and resources.",
           category: "education",
@@ -168,62 +166,6 @@ const Campaigns = ({ setActiveComponent }) => {
     console.log(`Donating to campaign ${campaignId}`);
   };
 
-  // Handle like button click and update localStorage
-  const handleLike = (campaignId) => {
-    setLikedCampaigns((prev) => {
-      const newLikedState = {
-        ...prev,
-        [campaignId]: !prev[campaignId],
-      };
-
-      // Save to localStorage
-      if (typeof window !== "undefined") {
-        localStorage.setItem("likedCampaigns", JSON.stringify(newLikedState));
-      }
-
-      return newLikedState;
-    });
-  };
-
-  // Floating Heart Animation Component
-  const FloatingHearts = ({ campaignId }) => {
-    const hearts = [1, 2, 3, 4, 5];
-
-    return (
-      <AnimatePresence>
-        {likedCampaigns[campaignId] && (
-          <div className="absolute bottom-0 left-0 w-full h-16 overflow-hidden pointer-events-none">
-            {hearts.map((heart, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 0, x: `${20 + Math.random() * 60}%` }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  y: -80,
-                  transition: {
-                    duration: 2,
-                    times: [0, 0.1, 1],
-                    delay: index * 0.1,
-                  },
-                }}
-                exit={{ opacity: 0 }}
-                className="absolute"
-              >
-                <FontAwesomeIcon
-                  icon={faHeart}
-                  className="text-red-500"
-                  style={{
-                    fontSize: `${12 + Math.random() * 8}px`,
-                  }}
-                />
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </AnimatePresence>
-    );
-  };
-
   // Categories for filter
   const categories = [
     { id: "all", name: "All Campaigns", icon: faHandHoldingHeart },
@@ -237,6 +179,16 @@ const Campaigns = ({ setActiveComponent }) => {
 
   const calculateProgress = (raised, goal) => {
     return Math.min((raised / goal) * 100, 100);
+  };
+
+  // Donate Now Setup
+
+  const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+
+  const handleViewDetails = (campaign) => {
+    setSelectedCampaign(campaign);
+    setShowPaymentsPlace(true);
   };
 
   return (
@@ -270,8 +222,6 @@ const Campaigns = ({ setActiveComponent }) => {
             />
             <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-300" />
           </div>
-
-         
 
           <div className="flex items-center gap-2 text-sm w-full md:w-auto">
             <Filter className="h-5 w-5 text-gray-500 dark:text-gray-300" />
@@ -311,8 +261,6 @@ const Campaigns = ({ setActiveComponent }) => {
         </div>
       </div>
 
-     
-
       {/* Campaigns Grid */}
       {loading ? (
         <div className="flex justify-center items-center h-64">
@@ -341,7 +289,7 @@ const Campaigns = ({ setActiveComponent }) => {
                 <img
                   src={campaign.image}
                   alt={campaign.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-56 object-cover hover:scale-[1.01] ease-in-out duration-200"
                 />
                 <span className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 text-teal-600 dark:text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
                   <FontAwesomeIcon icon={campaign.icon} className="mr-1" />
@@ -390,26 +338,13 @@ const Campaigns = ({ setActiveComponent }) => {
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center mt-4 relative">
+                <div className="flex justify-between items-center mt-5 relative">
                   <div className="flex space-x-2">
-                    <button
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 relative overflow-visible"
-                      onClick={() => handleLike(campaign.id)}
-                      title="Like"
-                    >
-                      {likedCampaigns[campaign.id] ? (
-                        <motion.div
-                          initial={{ scale: 0.8 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: "spring", stiffness: 500 }}
-                        >
-                          <Heart className="h-5 w-5 text-red-500 fill-red-500" />
-                        </motion.div>
-                      ) : (
-                        <Heart className="h-5 w-5 text-slate-500 dark:text-gray-400" />
-                      )}
-                      <FloatingHearts campaignId={campaign.id} />
+                    <button className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+                      <Eye size={14} />
+                      <span className="hidden sm:inline">View</span>
                     </button>
+
                     <button
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                       title="Share"
@@ -419,7 +354,7 @@ const Campaigns = ({ setActiveComponent }) => {
                   </div>
 
                   <button
-                    onClick={() => handleDonate(campaign.id)}
+                    onClick={() => handleViewDetails(campaign)}
                     className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
                   >
                     Donate Now
@@ -428,6 +363,25 @@ const Campaigns = ({ setActiveComponent }) => {
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* View Details Modal */}
+      {showPaymentsPlace && selectedCampaign && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                Donate Now Payments Place
+              </h2>
+              <button
+                onClick={() => setShowDetails(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+              >
+                <X size={20} />
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </motion.div>
