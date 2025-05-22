@@ -24,3 +24,8 @@ This disconnect can result in unfulfilled needs and wasted resources, preventing
 4. Enhanced Security: Email and Phone verification, upload of national document alongside your photo, 2FA, request limiting, transaction verification and secure data handling.
 
 5. Impact Tracking: Donors can track the impact of their donations and receive feedbacks.
+
+
+Seekers request is done physically or throuh call and their request is validated and verified by ConnectAID team.
+
+
