@@ -2,7 +2,16 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
-import { Search, Filter, Share2, Calendar, Users, X, Eye } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Share2,
+  Calendar,
+  Users,
+  X,
+  Eye,
+  CheckCircle,
+} from "lucide-react";
 
 import { motion } from "motion/react";
 
@@ -157,11 +166,17 @@ const Campaigns = ({ setActiveComponent }) => {
   // Donate Now Setup
 
   const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
 
   const handleViewDetails = (campaign) => {
     setSelectedCampaign(campaign);
     setShowPaymentsPlace(true);
+  };
+
+  const handleShareLink = (campaign) => {
+    setSelectedCampaign(campaign);
+    setShowShare(true);
   };
 
   const [amount, setAmount] = useState("");
@@ -221,7 +236,7 @@ const Campaigns = ({ setActiveComponent }) => {
     } else if (value.trim().length < 2) {
       setErrors((prev) => ({
         ...prev,
-        amount: "Donation Amount must be at least 2 characters", 
+        amount: "Donation Amount must be at least 2 characters",
       }));
     } else {
       setErrors((prev) => ({ ...prev, amount: "" }));
@@ -504,14 +519,18 @@ const Campaigns = ({ setActiveComponent }) => {
 
                 <div className="flex justify-between items-center mt-5 relative">
                   <div className="flex space-x-2">
-                    <button className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+                    {/* <button
+                      className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    > 
                       <Eye size={14} />
                       <span className="hidden sm:inline">View</span>
-                    </button>
+                    </button> */}
 
                     <button
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                       title="Share"
+                    onClick={() => handleShareLink(campaign)}
+
                     >
                       <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
                     </button>
@@ -530,10 +549,10 @@ const Campaigns = ({ setActiveComponent }) => {
         </div>
       )}
 
-      {/* View Details Modal */}
+      {/* View Payment Modal */}
       {showPaymentsPlace && selectedCampaign && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-8 mt-2">
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                 Shine Light 😊 In People's LIfe Through Your Donation 🙏
@@ -552,7 +571,8 @@ const Campaigns = ({ setActiveComponent }) => {
                 <button
                   key={value}
                   onClick={() => handleAmountClick(value)}
-                  className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors text-gray-700 dark:text-gray-700 ${
+                  className={`border rounded-md py-2 px-4 min-w-24 text-center  transition-colors text-gray-700 dark:text-white
+                  ${
                     amount === value
                       ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 "
                       : "border-gray-300 hover:border-green-600 hover:bg-green-50"
@@ -567,7 +587,7 @@ const Campaigns = ({ setActiveComponent }) => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {/* Custom Amount */}
                 <div className="md:col-span-3 mt-2 ">
-                  <label className="block text-lg font-medium text-gray-700 mb-2">
+                  <label className="block text-lg font-medium text-gray-700 mb-2 dark:text-white">
                     Donation Amount:
                   </label>
                   <input
@@ -575,11 +595,12 @@ const Campaigns = ({ setActiveComponent }) => {
                     min="1"
                     value={amount}
                     onChange={handleAmountChange}
-                    className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
-                      errors.amount
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
-                    } rounded-md focus:outline-none focus:ring-1 `}
+                    className={`w-full px-3 py-2 border dark:bg-gray-800 dark:text-white 
+                      ${
+                        errors.amount
+                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                          : "border-gray-300 focus:border-green-500 focus:ring-green-500"
+                      } rounded-md focus:outline-none focus:ring-1 `}
                     placeholder="eg 10000"
                     ref={amountDonate}
                     onMouseEnter={onMouseEnterAmountDonate}
@@ -592,8 +613,8 @@ const Campaigns = ({ setActiveComponent }) => {
 
                 {/* Phone NUmber */}
                 <div className="md:col-span-3 mt-2 ">
-                  <label className="block text-lg font-medium text-gray-700 mb-2">
-                    Phone Number:
+                  <label className="block text-lg font-medium text-gray-700 mb-2 dark:text-white">
+                    Phone Number<span className="text-red-500">*</span>
                   </label>
                   <input
                     type="tel"
@@ -624,21 +645,21 @@ const Campaigns = ({ setActiveComponent }) => {
                       {errors.phoneNumber}
                     </p>
                   )}
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
                     Format: +237 followed by 9 digits (e.g., +237672528362)
                   </p>
                 </div>
 
                 {/* Full Name */}
                 <div className="mt-2 md:col-span-3">
-                  <label className="block text-lg font-medium text-gray-700 mb-1">
+                  <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={handleNameChange}
-                    className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
+                    className={`w-full px-3 py-2 border dark:bg-gray-800 dark:text-white  ${
                       errors.name
                         ? "border-red-500 focus:ring-red-500 focus:border-red-500"
                         : "border-gray-300 focus:border-green-500 focus:ring-green-500"
@@ -654,8 +675,8 @@ const Campaigns = ({ setActiveComponent }) => {
 
                 {/* Category */}
                 <div className="mt-2 md:col-span-3">
-                  <label className="block text-lg font-medium text-gray-700 mb-1">
-                    Category<span className="text-red-500">*</span>
+                  <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
+                    Category:
                   </label>
                   <input
                     id="category"
@@ -664,14 +685,14 @@ const Campaigns = ({ setActiveComponent }) => {
                     placeholder="Donation Category"
                     value="Category by ID of  Donation"
                     readOnly={true}
-                    className={`w-full px-3 py-2 border-none dark:bg-white dark:text-gray-800 rounded-md focus:outline-none `}
+                    className={`w-full px-3 py-2 border-none dark:bg-gray-800 dark:text-white  rounded-md focus:outline-none `}
                   />
                 </div>
               </div>
 
               {/* Payment Methods */}
               <div className="mt-2">
-                <label className="block text-lg font-medium text-gray-700 mb-1">
+                <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
                   Payment Method <span className="text-red-500">*</span>
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-2">
@@ -728,6 +749,39 @@ const Campaigns = ({ setActiveComponent }) => {
                 {isSubmitting ? "Processing..." : "Donate Now"}
               </button>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* View Details Modal */}
+      {showShare && selectedCampaign && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-8 mt-2">
+              <div className="flex">
+                <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
+                  Campaign Details
+                </h2>
+              </div>
+              <button
+                onClick={() => setShowShare(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <hr />
+
+            <div className="mt-6 mb-3 leading-8">
+              <h1 className="text-xl">
+                Copy the lInk below and share to all social media platforms
+                to help 🙏 those in desperate need.
+              </h1>
+              <a href="/" className="text-blue-600 text-xl mt-4">
+                shareLink
+              </a> 
+            </div>
           </div>
         </div>
       )}
