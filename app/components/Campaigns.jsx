@@ -1,16 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import {
-  Search,
-  Filter,
-  Share2,
-  Calendar,
-  Users,
-  X,
-  Eye,
-} from "lucide-react";
+import { Search, Filter, Share2, Calendar, Users, X, Eye } from "lucide-react";
 
 import { motion } from "motion/react";
 
@@ -25,7 +17,7 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const Campaigns = ({ setActiveComponent }) => {
   const [campaigns, setCampaigns] = useState([]);
@@ -33,28 +25,9 @@ const Campaigns = ({ setActiveComponent }) => {
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [likedCampaigns, setLikedCampaigns] = useState({});
-  const [showForm, setShowForm] = useState(false);
 
+  // Sample campaign data
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedLikes = localStorage.getItem("likedCampaigns");
-      if (storedLikes) {
-        try {
-          const parsedLikes = JSON.parse(storedLikes);
-          setLikedCampaigns(parsedLikes);
-        } catch (e) {
-          console.error("Error parsing liked campaigns from localStorage:", e);
-
-          localStorage.setItem("likedCampaigns", JSON.stringify({}));
-        }
-      }
-    }
-  }, []);
-
-  // Sample campaign data - in production you would fetch this from your API
-  useEffect(() => {
-    // Simulate API fetch
     setTimeout(() => {
       setCampaigns([
         {
@@ -189,6 +162,197 @@ const Campaigns = ({ setActiveComponent }) => {
   const handleViewDetails = (campaign) => {
     setSelectedCampaign(campaign);
     setShowPaymentsPlace(true);
+  };
+
+  const [amount, setAmount] = useState("");
+  const [selectedPayment, setSelectedPayment] = useState("");
+
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const [errors, setErrors] = useState({
+    name: "",
+    payment: "",
+    phoneNumber: "",
+    amount: "",
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const paymentMethods = [
+    {
+      id: "mtn_mobile_money",
+      name: "mtn_mobile_money",
+      src: "/icon/mtn_mobile_money.png",
+    },
+    {
+      id: "orange_mobile_money",
+      name: "orange_mobile_money",
+      src: "/icon/orange_mobile_money.png",
+    },
+  ];
+
+  const predefinedAmounts = [
+    1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 25000, 50000,
+    100000, 250000, 500000, 900000,
+  ];
+
+  const handleAmountClick = (value) => {
+    setAmount(value);
+  };
+
+  const handlePaymentMethodClick = (id) => {
+    setSelectedPayment(id);
+    setErrors((prev) => ({ ...prev, payment: "" }));
+  };
+
+  const handleAmountChange = (e) => {
+    setAmount(parseInt(e.target.value) || 0);
+
+    const value = e.target.value;
+    setAmount(value);
+
+    if (!value.trim()) {
+      setErrors((prev) => ({
+        ...prev,
+        amount:
+          "Amount is required. Please click the amounts above to select or input amount manually",
+      }));
+    } else if (value.trim().length < 2) {
+      setErrors((prev) => ({
+        ...prev,
+        amount: "Donation Amount must be at least 2 characters", 
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, amount: "" }));
+    }
+  };
+
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+
+    if (!value.trim()) {
+      setErrors((prev) => ({ ...prev, name: "Full Name is required" }));
+    } else if (value.trim().length < 7) {
+      setErrors((prev) => ({
+        ...prev,
+        name: "Full Name must be at least 7 characters",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, name: "" }));
+    }
+  };
+
+  const handlePhoneNumberChange = (e) => {
+    const value = e.target.value;
+    setPhoneNumber(value);
+
+    const phoneNumberRegex = /^\+237[0-9]{9}$/;
+    if (!value.trim()) {
+      setErrors((prev) => ({
+        ...prev,
+        phoneNumber: "Phone NUmber is required",
+      }));
+    } else if (!phoneNumberRegex.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        phoneNumber:
+          "Please enter a valid phone number as defined in the format below",
+      }));
+    } else {
+      setErrors((prev) => ({ ...prev, phoneNumber: "" }));
+    }
+  };
+
+  const amountDonate = useRef(null);
+  const nameDonate = useRef(null);
+  const phoneNumberDonate = useRef(null);
+
+  const onMouseEnterPhoneNumber = () => {
+    if (phoneNumberDonate.current) {
+      phoneNumberDonate.current.focus();
+    }
+  };
+
+  const onMouseEnterAmountDonate = () => {
+    if (amountDonate.current) {
+      amountDonate.current.focus();
+    }
+  };
+
+  const onMouseEnterNameDonate = () => {
+    if (nameDonate.current) {
+      nameDonate.current.focus();
+    }
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = {
+      name: "",
+      payment: "",
+      phoneNumber: "",
+      amount: "",
+    };
+
+    if (!name.trim()) {
+      newErrors.name = "Full Name is required";
+      valid = false;
+    } else if (name.trim().length < 2) {
+      newErrors.name = "Full Name must be at least 2 characters";
+      valid = false;
+    }
+
+    if (!amount.trim()) {
+      newErrors.amount =
+        "Amount is required. Please click the amounts above to select or input amount manually";
+      valid = false;
+    } else if (amount.trim().length < 3) {
+      newErrors.amount = "Donation Amount must be at least 3 characters";
+      valid = false;
+    }
+
+    if (!phoneNumber.trim()) {
+      newErrors.phoneNumber = "Phone number is required";
+      valid = false;
+    } else {
+      const phoneRegex = /^\+237[0-9]{9}$/;
+      if (!phoneRegex.test(phoneNumber.trim())) {
+        newErrors.phoneNumber =
+          "Phone Number must be in format +237 followed by 9 digits";
+        valid = false;
+      }
+    }
+
+    if (!selectedPayment) {
+      newErrors.payment = "Please select a payment method";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      setIsSubmitting(true);
+
+      console.log("Form submitted successfully", {
+        amount,
+        name,
+        selectedPayment,
+      });
+
+      setTimeout(() => {
+        alert("Donation submitted successfully!");
+        setIsSubmitting(false);
+      }, 1000);
+    } else {
+      console.log("Form has errors");
+    }
   };
 
   return (
@@ -369,18 +533,201 @@ const Campaigns = ({ setActiveComponent }) => {
       {/* View Details Modal */}
       {showPaymentsPlace && selectedCampaign && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-8 mt-2">
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                Donate Now Payments Place
+                Shine Light 😊 In People's LIfe Through Your Donation 🙏
               </h2>
               <button
-                onClick={() => setShowDetails(false)}
+                onClick={() => setShowPaymentsPlace(false)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
               >
                 <X size={20} />
               </button>
             </div>
+
+            {/* Predefined Amounts */}
+            <div className="flex flex-wrap gap-2 mb-6 leading-9 ">
+              {predefinedAmounts.map((value) => (
+                <button
+                  key={value}
+                  onClick={() => handleAmountClick(value)}
+                  className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors text-gray-700 dark:text-gray-700 ${
+                    amount === value
+                      ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 "
+                      : "border-gray-300 hover:border-green-600 hover:bg-green-50"
+                  }`}
+                >
+                  {value} Francs
+                </button>
+              ))}
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {/* Custom Amount */}
+                <div className="md:col-span-3 mt-2 ">
+                  <label className="block text-lg font-medium text-gray-700 mb-2">
+                    Donation Amount:
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
+                      errors.amount
+                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    } rounded-md focus:outline-none focus:ring-1 `}
+                    placeholder="eg 10000"
+                    ref={amountDonate}
+                    onMouseEnter={onMouseEnterAmountDonate}
+                  />
+
+                  {errors.amount && (
+                    <p className="mt-1 text-sm text-red-500">{errors.amount}</p>
+                  )}
+                </div>
+
+                {/* Phone NUmber */}
+                <div className="md:col-span-3 mt-2 ">
+                  <label className="block text-lg font-medium text-gray-700 mb-2">
+                    Phone Number:
+                  </label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={phoneNumber}
+                    onMouseEnter={onMouseEnterPhoneNumber}
+                    placeholder="+237XXXXXXXXX"
+                    ref={phoneNumberDonate}
+                    onChange={handlePhoneNumberChange}
+                    className={`w-full border outline-none ease-in-out
+                    ${
+                      errors.phoneNumber &&
+                      /^\+237[0-9]{9}$/.test(errors.phoneNumber.trim())
+                        ? "border-green-500 focus:ring-green-500"
+                        : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
+                    } 
+                    ${
+                      errors.phoneNumber
+                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    }
+                    rounded-md px-3 py-2 focus:outline-none focus:ring-1 ease-in-out 
+                    dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`}
+                  />
+                  {errors.phoneNumber && (
+                    <p className="mt-1 text-sm text-red-500">
+                      {errors.phoneNumber}
+                    </p>
+                  )}
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Format: +237 followed by 9 digits (e.g., +237672528362)
+                  </p>
+                </div>
+
+                {/* Full Name */}
+                <div className="mt-2 md:col-span-3">
+                  <label className="block text-lg font-medium text-gray-700 mb-1">
+                    Full Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={handleNameChange}
+                    className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
+                      errors.name
+                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
+                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
+                    } rounded-md focus:outline-none focus:ring-1 `}
+                    placeholder="e.g Mbongo Alex Tabeng"
+                    ref={nameDonate}
+                    onMouseEnter={onMouseEnterNameDonate}
+                  />
+                  {errors.name && (
+                    <p className="mt-1 text-red-500 text-sm">{errors.name}</p>
+                  )}
+                </div>
+
+                {/* Category */}
+                <div className="mt-2 md:col-span-3">
+                  <label className="block text-lg font-medium text-gray-700 mb-1">
+                    Category<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="category"
+                    type="text"
+                    // value={category}
+                    placeholder="Donation Category"
+                    value="Category by ID of  Donation"
+                    readOnly={true}
+                    className={`w-full px-3 py-2 border-none dark:bg-white dark:text-gray-800 rounded-md focus:outline-none `}
+                  />
+                </div>
+              </div>
+
+              {/* Payment Methods */}
+              <div className="mt-2">
+                <label className="block text-lg font-medium text-gray-700 mb-1">
+                  Payment Method <span className="text-red-500">*</span>
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-2">
+                  {paymentMethods.map((method) => (
+                    <div
+                      key={method.id}
+                      onClick={() => handlePaymentMethodClick(method.id)}
+                      className={`flex items-center justify-center p-4 border rounded-md cursor-pointer relative ${
+                        selectedPayment === method.id
+                          ? "border-green-600 bg-green-50"
+                          : "border-gray-300 hover:border-green-600 hover:bg-green-50"
+                      }`}
+                    >
+                      <div className="h-8 w-full relative flex items-center justify-center">
+                        <Image
+                          src={method.src}
+                          alt={method.name}
+                          fill
+                          className="max-h-10 max-w-full object-cover"
+                        />
+                      </div>
+                      {selectedPayment === method.id && (
+                        <div className="absolute top-2 right-2 text-green-600">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {errors.payment && (
+                  <p className="mt-1 text-red-500 text-sm">{errors.payment}</p>
+                )}
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full sm:w-auto mt-2 ease-in-out cursor-pointer px-6 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors ${
+                  isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                }`}
+              >
+                {isSubmitting ? "Processing..." : "Donate Now"}
+              </button>
+            </form>
           </div>
         </div>
       )}

@@ -265,7 +265,6 @@ const DonatePayment = () => {
         selectedPayment,
       });
 
-      // Simulate API call
       setTimeout(() => {
         alert("Donation submitted successfully!");
         setIsSubmitting(false);
