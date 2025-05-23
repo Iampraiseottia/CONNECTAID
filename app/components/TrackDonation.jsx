@@ -10,7 +10,7 @@ const donationData = [
   {
     id: "DON-2025-001",
     campaign: "Clean Water Initiative",
-    organization: "Water for All",
+    organization: "10, 000, 000 Francs",
     date: "2025-04-15",
     amount: 10000,
     status: "completed",
@@ -28,7 +28,7 @@ const donationData = [
   {
     id: "DON-2025-002",
     campaign: "School Supplies Drive",
-    organization: "Education First",
+    organization: "26, 000, 000 Francs",
     date: "2025-03-22",
     amount: 30000,
     status: "completed",
@@ -46,7 +46,7 @@ const donationData = [
   {
     id: "DON-2025-003",
     campaign: "Hurricane Relief Fund",
-    organization: "Disaster Response Team",
+    organization: "5, 000, 000 Francs",
     date: "2025-02-10",
     amount: 250000,
     status: "completed",
@@ -247,7 +247,7 @@ const TrackDonation = () => {
                   <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-700 dark:text-gray-300">
-                        Amount:
+                        Amount Contributed:
                       </span>
                       <span className="font-semibold dark:text-gray-200">
                         {selectedDonation.amount} Francs
@@ -255,7 +255,7 @@ const TrackDonation = () => {
                     </div>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-700 dark:text-gray-300">
-                        Organization:
+                        Total Campaign Amount :
                       </span>
                       <span className="dark:text-gray-200">
                         {selectedDonation.organization}

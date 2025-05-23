@@ -529,8 +529,7 @@ const Campaigns = ({ setActiveComponent }) => {
                     <button
                       className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
                       title="Share"
-                    onClick={() => handleShareLink(campaign)}
-
+                      onClick={() => handleShareLink(campaign)}
                     >
                       <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
                     </button>
@@ -773,14 +772,16 @@ const Campaigns = ({ setActiveComponent }) => {
             </div>
             <hr />
 
-            <div className="mt-6 mb-3 leading-8">
+            <div className="mt-6 mb-3">
               <h1 className="text-xl">
-                Copy the lInk below and share to all social media platforms
-                to help 🙏 those in desperate need.
+                Copy the lInk below and share to all social media platforms to
+                help 🙏 those in desperate need.
               </h1>
-              <a href="/" className="text-blue-600 text-xl mt-4">
-                shareLink
-              </a> 
+              <p className="pt-5 ">
+                <a href="/" className="text-blue-600 text-xl">
+                  share Link
+                </a>
+              </p>
             </div>
           </div>
         </div>
