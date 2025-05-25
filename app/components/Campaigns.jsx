@@ -570,17 +570,17 @@ const Campaigns = ({ setActiveComponent }) => {
                 <button
                   key={value}
                   onClick={() => handleAmountClick(value)}
-                  className={`border rounded-md py-2 px-4 min-w-24 text-center  transition-colors text-gray-700 dark:text-white
+                  className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors text-gray-700 hover:dark:bg-transparent dark:text-white
                   ${
                     amount === value
-                      ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 "
-                      : "border-gray-300 hover:border-green-600 hover:bg-green-50"
+                      ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 dark:bg-transparent  "
+                      : "border-gray-300 hover:border-green-600 hover:bg-green-50 dark:bg-transparent"
                   }`}
                 >
                   {value} Francs
                 </button>
               ))}
-            </div>
+            </div> 
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
