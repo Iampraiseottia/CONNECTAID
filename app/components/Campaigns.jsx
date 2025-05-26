@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Search,
-  Filter,
-  Share2,
-  Calendar,
-  Users,
-  X,
+  Plus,
   Eye,
-  CheckCircle,
+  UserCheck,
+  X,
+  Filter,
+  Star,
+  Calendar,
+  Award,
+  AlertCircle,
 } from "lucide-react";
-
-import { motion } from "motion/react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -26,349 +26,182 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
-import Image from "next/image";
+import { motion } from "motion/react";
 
-const Campaigns = ({ setActiveComponent }) => {
-  const [campaigns, setCampaigns] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [filter, setFilter] = useState("all");
+const Campaigns = () => {
+  const [campaigns, setCampaigns] = useState([
+    {
+      id: 1,
+      title: "Food Drive for Homeless Shelter",
+      organizer: "Community Outreach",
+      location: "Downtown",
+      date: "2025-05-15",
+      category: "Food & Supplies",
+      participants: 12,
+      description:
+        "Collecting non-perishable food items and essential supplies for our local homeless shelter. We need volunteers to help sort and distribute items.",
+      requirements:
+        "Must be able to lift 10-20 pounds and commit to at least 2 hours",
+      contact: "outreach@community.org",
+    },
+    {
+      id: 2,
+      title: "Elderly Home Visitation",
+      organizer: "Silver Care",
+      location: "Sunshine Valley",
+      date: "2025-05-20",
+      category: "Social Support",
+      participants: 8,
+      description:
+        "Visiting elderly residents at Sunshine Valley Retirement Home to provide companionship and assistance with daily activities.",
+      requirements:
+        "Patience and good communication skills required. Background check necessary.",
+      contact: "volunteer@silvercare.org",
+    },
+    {
+      id: 3,
+      title: "Beach Cleanup Initiative",
+      organizer: "Ocean Friends",
+      location: "Seaside Beach",
+      date: "2025-05-25",
+      category: "Environmental",
+      participants: 24,
+      description:
+        "Join us for our monthly beach cleanup to remove plastic and other waste from our local shoreline. Equipment will be provided.",
+      requirements: "Comfortable working outdoors, sunscreen recommended",
+      contact: "cleanup@oceanfriends.org",
+    },
+    {
+      id: 4,
+      title: "After-School Tutoring Program",
+      organizer: "Education Matters",
+      location: "Central Library",
+      date: "2025-06-01",
+      category: "Education",
+      participants: 6,
+      description:
+        "Tutoring middle school students in math and science subjects. Looking for volunteers with teaching experience or strong academic background.",
+      requirements:
+        "Knowledge in mathematics or science subjects, experience with children preferred",
+      contact: "tutoring@educationmatters.org",
+    },
+    {
+      id: 5,
+      title: "Community Garden Project",
+      organizer: "Green Thumb Society",
+      location: "West Side Park",
+      date: "2025-06-05",
+      category: "Environmental",
+      participants: 15,
+      description:
+        "Help plant and maintain our community garden that provides fresh produce to local food banks. No gardening experience necessary!",
+      requirements:
+        "Physical activity required, bring your own gloves if possible",
+      contact: "garden@greenthumb.org",
+    },
+  ]);
+
   const [searchQuery, setSearchQuery] = useState("");
+  const [filter, setFilter] = useState("all");
 
-  // Sample campaign data
-  useEffect(() => {
+  // State for form visibility and data
+  const [showForm, setShowForm] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedCampaign, setSelectedCampaign] = useState(null);
+
+  // State for past campaign details
+  const [showPastDetails, setShowPastDetails] = useState(false);
+  const [selectedPastCampaign, setSelectedPastCampaign] = useState(null);
+
+  // State pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeCategories, setActiveCategories] = useState([]);
+  const [notification, setNotification] = useState(null);
+  const itemsPerPage = 5;
+
+  // Available categories
+  const categories = [
+    { id: "all", name: "All Categories", icon: faHandHoldingHeart },
+    { id: "Food & Supplies", name: "Food & Supplies", icon: faUtensils },
+    { id: "Environmental", name: "Environmental", icon: faSeedling },
+    { id: "Education", name: "Education", icon: faGraduationCap },
+    { id: "Healthcare", name: "Healthcare", icon: faHeartPulse },
+    { id: "Crisis Relief", name: "Crisis Relief", icon: faPaw },
+    { id: "Other", name: "Other", icon: faHome },
+  ];
+
+  // Handle showing notification
+  const showNotification = (message) => {
+    setNotification(message);
     setTimeout(() => {
-      setCampaigns([
-        {
-          id: 1,
-          title: "Provide Clean Water in Rural Communities",
-          description:
-            "Help us provide clean drinking water to communities struggling with access to safe water sources.",
-          category: "basic-needs",
-          categoryName: "Basic Needs",
-          icon: faSeedling,
-          raised: 26058500,
-          goal: 35750000,
-          supporters: 345,
-          daysLeft: 35,
-          image: "/gallery/water.png",
-          location: "East Africa",
-        },
-        {
-          id: 2,
-          title: "Educational Support for Children",
-          description:
-            "Support education initiatives for children in low-income areas by providing school supplies and resources.",
-          category: "education",
-          categoryName: "Education",
-          icon: faGraduationCap,
-          raised: 6127500,
-          goal: 10000000,
-          supporters: 189,
-          daysLeft: 50,
-          image: "/gallery/education.png",
-          location: "North Africa",
-        },
-        {
-          id: 3,
-          title: "Medical Aid for Rural Health Centers",
-          description:
-            "Help us supply essential medical equipment and medications to rural health centers.",
-          category: "healthcare",
-          categoryName: "Healthcare",
-          icon: faHeartPulse,
-          raised: 12050250,
-          goal: 53000000,
-          supporters: 278,
-          daysLeft: 71,
-          image: "/gallery/medical.png",
-          location: "West Africa",
-        },
-        {
-          id: 4,
-          title: " Extreme Case",
-          description:
-            "Your donation can support those facing extreme hardships and urgent needs!",
-          category: "Extreme Case",
-          categoryName: "Extreme Case",
-          icon: faPaw,
-          raised: 100000000,
-          goal: 20000000,
-          supporters: 125,
-          daysLeft: 95,
-          image: "/gallery/suffering.png",
-          location: "Central Africa",
-        },
-        {
-          id: 5,
-          title: "Food Initiative",
-          description:
-            "Join our mission to reduce hunger by supporting sustainable food production and distribution programs.",
-          category: "food",
-          categoryName: "Food",
-          icon: faUtensils,
-          raised: 8650000,
-          goal: 20000000,
-          supporters: 210,
-          daysLeft: 115,
-          image: "/gallery/endHunger.png",
-          location: "Southeast Africa",
-        },
-        {
-          id: 6,
-          title: "Homeless Shelter Support Program",
-          description:
-            "Support our shelter providing temporary housing, meals, and resources for people experiencing homelessness.",
-          category: "housing",
-          categoryName: "Housing",
-          icon: faHome,
-          raised: 28500000,
-          goal: 28500000,
-          supporters: 231,
-          daysLeft: 138,
-          image: "/gallery/donateList-1.png",
-          location: "Africa",
-        },
-      ]);
-      setLoading(false);
-    }, 1000);
-  }, []);
+      setNotification(null);
+    }, 5000);
+  };
 
-  // Filter campaigns based on category and search query
+  // Handle join campaign
+  const handleJoin = (id) => {
+    setCampaigns(
+      campaigns.map((campaign) => {
+        if (campaign.id === id) {
+          showNotification(`Requested to join "${campaign.title}"`);
+          return { ...campaign, participants: campaign.participants + 1 };
+        }
+        return campaign;
+      })
+    );
+  };
+
+  // Handle view details
+  const handleViewDetails = (campaign) => {
+    setSelectedCampaign(campaign);
+    setShowDetails(true);
+  };
+
+  // Handle category filter
+  const toggleCategoryFilter = (category) => {
+    if (activeCategories.includes(category)) {
+      setActiveCategories(activeCategories.filter((c) => c !== category));
+    } else {
+      setActiveCategories([...activeCategories, category]);
+    }
+    setCurrentPage(1);
+  };
+
+  // Filter campaigns based on search term and category filters
   const filteredCampaigns = campaigns.filter((campaign) => {
     const matchesFilter = filter === "all" || campaign.category === filter;
     const matchesSearch =
       campaign.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      campaign.description.toLowerCase().includes(searchQuery.toLowerCase());
+      campaign.organizer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      campaign.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      campaign.location.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
 
-  // Handle donation button click
-  const handleDonate = (campaignId) => {
-    console.log(`Donating to campaign ${campaignId}`);
+  // Calculate pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCampaigns = filteredCampaigns.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  // Joining Campaign
+  const [joinedCampaignIds, setJoinedCampaignIds] = useState({});
+
+  const handleJoinCampaign = (campaignId) => {
+    console.log(`Joining campaign: ${campaignId}`);
+    setJoinedCampaignIds((prev) => ({
+      ...prev,
+      [campaignId]: true,
+    }));
   };
 
-  // Categories for filter
-  const categories = [
-    { id: "all", name: "All Campaigns", icon: faHandHoldingHeart },
-    { id: "basic-needs", name: "Basic Needs", icon: faSeedling },
-    { id: "education", name: "Education", icon: faGraduationCap },
-    { id: "healthcare", name: "Healthcare", icon: faHeartPulse },
-    { id: "extreme case", name: "Extreme case", icon: faPaw },
-    { id: "food", name: "Food", icon: faUtensils },
-    { id: "housing", name: "Housing", icon: faHome },
-  ];
+  // Fetching Past Successful Event Data from Postgres
 
-  const calculateProgress = (raised, goal) => {
-    return Math.min((raised / goal) * 100, 100);
-  };
-
-  // Donate Now Setup
-
-  const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
-  const [showShare, setShowShare] = useState(false);
-  const [selectedCampaign, setSelectedCampaign] = useState(null);
-
-  const handleViewDetails = (campaign) => {
-    setSelectedCampaign(campaign);
-    setShowPaymentsPlace(true);
-  };
-
-  const handleShareLink = (campaign) => {
-    setSelectedCampaign(campaign);
-    setShowShare(true);
-  };
-
-  const [amount, setAmount] = useState("");
-  const [selectedPayment, setSelectedPayment] = useState("");
-
-  const [name, setName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-  const [errors, setErrors] = useState({
-    name: "",
-    payment: "",
-    phoneNumber: "",
-    amount: "",
-  });
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const paymentMethods = [
-    {
-      id: "mtn_mobile_money",
-      name: "mtn_mobile_money",
-      src: "/icon/mtn_mobile_money.png",
-    },
-    {
-      id: "orange_mobile_money",
-      name: "orange_mobile_money",
-      src: "/icon/orange_mobile_money.png",
-    },
-  ];
-
-  const predefinedAmounts = [
-    1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 25000, 50000,
-    100000, 250000, 500000, 900000,
-  ];
-
-  const handleAmountClick = (value) => {
-    setAmount(value);
-  };
-
-  const handlePaymentMethodClick = (id) => {
-    setSelectedPayment(id);
-    setErrors((prev) => ({ ...prev, payment: "" }));
-  };
-
-  const handleAmountChange = (e) => {
-    setAmount(parseInt(e.target.value) || 0);
-
-    const value = e.target.value;
-    setAmount(value);
-
-    if (!value.trim()) {
-      setErrors((prev) => ({
-        ...prev,
-        amount:
-          "Amount is required. Please click the amounts above to select or input amount manually",
-      }));
-    } else if (value.trim().length < 2) {
-      setErrors((prev) => ({
-        ...prev,
-        amount: "Donation Amount must be at least 2 characters",
-      }));
-    } else {
-      setErrors((prev) => ({ ...prev, amount: "" }));
-    }
-  };
-
-  const handleNameChange = (e) => {
-    const value = e.target.value;
-    setName(value);
-
-    if (!value.trim()) {
-      setErrors((prev) => ({ ...prev, name: "Full Name is required" }));
-    } else if (value.trim().length < 7) {
-      setErrors((prev) => ({
-        ...prev,
-        name: "Full Name must be at least 7 characters",
-      }));
-    } else {
-      setErrors((prev) => ({ ...prev, name: "" }));
-    }
-  };
-
-  const handlePhoneNumberChange = (e) => {
-    const value = e.target.value;
-    setPhoneNumber(value);
-
-    const phoneNumberRegex = /^\+237[0-9]{9}$/;
-    if (!value.trim()) {
-      setErrors((prev) => ({
-        ...prev,
-        phoneNumber: "Phone NUmber is required",
-      }));
-    } else if (!phoneNumberRegex.test(value)) {
-      setErrors((prev) => ({
-        ...prev,
-        phoneNumber:
-          "Please enter a valid phone number as defined in the format below",
-      }));
-    } else {
-      setErrors((prev) => ({ ...prev, phoneNumber: "" }));
-    }
-  };
-
-  const amountDonate = useRef(null);
-  const nameDonate = useRef(null);
-  const phoneNumberDonate = useRef(null);
-
-  const onMouseEnterPhoneNumber = () => {
-    if (phoneNumberDonate.current) {
-      phoneNumberDonate.current.focus();
-    }
-  };
-
-  const onMouseEnterAmountDonate = () => {
-    if (amountDonate.current) {
-      amountDonate.current.focus();
-    }
-  };
-
-  const onMouseEnterNameDonate = () => {
-    if (nameDonate.current) {
-      nameDonate.current.focus();
-    }
-  };
-
-  const validateForm = () => {
-    let valid = true;
-    const newErrors = {
-      name: "",
-      payment: "",
-      phoneNumber: "",
-      amount: "",
-    };
-
-    if (!name.trim()) {
-      newErrors.name = "Full Name is required";
-      valid = false;
-    } else if (name.trim().length < 2) {
-      newErrors.name = "Full Name must be at least 2 characters";
-      valid = false;
-    }
-
-    if (!amount.trim()) {
-      newErrors.amount =
-        "Amount is required. Please click the amounts above to select or input amount manually";
-      valid = false;
-    } else if (amount.trim().length < 3) {
-      newErrors.amount = "Donation Amount must be at least 3 characters";
-      valid = false;
-    }
-
-    if (!phoneNumber.trim()) {
-      newErrors.phoneNumber = "Phone number is required";
-      valid = false;
-    } else {
-      const phoneRegex = /^\+237[0-9]{9}$/;
-      if (!phoneRegex.test(phoneNumber.trim())) {
-        newErrors.phoneNumber =
-          "Phone Number must be in format +237 followed by 9 digits";
-        valid = false;
-      }
-    }
-
-    if (!selectedPayment) {
-      newErrors.payment = "Please select a payment method";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (validateForm()) {
-      setIsSubmitting(true);
-
-      console.log("Form submitted successfully", {
-        amount,
-        name,
-        selectedPayment,
-      });
-
-      setTimeout(() => {
-        alert("Donation submitted successfully!");
-        setIsSubmitting(false);
-      }, 1000);
-    } else {
-      console.log("Form has errors");
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   return (
     <motion.div
@@ -378,410 +211,460 @@ const Campaigns = ({ setActiveComponent }) => {
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-14"
     >
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
-          Active Campaigns
-        </h1>
-        <p className="text-slate-600 dark:text-gray-300">
-          Browse through current campaigns and support causes that matter to
-          you.
-        </p>
-      </div>
-
-      {/* Search and Filter Bar */}
-      <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
-        <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-          <div className="relative w-full md:w-1/2">
-            <input
-              type="text"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
-              placeholder="Search campaigns..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-300" />
-          </div>
-
-          <div className="flex items-center gap-2 text-sm w-full md:w-auto">
-            <Filter className="h-5 w-5 text-gray-500 dark:text-gray-300" />
-            <span className="text-gray-600 dark:text-gray-300">Filter:</span>
-            <select
-              className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* Category Pills */}
-      <div className="mb-8 overflow-x-auto">
-        <div className="flex space-x-2 pb-2">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              className={`flex items-center px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                filter === category.id
-                  ? "bg-teal-500 text-white"
-                  : "bg-white dark:bg-gray-700 text-slate-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
-              }`}
-              onClick={() => setFilter(category.id)}
-            >
-              <FontAwesomeIcon icon={category.icon} className="h-4 w-4 mr-2" />
-              {category.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Campaigns Grid */}
-      {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
-        </div>
-      ) : error ? (
-        <div className="text-center p-8 bg-red-50 dark:bg-red-900/20 rounded-lg">
-          <p className="text-red-600 dark:text-red-400">
-            Error loading campaigns. Please try again later.
+      <div className="max-w-6xl mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
+            Active Campaigns
+          </h1>
+          <p className="text-slate-600 dark:text-gray-300">
+            Browse through current campaigns and support causes that matter to
+            you.
           </p>
         </div>
-      ) : filteredCampaigns.length === 0 ? (
-        <div className="text-center p-8 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <p className="text-gray-600 dark:text-gray-300">
-            No campaigns found matching your criteria.
-          </p>
-        </div>
-      ) : (
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {filteredCampaigns.map((campaign) => (
-            <div
-              key={campaign.id}
-              className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
-            >
-              <div className="relative">
-                <img
-                  src={campaign.image}
-                  alt={campaign.title}
-                  className="w-full h-56 object-cover hover:scale-[1.01] ease-in-out duration-200"
-                />
-                <span className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 text-teal-600 dark:text-teal-400 px-3 py-1 rounded-full text-sm font-medium">
-                  <FontAwesomeIcon icon={campaign.icon} className="mr-1" />
-                  {campaign.categoryName}
-                </span>
-              </div>
 
-              <div className="p-5">
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
-                  {campaign.title}
-                </h3>
-                <p className="text-slate-600 dark:text-gray-300 mb-4 line-clamp-2">
-                  {campaign.description}
-                </p>
-
-                {/* Progress bar */}
-                <div className="mb-2">
-                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                    <div
-                      className="bg-teal-500 h-2.5 rounded-full"
-                      style={{
-                        width: `${calculateProgress(
-                          campaign.raised,
-                          campaign.goal
-                        )}%`,
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className="flex justify-between text-sm text-slate-700 dark:text-gray-300 mb-4">
-                  <span className="font-medium">
-                    {campaign.raised.toLocaleString()} Francs raised
-                  </span>
-                  <span> {campaign.goal.toLocaleString()} Francs</span>
-                </div>
-
-                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mb-4">
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-1" />
-                    <span>{campaign.supporters} supporters</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    <span>{campaign.daysLeft} days left</span>
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center mt-5 relative">
-                  <div className="flex space-x-2">
-                    {/* <button
-                      className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-                    > 
-                      <Eye size={14} />
-                      <span className="hidden sm:inline">View</span>
-                    </button> */}
-
-                    <button
-                      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                      title="Share"
-                      onClick={() => handleShareLink(campaign)}
-                    >
-                      <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={() => handleViewDetails(campaign)}
-                    className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
-                  >
-                    Donate Now
-                  </button>
-                </div>
-              </div>
+        {/* Search and Filter Bar */}
+        <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+            <div className="relative w-full md:w-1/2">
+              <input
+                type="text"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
+                placeholder="Search campaigns..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400 dark:text-gray-300" />
             </div>
-          ))}
-        </div>
-      )}
 
-      {/* View Payment Modal */}
-      {showPaymentsPlace && selectedCampaign && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-8 mt-2">
+            <div className="flex items-center gap-2 text-sm w-full md:w-auto">
+              <Filter className="h-5 w-5 text-gray-500 dark:text-gray-300" />
+              <span className="text-gray-600 dark:text-gray-300">Filter:</span>
+              <select
+                className="border border-gray-300 dark:border-gray-600 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:text-white"
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+              >
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        {/* Category Pills */}
+        <div className="mb-8 overflow-x-auto">
+          <div className="flex space-x-2 pb-2">
+            {categories.map((category) => (
+              <button
+                key={category.id}
+                className={`flex items-center px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
+                  filter === category.id
+                    ? "bg-teal-500 text-white"
+                    : "bg-white dark:bg-gray-700 text-slate-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600"
+                }`}
+                onClick={() => setFilter(category.id)}
+              >
+                <FontAwesomeIcon
+                  icon={category.icon}
+                  className="h-4 w-4 mr-2"
+                />
+                {category.name}
+              </button>
+            ))}
+          </div>
+        </div> 
+
+        {/* Campaigns Table */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
+            <thead className="bg-gray-100 dark:bg-gray-700">
+              <tr>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  Title
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell">
+                  Organizer
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
+                  Location
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden lg:table-cell">
+                  Date
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
+                  Category
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              {currentCampaigns.length > 0 ? (
+                currentCampaigns.map((campaign) => (
+                  <tr
+                    key={campaign.id}
+                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                  >
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
+                      {campaign.title}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
+                      {campaign.organizer}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
+                      {campaign.location}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden lg:table-cell">
+                      {campaign.date}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
+                      <span
+                        className="px-2 py-1 text-xs font-semibold rounded-full 
+                        bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
+                      >
+                        {campaign.category}
+                      </span>
+                    </td>
+                    <td className="py-4 px-4 text-sm flex gap-2">
+                      <button
+                        onClick={() => handleViewDetails(campaign)}
+                        className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      >
+                        <Eye size={14} />
+                        <span className="hidden sm:inline">View</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleJoin(campaign.id);
+                          handleJoinCampaign(campaign.id);
+                        }}
+                        className="px-3 py-1 bg-green-100 text-green-600 rounded-md hover:bg-green-200 flex items-center gap-1 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-700"
+                      >
+                        <UserCheck size={14} />
+                        <span className="hidden sm:inline">
+                          {joinedCampaignIds[campaign.id]
+                            ? "Request Received"
+                            : "Join Campaign"}
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="py-4 px-4 text-center text-gray-500 dark:text-gray-400"
+                  >
+                    No campaigns found
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Create Campaign Form Modal */}
+      {showForm && (
+        <motion.div
+          initial={{ opacity: 0, y: 100 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+          viewport={{ once: true, amount: 0.05 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        >
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[92vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                Shine Light 😊 In People's LIfe Through Your Donation 🙏
+                Create New Campaign
               </h2>
               <button
-                onClick={() => setShowPaymentsPlace(false)}
+                onClick={() => setShowForm(false)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Predefined Amounts */}
-            <div className="flex flex-wrap gap-2 mb-6 leading-9 ">
-              {predefinedAmounts.map((value) => (
-                <button
-                  key={value}
-                  onClick={() => handleAmountClick(value)}
-                  className={`border rounded-md py-2 px-4 min-w-24 text-center transition-colors text-gray-700 hover:dark:bg-transparent dark:text-white
-                  ${
-                    amount === value
-                      ? "border-green-600 bg-green-50 text-green-600 dark:text-green-600 dark:bg-transparent  "
-                      : "border-gray-300 hover:border-green-600 hover:bg-green-50 dark:bg-transparent"
-                  }`}
-                >
-                  {value} Francs
-                </button>
-              ))}
-            </div> 
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {/* Custom Amount */}
-                <div className="md:col-span-3 mt-2 ">
-                  <label className="block text-lg font-medium text-gray-700 mb-2 dark:text-white">
-                    Donation Amount:
-                  </label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={amount}
-                    onChange={handleAmountChange}
-                    className={`w-full px-3 py-2 border dark:bg-gray-800 dark:text-white 
-                      ${
-                        errors.amount
-                          ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                          : "border-gray-300 focus:border-green-500 focus:ring-green-500"
-                      } rounded-md focus:outline-none focus:ring-1 `}
-                    placeholder="eg 10000"
-                    ref={amountDonate}
-                    onMouseEnter={onMouseEnterAmountDonate}
-                  />
-
-                  {errors.amount && (
-                    <p className="mt-1 text-sm text-red-500">{errors.amount}</p>
-                  )}
-                </div>
-
-                {/* Phone NUmber */}
-                <div className="md:col-span-3 mt-2 ">
-                  <label className="block text-lg font-medium text-gray-700 mb-2 dark:text-white">
-                    Phone Number<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={phoneNumber}
-                    onMouseEnter={onMouseEnterPhoneNumber}
-                    placeholder="+237XXXXXXXXX"
-                    ref={phoneNumberDonate}
-                    onChange={handlePhoneNumberChange}
-                    className={`w-full border outline-none ease-in-out
-                    ${
-                      errors.phoneNumber &&
-                      /^\+237[0-9]{9}$/.test(errors.phoneNumber.trim())
-                        ? "border-green-500 focus:ring-green-500"
-                        : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                    } 
-                    ${
-                      errors.phoneNumber
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
-                    }
-                    rounded-md px-3 py-2 focus:outline-none focus:ring-1 ease-in-out 
-                    dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`}
-                  />
-                  {errors.phoneNumber && (
-                    <p className="mt-1 text-sm text-red-500">
-                      {errors.phoneNumber}
-                    </p>
-                  )}
-                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-300">
-                    Format: +237 followed by 9 digits (e.g., +237672528362)
-                  </p>
-                </div>
-
-                {/* Full Name */}
-                <div className="mt-2 md:col-span-3">
-                  <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={handleNameChange}
-                    className={`w-full px-3 py-2 border dark:bg-gray-800 dark:text-white  ${
-                      errors.name
-                        ? "border-red-500 focus:ring-red-500 focus:border-red-500"
-                        : "border-gray-300 focus:border-green-500 focus:ring-green-500"
-                    } rounded-md focus:outline-none focus:ring-1 `}
-                    placeholder="e.g Mbongo Alex Tabeng"
-                    ref={nameDonate}
-                    onMouseEnter={onMouseEnterNameDonate}
-                  />
-                  {errors.name && (
-                    <p className="mt-1 text-red-500 text-sm">{errors.name}</p>
-                  )}
-                </div>
-
-                {/* Category */}
-                <div className="mt-2 md:col-span-3">
-                  <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
-                    Category:
-                  </label>
-                  <input
-                    id="category"
-                    type="text"
-                    // value={category}
-                    placeholder="Donation Category"
-                    value="Category by ID of  Donation"
-                    readOnly={true}
-                    className={`w-full px-3 py-2 border-none dark:bg-gray-800 dark:text-white  rounded-md focus:outline-none `}
-                  />
-                </div>
-              </div>
-
-              {/* Payment Methods */}
-              <div className="mt-2">
-                <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
-                  Payment Method <span className="text-red-500">*</span>
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-2">
-                  {paymentMethods.map((method) => (
-                    <div
-                      key={method.id}
-                      onClick={() => handlePaymentMethodClick(method.id)}
-                      className={`flex items-center justify-center p-4 border rounded-md cursor-pointer relative ${
-                        selectedPayment === method.id
-                          ? "border-green-600 bg-green-50"
-                          : "border-gray-300 hover:border-green-600 hover:bg-green-50"
-                      }`}
-                    >
-                      <div className="h-8 w-full relative flex items-center justify-center">
-                        <Image
-                          src={method.src}
-                          alt={method.name}
-                          fill
-                          className="max-h-10 max-w-full object-cover"
-                        />
-                      </div>
-                      {selectedPayment === method.id && (
-                        <div className="absolute top-2 right-2 text-green-600">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                {errors.payment && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.payment}</p>
-                )}
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full sm:w-auto mt-2 ease-in-out cursor-pointer px-6 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors ${
-                  isSubmitting ? "opacity-70 cursor-not-allowed" : ""
-                }`}
-              >
-                {isSubmitting ? "Processing..." : "Donate Now"}
-              </button>
-            </form>
+            <NewRequest />
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* View Details Modal */}
-      {showShare && selectedCampaign && (
+      {showDetails && selectedCampaign && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-8 mt-2">
-              <div className="flex">
-                <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
-                  Campaign Details
-                </h2>
-              </div>
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                Campaign Details
+              </h2>
               <button
-                onClick={() => setShowShare(false)}
+                onClick={() => setShowDetails(false)}
                 className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
               >
                 <X size={20} />
               </button>
             </div>
-            <hr />
 
-            <div className="mt-6 mb-3">
-              <h1 className="text-xl">
-                Copy the lInk below and share to all social media platforms to
-                help 🙏 those in desperate need.
-              </h1>
-              <p className="pt-5 ">
-                <a href="/" className="text-blue-600 text-xl">
-                  share Link
-                </a>
-              </p>
+            <div className="space-y-4">
+              <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                  {selectedCampaign.title}
+                </h3>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100">
+                    {selectedCampaign.category}
+                  </span>
+                  <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
+                    {selectedCampaign.participants} participants
+                  </span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {selectedCampaign.description}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Organizer
+                  </h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    {selectedCampaign.organizer}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Location
+                  </h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    {selectedCampaign.location}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Date
+                  </h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    {selectedCampaign.date}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    Contact
+                  </h4>
+                  <p className="text-gray-800 dark:text-gray-200">
+                    {selectedCampaign.contact}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  Requirements
+                </h4>
+                <p className="text-gray-800 dark:text-gray-200">
+                  {selectedCampaign.requirements}
+                </p>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-4">
+                <button
+                  onClick={() => {
+                    handleJoin(selectedCampaign.id);
+                    setShowDetails(false);
+                  }}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 flex items-center gap-2"
+                >
+                  <UserCheck size={16} />
+                  Join Campaign
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Past Campaign Details Modal */}
+      {showPastDetails && selectedPastCampaign && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                Campaign Impact Report
+              </h2>
+              <button
+                onClick={() => setShowPastDetails(false)}
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex flex-col md:flex-row gap-6">
+                <div className="md:w-1/3">
+                  <img
+                    src={selectedPastCampaign.image}
+                    alt={selectedPastCampaign.title}
+                    className="w-full h-52 object-cover rounded-lg shadow-md"
+                  />
+                </div>
+                <div className="md:w-2/3">
+                  <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                    {selectedPastCampaign.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100">
+                      {selectedPastCampaign.category}
+                    </span>
+                    <span className="px-2 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100 flex items-center">
+                      <Calendar size={12} className="mr-1" />
+                      {selectedPastCampaign.date}
+                    </span>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {selectedPastCampaign.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="bg-blue-50 dark:bg-blue-900/30 p-3 rounded-lg text-center">
+                      <p className="text-sm text-blue-600 dark:text-blue-300">
+                        Participants
+                      </p>
+                      <p className="text-2xl font-bold text-blue-700 dark:text-blue-200">
+                        {selectedPastCampaign.participants}
+                      </p>
+                    </div>
+                    <div className="bg-green-50 dark:bg-green-900/30 p-3 rounded-lg text-center">
+                      <p className="text-sm text-green-600 dark:text-green-300">
+                        Success Rate
+                      </p>
+                      <p className="text-2xl font-bold text-green-700 dark:text-green-200">
+                        {selectedPastCampaign.successRate}%
+                      </p>
+                    </div>
+                    <div className="bg-indigo-50 dark:bg-indigo-900/30 p-3 rounded-lg text-center">
+                      <p className="text-sm text-indigo-600 dark:text-indigo-300">
+                        People Helped
+                      </p>
+                      <p className="text-2xl font-bold text-indigo-700 dark:text-indigo-200">
+                        {selectedPastCampaign.peopleHelped}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center">
+                  <Award size={18} className="mr-2" />
+                  Impact Assessment
+                </h4>
+
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Community Impact
+                      </span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {Math.round(selectedPastCampaign.impactScore * 10)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                      <div
+                        className="bg-blue-600 h-2.5 rounded-full"
+                        style={{
+                          width: `${selectedPastCampaign.impactScore * 10}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Volunteer Satisfaction
+                      </span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {Math.round(selectedPastCampaign.successRate)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                      <div
+                        className="bg-green-500 h-2.5 rounded-full"
+                        style={{
+                          width: `${selectedPastCampaign.successRate}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        Resource Efficiency
+                      </span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                        {Math.round(selectedPastCampaign.impactScore * 8.5)}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                      <div
+                        className="bg-purple-500 h-2.5 rounded-full"
+                        style={{
+                          width: `${selectedPastCampaign.impactScore * 8.5}%`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
+                <h4 className="font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  Testimonials
+                </h4>
+                <div className="space-y-3">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-l-4 border-blue-500">
+                    <p className="text-gray-600 dark:text-gray-300 italic">
+                      "This campaign made a real difference in our community.
+                      I'm proud to have been part of it!"
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      — Volunteer Participant
+                    </p>
+                  </div>
+                  <div className="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border-l-4 border-green-500">
+                    <p className="text-gray-600 dark:text-gray-300 italic">
+                      "Thanks to all the volunteers, we were able to exceed our
+                      initial goals and help more people than expected."
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      — Campaign Organizer
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button
+                  onClick={() => setShowPastDetails(false)}
+                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         </div>
