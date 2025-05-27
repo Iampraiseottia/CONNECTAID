@@ -29,80 +29,12 @@ import {
 import { motion } from "motion/react";
 
 const Campaigns = () => {
-  const [campaigns, setCampaigns] = useState([
-    {
-      id: 1,
-      title: "Food Drive for Homeless Shelter",
-      organizer: "Community Outreach",
-      location: "Downtown",
-      date: "2025-05-15",
-      category: "Food & Supplies",
-      participants: 12,
-      description:
-        "Collecting non-perishable food items and essential supplies for our local homeless shelter. We need volunteers to help sort and distribute items.",
-      requirements:
-        "Must be able to lift 10-20 pounds and commit to at least 2 hours",
-      contact: "outreach@community.org",
-    },
-    {
-      id: 2,
-      title: "Elderly Home Visitation",
-      organizer: "Silver Care",
-      location: "Sunshine Valley",
-      date: "2025-05-20",
-      category: "Social Support",
-      participants: 8,
-      description:
-        "Visiting elderly residents at Sunshine Valley Retirement Home to provide companionship and assistance with daily activities.",
-      requirements:
-        "Patience and good communication skills required. Background check necessary.",
-      contact: "volunteer@silvercare.org",
-    },
-    {
-      id: 3,
-      title: "Beach Cleanup Initiative",
-      organizer: "Ocean Friends",
-      location: "Seaside Beach",
-      date: "2025-05-25",
-      category: "Environmental",
-      participants: 24,
-      description:
-        "Join us for our monthly beach cleanup to remove plastic and other waste from our local shoreline. Equipment will be provided.",
-      requirements: "Comfortable working outdoors, sunscreen recommended",
-      contact: "cleanup@oceanfriends.org",
-    },
-    {
-      id: 4,
-      title: "After-School Tutoring Program",
-      organizer: "Education Matters",
-      location: "Central Library",
-      date: "2025-06-01",
-      category: "Education",
-      participants: 6,
-      description:
-        "Tutoring middle school students in math and science subjects. Looking for volunteers with teaching experience or strong academic background.",
-      requirements:
-        "Knowledge in mathematics or science subjects, experience with children preferred",
-      contact: "tutoring@educationmatters.org",
-    },
-    {
-      id: 5,
-      title: "Community Garden Project",
-      organizer: "Green Thumb Society",
-      location: "West Side Park",
-      date: "2025-06-05",
-      category: "Environmental",
-      participants: 15,
-      description:
-        "Help plant and maintain our community garden that provides fresh produce to local food banks. No gardening experience necessary!",
-      requirements:
-        "Physical activity required, bring your own gloves if possible",
-      contact: "garden@greenthumb.org",
-    },
-  ]);
+
+  const [joinedActiveCampIds, setJoinedActiveCampIds] = useState({});
+  const [activeCampaigns, setActiveCampaigns] = useState([]);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState("all"); 
 
   // State for form visibility and data
   const [showForm, setShowForm] = useState(false);
@@ -112,13 +44,6 @@ const Campaigns = () => {
   // State for past campaign details
   const [showPastDetails, setShowPastDetails] = useState(false);
   const [selectedPastCampaign, setSelectedPastCampaign] = useState(null);
-
-  // State pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategories, setActiveCategories] = useState([]);
-  const [notification, setNotification] = useState(null);
-  const itemsPerPage = 5;
 
   // Available categories
   const categories = [
@@ -131,45 +56,8 @@ const Campaigns = () => {
     { id: "Other", name: "Other", icon: faHome },
   ];
 
-  // Handle showing notification
-  const showNotification = (message) => {
-    setNotification(message);
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
-  };
-
-  // Handle join campaign
-  const handleJoin = (id) => {
-    setCampaigns(
-      campaigns.map((campaign) => {
-        if (campaign.id === id) {
-          showNotification(`Requested to join "${campaign.title}"`);
-          return { ...campaign, participants: campaign.participants + 1 };
-        }
-        return campaign;
-      })
-    );
-  };
-
-  // Handle view details
-  const handleViewDetails = (campaign) => {
-    setSelectedCampaign(campaign);
-    setShowDetails(true);
-  };
-
-  // Handle category filter
-  const toggleCategoryFilter = (category) => {
-    if (activeCategories.includes(category)) {
-      setActiveCategories(activeCategories.filter((c) => c !== category));
-    } else {
-      setActiveCategories([...activeCategories, category]);
-    }
-    setCurrentPage(1);
-  };
-
-  // Filter campaigns based on search term and category filters
-  const filteredCampaigns = campaigns.filter((campaign) => {
+  // Filter campaigns based on search term and category filters 
+  const filteredCampaigns = activeCampaigns.filter((campaign) => {
     const matchesFilter = filter === "all" || campaign.category === filter;
     const matchesSearch =
       campaign.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -179,29 +67,48 @@ const Campaigns = () => {
     return matchesFilter && matchesSearch;
   });
 
-  // Calculate pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentCampaigns = filteredCampaigns.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
 
-  // Joining Campaign
-  const [joinedCampaignIds, setJoinedCampaignIds] = useState({});
+  // Handle View Details
 
-  const handleJoinCampaign = (campaignId) => {
-    console.log(`Joining campaign: ${campaignId}`);
-    setJoinedCampaignIds((prev) => ({
-      ...prev,
-      [campaignId]: true,
-    }));
+  const handleViewDetails = (campaign) => {
+    setSelectedCampaign(campaign);
+    setShowDetails(true); 
   };
+
 
   // Fetching Past Successful Event Data from Postgres
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchActiveCampaigns() {
+      try {
+        const response = await fetch("/api/campaigns-donation");
+        if (!response.ok) {
+          throw new Error("Failed to fetch active campaigns");
+        }
+        const data = await response.json();
+        setActiveCampaigns(data.activeCampaigns);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    }
+
+    fetchActiveCampaigns();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>
+      </div>
+    );
+  }
+  if (error)
+    return <div className="text-center p-10 text-red-500">Error: {error}</div>;
 
   return (
     <motion.div
@@ -209,7 +116,7 @@ const Campaigns = () => {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
-      className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-14"
+      className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
       <div className="max-w-6xl mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
         <div className="mb-8">
@@ -275,7 +182,7 @@ const Campaigns = () => {
               </button>
             ))}
           </div>
-        </div> 
+        </div>
 
         {/* Campaigns Table */}
         <div className="overflow-x-auto">
@@ -286,52 +193,52 @@ const Campaigns = () => {
                   Title
                 </th>
                 <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell">
-                  Organizer
-                </th>
-                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
-                  Location
-                </th>
-                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden lg:table-cell">
-                  Date
-                </th>
-                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
                   Category
+                </th>
+               
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden lg:table-cell">
+                  Raised Amount
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
+                  Target Amount
+                </th>
+                <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell">
+                  Date
                 </th>
                 <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 dark:text-gray-300 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {currentCampaigns.length > 0 ? (
-                currentCampaigns.map((campaign) => (
-                  <tr
-                    key={campaign.id}
-                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
-                  >
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
-                      {campaign.title}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
-                      {campaign.organizer}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
-                      {campaign.location}
-                    </td>
-                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden lg:table-cell">
-                      {campaign.date}
+            
+
+            <tbody className="divide-y divide-gray-200">
+              {activeCampaigns.map((activeCamp) => (
+                <tr key={activeCamp.id}  className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200">
+                      {activeCamp.title}
                     </td>
                     <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
                       <span
                         className="px-2 py-1 text-xs font-semibold rounded-full 
                         bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
                       >
-                        {campaign.category}
+                        {activeCamp.category}
                       </span>
                     </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
+                      {activeCamp.raisedamount}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
+                      {activeCamp.totalamount}
+                    </td>
+                    <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden lg:table-cell">
+                      {activeCamp.date}
+                    </td>
+                    
                     <td className="py-4 px-4 text-sm flex gap-2">
                       <button
-                        onClick={() => handleViewDetails(campaign)}
+                        onClick={() => handleViewDetails(activeCamp)}
                         className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
                       >
                         <Eye size={14} />
@@ -339,31 +246,21 @@ const Campaigns = () => {
                       </button>
                       <button
                         onClick={() => {
-                          handleJoin(campaign.id);
-                          handleJoinCampaign(campaign.id);
+                          handleJoin(activeCamp.id);
+                          handleJoinactiveCamp(activeCamp.id);
                         }}
                         className="px-3 py-1 bg-green-100 text-green-600 rounded-md hover:bg-green-200 flex items-center gap-1 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-700"
                       >
                         <UserCheck size={14} />
                         <span className="hidden sm:inline">
-                          {joinedCampaignIds[campaign.id]
+                          {joinedActiveCampIds[activeCamp.id]
                             ? "Request Received"
-                            : "Join Campaign"}
+                            : "Join activeCamp"}
                         </span>
                       </button>
                     </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="py-4 px-4 text-center text-gray-500 dark:text-gray-400"
-                  >
-                    No campaigns found
-                  </td>
                 </tr>
-              )}
+              ))}
             </tbody>
           </table>
         </div>
