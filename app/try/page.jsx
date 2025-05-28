@@ -172,7 +172,9 @@ const Try = ({ setActiveComponent }) => {
   const [showShare, setShowShare] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
 
-  const handleViewDetails = (campaign) => {
+  const handleViewDetails = (campaign) => {const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
+    const [showShare, setShowShare] = useState(false);
+    const [selectedCampaign, setSelectedCampaign] = useState(null);
     setSelectedCampaign(campaign);
     setShowPaymentsPlace(true);
   };
