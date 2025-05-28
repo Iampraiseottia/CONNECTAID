@@ -2,7 +2,16 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
-import { Search, Eye, X, Filter, DollarSign } from "lucide-react";
+import {
+  Search,
+  Eye,
+  X,
+  Filter,
+  DollarSign,
+  CheckCircle,
+  Heart,
+  Download,
+} from "lucide-react";
 
 import Image from "next/image";
 
@@ -17,6 +26,8 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
+import navLogo from "/public/icon/logo.png";
+
 import { motion } from "motion/react";
 
 const Campaigns = () => {
@@ -29,11 +40,11 @@ const Campaigns = () => {
   const categories = [
     { id: "all", name: "All Categories", icon: faHandHoldingHeart },
     { id: "Food & Supplies", name: "Food & Supplies", icon: faUtensils },
-    { id: "Shelter", name: "Shelter", icon: faSeedling },
+    { id: "Water", name: "Water", icon: faSeedling },
     { id: "Education", name: "Education", icon: faGraduationCap },
     { id: "Healthcare", name: "Healthcare", icon: faHeartPulse },
     { id: "Extreme Cases", name: "Extreme Cases", icon: faPaw },
-    { id: "Other", name: "Other", icon: faHome },
+    { id: "Shelter", name: "Shelter", icon: faHome },
   ];
 
   // Filter campaigns based on search term and category filters
@@ -46,13 +57,6 @@ const Campaigns = () => {
       activeCamp.location.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
-
-  // Handle View Details
-
-  // const handleViewDetails = (activeCamp) => {
-  //   setSelectedCampaign(activeCamp);
-  //   setShowDetails(true);
-  // };
 
   // Fetching Past Successful Event Data from Postgres
 
@@ -83,11 +87,9 @@ const Campaigns = () => {
   const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
+  const [thankYouMessage, setThankYouMessage] = useState(false);
 
   const handleViewDetails = (activeCamp) => {
-    // const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
-    // const [showShare, setShowShare] = useState(false);
-    // const [selectedCampaign, setSelectedCampaign] = useState(null);
     setSelectedCampaign(activeCamp);
     setShowPaymentsPlace(true);
   };
@@ -102,6 +104,9 @@ const Campaigns = () => {
 
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+
+  // Donation data for thank you message
+  const [donationData, setDonationData] = useState(null);
 
   const [errors, setErrors] = useState({
     name: "",
@@ -228,7 +233,7 @@ const Campaigns = () => {
       phoneNumber: "",
       amount: "",
     };
-  
+
     if (!name.trim()) {
       newErrors.name = "Full Name is required";
       valid = false;
@@ -236,7 +241,7 @@ const Campaigns = () => {
       newErrors.name = "Full Name must be at least 2 characters";
       valid = false;
     }
-  
+
     // Fix: Convert amount to string and handle both string and number cases
     const amountStr = String(amount).trim();
     if (!amountStr || amountStr === "0") {
@@ -247,7 +252,7 @@ const Campaigns = () => {
       newErrors.amount = "Donation Amount must be at least 3 characters";
       valid = false;
     }
-  
+
     if (!phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
       valid = false;
@@ -259,15 +264,24 @@ const Campaigns = () => {
         valid = false;
       }
     }
-  
+
     if (!selectedPayment) {
       newErrors.payment = "Please select a payment method";
       valid = false;
     }
-  
-    setErrors(newErrors); 
+
+    setErrors(newErrors);
     return valid;
   };
+
+  // Generate transaction ID
+  const generateTransactionId = () => {
+    const timestamp = Date.now().toString(36);
+    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `TXN-${timestamp}-${randomStr}`;
+  };
+
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -275,18 +289,37 @@ const Campaigns = () => {
     if (validateForm()) {
       setIsSubmitting(true);
 
-      console.log("Form submitted successfully", {
-        amount,
-        name,
-        selectedPayment,
-      });
+      // Prepare donation data
+      const transactionId = generateTransactionId();
+      const paymentMethodName =
+        paymentMethods.find((method) => method.id === selectedPayment)?.name ||
+        selectedPayment;
 
-      // setShowPaymentsPlace(false);
+      const newDonationData = {
+        name: name,
+        phoneNumber: phoneNumber,
+        amount: amount,
+        paymentMethod: paymentMethodName,
+        transactionId: transactionId,
+        timestamp: new Date().toISOString(),
+      };
+
+      setDonationData(newDonationData);
+
+      console.log("Form submitted successfully", newDonationData);
+
+      setShowPaymentsPlace(false);
+      setThankYouMessage(true);
 
       setTimeout(() => {
-        alert("Donation submitted successfully!");
         setIsSubmitting(false);
-      }, 1000);
+        // Reset form
+        setAmount("");
+        setName("");
+        setPhoneNumber("");
+        setSelectedPayment("");
+        setSelectedCampaign(null);
+      }, 1000000);
     } else {
       console.log("Form has errors");
     }
@@ -455,8 +488,8 @@ const Campaigns = () => {
 
         {/* View Payment Modal */}
         {showPaymentsPlace && selectedCampaign && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 view_pay">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-7xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-8 mt-2">
                 <h2 className="text-xl font-bold text-gray-800 dark:text-white">
                   Shine Light 😊 In People's LIfe Through Your Donation 🙏
@@ -593,7 +626,7 @@ const Campaigns = () => {
                         readOnly={true}
                         className={`w-full px-3 py-2 border-none dark:bg-gray-800 dark:text-white  rounded-md focus:outline-none `}
                       />
-                    </div> 
+                    </div>
                   ))}
                 </div>
 
@@ -658,6 +691,106 @@ const Campaigns = () => {
                   {isSubmitting ? "Processing..." : "Donate Now"}
                 </button>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Thank You Message */}
+        {thankYouMessage && selectedCampaign && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 mt-2">
+                <div className="flex items-center ">
+                  <Image
+                    src={navLogo}
+                    alt="ConnectAID Logo"
+                    width={20}
+                    height={20}
+                    className="h-8 w-8 mr-2"
+                  />
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                    ConnectAID
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setThankYouMessage(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Success Content */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
+                  <CheckCircle
+                    size={130}
+                    className="text-green-500 dark:text-green-400"
+                  />
+                  <div className="absolute -top-2 -right-2">
+                    <Heart size={20} className="text-red-500 fill-current" />
+                  </div>
+                </div>
+
+                {/* Thank You Message */}
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
+                  Thank You, {donationData.name}! 🙏
+                </h2>
+
+                <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                  Your generous donation of{" "}
+                  <span className="font-bold text-green-600 dark:text-green-400">
+                    {Number(donationData.amount).toLocaleString()} Francs
+                  </span>{" "}
+                  has been successfully processed!
+                </p>
+
+                {filteredCampaigns.map((activeCamp) => (
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
+                      Campaign Supported:
+                    </h3>
+
+                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                      {activeCamp.title}
+                    </p>
+                    <div className="flex justify-between items-center mt-3 text-sm">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Category:
+                      </span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                        {activeCamp.category}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center mt-2 text-sm">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Transaction ID:
+                      </span>
+                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                        {donationData.transactionId}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Download Receipt Button */} 
+                <button
+                  className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Download size={18} />
+                  Download Receipt
+                </button>
+
+                {/* Auto-close Timer */}
+                <div className="text-center">
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                    Your contribution is making a real difference! 💫
+                  </p>
+                </div>
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-t-lg">shhs</div>
             </div>
           </div>
         )}

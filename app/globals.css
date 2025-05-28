@@ -362,6 +362,12 @@ body {
   border-bottom-right-radius: 55px !important;
 }
 
+@media (min-width: 1200px) {
+  .view_pay{
+    padding-left: 384px;
+  }
+}
+
 
 
 /* Date Indicator Picker*/
