@@ -11,6 +11,9 @@ import {
   CheckCircle,
   Heart,
   Download,
+  Calendar,
+  Share2,
+  Users,
 } from "lucide-react";
 
 import Image from "next/image";
@@ -85,18 +88,25 @@ const Campaigns = () => {
   // Donate Now Setup
 
   const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
-  const [showShare, setShowShare] = useState(false);
+  const [showCampDetails, setShowCampDetails] = useState(false);
+  const [showShareCampaigns, setShowShareCampaigns] = useState(false);
   const [selectedCampaign, setSelectedCampaign] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  const handleViewDetails = (activeCamp) => {
+  const handleViewDetails = (activeCamp) => { 
     setSelectedCampaign(activeCamp);
     setShowPaymentsPlace(true);
+    setShowCampDetails(false);
   };
 
   const handleShareLink = (activeCamp) => {
     setSelectedCampaign(activeCamp);
-    setShowShare(true);
+    setShowShareCampaigns(true);
+  };
+
+  const handleShowCampDetails = (activeCamp) => {
+    setSelectedCampaign(activeCamp);
+    setShowCampDetails(true);
   };
 
   const [amount, setAmount] = useState("");
@@ -281,8 +291,6 @@ const Campaigns = () => {
     return `TXN-${timestamp}-${randomStr}`;
   };
 
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -313,7 +321,7 @@ const Campaigns = () => {
 
       setTimeout(() => {
         setIsSubmitting(false);
-        // Reset form
+
         setAmount("");
         setName("");
         setPhoneNumber("");
@@ -324,6 +332,12 @@ const Campaigns = () => {
       console.log("Form has errors");
     }
   };
+
+  // bytea to base64 database image
+  // const campaigns = result.rows.map((row) => ({
+  //   ...row,
+  //   image: `data:image/png;base64,${row.image.toString("base64")}`,
+  // }));
 
   // Loading and display error
   if (loading) {
@@ -448,11 +462,11 @@ const Campaigns = () => {
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden md:table-cell">
                     <span
-                      className="px-2 py-1 text-xs font-semibold rounded-full 
+                      className="px-4 py-2 text-sm font-semibold rounded-full 
                         bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
                     >
                       {activeCamp.category}
-                    </span>
+                    </span> 
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
                     {Number(activeCamp.raisedamount).toLocaleString()} Francs
@@ -466,15 +480,15 @@ const Campaigns = () => {
 
                   <td className="py-4 px-4 text-sm flex gap-2">
                     <button
-                      onClick={() => handleViewDetails(activeCamp)}
-                      className="px-3 py-1 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                      onClick={() => handleShowCampDetails(activeCamp.id)}
+                      className="px-4 py-2 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-400 dark:hover:text-gray-100"
                     >
                       <Eye size={14} />
-                      <span className="hidden sm:inline">View</span>
+                      <span className="hidden sm:inline">View</span> 
                     </button>
                     <button
                       onClick={() => handleViewDetails(activeCamp.id)}
-                      className="px-3 py-1 bg-green-100 text-green-600 rounded-md hover:bg-green-200 flex items-center gap-1 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-700"
+                      className="px-4 py-2 bg-green-100 text-green-600 rounded-md hover:bg-green-200 flex items-center gap-1 dark:bg-green-800 dark:text-green-100 dark:hover:bg-green-700"
                     >
                       <DollarSign size={14} />
                       <span className="hidden sm:inline">Donate Now</span>
@@ -612,9 +626,9 @@ const Campaigns = () => {
                     )}
                   </div>
 
-                  {/* Category */}
+                  {/* Campaign Title */}
                   {filteredCampaigns.map((activeCamp) => (
-                    <div className="mt-2 md:col-span-3">
+                    <div className="mt-2 md:col-span-3" key={activeCamp.id}>
                       <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
                         Donation Campaign:
                       </label>
@@ -688,7 +702,7 @@ const Campaigns = () => {
                     isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 >
-                  {isSubmitting ? "Processing..." : "Donate Now"}
+                  {isSubmitting ? "Donate Now" : "Donate Now"}
                 </button>
               </form>
             </div>
@@ -713,7 +727,10 @@ const Campaigns = () => {
                   </h2>
                 </div>
                 <button
-                  onClick={() => setThankYouMessage(false)}
+                  onClick={() => {
+                    setThankYouMessage(false);
+                    setShowPaymentsPlace(false);
+                  }}
                   className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
                 >
                   <X size={20} />
@@ -746,7 +763,10 @@ const Campaigns = () => {
                 </p>
 
                 {filteredCampaigns.map((activeCamp) => (
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                  <div
+                    key={activeCamp.id}
+                    className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6"
+                  >
                     <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
                       Campaign Supported:
                     </h3>
@@ -773,10 +793,8 @@ const Campaigns = () => {
                   </div>
                 ))}
 
-                {/* Download Receipt Button */} 
-                <button
-                  className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
-                >
+                {/* Download Receipt Button */}
+                <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                   <Download size={18} />
                   Download Receipt
                 </button>
@@ -788,9 +806,116 @@ const Campaigns = () => {
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
 
-              {/* Decorative Elements */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 rounded-t-lg">shhs</div>
+        {/* View Details Modal */}
+        {showCampDetails && selectedCampaign && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 mt-2">
+                <div className="flex">
+                  <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
+                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
+                    Campaign Details
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setShowCampDetails(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <hr />
+
+              {filteredCampaigns.map((activeCamp) => (
+                <div className="mt-6 mb-3" key={activeCamp.id}>
+                  <div className="">
+                    <Image
+                      className="w-full rounded-lg"
+                      src={activeCamp.image}
+                      alt="Campaign Image"
+                      width={400}
+                      height={150}
+                      unoptimized={true}
+                    />
+                  </div>
+
+                  <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4">
+                    {activeCamp.title}
+                  </h1>
+
+                  <p className="text-gray-600 dark:text-gray-400 mt-2">
+                    {activeCamp.description}
+                  </p>
+
+                  <div className="flex justify-between text-sm text-slate-700 dark:text-gray-300 mb-4">
+                    <span className="font-medium">
+                      {activeCamp.raisedamount.toLocaleString()} Francs raised
+                    </span>
+                    <span>
+                      {" "}
+                      {activeCamp.totalamount.toLocaleString()} Francs
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mb-4">
+                    <div className="flex items-center">
+                      <Users className="h-4 w-4 mr-1" />
+                      <span>{activeCamp.totaldonors} supporters</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      <span>{activeCamp.date} days left</span>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center mt-5 relative">
+                    <div className="flex space-x-2">
+                      <button
+                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                        title="Donate Now"
+                        onClick={() => handleShareLink(activeCamp.id)}
+                      >
+                        <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={() => handleViewDetails(activeCamp.id)}
+                      className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
+                    >
+                      Donate Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+
+         {/* Share Modal */}
+         {showShareCampaigns && selectedCampaign && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 mt-2">
+                <div className="flex">
+                  <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
+                  <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
+                    Share Campaign 🙏😊
+                  </h2>
+                </div>
+                <button
+                  onClick={() => setShowShareCampaigns(false)}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <hr />
             </div>
           </div>
         )}
