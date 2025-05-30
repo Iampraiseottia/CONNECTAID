@@ -22,9 +22,9 @@ const DonationList = () => {
       title:
         "Together we can end hunger — Donate today and make a long lasting impacts in lives of people and communities!",
       description:
-        "Your contribution can help fill empty plates and hearts. By donating, you support families and people in desperate need, ensuring everyone has access to nutritious meals and a brighter future.",
+        "Your contribution can help fill empty plates and hearts. By donating, you support families and people in desperate need, ensuring everyone has access to nutritious meals and a brighter future.", 
       totalAmt: "20, 000, 000 Francs",
-      raisedAmt: "8, 650, 000 Francs",
+      raisedAmt: "8, 650, 000 Francs", 
       donationSlug: "/donation-details-1",
     },
     {
@@ -54,7 +54,7 @@ const DonationList = () => {
         " Join our mission to provide vital medical assistance to under-served communities. Your generous donations help fund treatments, medications, and healthcare services, ensuring everyone has access to the care they deserve.",
       totalAmt: "53, 000, 000 Francs",
       raisedAmt: "12, 050, 250 Francs",
-      donationSlug: "/donation-details-3",
+      donationSlug: "/donation-details-3", 
     },
     {
       id: 4,
@@ -81,7 +81,7 @@ const DonationList = () => {
       description:
         "Join our mission to help the homeless find stability and support. Your generous donations provide essential services, shelter, and resources, empowering individuals to rebuild their lives and regain dignity.",
       totalAmt: "28, 500, 000 Francs",
-      raisedAmt: "15, 100, 000 Francs",
+      raisedAmt: "15, 100, 000 Francs", 
       donationSlug: "/donation-details-5",
     },
     {

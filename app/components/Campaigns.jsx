@@ -93,20 +93,24 @@ const Campaigns = () => {
   const [selectedCampaign, setSelectedCampaign] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  const handleViewDetails = (activeCamp) => { 
-    setSelectedCampaign(activeCamp);
+  const handleViewDetails = (campaignId) => {
+    setSelectedCampaign(campaignId);
     setShowPaymentsPlace(true);
     setShowCampDetails(false);
   };
 
-  const handleShareLink = (activeCamp) => {
-    setSelectedCampaign(activeCamp);
+  const handleShareLink = (campaignId) => {
+    setSelectedCampaign(campaignId);
     setShowShareCampaigns(true);
   };
 
-  const handleShowCampDetails = (activeCamp) => {
-    setSelectedCampaign(activeCamp);
+  const handleShowCampDetails = (campaignId) => {
+    setSelectedCampaign(campaignId);
     setShowCampDetails(true);
+  };
+
+  const getSelectedCampaignData = () => {
+    return activeCampaigns.find((campaign) => campaign.id === selectedCampaign);
   };
 
   const [amount, setAmount] = useState("");
@@ -333,11 +337,21 @@ const Campaigns = () => {
     }
   };
 
-  // bytea to base64 database image
-  // const campaigns = result.rows.map((row) => ({
-  //   ...row,
-  //   image: `data:image/png;base64,${row.image.toString("base64")}`,
-  // }));
+  // Calculate Donation Postgres
+  const calculateProgress = (raisedamount, totalamount) => {
+    return Math.min((raisedamount / totalamount) * 100, 100);
+  };
+
+  // Formatting MY Date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-GB", {
+      weekday: "long",
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
 
   // Loading and display error
   if (loading) {
@@ -358,7 +372,7 @@ const Campaigns = () => {
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
-      <div className="max-w-[1350px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
+      <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
             Active Campaigns
@@ -466,7 +480,7 @@ const Campaigns = () => {
                         bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100"
                     >
                       {activeCamp.category}
-                    </span> 
+                    </span>
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden sm:table-cell">
                     {Number(activeCamp.raisedamount).toLocaleString()} Francs
@@ -475,7 +489,7 @@ const Campaigns = () => {
                     {Number(activeCamp.totalamount).toLocaleString()} Francs
                   </td>
                   <td className="py-4 px-4 text-sm text-gray-900 dark:text-gray-200 hidden lg:table-cell">
-                    {activeCamp.date}
+                    {formatDate(activeCamp.date)}
                   </td>
 
                   <td className="py-4 px-4 text-sm flex gap-2">
@@ -484,7 +498,7 @@ const Campaigns = () => {
                       className="px-4 py-2 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 flex items-center gap-1 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-400 dark:hover:text-gray-100"
                     >
                       <Eye size={14} />
-                      <span className="hidden sm:inline">View</span> 
+                      <span className="hidden sm:inline">View</span>
                     </button>
                     <button
                       onClick={() => handleViewDetails(activeCamp.id)}
@@ -501,7 +515,7 @@ const Campaigns = () => {
         </div>
 
         {/* View Payment Modal */}
-        {showPaymentsPlace && selectedCampaign && (
+        {showPaymentsPlace && selectedCampaign && getSelectedCampaignData() && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 view_pay">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-7xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-8 mt-2">
@@ -627,21 +641,19 @@ const Campaigns = () => {
                   </div>
 
                   {/* Campaign Title */}
-                  {filteredCampaigns.map((activeCamp) => (
-                    <div className="mt-2 md:col-span-3" key={activeCamp.id}>
-                      <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
-                        Donation Campaign:
-                      </label>
-                      <input
-                        id="category"
-                        type="text"
-                        placeholder="Donation Campaign"
-                        value={activeCamp.title}
-                        readOnly={true}
-                        className={`w-full px-3 py-2 border-none dark:bg-gray-800 dark:text-white  rounded-md focus:outline-none `}
-                      />
-                    </div>
-                  ))}
+                  <div className="mt-2 md:col-span-3">
+                    <label className="block text-lg font-medium text-gray-700 mb-1 dark:text-white">
+                      Donation Campaign:
+                    </label>
+                    <input
+                      id="category"
+                      type="text"
+                      placeholder="Donation Campaign"
+                      value={getSelectedCampaignData()?.title || ""}
+                      readOnly={true}
+                      className={`w-full px-3 py-2 border-none dark:bg-gray-800 dark:text-white rounded-md focus:outline-none`}
+                    />
+                  </div>
                 </div>
 
                 {/* Payment Methods */}
@@ -710,7 +722,7 @@ const Campaigns = () => {
         )}
 
         {/* Thank You Message */}
-        {thankYouMessage && selectedCampaign && (
+        {thankYouMessage && selectedCampaign && getSelectedCampaignData() && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-8 mt-2">
@@ -762,36 +774,36 @@ const Campaigns = () => {
                   has been successfully processed!
                 </p>
 
-                {filteredCampaigns.map((activeCamp) => (
-                  <div
-                    key={activeCamp.id}
-                    className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6"
-                  >
-                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
-                      Campaign Supported:
-                    </h3>
+                {(() => {
+                  const campaign = getSelectedCampaignData();
+                  return (
+                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                      <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-2">
+                        Campaign Supported:
+                      </h3>
 
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
-                      {activeCamp.title}
-                    </p>
-                    <div className="flex justify-between items-center mt-3 text-sm">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Category:
-                      </span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
-                        {activeCamp.category}
-                      </span>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm">
+                        {campaign.title}
+                      </p>
+                      <div className="flex justify-between items-center mt-3 text-sm">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Category:
+                        </span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                          {campaign.category}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center mt-2 text-sm">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Transaction ID:
+                        </span>
+                        <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                          {donationData.transactionId}
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center mt-2 text-sm">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Transaction ID:
-                      </span>
-                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
-                        {donationData.transactionId}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })()}
 
                 {/* Download Receipt Button */}
                 <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
@@ -811,7 +823,7 @@ const Campaigns = () => {
         )}
 
         {/* View Details Modal */}
-        {showCampDetails && selectedCampaign && (
+        {showCampDetails && selectedCampaign && getSelectedCampaignData() && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-8 mt-2">
@@ -830,75 +842,95 @@ const Campaigns = () => {
               </div>
               <hr />
 
-              {filteredCampaigns.map((activeCamp) => (
-                <div className="mt-6 mb-3" key={activeCamp.id}>
-                  <div className="">
-                    <Image
-                      className="w-full rounded-lg"
-                      src={activeCamp.image}
-                      alt="Campaign Image"
-                      width={400}
-                      height={150}
-                      unoptimized={true}
-                    />
-                  </div>
-
-                  <h1 className="text-2xl font-bold text-gray-800 dark:text-white mt-4">
-                    {activeCamp.title}
-                  </h1>
-
-                  <p className="text-gray-600 dark:text-gray-400 mt-2">
-                    {activeCamp.description}
-                  </p>
-
-                  <div className="flex justify-between text-sm text-slate-700 dark:text-gray-300 mb-4">
-                    <span className="font-medium">
-                      {activeCamp.raisedamount.toLocaleString()} Francs raised
-                    </span>
-                    <span>
-                      {" "}
-                      {activeCamp.totalamount.toLocaleString()} Francs
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mb-4">
-                    <div className="flex items-center">
-                      <Users className="h-4 w-4 mr-1" />
-                      <span>{activeCamp.totaldonors} supporters</span>
+              {(() => {
+                const campaign = getSelectedCampaignData();
+                return (
+                  <div className="mt-6 mb-3">
+                    <div className="">
+                      <Image
+                        className="w-full max-h-[42vh] rounded-lg"
+                        src={campaign.image}
+                        alt="Donation Campaign Image"
+                        width={400}
+                        height={120}
+                        unoptimized={true}
+                      />
                     </div>
-                    <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      <span>{activeCamp.date} days left</span>
-                    </div>
-                  </div>
 
-                  <div className="flex justify-between items-center mt-5 relative">
-                    <div className="flex space-x-2">
+                    <h1 className="md:text-3xl text-xl font-bold text-gray-800 dark:text-white mt-4">
+                      {campaign.title}
+                    </h1>
+
+                    <p className="text-gray-600 dark:text-gray-400 mt-2 md:text-xl text-lg">
+                      {campaign.description}
+                    </p>
+
+                    {/* Progress bar */}
+                    <div className="mb-2 pt-4">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div
+                          className="bg-teal-500 h-2.5 rounded-full"
+                          style={{
+                            width: `${calculateProgress(
+                              campaign.raisedamount,
+                              campaign.totalamount
+                            )}%`,
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between text-lg sm:text-base text-slate-700 dark:text-gray-300 mb-4 pt-2">
+                      <span className="font-medium">
+                        {campaign.raisedamount.toLocaleString()} Francs raised
+                      </span>
+                      <span>
+                        {campaign.totalamount.toLocaleString()} Francs
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs text-slate-500 dark:text-gray-400 mb-4 pt-3">
+                      <div className="flex items-center">
+                        <Users className="h-5 w-5 mr-1" />
+                        <span className="sm:text-[16px] text-sm">
+                          {campaign.totaldonors} supporters
+                        </span>
+                      </div>
+                      <div className="flex items-center">
+                        <Calendar className="h-5 w-5 mr-1" />
+                        <span className="sm:text-[16px] text-sm">
+                          {formatDate(campaign.date)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-between items-center mt-5 relative">
+                      <div className="flex space-x-2">
+                        <button
+                          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                          title="Share Campaign"
+                          onClick={() => handleShareLink(campaign.id)}
+                        >
+                          <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
+                        </button>
+                      </div>
+
                       <button
-                        className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-                        title="Donate Now"
-                        onClick={() => handleShareLink(activeCamp.id)}
+                        onClick={() => handleViewDetails(campaign.id)}
+                        className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
                       >
-                        <Share2 className="h-5 w-5 text-slate-500 dark:text-gray-400" />
+                        Donate Now
                       </button>
                     </div>
-
-                    <button
-                      onClick={() => handleViewDetails(activeCamp.id)}
-                      className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition-colors"
-                    >
-                      Donate Now
-                    </button>
                   </div>
-                </div>
-              ))}
+                );
+              })()}
             </div>
           </div>
         )}
 
-
-         {/* Share Modal */}
-         {showShareCampaigns && selectedCampaign && (
+        {/* Share Modal */}
+        {showShareCampaigns && selectedCampaign && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-8 mt-2">
