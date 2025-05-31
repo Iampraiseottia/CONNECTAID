@@ -12,11 +12,23 @@ import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import { Clock, DollarSign } from "lucide-react";
+import {
+  X,
+  CheckCircle,
+  Heart,
+  Download,
+  Clock,
+  DollarSign,
+} from "lucide-react";
+
+import navLogo from "/public/icon/logo.png";
+
 
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
+
+
 
 
 import relatedPostImg1 from '/public/gallery/donateList-1.png'
@@ -41,24 +53,18 @@ const DonationDetails2 = () => {
   const [selectedAmount, setSelectedAmount] = useState(1000);
   const [agreedToTerms, setAgreedToTerms] = useState(true);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [formData, setFormData] = useState({
     mobileNumber: "",
-    mobileName: "",
     fullName: "",
     email: "",
-    region: "",
-    city: "",
-    address: "",
   });
 
   const [errors, setErrors] = useState({
     mobileNumber: "",
-    mobileName: "",
     fullName: "",
     email: "",
-    region: "",
-    city: "",
-    address: "",
     terms: "",
   });
 
@@ -78,7 +84,7 @@ const DonationDetails2 = () => {
   };
 
   const validateMobileNumber = (number) => {
-    const mobileRegex = /^\+\d{1,3}\s\d{3}\s\d{3}\s\d{3}$/;
+    const mobileRegex = /^\d{3}\d{3}\d{3}$/;
     return mobileRegex.test(number);
   };
 
@@ -87,7 +93,26 @@ const DonationDetails2 = () => {
     return emailRegex.test(email);
   };
 
-  const handleDonation = (e) => {
+  const mobileMoneyNumberRef = useRef();
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+
+  const onMouseEnterMobileNUmberRef = () => {
+    mobileMoneyNumberRef.current.focus();
+  };
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+
+  const [donationData, setDonationData] = useState(null);
+  const [thankYouMessage, setThankYouMessage] = useState(false);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const newErrors = {};
@@ -98,24 +123,13 @@ const DonationDetails2 = () => {
       isValid = false;
     } else if (!validateMobileNumber(formData.mobileNumber)) {
       newErrors.mobileNumber =
-        "Please enter a valid mobile number (e.g. +237 686 529 762)";
+        "Please enter a valid mobile number (e.g. 686529762)";
       isValid = false;
     } else if (formData.mobileNumber.length < 2) {
       newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
       isValid = false;
     } else if (formData.mobileNumber.length > 16) {
       newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
-      isValid = false;
-    }
-
-    if (!formData.mobileName) {
-      newErrors.mobileName = "Mobile money name is required";
-      isValid = false;
-    } else if (formData.mobileName.length < 2) {
-      newErrors.mobileName = " Mobile Name must be at least 2 characters";
-      isValid = false;
-    } else if (formData.mobileName.length > 30) {
-      newErrors.mobileName = " Mobile Name cannot exceed 30 characters";
       isValid = false;
     }
 
@@ -138,39 +152,6 @@ const DonationDetails2 = () => {
       isValid = false;
     }
 
-    if (!formData.region) {
-      newErrors.region = "Region is required";
-      isValid = false;
-    } else if (formData.region.length < 2) {
-      newErrors.region = "Region must be at least 2 characters";
-      isValid = false;
-    } else if (formData.region.length > 20) {
-      newErrors.region = "Region cannot exceed 20 characters";
-      isValid = false;
-    }
-
-    if (!formData.city) {
-      newErrors.city = "City/Town is required";
-      isValid = false;
-    } else if (formData.city.length < 2) {
-      newErrors.city = "City must be at least 2 characters";
-      isValid = false;
-    } else if (formData.city.length > 50) {
-      newErrors.city = "City cannot exceed 50 characters";
-      isValid = false;
-    }
-
-    if (!formData.address) {
-      newErrors.address = "Home address is required";
-      isValid = false;
-    } else if (formData.address.length < 2) {
-      newErrors.address = "Home Address must be at least 2 characters";
-      isValid = false;
-    } else if (formData.address.length > 50) {
-      newErrors.address = "Home Address cannot exceed 50 characters";
-      isValid = false;
-    }
-
     if (!agreedToTerms) {
       newErrors.terms = "You must agree to the Terms of Service";
       isValid = false;
@@ -179,54 +160,51 @@ const DonationDetails2 = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      console.log("Donation input fields okay! .");
+      setIsSubmitting(true);
+
+      // Generate transaction ID
+      const timestamp = Date.now().toString(36);
+      const randomStr = Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase();
+      const transactionId = `TXN-${timestamp}-${randomStr}`;
+
+      // Get payment method name
+      const paymentMethodName =
+        selectedPayment === "mtn" ? "MTN Mobile Money" : "Orange Mobile Money";
+
+      const newDonationData = {
+        name: formData.fullName,
+        email: formData.email,
+        phoneNumber: formData.mobileNumber,
+        amount: selectedAmount,
+        category: "Education Donation - Let's Empower minds and change lifes together",
+        paymentMethod: paymentMethodName,
+        transactionId: transactionId,
+        timestamp: new Date().toISOString(),
+      };
+
+      setDonationData(newDonationData);
+
+      console.log("Form submitted successfully", newDonationData);
+
+      setThankYouMessage(true);
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setSelectedAmount(1000);
+        setFormData({
+          mobileNumber: "",
+          fullName: "",
+          email: "",
+        });
+        setSelectedPayment("mtn");
+        setAgreedToTerms(false);
+      }, 1000);
+    } else {
+      console.log("Form has errors");
     }
-
-    setFormData({
-      mobileNumber: "",
-      mobileName: "",
-      fullName: "",
-      email: "",
-      region: "",
-      city: "",
-      address: "",
-    });
-  };
-
-  const mobileMoneyNumberRef = useRef();
-  const mobileMoneyNameRef = useRef();
-  const fullNameRef = useRef();
-  const emailAddressRef = useRef();
-  const regionRef = useRef();
-  const cityRef = useRef();
-  const homeAddressRef = useRef();
-
-  const onMouseEnterMobileNUmberRef = () => {
-    mobileMoneyNumberRef.current.focus();
-  };
-
-  const onMouseEnterMobileMoneyNameRef = () => {
-    mobileMoneyNameRef.current.focus();
-  };
-
-  const onMouseEnterFullNameRef = () => {
-    fullNameRef.current.focus();
-  };
-
-  const onMouseEnterEmailAddressRef = () => {
-    emailAddressRef.current.focus();
-  };
-
-  const onMouseEnterRegionRef = () => {
-    regionRef.current.focus();
-  };
-
-  const onMouseEnterCityRef = () => {
-    cityRef.current.focus();
-  };
-
-  const onMouseEnterHomeAddressRef = () => {
-    homeAddressRef.current.focus();
   };
 
   return (
@@ -457,227 +435,228 @@ const DonationDetails2 = () => {
                     </div>
                   </motion.div>
 
-                  {/* Details */}
-                  <motion.div
+                  
+                  <motion.form
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
                     initial={{ opacity: 0, y: 100 }}
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, delay: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
                   >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">Payment Details</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
+                    {/* Payment Method */}
+                    <div className="mb-8">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                        Select Payment Method
+                      </h4>
+                      <div className="space-y-3 ">
+                        <div className="flex items-center">
                           <input
-                            type="text"
-                            placeholder="Mobile Money Number e.g +237 686 529 762*"
-                            className={`w-full px-4 py-2 border ${
-                              errors.mobileNumber
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            name="mobileNumber"
-                            id="Mobile_Money_Number"
-                            value={formData.mobileNumber}
-                            onChange={handleInputChange}
-                            ref={mobileMoneyNumberRef}
-                            onMouseEnter={onMouseEnterMobileNUmberRef}
+                            id="mtn-momo"
+                            type="radio"
+                            name="payment"
+                            value="mtn"
+                            checked={selectedPayment === "mtn"}
+                            onChange={() => setSelectedPayment("mtn")}
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
                           />
-                          {errors.mobileNumber && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.mobileNumber}
-                            </p>
-                          )}
+                          <label
+                            htmlFor="mtn-momo"
+                            className="ml-2 text-gray-700"
+                          >
+                            MTN Mobile Money
+                          </label>
                         </div>
-                        <div>
+                        <div className="flex items-center">
                           <input
-                            type="text"
-                            name="mobileName"
-                            id="Mobile_Money_Name"
-                            placeholder="Mobile Money Name e.g Alex Jordan*"
-                            className={`w-full px-4 py-2 border ${
-                              errors.mobileName
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            value={formData.mobileName}
-                            onChange={handleInputChange}
-                            ref={mobileMoneyNameRef}
-                            onMouseEnter={onMouseEnterMobileMoneyNameRef}
+                            id="orange-momo"
+                            type="radio"
+                            name="payment"
+                            value="orange"
+                            checked={selectedPayment === "orange"}
+                            onChange={() => setSelectedPayment("orange")}
+                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
                           />
-                          {errors.mobileName && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.mobileName}
-                            </p>
-                          )}
+                          <label
+                            htmlFor="orange-momo"
+                            className="ml-2 text-gray-700"
+                          >
+                            ORANGE Mobile Money
+                          </label>
                         </div>
                       </div>
-                      <div>
+                    </div>
+
+                    {/* Amount */}
+                    <div className="mb-8">
+                      <button
+                        type="button"
+                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black  "
+                      >
+                        Select An Amount From Available Options Below
+                      </button>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {[
+                          500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
+                          5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
+                          9500, 10000, 50000, 100000, 500000, 1000000,
+                        ].map((amount) => (
+                          <button
+                            key={amount}
+                            type="button"
+                            onClick={() => setSelectedAmount(amount)}
+                            className={`py-2 px-4 rounded border ${
+                              selectedAmount === amount
+                                ? "bg-green-600 text-white border-green-600"
+                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                            }`}
+                          >
+                            {amount} Frs
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Your Full Name */}
+                    <div className="mb-6">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                        Donation Payment Number
+                      </h4>
+                      <div className="bg-gray-50 rounded-lg">
+                        <div className="grid grid-cols-1 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Mobile Money Number e.g 686529762*"
+                              className={`w-full border outline-none ease-in-out px-3 py-2 rounded-md focus:outline-none focus:ring-2 dark:bg-white dark:text-gray-800 ${
+                                errors.mobileNumber
+                                  ? "border-red-500 focus:ring-red-500"
+                                  : "border-gray-300 focus:ring-green-500 focus:border-green-500"
+                              }`}
+                              name="mobileNumber"
+                              id="Mobile_Money_Number"
+                              value={formData.mobileNumber}
+                              onChange={handleInputChange}
+                              ref={mobileMoneyNumberRef}
+                              onMouseEnter={onMouseEnterMobileNUmberRef}
+                            />
+                            {errors.mobileNumber && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.mobileNumber}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Your Full Name */}
+                    <div className="mb-6">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                        Full Name
+                      </h4>
+                      <div className="bg-gray-50 rounded-lg">
+                        <div className="grid grid-cols-1 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="text"
+                              placeholder="Your Full Name*"
+                              className={`w-full px-4 py-2 border ${
+                                errors.fullName
+                                  ? "border-red-500"
+                                  : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
+                              name="fullName"
+                              id="Full_Name"
+                              value={formData.fullName}
+                              onChange={handleInputChange}
+                              ref={fullNameRef}
+                              onMouseEnter={onMouseEnterFullNameRef}
+                            />
+                            {errors.fullName && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.fullName}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Address */}
+                    <div className="mb-6">
+                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
+                        Email Address
+                      </h4>
+                      <div className="bg-gray-50 rounded-lg">
+                        <div className="grid grid-cols-1 gap-4 mb-4">
+                          <div>
+                            <input
+                              type="email"
+                              placeholder="Email Address e.g name@gmail.com*"
+                              name="email"
+                              id="Email_Address"
+                              className={`w-full px-4 py-2 border ${
+                                errors.email
+                                  ? "border-red-500"
+                                  : "border-gray-300"
+                              } rounded focus:outline-none focus:ring-2 focus:ring-green-500 dark:bg-white dark:text-black `}
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              ref={emailAddressRef}
+                              onMouseEnter={onMouseEnterEmailAddressRef}
+                            />
+                            {errors.email && (
+                              <p className="text-red-500 text-sm mt-1">
+                                {errors.email}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Terms */}
+                    <div className="mb-20 ">
+                      <div className="flex items-center ">
                         <input
-                          type="text"
-                          placeholder="Your Full Name*"
-                          className={`w-full px-4 py-2 border ${
-                            errors.fullName
-                              ? "border-red-500"
-                              : "border-gray-300"
-                          } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                          name="fullName"
-                          id="Full_Name"
-                          value={formData.fullName}
-                          onChange={handleInputChange}
-                          ref={fullNameRef}
-                          onMouseEnter={onMouseEnterFullNameRef}
+                          id="terms"
+                          type="checkbox"
+                          checked={agreedToTerms}
+                          onChange={() => setAgreedToTerms(!agreedToTerms)}
+                          className="w-4 h-4 text-green-600 focus:ring-green-500"
                         />
-                        {errors.fullName && (
-                          <p className="text-red-500 text-sm mt-1">
-                            {errors.fullName}
-                          </p>
-                        )}
+                        <label htmlFor="terms" className="ml-2 text-gray-700">
+                          I agree with the Terms Of service
+                        </label>
                       </div>
+                      {errors.terms && (
+                        <p className="text-red-500 text-sm mt-1">
+                          {errors.terms}
+                        </p>
+                      )}
                     </div>
-                  </motion.div>
 
-                  {/* Address */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-8"
-                  >
-                    <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black">Address</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <input
-                            type="email"
-                            placeholder="Email Address e.g name@gmail.com*"
-                            name="email"
-                            id="Email_Address"
-                            className={`w-full px-4 py-2 border ${
-                              errors.email
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            ref={emailAddressRef}
-                            onMouseEnter={onMouseEnterEmailAddressRef}
-                          />
-                          {errors.email && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.email}
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <input
-                            type="text"
-                            placeholder="Region e.g South-west*"
-                            className={`w-full px-4 py-2 border ${
-                              errors.region
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            name="region"
-                            id="Region"
-                            value={formData.region}
-                            onChange={handleInputChange}
-                            ref={regionRef}
-                            onMouseEnter={onMouseEnterRegionRef}
-                          />
-                          {errors.region && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.region}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div>
-                          <input
-                            type="text"
-                            placeholder="City/Town e.g Limbe*"
-                            name="city"
-                            id="City_Town"
-                            className={`w-full px-4 py-2 border ${
-                              errors.city ? "border-red-500" : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            ref={cityRef}
-                            onMouseEnter={onMouseEnterCityRef}
-                          />
-                          {errors.city && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.city}
-                            </p>
-                          )}
-                        </div>
-                        <div>
-                          <input
-                            type="text"
-                            placeholder="Home Address e.g Quater 4, House 104, Samco, Mile 4*"
-                            name="address"
-                            id="Home_Address"
-                            className={`w-full px-4 py-2 border ${
-                              errors.address
-                                ? "border-red-500"
-                                : "border-gray-300"
-                            } rounded focus:outline-none focus:ring-2 focus:ring-green-500  dark:bg-white dark:text-b`}
-                            value={formData.address}
-                            onChange={handleInputChange}
-                            ref={homeAddressRef}
-                            onMouseEnter={onMouseEnterHomeAddressRef}
-                          />
-                          {errors.address && (
-                            <p className="text-red-500 text-sm mt-1">
-                              {errors.address}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div> 
-                  </motion.div>
-
-                  {/* Terms */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="mb-20 "
-                  >
-                    <div className="flex items-center ">
-                      <input
-                        id="terms"
-                        type="checkbox"
-                        checked={agreedToTerms}
-                        onChange={() => setAgreedToTerms(!agreedToTerms)}
-                        className="w-4 h-4 text-green-600 focus:ring-green-500"
-                      />
-                      <label htmlFor="terms" className="ml-2 text-gray-700">
-                        I agree with the Terms Of service
-                      </label>
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap gap-4 -mt-10 mb-10 ">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`w-full sm:w-auto mt-2 ease-in-out cursor-pointer px-6 py-3 bg-green-700 text-white font-medium rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors ${
+                          isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        {isSubmitting ? "Processing..." : "Donate Now"}
+                      </button>
+                      <button
+                        type="button"
+                        className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition"
+                      >
+                        Total Donation: {selectedAmount} Francs
+                      </button>
                     </div>
-                  </motion.div>
+                  </motion.form>
 
-                  {/* Action Buttons */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 100 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="flex flex-wrap gap-4 -mt-10 mb-10 "
-                  >
-                    <button className="py-3 px-6 bg-green-600 text-white font-medium rounded hover:bg-green-700 transition">
-                      Donate Now
-                    </button>
-                    <button className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition">
-                      Total Donation: {selectedAmount} Francs
-                    </button>
-                  </motion.div>
                 </div>
                 {/* <p className="text-[]">We love you</p> */}
               </div>
@@ -1190,6 +1169,140 @@ const DonationDetails2 = () => {
               </motion.div>
             </div>
           </div>
+
+           {/* Thank You Message */}
+        {thankYouMessage && donationData && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 mt-2">
+                <div className="flex items-center ">
+                  <Image
+                    src={navLogo}
+                    alt="ConnectAID Logo"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 mr-2"
+                  />
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                    ConnectAID
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setThankYouMessage(false);
+                  }}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Success Content */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
+                  <CheckCircle
+                    size={48}
+                    className="text-green-500 dark:text-green-400"
+                  />
+                  <div className="absolute -top-2 -right-2">
+                    <Heart size={20} className="text-red-500 fill-current" />
+                  </div>
+                </div>
+
+                {/* Thank You Message */}
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
+                  Thank You, {donationData.name}! 🙏
+                </h2>
+
+                <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                  Your generous donation of{" "}
+                  <span className="font-bold text-green-600 dark:text-green-400">
+                    {Number(donationData.amount).toLocaleString()} Francs
+                  </span>{" "}
+                  has been successfully processed!
+                </p>
+
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                  <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                    Donation Details:
+                  </h3>
+
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Name:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.name}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Email:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.email}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Phone:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.phoneNumber}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Category:
+                      </span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                        {donationData.category}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Payment Method:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
+                        {donationData.paymentMethod.replace(/_/g, " ")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Transaction ID:
+                      </span>
+                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                        {donationData.transactionId}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                  <Download size={18} />
+                  Download Receipt
+                </button>
+
+                <div className="text-center">
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                    Your contribution is making a real difference! 💫
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">
+                    The Donation Receipt Has been Sent To Your Email{" "}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+
         </div>
       </section>
 

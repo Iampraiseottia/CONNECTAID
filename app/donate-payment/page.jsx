@@ -13,6 +13,8 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
+import navLogo from "/public/icon/logo.png";
+
 import Image from "next/image";
 import { CheckCircle, Download, Heart, X } from "lucide-react";
 
@@ -633,7 +635,7 @@ const DonatePayment = () => {
               <div className="flex justify-between items-center mb-8 mt-2">
                 <div className="flex items-center ">
                   <Image
-                    src="/logo.png"
+                    src={navLogo}
                     alt="ConnectAID Logo"
                     width={32}
                     height={32}
