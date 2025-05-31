@@ -679,7 +679,7 @@ const DonationDetails1 = () => {
                       Donate Now
                     </button>
                     <button className="py-3 px-6 bg-white text-gray-700 font-medium rounded border border-gray-300 hover:bg-gray-50 transition">
-                      Total Donation: ${selectedAmount}
+                      Total Donation: {selectedAmount} Francs
                     </button>
                   </motion.div>
                 </div>

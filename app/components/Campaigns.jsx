@@ -372,7 +372,8 @@ const Campaigns = () => {
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
-      <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
+      <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">]
+        
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
             Active Campaigns
@@ -380,8 +381,7 @@ const Campaigns = () => {
           <p className="text-slate-600 dark:text-gray-300">
             Browse through current campaigns and support causes that matter to
             you.
-          </p>
-        </div>
+          </p>        </div>
 
         {/* Search and Filter Bar */}
         <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">

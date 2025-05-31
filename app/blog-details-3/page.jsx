@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useRef } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -23,15 +25,12 @@ import Breadcrumb from "../components/Breadcrumb";
 
 import relatedPostImg1 from "/public/gallery/donateList-1.png";
 import relatedPostImg2 from "/public/gallery/gallery-4.png";
-import relatedPostImg3 from "/public/gallery/gallery-20.png";
 import relatedPostImg4 from "/public/urgent/urgent-1.png";
 import relatedPostImg5 from "/public/gallery/donationList-2.png";
 import relatedPostImg6 from "/public/gallery/gallery-1.png";
-import relatedPostImg7 from "/public/gallery/gallery-3.png";
 import relatedPostImg8 from "/public/gallery/gallery-2.png";
 import relatedPostImg9 from "/public/blog/blog-5.png";
 import relatedPostImg10 from "/public/gallery/education.png";
-import relatedPostImg11 from "/public/gallery/gallery-13.png";
 import relatedPostImg12 from "/public/gallery/water.png";
 
 const BlogDetails3 = () => {
@@ -41,6 +40,37 @@ const BlogDetails3 = () => {
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
+
+  const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [comment, setComment] = useState("");
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log({ fullName, email, comment });
+      setFullName("");
+      setEmail("");
+      setComment("");
+    };
+  
+    const fullNameRef = useRef();
+    const emailAddressRef = useRef();
+    const commentRef = useRef();
+    const searchRef = useRef();
+  
+    const onMouseEnterFullNameRef = () => {
+      fullNameRef.current.focus();
+    };
+    const onMouseEnterEmailAddressRef = () => {
+      emailAddressRef.current.focus();
+    };
+    const onMouseEnterCommentRef = () => {
+      commentRef.current.focus();
+    };
+    const onMouseEnterSearchRef = () => {
+      searchRef.current.focus();
+    };
+  
 
   return (
     <div className="bg-[#f9f9f9]">
@@ -484,6 +514,96 @@ const BlogDetails3 = () => {
                   </div>
                 </motion.div>
               </div>
+
+
+              {/* Comment Form */}
+              <div className="mt-16">
+                <motion.h3
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="text-xl font-bold text-gray-800 mb-6"
+                >
+                  Leave a Comment
+                </motion.h3>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 100 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-6"
+                >
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label
+                          htmlFor="fullName"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          id="fullName"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="Alex Jordan"
+                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                          ref={fullNameRef}
+                          onMouseEnter={onMouseEnterFullNameRef}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-gray-700 mb-2"
+                        >
+                          Email address
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          placeholder="name@example.com"
+                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                          ref={emailAddressRef}
+                          onMouseEnter={onMouseEnterEmailAddressRef}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="comment"
+                        className="block text-sm font-medium text-gray-700 mb-2"
+                      >
+                        Comment
+                      </label>
+                      <textarea
+                        id="comment"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Type Keyword"
+                        rows={4}
+                        className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                        ref={commentRef}
+                        onMouseEnter={onMouseEnterCommentRef}
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors"
+                    >
+                      Submit Comment
+                    </button>
+                  </form>
+                </motion.div>
+              </div>
+
             </div>
 
             {/* Sidebar */}

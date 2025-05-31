@@ -29,7 +29,7 @@ const UpcomingEvents = () => {
           <h3 className="text-center text-teal-700 font-bold tracking-wide text-3xl sm:text-5xl">
             Upcoming Events{" "}
           </h3>
-          <p className="text-center text-xl mt-3 tracking-tight font-normal mb-10 leading-8 sm:mx-32 mx-3">
+          <p className="text-center text-xl mt-3 tracking-tight font-normal mb-10 leading-8 sm:mx-32 mx-3 dark:text-white ">
             Join us for an unforgettable experience filled with inspiration,
             community connection, and impactful moments that empower change,
             celebrate togetherness, and create lasting memories for everyone

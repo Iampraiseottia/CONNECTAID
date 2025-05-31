@@ -25,15 +25,12 @@ import Breadcrumb from "../components/Breadcrumb";
 
 import relatedPostImg1 from "/public/gallery/donateList-1.png";
 import relatedPostImg2 from "/public/gallery/gallery-4.png";
-import relatedPostImg3 from "/public/gallery/gallery-20.png";
 import relatedPostImg4 from "/public/urgent/urgent-1.png";
 import relatedPostImg5 from "/public/gallery/donationList-2.png";
 import relatedPostImg6 from "/public/gallery/gallery-1.png";
-import relatedPostImg7 from "/public/gallery/gallery-3.png";
 import relatedPostImg8 from "/public/gallery/gallery-2.png";
 import relatedPostImg9 from "/public/blog/blog-5.png";
 import relatedPostImg10 from "/public/gallery/education.png";
-import relatedPostImg11 from "/public/gallery/gallery-13.png";
 import relatedPostImg12 from "/public/gallery/water.png";
 
 const BlogDetails1 = () => {
@@ -632,8 +629,8 @@ const BlogDetails1 = () => {
                         width={60}
                         height={65}
                         className="rounded-full h-[65px]"
-                      /> 
-                    </div> 
+                      />
+                    </div>
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
                         <p className="font-semibold text-gray-800">
@@ -666,8 +663,8 @@ const BlogDetails1 = () => {
                       <Image
                         src={`/gallery/comment-3.png`}
                         alt="Commenter"
-                        width={70} 
-                        height={70} 
+                        width={70}
+                        height={70}
                         className="rounded-full h-[70px]"
                       />
                     </div>
@@ -682,7 +679,7 @@ const BlogDetails1 = () => {
                       </div>
                       <p className="text-gray-600 mb-3">
                         Great insights on the transformative power of education!
-                        I never realized how impactful donations could be. I’m 
+                        I never realized how impactful donations could be. I’m
                         motivated to contribute to educational causes after
                         reading this.
                       </p>
@@ -728,9 +725,9 @@ const BlogDetails1 = () => {
                         className="text-teal-600 hover:text-teal-700 text-sm font-medium"
                       >
                         Reply
-                      </a> 
+                      </a>
                     </div>
-                  </div> 
+                  </div>
                   <hr className="my-6 border-gray-200" />
                 </div>
 
@@ -747,15 +744,13 @@ const BlogDetails1 = () => {
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                        <p className="font-semibold text-gray-800">
-                          Nkum Ryan
-                        </p>
+                        <p className="font-semibold text-gray-800">Nkum Ryan</p>
                         <p className="text-sm text-gray-500">
                           Dec 28, 2024 At 7.00 am
                         </p>
                       </div>
                       <p className="text-gray-600 mb-3">
-                        I highlights the urgent need for educational support. 
+                        I highlights the urgent need for educational support.
                         appreciate the practical suggestions for donating and
                         volunteering. Together, we can make a real difference!
                       </p>
@@ -909,8 +904,6 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
 
-                    
-
                     <div className="">
                       <div className="flex gap-3">
                         <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -998,8 +991,6 @@ const BlogDetails1 = () => {
                       <hr className="my-4 border-gray-200" />
                     </div>
 
-                 
-
                     <div className="">
                       <div className="flex gap-3">
                         <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -1083,7 +1074,6 @@ const BlogDetails1 = () => {
                       </div>
                       <hr className="my-4 border-gray-200" />
                     </div>
-
 
                     <div className="">
                       <div className="flex gap-3">
