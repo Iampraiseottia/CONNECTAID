@@ -14,6 +14,7 @@ import { motion } from "motion/react";
 import Metadata from "../components/Metadata";
 
 import Image from "next/image";
+import { CheckCircle, Download, Heart, X } from "lucide-react";
 
 const DonatePayment = () => {
   const metadata = {
@@ -22,7 +23,7 @@ const DonatePayment = () => {
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
-  const [amount, setAmount] = useState(50);
+  const [amount, setAmount] = useState(500);
   const [selectedPayment, setSelectedPayment] = useState("");
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [category, setCategory] = useState("");
@@ -38,7 +39,7 @@ const DonatePayment = () => {
     category: "",
     terms: "",
     payment: "",
-    phoneNumber: ""
+    phoneNumber: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,11 +59,11 @@ const DonatePayment = () => {
 
   const categories = [
     "Charity For Food Campaign",
-    "Charity For Education  ",
-    "Charity For Medical ",
-    "Charity For Water ",
-    "Charity For Extreme Cases ",
-    "Charity For Kindness ",
+    "Charity For Education",
+    "Charity For Medical",
+    "Charity For Water",
+    "Charity For Extreme Cases",
+    "Charity For Kindness",
     "Others",
   ];
 
@@ -95,8 +96,6 @@ const DonatePayment = () => {
   };
 
   const handleNameChange = (e) => {
-
-
     const value = e.target.value;
     setName(value);
 
@@ -112,27 +111,26 @@ const DonatePayment = () => {
     }
   };
 
-
-
   const handlePhoneNumberChange = (e) => {
-
     const value = e.target.value;
     setPhoneNumber(value);
 
     const phoneNumberRegex = /^\+237[0-9]{9}$/;
     if (!value.trim()) {
-      setErrors((prev) => ({ ...prev, phoneNumber: "Phone NUmber is required" }));
+      setErrors((prev) => ({
+        ...prev,
+        phoneNumber: "Phone Number is required",
+      }));
     } else if (!phoneNumberRegex.test(value)) {
       setErrors((prev) => ({
         ...prev,
-        phoneNumber: "Please enter a valid phone number as defined in the format below",
+        phoneNumber:
+          "Please enter a valid phone number as defined in the format below",
       }));
     } else {
       setErrors((prev) => ({ ...prev, phoneNumber: "" }));
     }
   };
-
-
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
@@ -165,13 +163,11 @@ const DonatePayment = () => {
   const emailDonate = useRef(null);
   const phoneNumberDonate = useRef(null);
 
-
   const onMouseEnterPhoneNumber = () => {
-    if (phoneNumber.current) {
-      phoneNumber.current.focus();
+    if (phoneNumberDonate.current) {
+      phoneNumberDonate.current.focus();
     }
   };
-
 
   const onMouseEnterAmountDonate = () => {
     if (amountDonate.current) {
@@ -199,7 +195,7 @@ const DonatePayment = () => {
       category: "",
       terms: "",
       payment: "",
-      phoneNumber: ""
+      phoneNumber: "",
     };
 
     if (!name.trim()) {
@@ -209,7 +205,6 @@ const DonatePayment = () => {
       newErrors.name = "Full Name must be at least 2 characters";
       valid = false;
     }
-
 
     if (!phoneNumber.trim()) {
       newErrors.phoneNumber = "Phone number is required";
@@ -251,23 +246,54 @@ const DonatePayment = () => {
     return valid;
   };
 
+  const [donationData, setDonationData] = useState(null);
+  const [thankYouMessage, setThankYouMessage] = useState(false);
+
+  // Generate transaction ID
+  const generateTransactionId = () => {
+    const timestamp = Date.now().toString(36);
+    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `TXN-${timestamp}-${randomStr}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       setIsSubmitting(true);
 
-      console.log("Form submitted successfully", {
-        amount,
-        name,
-        email,
-        category,
-        selectedPayment,
-      });
+      // Prepare donation data
+      const transactionId = generateTransactionId();
+      const paymentMethodName =
+        paymentMethods.find((method) => method.id === selectedPayment)?.name ||
+        selectedPayment;
+
+      const newDonationData = {
+        name: name,
+        email: email,
+        phoneNumber: phoneNumber,
+        amount: amount,
+        category: category,
+        paymentMethod: paymentMethodName,
+        transactionId: transactionId,
+        timestamp: new Date().toISOString(),
+      };
+
+      setDonationData(newDonationData);
+
+      console.log("Form submitted successfully", newDonationData);
+
+      setThankYouMessage(true);
 
       setTimeout(() => {
-        alert("Donation submitted successfully!");
         setIsSubmitting(false);
+        setAmount(500);
+        setName("");
+        setEmail("");
+        setPhoneNumber("");
+        setCategory("");
+        setSelectedPayment("");
+        setAgreeToTerms(false);
       }, 1000);
     } else {
       console.log("Form has errors");
@@ -281,7 +307,7 @@ const DonatePayment = () => {
       {/* Navigation Bar | Header  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb for About Page */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -350,8 +376,7 @@ const DonatePayment = () => {
                 />
               </div>
 
-
-              {/* Phone NUmber */}
+              {/* Phone Number */}
               <div className="md:col-span-3 mt-2 ">
                 <label className="block text-lg font-medium text-gray-700 mb-2">
                   Phone Number:
@@ -365,15 +390,11 @@ const DonatePayment = () => {
                   placeholder="+237XXXXXXXXX"
                   ref={phoneNumberDonate}
                   onChange={handlePhoneNumberChange}
-                  className={`w-full border outline-none ease-in-out
-                  ${
-                    errors.phoneNumber &&
-                    /^\+237[0-9]{9}$/.test(errors.phoneNumber.trim())
-                      ? "border-green-500 focus:ring-green-500"
-                      : "border-gray-500 dark:border-gray-600 focus:ring-gray-500 focus:outline-none"
-                  } 
-                  rounded-md px-3 py-2 focus:outline-none focus:ring-2 ease-in-out 
-                  dark:bg-gray-700 dark:text-white dark:placeholder-gray-400`} 
+                  className={`w-full border outline-none ease-in-out px-3 py-2 rounded-md focus:outline-none focus:ring-2 dark:bg-white dark:text-gray-800 ${
+                    errors.phoneNumber
+                      ? "border-red-500 focus:ring-red-500"
+                      : "border-gray-300 focus:ring-green-500 focus:border-green-500"
+                  }`}
                 />
                 {errors.phoneNumber && (
                   <p className="mt-1 text-sm text-red-500">
@@ -381,10 +402,9 @@ const DonatePayment = () => {
                   </p>
                 )}
                 <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                  Format: +237 followed by 9 digits (e.g., +237672528362) 
+                  Format: +237 followed by 9 digits (e.g., +237672528362)
                 </p>
               </div>
-
 
               {/* Name */}
               <div className="mt-2">
@@ -396,11 +416,11 @@ const DonatePayment = () => {
                   value={name}
                   onChange={handleNameChange}
                   className={`w-full px-3 py-2 border dark:bg-white dark:text-gray-800 ${
-                    errors.phoneNumber ? "border-red-500" : "border-gray-300"
+                    errors.name ? "border-red-500" : "border-gray-300"
                   } rounded-md focus:outline-none focus:ring-1 ${
-                    errors.phoneNumber ? "focus:ring-red-500" : "focus:ring-green-500"
+                    errors.name ? "focus:ring-red-500" : "focus:ring-green-500"
                   } ${
-                    errors.phoneNumber
+                    errors.name
                       ? "focus:border-red-500"
                       : "focus:border-green-500"
                   }`}
@@ -496,10 +516,10 @@ const DonatePayment = () => {
                         </div>
                       ))}
                     </div>
-                  )} 
+                  )}
                 </div>
                 {errors.category && (
-                  <p className="mt-1 text-red-500 text-sm">{errors.category}</p> 
+                  <p className="mt-1 text-red-500 text-sm">{errors.category}</p>
                 )}
               </div>
             </div>
@@ -605,6 +625,138 @@ const DonatePayment = () => {
             </button>
           </form>
         </div>
+
+        {/* Thank You Message */}
+        {thankYouMessage && donationData && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="flex justify-between items-center mb-8 mt-2">
+                <div className="flex items-center ">
+                  <Image
+                    src="/logo.png"
+                    alt="ConnectAID Logo"
+                    width={32}
+                    height={32}
+                    className="h-8 w-8 mr-2"
+                  />
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                    ConnectAID
+                  </h2>
+                </div>
+                <button
+                  onClick={() => {
+                    setThankYouMessage(false);
+                  }}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Success Content */}
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
+                  <CheckCircle
+                    size={48}
+                    className="text-green-500 dark:text-green-400"
+                  />
+                  <div className="absolute -top-2 -right-2">
+                    <Heart size={20} className="text-red-500 fill-current" />
+                  </div>
+                </div>
+
+                {/* Thank You Message */}
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
+                  Thank You, {donationData.name}! 🙏
+                </h2>
+
+                <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                  Your generous donation of{" "}
+                  <span className="font-bold text-green-600 dark:text-green-400">
+                    {Number(donationData.amount).toLocaleString()} Francs
+                  </span>{" "}
+                  has been successfully processed!
+                </p>
+
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                  <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                    Donation Details:
+                  </h3>
+
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Name:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.name}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Email:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.email}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Phone:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium">
+                        {donationData.phoneNumber}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Category:
+                      </span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                        {donationData.category}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Payment Method:
+                      </span>
+                      <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
+                        {donationData.paymentMethod.replace(/_/g, " ")}
+                      </span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-500 dark:text-slate-400">
+                        Transaction ID:
+                      </span>
+                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                        {donationData.transactionId}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                  <Download size={18} />
+                  Download Receipt
+                </button>
+
+                <div className="text-center">
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                    Your contribution is making a real difference! 💫
+                  </p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs">
+                    The DOnation Receipt Has been Sent To Your Email{" "}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </motion.div>
 
       {/* Picture Gallery  */}

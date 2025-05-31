@@ -256,7 +256,6 @@ const Campaigns = () => {
       valid = false;
     }
 
-    // Fix: Convert amount to string and handle both string and number cases
     const amountStr = String(amount).trim();
     if (!amountStr || amountStr === "0") {
       newErrors.amount =
@@ -805,13 +804,11 @@ const Campaigns = () => {
                   );
                 })()}
 
-                {/* Download Receipt Button */}
                 <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                   <Download size={18} />
                   Download Receipt
                 </button>
 
-                {/* Auto-close Timer */}
                 <div className="text-center">
                   <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
                     Your contribution is making a real difference! 💫
