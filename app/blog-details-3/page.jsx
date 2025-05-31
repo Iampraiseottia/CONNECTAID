@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,15 @@ import Metadata from "../components/Metadata";
 
 import { motion } from "motion/react";
 
-import { User, MessageSquare, Clock, DollarSign } from "lucide-react";
+import {
+  User,
+  MessageSquare,
+  Search,
+  Clock,
+  DollarSign,
+  Upload,
+  X,
+} from "lucide-react";
 
 import Facebook from "/public/icon/fb.png";
 import Youtube from "/public/icon/youtube.png";
@@ -40,37 +48,262 @@ const BlogDetails3 = () => {
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
-
   const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
-    const [comment, setComment] = useState("");
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log({ fullName, email, comment });
-      setFullName("");
-      setEmail("");
-      setComment("");
-    };
-  
-    const fullNameRef = useRef();
-    const emailAddressRef = useRef();
-    const commentRef = useRef();
-    const searchRef = useRef();
-  
-    const onMouseEnterFullNameRef = () => {
-      fullNameRef.current.focus();
-    };
-    const onMouseEnterEmailAddressRef = () => {
-      emailAddressRef.current.focus();
-    };
-    const onMouseEnterCommentRef = () => {
-      commentRef.current.focus();
-    };
-    const onMouseEnterSearchRef = () => {
-      searchRef.current.focus();
-    };
-  
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [displayedComments, setDisplayedComments] = useState(5);
+  const [generatedAvatar, setGeneratedAvatar] = useState("");
+
+
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+  const commentRef = useRef();
+  const searchRef = useRef();
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+  const onMouseEnterCommentRef = () => {
+    commentRef.current.focus();
+  };
+  const onMouseEnterSearchRef = () => {
+    searchRef.current.focus();
+  };
+
+  const avatarInputRef = useRef();
+
+  // Validation function
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!fullName.trim()) {
+      newErrors.fullName = "Full name is required";
+    } else if (fullName.trim().length < 2) {
+      newErrors.fullName = "Full name must be at least 2 characters";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!comment.trim()) {
+      newErrors.comment = "Comment is required";
+    } else if (comment.trim().length < 10) {
+      newErrors.comment = "Comment must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Generate avatar from initials
+  const generateAvatar = (name) => {
+    const names = name.trim().split(" ");
+    const initials = names
+      .slice(0, 2)
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+    const colors = [
+      "#FF6B6B",
+      "#4ECDC4",
+      "#45B7D1",
+      "#96CEB4",
+      "#FFEAA7",
+      "#DDA0DD",
+      "#98D8C8",
+    ];
+    const backgroundColor = colors[initials.charCodeAt(0) % colors.length];
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 120;
+    canvas.height = 120;
+    const ctx = canvas.getContext("2d");
+
+    // Draw circle background
+    ctx.fillStyle = backgroundColor;
+    ctx.beginPath();
+    ctx.arc(60, 60, 60, 0, 2 * Math.PI);
+    ctx.fill();
+
+    // Draw initials
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 48px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials, 60, 60);
+
+    return canvas.toDataURL();
+  };
+
+  // Handle avatar file selection
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        setErrors((prev) => ({
+          ...prev,
+          avatar: "File size must be less than 5MB",
+        }));
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        setErrors((prev) => ({
+          ...prev,
+          avatar: "Please select an image file",
+        }));
+        return;
+      }
+
+      setAvatarFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => setAvatarPreview(e.target.result);
+      reader.readAsDataURL(file);
+
+      setErrors((prev) => ({ ...prev, avatar: undefined }));
+    }
+  };
+
+  // Remove avatar
+  const removeAvatar = () => {
+    setAvatarFile(null);
+    setAvatarPreview("");
+    if (avatarInputRef.current) {
+      avatarInputRef.current.value = "";
+    }
+  };
+
+  const uploadAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload-avatar", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      return data.url;
+    } catch (error) {
+      console.error("Error uploading avatar:", error);
+      return null;
+    }
+  };
+
+
+  useEffect(() => {
+    if (fullName.trim()) {
+      const avatar = generateAvatar(fullName);
+      setGeneratedAvatar(avatar);
+    } else {
+      setGeneratedAvatar("");
+    }
+  }, [fullName]);
+
+  // See MOre
+  const handleSeeMoreComments = () => {
+    setDisplayedComments((prev) => prev + 15);
+  };
+
+  // Fetch comments 
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`/api/comments?blogPostId=blog-details-3`);
+      const data = await response.json();
+      if (data.success) {
+        setComments(data.comments);
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      let avatarUrl = "";
+
+      if (avatarFile) {
+        avatarUrl = await uploadAvatar(avatarFile);
+      } else {
+        avatarUrl = generateAvatar(fullName);
+      }
+
+      const response = await fetch("/api/comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: email.trim(),
+          comment: comment.trim(),
+          avatarUrl,
+          blogPostId: "blog-details-3",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFullName("");
+        setEmail("");
+        setComment("");
+        setAvatarFile(null);
+        setAvatarPreview("");
+        setGeneratedAvatar("");
+        setErrors({});
+        setDisplayedComments(5);
+
+        await fetchComments();
+      } else {
+        throw new Error(data.error || "Failed to submit comment");
+      }
+    } catch (error) {
+      console.error("Error submitting comment:", error);
+      setErrors({ submit: "Failed to submit comment. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Format date function
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  };
 
   return (
     <div className="bg-[#f9f9f9]">
@@ -515,7 +748,6 @@ const BlogDetails3 = () => {
                 </motion.div>
               </div>
 
-
               {/* Comment Form */}
               <div className="mt-16">
                 <motion.h3
@@ -536,42 +768,141 @@ const BlogDetails3 = () => {
                   className="bg-white rounded-lg shadow-md p-6"
                 >
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {errors.submit && (
+                      <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {errors.submit}
+                      </div>
+                    )}
+
+                    {/* Avatar Upload Section */}
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Profile Picture (Optional)
+                      </label>
+                      <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                          {avatarPreview ? (
+                            <img
+                              src={avatarPreview}
+                              alt="Avatar preview"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : generatedAvatar ? (
+                            <img
+                              src={generatedAvatar}
+                              alt="Generated avatar"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <User className="w-8 h-8 text-gray-400" />
+                          )}
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => avatarInputRef.current?.click()}
+                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors flex items-center gap-2"
+                          >
+                            <Upload className="w-4 h-4" />
+                            Upload Photo
+                          </button>
+
+                          {avatarPreview && (
+                            <button
+                              type="button"
+                              onClick={removeAvatar}
+                              className="px-4 py-2 bg-red-100 text-red-700 rounded-md hover:bg-red-200 transition-colors flex items-center gap-2"
+                            >
+                              <X className="w-4 h-4" />
+                              Remove
+                            </button>
+                          )}
+                        </div>
+
+                        <input
+                          type="file"
+                          ref={avatarInputRef}
+                          onChange={handleAvatarChange}
+                          accept="image/*"
+                          className="hidden"
+                        />
+                      </div>
+                      {errors.avatar && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {errors.avatar}
+                        </p>
+                      )}
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label
                           htmlFor="fullName"
                           className="block text-sm font-medium text-gray-700 mb-2"
                         >
-                          Full Name
+                          Full Name *
                         </label>
                         <input
                           type="text"
                           id="fullName"
                           value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
+                          onChange={(e) => {
+                            setFullName(e.target.value);
+                            if (errors.fullName) {
+                              setErrors((prev) => ({
+                                ...prev,
+                                fullName: undefined,
+                              }));
+                            }
+                          }}
                           placeholder="Alex Jordan"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                          className={`w-full p-3 border rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black ${
+                            errors.fullName
+                              ? "border-red-500"
+                              : "border-gray-300"
+                          }`}
                           ref={fullNameRef}
                           onMouseEnter={onMouseEnterFullNameRef}
                         />
+                        {errors.fullName && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {errors.fullName}
+                          </p>
+                        )}
                       </div>
                       <div>
                         <label
                           htmlFor="email"
                           className="block text-sm font-medium text-gray-700 mb-2"
                         >
-                          Email address
+                          Email address *
                         </label>
                         <input
                           type="email"
                           id="email"
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (errors.email) {
+                              setErrors((prev) => ({
+                                ...prev,
+                                email: undefined,
+                              }));
+                            }
+                          }}
                           placeholder="name@example.com"
-                          className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                          className={`w-full p-3 border rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black ${
+                            errors.email ? "border-red-500" : "border-gray-300"
+                          }`}
                           ref={emailAddressRef}
                           onMouseEnter={onMouseEnterEmailAddressRef}
                         />
+                        {errors.email && (
+                          <p className="text-red-600 text-sm mt-1">
+                            {errors.email}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -580,30 +911,129 @@ const BlogDetails3 = () => {
                         htmlFor="comment"
                         className="block text-sm font-medium text-gray-700 mb-2"
                       >
-                        Comment
+                        Comment *
                       </label>
                       <textarea
                         id="comment"
                         value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                        placeholder="Type Keyword"
+                        onChange={(e) => {
+                          setComment(e.target.value);
+                          if (errors.comment) {
+                            setErrors((prev) => ({
+                              ...prev,
+                              comment: undefined,
+                            }));
+                          }
+                        }}
+                        placeholder="Share your thoughts..."
                         rows={4}
-                        className="w-full p-3 border border-gray-300 rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
+                        className={`w-full p-3 border rounded-md outline-none focus:outline-none focus:ring-1 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black ${
+                          errors.comment ? "border-red-500" : "border-gray-300"
+                        }`}
                         ref={commentRef}
                         onMouseEnter={onMouseEnterCommentRef}
                       />
+                      {errors.comment && (
+                        <p className="text-red-600 text-sm mt-1">
+                          {errors.comment}
+                        </p>
+                      )}
+                      <p className="text-gray-500 text-sm mt-1">
+                        {comment.length}/500 characters
+                      </p>
                     </div>
 
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors"
+                      disabled={isSubmitting}
+                      className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                     >
-                      Submit Comment
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          Submitting...
+                        </>
+                      ) : (
+                        "Submit Comment"
+                      )}
                     </button>
                   </form>
                 </motion.div>
               </div>
 
+              {/* Comments List */}
+              <motion.div
+                initial={{ opacity: 0, y: 100 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.1 }}
+                className="mt-16"
+              >
+                <h3 className="text-xl font-bold text-gray-800 mb-6">
+                  {loading
+                    ? "Loading Comments..."
+                    : `${comments.length} Comment${
+                        comments.length !== 1 ? "s" : ""
+                      }`}
+                </h3>
+
+                {loading ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
+                ) : comments.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <MessageSquare className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                    <p>No comments yet. Be the first to leave a comment!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {comments.map((comment, index) => (
+                      <div key={comment.id} className="mb-6">
+                        <div className="flex gap-4">
+                          <div className="flex-shrink-0">
+                            {comment.avatar_url ? (
+                              <img
+                                src={comment.avatar_url}
+                                alt={`${comment.full_name}'s avatar`}
+                                className="w-16 h-16 rounded-full object-cover"
+                              />
+                            ) : (
+                              <div
+                                className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                                style={{ backgroundColor: "#4ECDC4" }}
+                              >
+                                {comment.full_name
+                                  .split(" ")
+                                  .slice(0, 2)
+                                  .map((n) => n[0])
+                                  .join("")
+                                  .toUpperCase()}
+                              </div>
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                              <p className="font-semibold text-gray-800">
+                                {comment.full_name}
+                              </p>
+                              <p className="text-sm text-gray-500">
+                                {formatDate(comment.created_at)}
+                              </p>
+                            </div>
+                            <p className="text-gray-600 mb-3">
+                              {comment.comment}
+                            </p>
+                          </div>
+                        </div>
+                        {index < comments.length - 1 && (
+                          <hr className="mt-6 border-gray-200" />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
             </div>
 
             {/* Sidebar */}
@@ -707,7 +1137,7 @@ const BlogDetails3 = () => {
                             <a href="/donation-details-6">
                               Act now, save lives—your donation can support
                               those facing extreme hardships and urgent needs!
-                            </a> 
+                            </a>
                           </h4>
                         </div>
                       </div>
@@ -1001,7 +1431,7 @@ const BlogDetails3 = () => {
         </div>
       </section>
 
-      {/* Picture Gallery  */}
+      {/* Picture Gallery */}
       <Gallery />
 
       {/* Footer  */}

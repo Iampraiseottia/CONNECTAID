@@ -59,6 +59,9 @@ const BlogDetails1 = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [displayedComments, setDisplayedComments] = useState(5);
+  const [generatedAvatar, setGeneratedAvatar] = useState("");
+
   const fullNameRef = useRef();
   const emailAddressRef = useRef();
   const commentRef = useRef();
@@ -184,7 +187,6 @@ const BlogDetails1 = () => {
     }
   };
 
-
   const uploadAvatar = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
@@ -200,6 +202,20 @@ const BlogDetails1 = () => {
       console.error("Error uploading avatar:", error);
       return null;
     }
+  };
+
+  useEffect(() => {
+    if (fullName.trim()) {
+      const avatar = generateAvatar(fullName);
+      setGeneratedAvatar(avatar);
+    } else {
+      setGeneratedAvatar("");
+    }
+  }, [fullName]);
+
+  // See MOre
+  const handleSeeMoreComments = () => {
+    setDisplayedComments((prev) => prev + 15);
   };
 
   // Fetch comments
@@ -259,13 +275,13 @@ const BlogDetails1 = () => {
         setComment("");
         setAvatarFile(null);
         setAvatarPreview("");
+        setGeneratedAvatar("");
         setErrors({});
+        setDisplayedComments(5);
 
         await fetchComments();
-
-       
       } else {
-        throw new Error(data.error || "Failed to submit comment");
+        throw new Error(data.error || "Failed to submit comment"); 
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
@@ -770,20 +786,17 @@ const BlogDetails1 = () => {
                       <div className="flex items-center gap-4">
                         <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
                           {avatarPreview ? (
-                            
-                          ) : fullName ? (
-                            <div
-                              className="w-full h-full flex items-center justify-center text-white font-bold text-lg"
-                              style={{ backgroundColor: "#4ECDC4" }}
-                            >
-                              {fullName
-                                .trim()
-                                .split(" ")
-                                .slice(0, 2)
-                                .map((n) => n[0])
-                                .join("")
-                                .toUpperCase()}
-                            </div>
+                            <img
+                              src={avatarPreview}
+                              alt="Avatar preview"
+                              className="w-full h-full object-cover"
+                            />
+                          ) : generatedAvatar ? (
+                            <img
+                              src={generatedAvatar}
+                              alt="Generated avatar"
+                              className="w-full h-full object-cover"
+                            />
                           ) : (
                             <User className="w-8 h-8 text-gray-400" />
                           )}
@@ -979,49 +992,72 @@ const BlogDetails1 = () => {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    {comments.map((comment, index) => (
-                      <div key={comment.id} className="mb-6">
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0">
-                            {comment.avatar_url ? (
-                              <img
-                                src={comment.avatar_url}
-                                alt={`${comment.full_name}'s avatar`}
-                                className="w-16 h-16 rounded-full object-cover"
-                              />
-                            ) : (
-                              <div
-                                className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                                style={{ backgroundColor: "#4ECDC4" }}
-                              >
-                                {comment.full_name
-                                  .split(" ")
-                                  .slice(0, 2)
-                                  .map((n) => n[0])
-                                  .join("")
-                                  .toUpperCase()}
+                    {comments
+                      .slice(0, displayedComments)
+                      .map((comment, index) => (
+                        <div key={comment.id} className="mb-6">
+                          <div className="flex gap-4">
+                            <div className="flex-shrink-0">
+                              {comment.avatar_url ? (
+                                comment.avatar_url.startsWith("data:") ? (
+                                  <img
+                                    src={comment.avatar_url}
+                                    alt={`${comment.full_name}'s avatar`}
+                                    className="w-16 h-16 rounded-full object-cover"
+                                  />
+                                ) : (
+                                  <img
+                                    src={comment.avatar_url}
+                                    alt={`${comment.full_name}'s avatar`}
+                                    className="w-16 h-16 rounded-full object-cover"
+                                  />
+                                )
+                              ) : (
+                                <div
+                                  className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                                  style={{ backgroundColor: "#4ECDC4" }}
+                                >
+                                  {comment.full_name
+                                    .split(" ")
+                                    .slice(0, 2)
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .toUpperCase()}
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                                <p className="font-semibold text-gray-800">
+                                  {comment.full_name}
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                  {formatDate(comment.created_at)}
+                                </p>
                               </div>
-                            )}
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                              <p className="font-semibold text-gray-800">
-                                {comment.full_name}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {formatDate(comment.created_at)}
+                              <p className="text-gray-600 mb-3">
+                                {comment.comment}
                               </p>
                             </div>
-                            <p className="text-gray-600 mb-3">
-                              {comment.comment}
-                            </p>
                           </div>
+                          {index <
+                            Math.min(displayedComments, comments.length) -
+                              1 && <hr className="mt-6 border-gray-200" />}
                         </div>
-                        {index < comments.length - 1 && (
-                          <hr className="mt-6 border-gray-200" />
-                        )}
+                      ))}
+
+                    {/* See More Button */}
+                    {displayedComments < comments.length && (
+                      <div className="text-center mt-8">
+                        <button
+                          onClick={handleSeeMoreComments}
+                          className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          See More Comments (
+                          {comments.length - displayedComments} remaining)
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </div>
                 )}
               </motion.div>
