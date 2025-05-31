@@ -21,6 +21,9 @@ import {
   DollarSign,
 } from "lucide-react";
 
+import navLogo from "/public/icon/logo.png"; 
+
+
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";

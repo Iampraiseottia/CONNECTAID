@@ -21,6 +21,8 @@ import {
   DollarSign,
 } from "lucide-react";
 
+import navLogo from "/public/icon/logo.png"; 
+
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
@@ -33,7 +35,6 @@ import relatedPostImg6 from "/public/gallery/gallery-1.png";
 import relatedPostImg8 from "/public/gallery/gallery-2.png";
 import relatedPostImg9 from "/public/blog/blog-5.png";
 import relatedPostImg10 from "/public/gallery/education.png";
-import relatedPostImg11 from "/public/gallery/gallery-13.png";
 import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails6 = () => {
