@@ -21,7 +21,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-import navLogo from "/public/icon/logo.png";
+import navLogo from "/public/icon/logo.png"; 
 
 
 import { motion } from "motion/react";
@@ -179,7 +179,7 @@ const DonationDetails2 = () => {
         email: formData.email,
         phoneNumber: formData.mobileNumber,
         amount: selectedAmount,
-        category: "Education Donation - Let's Empower minds and change lifes together",
+        category: "Education Donation - Let's Empower minds and change lives together",
         paymentMethod: paymentMethodName,
         transactionId: transactionId,
         timestamp: new Date().toISOString(),
@@ -658,7 +658,7 @@ const DonationDetails2 = () => {
                   </motion.form>
 
                 </div>
-                {/* <p className="text-[]">We love you</p> */}
+              
               </div>
               <motion.hr
                 initial={{ opacity: 0, y: 100 }}
