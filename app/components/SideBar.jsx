@@ -37,7 +37,7 @@ const SideBar = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
   const [metadata, setMetadata] = useState({
-    title: "Dashboard - ConnectAID Web Application",
+    title: "Dashboard - ConnectAID",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   });
@@ -51,43 +51,43 @@ const SideBar = () => {
   const updateMetadata = (component) => {
     const metadataMap = {
       dashboardMain: {
-        title: "Donor Dashboard - ConnectAID Web Application",
+        title: "Dashboard - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       Campaigns: {
-        title: "All Campaigns - ConnectAID Web Application",
+        title: "All Campaigns - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       "about-you": {
-        title: "About You ~ Profile - ConnectAID Web Application",
+        title: "About You ~ Profile - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       identity: {
-        title: "Identity Verification ~ Profile  - ConnectAID Web Application",
+        title: "Identity Verification ~ Profile  - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       TrackDonation: {
-        title: "Track Your Donations - ConnectAID Web Application",
+        title: "Track Your Donations - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       survey: {
-        title: "Survey ~ Profile  - ConnectAID Web Application",
+        title: "Survey ~ Profile  - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
       MyDonations: {
-        title: "My Donations - ConnectAID Web Application",
+        title: "My Donations - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
 
       logout: {
-        title: "Logout - ConnectAID Web Application",
+        title: "Logout - ConnectAID ",
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
@@ -96,7 +96,7 @@ const SideBar = () => {
     setMetadata(metadataMap[component] || metadataMap["dashboardMain"]);
   };
 
-  // Set active component from URL parameter
+  // Set active component from URL parameter 
   useEffect(() => {
     if (componentParam) {
       setActiveComponent(componentParam);

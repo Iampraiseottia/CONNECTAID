@@ -44,7 +44,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 const BlogDetails3 = () => {
   const metadata = {
     title:
-      "Nourished Communities: The Power of Good Food - ConnectAID Web Application",
+      "Nourished Communities: The Power of Good Food - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
@@ -988,49 +988,72 @@ const BlogDetails3 = () => {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    {comments.map((comment, index) => (
-                      <div key={comment.id} className="mb-6">
-                        <div className="flex gap-4">
-                          <div className="flex-shrink-0">
-                            {comment.avatar_url ? (
-                              <img
-                                src={comment.avatar_url}
-                                alt={`${comment.full_name}'s avatar`}
-                                className="w-16 h-16 rounded-full object-cover"
-                              />
-                            ) : (
-                              <div
-                                className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                                style={{ backgroundColor: "#4ECDC4" }}
-                              >
-                                {comment.full_name
-                                  .split(" ")
-                                  .slice(0, 2)
-                                  .map((n) => n[0])
-                                  .join("")
-                                  .toUpperCase()}
+                    {comments
+                      .slice(0, displayedComments)
+                      .map((comment, index) => (
+                        <div key={comment.id} className="mb-6">
+                          <div className="flex gap-4">
+                            <div className="flex-shrink-0">
+                              {comment.avatar_url ? (
+                                comment.avatar_url.startsWith("data:") ? (
+                                  <img
+                                    src={comment.avatar_url}
+                                    alt={`${comment.full_name}'s avatar`}
+                                    className="w-16 h-16 rounded-full object-cover"
+                                  />
+                                ) : (
+                                  <img
+                                    src={comment.avatar_url}
+                                    alt={`${comment.full_name}'s avatar`}
+                                    className="w-16 h-16 rounded-full object-cover"
+                                  />
+                                )
+                              ) : (
+                                <div
+                                  className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                                  style={{ backgroundColor: "#4ECDC4" }}
+                                >
+                                  {comment.full_name
+                                    .split(" ")
+                                    .slice(0, 2)
+                                    .map((n) => n[0])
+                                    .join("")
+                                    .toUpperCase()}
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex-1">
+                              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                                <p className="font-semibold text-gray-800">
+                                  {comment.full_name}
+                                </p>
+                                <p className="text-sm text-gray-500">
+                                  {formatDate(comment.created_at)}
+                                </p>
                               </div>
-                            )}
-                          </div>
-                          <div className="flex-1">
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                              <p className="font-semibold text-gray-800">
-                                {comment.full_name}
-                              </p>
-                              <p className="text-sm text-gray-500">
-                                {formatDate(comment.created_at)}
+                              <p className="text-gray-600 mb-3">
+                                {comment.comment}
                               </p>
                             </div>
-                            <p className="text-gray-600 mb-3">
-                              {comment.comment}
-                            </p>
                           </div>
+                          {index <
+                            Math.min(displayedComments, comments.length) -
+                              1 && <hr className="mt-6 border-gray-200" />}
                         </div>
-                        {index < comments.length - 1 && (
-                          <hr className="mt-6 border-gray-200" />
-                        )}
+                      ))}
+
+                    {/* See More Button */}
+                    {displayedComments < comments.length && (
+                      <div className="text-center mt-8">
+                        <button
+                          onClick={handleSeeMoreComments}
+                          className="px-6 py-3 bg-teal-600 text-white font-medium rounded-md hover:bg-teal-700 transition-colors"
+                        >
+                          See More Comments (
+                          {comments.length - displayedComments} remaining)
+                        </button>
                       </div>
-                    ))}
+                    )}
                   </div>
                 )}
               </motion.div>

@@ -39,7 +39,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails6 = () => {
   const metadata = {
-    title: "Act now, save lives - ConnectAID Web Application",
+    title: "Act now, save lives - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

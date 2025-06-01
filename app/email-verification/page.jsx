@@ -143,7 +143,7 @@ const LoadingFallback = () => (
 
 const Email_Verification = () => {
   const metadata = {
-    title: "Verify Email Address - ConnectAID Web Application",
+    title: "Verify Email Address - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

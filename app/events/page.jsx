@@ -16,7 +16,7 @@ import Metadata from "../components/Metadata";
 
 const Events = () => {
   const metadata = {
-    title: "Upcoming Charity Events - ConnectAID Web Application",
+    title: "Upcoming Charity Events - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

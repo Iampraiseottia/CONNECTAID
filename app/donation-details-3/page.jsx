@@ -39,7 +39,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails3 = () => {
   const metadata = {
-    title: "Heal lives, restore hope - ConnectAID Web Application",
+    title: "Heal lives, restore hope - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

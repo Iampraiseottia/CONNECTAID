@@ -14,7 +14,7 @@ import Metadata from "../components/Metadata";
 
 const PictureGallery = () => {
   const metadata = {
-    title: "Gallery - ConnectAID Web Application",
+    title: "Gallery - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

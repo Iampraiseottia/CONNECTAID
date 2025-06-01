@@ -20,7 +20,7 @@ import { CheckCircle, Download, Heart, X } from "lucide-react";
 
 const DonatePayment = () => {
   const metadata = {
-    title: "Donate - ConnectAID Web Application",
+    title: "Donate - ConnectAID",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

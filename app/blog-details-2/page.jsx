@@ -44,7 +44,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 const DonationDetails2 = () => {
   const metadata = {
     title:
-      "Quality Medicine: Empowering a Healthier Community - ConnectAID Web Application",
+      "Quality Medicine: Empowering a Healthier Community - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

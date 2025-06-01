@@ -1,0 +1,150 @@
+{
+  "Homepage": {
+    "title": "ConnectAid | Bienvenue",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "About": {
+    "title": "À Propos de Nous - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Blog": {
+    "title": "Notre Blog - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "BlogDetailsPage1": {
+    "title": "Autonomiser les Avenirs Grâce à une Éducation Accessible pour Tous - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "BlogDetailsPage2": {
+    "title": "Médecine de Qualité : Autonomiser une Communauté Plus Saine - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "BlogDetailsPage3": {
+    "title": "Communautés Nourries : Le Pouvoir de la Bonne Nourriture - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Campaigns": {
+    "title": "Toutes les Campagnes - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "ContactUS": {
+    "title": "Nous Contacter - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Dashboard": {
+    "title": "Tableau de Bord - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "dashboardMain": {
+    "title": "Tableau de Bord - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonatePayment": {
+    "title": "Faire un Don - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Donations": {
+    "title": "Dons - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage1": {
+    "title": "Ensemble nous pouvons mettre fin à la faim - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage2": {
+    "title": "Autonomiser les esprits, changer les avenirs - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage3": {
+    "title": "Guérir les vies, restaurer l'espoir - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage4": {
+    "title": "Étancher la soif, transformer les vies - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage5": {
+    "title": "Donner l'espoir, changer les vies - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage6": {
+    "title": "Agir maintenant, sauver des vies - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "DonationDetailsPage7": {
+    "title": "Formation Professionnelle - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "EmailVerification": {
+    "title": "Vérifier l'Adresse E-mail - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Events": {
+    "title": "Événements Caritatifs à Venir - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "FAQs": {
+    "title": "Foire Aux Questions - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "ForgotPassword": {
+    "title": "Mot de Passe Oublié - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Gallery": {
+    "title": "Galerie - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Login": {
+    "title": "Connexion - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "MyDonations": {
+    "title": "Mes Dons - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "NewPassword": {
+    "title": "Nouveau Mot de Passe - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "PrivacyPolicy": {
+    "title": "Politique de Confidentialité - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Registration": {
+    "title": "Inscription - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "TermsConditions": {
+    "title": "Termes et Conditions - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Testimonials": {
+    "title": "Témoignages - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "UpcomingEventDetail1": {
+    "title": "Espoir pour les Sans-Abri : Compassion / Fournir un Foyer pour les Sans-Abri - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "UpcomingEventDetail2": {
+    "title": "Autonomiser les Générations Futures : Accès à l'Eau Potable pour les Enfants - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "UpcomingEventDetail3": {
+    "title": "Unis pour le Changement : Aider Ceux en Cas de Besoin Extrême ! - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "CodeVerification": {
+    "title": "Valider le Compte - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "Verify": {
+    "title": "Vérifier - ConnectAID",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  },
+  "404": {
+    "title": "Cette Page N'a Pas Pu Être Trouvée",
+    "content": "ConnectAID est une application caritative où les demandeurs (ceux dans le besoin) d'aide peuvent trouver et rencontrer des donateurs (ceux disposés à aider) auprès desquels ils peuvent obtenir une assistance précieuse."
+  }
+}

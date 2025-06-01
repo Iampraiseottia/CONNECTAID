@@ -46,7 +46,7 @@ const UpcomingEventDetail2 = () => {
   
   const metadata = {
     title:
-      "Empowering Future Generations: Access to Clean Water for Children - ConnectAID Web Application",
+      "Empowering Future Generations: Access to Clean Water for Children - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

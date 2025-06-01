@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import {
   faEnvelope,
   faLock,
@@ -22,6 +22,8 @@ import navLogo from "/public/icon/logo.png";
 
 const Login = () => {
   const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formValues, setFormValues] = useState({
     email: "",
@@ -103,21 +105,76 @@ const Login = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (validateForm()) {
-      if (formValues.userType === "Donor") {
-        router.push("/dashboard-donor");
-      } else {
-        router.push("/dashboard-seeker");
-      }
-    } else {
+  
+    if (!validateForm()) {
       // Scroll to the first error
       const firstErrorField = Object.keys(errors).find((key) => errors[key]);
       if (firstErrorField && firstErrorField !== "general") {
         document.getElementById(firstErrorField)?.focus();
       }
+      return;
+    }
+  
+    setIsLoading(true);
+    
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formValues.email,
+          password: formValues.password,
+          userType: formValues.userType,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        // Store user data in localStorage or context
+        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('token', data.token);
+        
+        router.push("/dashboard");
+       
+      } else {
+        // Handle different error cases
+        if (response.status === 404) {
+          setErrors({
+            ...errors,
+            general: 'User not found. Please check your email or register first.',
+          });
+        } else if (response.status === 401) {
+          if (data.error.includes('verify your email')) {
+            setErrors({
+              ...errors,
+              general: 'Please verify your email before logging in. Check your inbox for verification link.',
+            });
+          } else {
+            setErrors({
+              ...errors,
+              general: 'Invalid email or password. Please try again.',
+            });
+          }
+        } else {
+          setErrors({
+            ...errors,
+            general: data.error || 'Login failed. Please try again.',
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      setErrors({
+        ...errors,
+        general: 'Network error. Please check your connection and try again.',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -249,53 +306,16 @@ const Login = () => {
             </div>
           </div>
 
-          <fieldset className="px-4 sm:px-6 md:px-8 lg:px-10 text-center border-[1px] border-teal-600 mx-10 ">
-            <legend className="text-xl font-bold tracking-wide dark:text-slate-900 text-black ">
-              Login As A{" "}
-            </legend>
-            <div className="flex justify-evenly items-center mt-4 mb-6 px-4 md:px-8">
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="userType"
-                  id="Donor"
-                  checked={formValues.userType === "Donor"}
-                  onChange={handleUserTypeChange}
-                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
-                />
-                <label
-                  htmlFor="Donor"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black"
-                >
-                  Donor
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="userType"
-                  id="Seeker"
-                  checked={formValues.userType === "Seeker"}
-                  onChange={handleUserTypeChange}
-                  className="w-4 h-4 md:w-5 md:h-5 accent-teal-500 cursor-pointer"
-                />
-                <label
-                  htmlFor="Seeker"
-                  className="ml-2 text-base md:text-lg font-medium cursor-pointer dark:text-slate-900 text-black"
-                >
-                  Seeker
-                </label> 
-              </div>
-            </div>
-          </fieldset>
+        
 
           {/* Login Button */}
           <button
-            type="submit"
-            className="w-[90%] mx-5 sm:mx-10 mt-10 bg-teal-500 hover:bg-teal-600 text-white text-xl font-bold py-3 rounded-lg transition-all duration-300"
-          >
-            Login
-          </button>
+  type="submit"
+  disabled={isLoading}
+  className="w-[90%] mx-5 sm:mx-10 mt-10 bg-teal-500 hover:bg-teal-600 text-white text-xl font-bold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  {isLoading ? 'Logging in...' : 'Login'}
+</button>
         </form>
 
         {/* Register Link */}

@@ -30,6 +30,8 @@ const Register = () => {
   const userNameRef = useRef();
   const confirmPasswordRef = useRef();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formValues, setFormValues] = useState({
     fullName: "",
     email: "",
@@ -151,17 +153,64 @@ const Register = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (validateForm()) {
-      router.push(`/email-verification?email=${encodeURIComponent(formValues.email)}`);
-    } else {
+    if (!validateForm()) {
       // Scroll to the first error
       const firstErrorField = Object.keys(errors).find((key) => errors[key]);
       if (firstErrorField && firstErrorField !== "general") {
         document.getElementById(firstErrorField)?.focus();
-      } 
+      }
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formValues.fullName,
+          email: formValues.email,
+          userName: formValues.userName,
+          password: formValues.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Registration successful - redirect to email verification
+        router.push(
+          `/email-verification?email=${encodeURIComponent(formValues.email)}`
+        );
+      } else {
+        // Handle errors
+        if (response.status === 409) {
+          setErrors({
+            ...errors,
+            general:
+              data.error || "User with this email or username already exists",
+          });
+        } else {
+          setErrors({
+            ...errors,
+            general: data.error || "Registration failed. Please try again.",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      setErrors({
+        ...errors,
+        general: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -227,7 +276,7 @@ const Register = () => {
               className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6 "
               alt="Apple logo"
             />
-            <span>Sign In With Apple</span> 
+            <span>Sign In With Apple</span>
           </Link>
         </div>
 
@@ -243,7 +292,7 @@ const Register = () => {
               className="mr-2 md:mr-3 w-5 h-5 md:w-6 md:h-6"
               alt="Google logo"
             />
-            <span>Sign In With Facebook</span> 
+            <span>Sign In With Facebook</span>
           </Link>
         </div>
 
@@ -445,9 +494,10 @@ const Register = () => {
           <div className="px-4 sm:px-6 md:px-8 lg:px-10 mt-6 ">
             <button
               type="submit"
-              className="w-full mt-4 mb-4 py-3 md:py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl md:text-2xl lg:text-3xl font-bold tracking-wide rounded-lg"
+              disabled={isLoading}
+              className="w-full mt-4 mb-4 py-3 md:py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl md:text-2xl lg:text-3xl font-bold tracking-wide rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Register
+              {isLoading ? "Creating Account..." : "Register"}
             </button>
           </div>
         </form>
@@ -456,7 +506,7 @@ const Register = () => {
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-teal-600 font-medium  hover:text-[16.2px] hover:underline "
+            className="text-teal-600 font-medium  hover:text-[16.2px] hover:underline"
           >
             Login
           </Link>

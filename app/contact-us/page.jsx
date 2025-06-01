@@ -17,7 +17,7 @@ import { Phone, Mail, MapPin } from "lucide-react";
 
 const ContactUS = () => {
   const metadata = {
-    title: "Contact Us - ConnectAID Web Application",
+    title: "Contact Us - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

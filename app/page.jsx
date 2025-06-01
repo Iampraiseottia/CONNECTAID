@@ -28,7 +28,7 @@ import { motion } from "motion/react";
 
 const ConnectAID_App = () => {
   const metadata = {
-    title: "ConnectAID Web Application",
+    title: "ConnectAID | Welcome ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

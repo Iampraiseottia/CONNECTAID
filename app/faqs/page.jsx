@@ -19,7 +19,7 @@ import Metadata from '../components/Metadata'
 const FrequentlyAskedQuestions = () => {
 
   const metadata = {
-    title: 'Our Blog - ConnectAID Web Application',
+    title: 'Frequently Asked Questions - ConnectAID ',
     description: 'ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.',
   };
 

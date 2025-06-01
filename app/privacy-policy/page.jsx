@@ -15,7 +15,7 @@ import { ShieldAlert } from "lucide-react";
 
 const PrivacyPolicy = () => {
   const metadata = {
-    title: "Privacy Policy - ConnectAID Web Application",
+    title: "Privacy Policy - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

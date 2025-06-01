@@ -24,7 +24,7 @@ import navLogo from "/public/icon/logo.png";
 
 const ForgotPassword = () => {
   const metadata = {
-    title: "Forgot Password - ConnectAID Web Application",
+    title: "Forgot Password - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

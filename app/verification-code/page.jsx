@@ -16,7 +16,7 @@ import navLogo from "/public/icon/logo.png";
 
 const Code_Verification = () => {
   const metadata = {
-    title: "Validate Account - ConnectAID Web Application",
+    title: "Validate Account - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
@@ -166,4 +166,4 @@ const Code_Verification = () => {
   );
 };
 
-export default Code_Verification;
+export default Code_Verification; 

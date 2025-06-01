@@ -39,7 +39,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails1 = () => {
   const metadata = {
-    title: "Together we can end hunger - ConnectAID Web Application",
+    title: "Together we can end hunger - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

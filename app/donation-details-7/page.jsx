@@ -40,7 +40,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails7 = () => {
   const metadata = {
-    title: " Vocational Training - ConnectAID Web Application",
+    title: " Vocational Training - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

@@ -18,7 +18,7 @@ import Metadata from "../components/Metadata";
 
 const Testimonials = () => {
   const metadata = {
-    title: "Testimonials - ConnectAID Web Application",
+    title: "Testimonials - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

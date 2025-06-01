@@ -45,7 +45,7 @@ import relatedPostImg12 from '/public/gallery/water.png'
 const UpcomingEventDetail1 = () => {
   const metadata = {
     title:
-      "Hope for the Homeless: Compassion / Provide Home for the Homeless - ConnectAID Web Application",
+      "Hope for the Homeless: Compassion / Provide Home for the Homeless - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

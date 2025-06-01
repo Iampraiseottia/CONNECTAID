@@ -15,7 +15,7 @@ import Metadata from "../components/Metadata";
 
 const TermsConditions = () => {
   const metadata = {
-    title: "Terms & Conditions - ConnectAID Web Application",
+    title: "Terms & Conditions - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

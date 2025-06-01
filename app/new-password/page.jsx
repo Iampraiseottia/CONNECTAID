@@ -28,7 +28,7 @@ import navLogo from "/public/icon/logo.png";
 
 const NewPassword = () => {
   const metadata = {
-    title: "New Password - ConnectAID Web Application",
+    title: "New Password - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

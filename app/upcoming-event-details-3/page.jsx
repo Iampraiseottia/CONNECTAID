@@ -46,7 +46,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 const UpcomingEventDetail3 = () => {
   const metadata = {
     title:
-      "Stand Together for Change: Aid Those in Extreme Cases of Need! - ConnectAID Web Application",
+      "Stand Together for Change: Aid Those in Extreme Cases of Need! - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };

@@ -44,7 +44,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 const BlogDetails1 = () => {
   const metadata = {
     title:
-      "Empowering Futures Through Accessible Education for All - ConnectAID Web Application",
+      "Empowering Futures Through Accessible Education for All - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
