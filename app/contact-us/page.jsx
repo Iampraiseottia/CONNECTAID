@@ -55,27 +55,46 @@ const ContactUS = () => {
     let valid = true;
     const newErrors = { ...errors };
 
+    // Full Name validation
     if (!formData.fullName.trim()) {
       newErrors.fullName = "Full name is required";
       valid = false;
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required";
+    } else if (formData.fullName.trim().length < 2) {
+      newErrors.fullName = "Full name must be at least 2 characters";
+      valid = false;
+    } else if (!/^[a-zA-Z\s]+$/.test(formData.fullName.trim())) {
+      newErrors.fullName = "Full name can only contain letters and spaces";
       valid = false;
     }
 
+    // Phone validation 
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+      valid = false;
+    } else if (!/^\d{8,15}$/.test(formData.phone.trim())) {
+      newErrors.phone = "Please enter a valid phone number";
+      valid = false;
+    }
+
+    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email address is required";
       valid = false;
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = "Please enter a valid email address"; 
       valid = false;
     }
 
+    // Message validation
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
+      valid = false;
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+      valid = false;
+    } else if (formData.message.trim().length > 1000) {
+      newErrors.message = "Message must not exceed 1000 characters";
       valid = false;
     }
 
@@ -83,22 +102,73 @@ const ContactUS = () => {
     return valid;
   };
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState({ type: "", text: "" });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitMessage({ type: "", text: "" });
 
-    if (validateForm()) {
-      console.log("Form data submitted:", formData);
+    if (!validateForm()) {
+      setSubmitMessage({
+        type: "error",
+        text: "Please fix the errors above before submitting.",
+      });
+      return;
+    }
 
-      setFormData({
-        fullName: "",
-        phone: "",
-        email: "",
-        message: "",
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          submittedAt: new Date().toISOString(),
+        }),
       });
 
-      console.log("Message sent successfully!");
-    } else {
-      console.log("Form validation failed");
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitMessage({
+          type: "success",
+          text: "Thank you! Your message has been sent successfully.",
+        });
+
+        setFormData({
+          fullName: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+        setErrors({
+          fullName: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+
+        setTimeout(() => {
+          setSubmitMessage({ type: "", text: "" });
+        }, 5000);
+      } else {
+        setSubmitMessage({
+          type: "error",
+          text: data.error || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      setSubmitMessage({
+        type: "error",
+        text: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -325,11 +395,28 @@ const ContactUS = () => {
 
                   <button
                     type="submit"
-                    className="px-6 py-3 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition duration-300 uppercase"
+                    disabled={isSubmitting}
+                    className={`px-6 py-3 font-medium rounded-md transition duration-300 uppercase ${
+                      isSubmitting
+                        ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                        : "bg-emerald-600 text-white hover:bg-emerald-700"
+                    }`}
                   >
-                    Send Message
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
+
+                {submitMessage.text && (
+                  <div
+                    className={`mt-4 p-4 rounded-md ${
+                      submitMessage.type === "success"
+                        ? "bg-green-50 text-green-800 border border-green-200"
+                        : "bg-red-50 text-red-800 border border-red-200"
+                    }`}
+                  >
+                    {submitMessage.text}
+                  </div>
+                )}
               </div>
 
               <div className="sm:h-auto h-[40vh] w-full shadow-xl rounded-lg overflow-hidden">
