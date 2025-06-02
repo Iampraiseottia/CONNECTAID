@@ -13,17 +13,18 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import navLogo from "/public/icon/logo.png";
 
 const EmailVerificationForm = () => {
-  
   const emailRef = useRef();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get email from URL parameters when component mounts
   useEffect(() => {
@@ -33,21 +34,50 @@ const EmailVerificationForm = () => {
     }
   }, [searchParams]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+    setIsLoading(true);
 
     if (!email.trim()) {
       setError("Please enter an Email Address");
+      setIsLoading(false);
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address");
+      setIsLoading(false);
       return;
     }
 
-    router.push("/verification-code");
+    try {
+      const response = await fetch("/api/send-verification-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess("Verification code sent successfully! Check your email.");
+        setTimeout(() => {
+          router.push(`/verification-code?email=${encodeURIComponent(email)}`);
+        }, 2000);
+      } else {
+        setError(data.error || "Failed to send verification code");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setError("Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -93,15 +123,29 @@ const EmailVerificationForm = () => {
               type="email"
               ref={emailRef}
               value={email}
-              readOnly={true}
-              className={`w-full text-base bg-gray-100 rounded-xl border-2 ${
-                error ? "border-red-500" : "border-green-500"
-              } py-3 px-4 focus:ring-1 focus:ring-[#0ef] outline-none focus:outline-none duration-300 mt-3 dark:text-slate-900 cursor-not-allowed`}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isLoading}
+              className={`w-full text-base bg-white rounded-xl border-2 ${
+                error
+                  ? "border-red-500"
+                  : success
+                  ? "border-green-500"
+                  : "border-gray-300"
+              } py-3 px-4 focus:ring-1 focus:ring-[#0ef] outline-none focus:outline-none duration-300 mt-3 dark:text-slate-900 ${
+                isLoading ? "opacity-50" : ""
+              }`}
+              placeholder="Enter your email address"
             />
 
             {error && (
               <p className="text-red-500 mt-2 text-right font-medium">
                 {error}
+              </p>
+            )}
+
+            {success && (
+              <p className="text-green-500 mt-2 text-right font-medium">
+                {success}
               </p>
             )}
           </div>
@@ -113,10 +157,23 @@ const EmailVerificationForm = () => {
           </div>
 
           <button
-            className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl font-bold tracking-wide w-[80%] sm:text-2xl md:text-3xl"
+            className={`mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-xl font-bold tracking-wide w-[80%] sm:text-2xl md:text-3xl ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             type="submit"
+            disabled={isLoading}
           >
-            Send Code
+            {isLoading ? (
+              <>
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  className="mr-2 animate-spin"
+                />
+                Sending...
+              </>
+            ) : (
+              "Send Code"
+            )}
           </button>
         </form>
       </div>
