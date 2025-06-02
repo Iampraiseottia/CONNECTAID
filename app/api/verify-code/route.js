@@ -24,16 +24,25 @@ export async function POST(request) {
       );
     }
 
+    // Clean up expired codes before checking
+    verificationCodes.cleanup();
+
     // Get stored verification data
     const storedData = verificationCodes.get(email);
     console.log("🔍 Stored data for", email, ":", storedData);
+
+    // Debug: Check all stored codes (remove in production)
+    console.log("🗂️ All stored verification codes:", Array.from(verificationCodes.memoryStorage.keys()));
 
     if (!storedData) {
       console.log("❌ No verification code found for email:", email);
       return new Response(
         JSON.stringify({
-          error:
-            "No verification code found for this email. Please request a new code.",
+          error: "No verification code found for this email. Please request a new code.",
+          debug: process.env.NODE_ENV === "development" ? {
+            storedEmails: Array.from(verificationCodes.memoryStorage.keys()),
+            requestedEmail: email
+          } : undefined
         }),
         {
           status: 400,
@@ -42,14 +51,14 @@ export async function POST(request) {
       );
     }
 
-    // Check if code has expired
+    // Check if code has expired (additional safety check)
     const now = Date.now();
     const expiresAt = storedData.expiresAt;
     console.log(
       "⏰ Time check - Now:",
-      now,
+      new Date(now).toISOString(),
       "Expires:",
-      expiresAt,
+      new Date(expiresAt).toISOString(),
       "Expired:",
       now > expiresAt
     );
@@ -85,6 +94,11 @@ export async function POST(request) {
       return new Response(
         JSON.stringify({
           error: "Invalid verification code. Please check and try again.",
+          debug: process.env.NODE_ENV === "development" ? {
+            providedCode,
+            expectedLength: storedCode.length,
+            providedLength: providedCode.length
+          } : undefined
         }),
         {
           status: 400,
@@ -126,8 +140,7 @@ export async function POST(request) {
     return new Response(
       JSON.stringify({
         error: "Failed to verify code. Please try again.",
-        details:
-          process.env.NODE_ENV === "development" ? error.message : undefined,
+        details: process.env.NODE_ENV === "development" ? error.message : undefined,
       }),
       {
         status: 500,

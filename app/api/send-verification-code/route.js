@@ -31,13 +31,11 @@ function createEmailTemplate(code) {
         <!-- Header -->
         <div style="background: linear-gradient(135deg, #14b8a6 0%, #0891b2 100%); padding: 30px 20px; text-align: center;">
           <div style="display: inline-flex; align-items: center; gap: 15px;">
-            <div style="width: 60px; height: 60px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <img style="font-size: 24px; font-weight: bold; color: #14b8a6;"
-              src='/public/icon/logo.png'
-              />
-            </div> 
-            <h1 style="color: white; margin: 0; font-size: 32px; font-weight: bold; letter-spacing: 1px;">ConnectAID</h1>
-          </div>
+            <div style="width: 60px; height: 60px; background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative;">
+              <span style="font-size: 24px; font-weight: bold; color: #14b8a6;">CA</span>
+            </div>
+            <h1 style="color: white; margin: 0; padding-top: 7px; font-size: 32px; font-weight: bold; letter-spacing: 1px;">ConnectAID</h1>
+          </div> 
         </div>
 
         <!-- Content -->

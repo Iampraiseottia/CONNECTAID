@@ -42,7 +42,6 @@ const CodeVerificationForm = () => {
     if (emailParam) {
       setEmail(emailParam);
     } else {
-      // Redirect back if no email provided
       router.push("/email-verification");
     }
   }, [searchParams, router]);
