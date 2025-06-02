@@ -1,4 +1,4 @@
-import { verificationCodes } from "../../../lib/verificationStorage.js";
+import { query } from "@/lib/db";
 
 export async function POST(request) {
   console.log("📝 Verification API called");
@@ -24,25 +24,20 @@ export async function POST(request) {
       );
     }
 
-    // Clean up expired codes before checking
-    verificationCodes.cleanup();
+    // Get user and verification data from database
+    const userQuery = `
+      SELECT id, email, full_name, is_email_verified, 
+             email_verification_code, email_verification_expires
+      FROM users 
+      WHERE email = $1
+    `;
+    const userResult = await query(userQuery, [email.toLowerCase()]);
 
-    // Get stored verification data
-    const storedData = verificationCodes.get(email);
-    console.log("🔍 Stored data for", email, ":", storedData);
-
-    // Debug: Check all stored codes (remove in production)
-    console.log("🗂️ All stored verification codes:", Array.from(verificationCodes.memoryStorage.keys()));
-
-    if (!storedData) {
-      console.log("❌ No verification code found for email:", email);
+    if (userResult.rows.length === 0) {
+      console.log("❌ No user found for email:", email);
       return new Response(
         JSON.stringify({
-          error: "No verification code found for this email. Please request a new code.",
-          debug: process.env.NODE_ENV === "development" ? {
-            storedEmails: Array.from(verificationCodes.memoryStorage.keys()),
-            requestedEmail: email
-          } : undefined
+          error: "No account found with this email address.",
         }),
         {
           status: 400,
@@ -51,21 +46,68 @@ export async function POST(request) {
       );
     }
 
-    // Check if code has expired (additional safety check)
-    const now = Date.now();
-    const expiresAt = storedData.expiresAt;
+    const user = userResult.rows[0];
+    console.log("🔍 User data retrieved:", {
+      email: user.email,
+      isVerified: user.is_email_verified,
+      hasCode: !!user.email_verification_code,
+      codeExpires: user.email_verification_expires
+    });
+
+    // Check if already verified
+    if (user.is_email_verified) {
+      console.log("✅ Email already verified for:", email);
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: "Email is already verified",
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Check if verification code exists
+    if (!user.email_verification_code) {
+      console.log("❌ No verification code found for email:", email);
+      return new Response(
+        JSON.stringify({
+          error: "No verification code found for this email. Please request a new code.",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Check if code has expired
+    const now = new Date();
+    const expiresAt = new Date(user.email_verification_expires);
     console.log(
       "⏰ Time check - Now:",
-      new Date(now).toISOString(),
+      now.toISOString(),
       "Expires:",
-      new Date(expiresAt).toISOString(),
+      expiresAt.toISOString(),
       "Expired:",
       now > expiresAt
     );
 
     if (now > expiresAt) {
-      verificationCodes.delete(email);
       console.log("⏰ Code expired for:", email);
+      
+      // Clear expired code from database
+      const clearExpiredQuery = `
+        UPDATE users 
+        SET email_verification_code = NULL,
+            email_verification_expires = NULL,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1
+      `;
+      await query(clearExpiredQuery, [user.id]);
+      
       return new Response(
         JSON.stringify({
           error: "Verification code has expired. Please request a new code.",
@@ -79,7 +121,7 @@ export async function POST(request) {
 
     // Verify the code
     const providedCode = code.toString().trim();
-    const storedCode = storedData.code.toString().trim();
+    const storedCode = user.email_verification_code.toString().trim();
     console.log(
       "🔑 Code comparison - Provided:",
       providedCode,
@@ -107,14 +149,52 @@ export async function POST(request) {
       );
     }
 
-    // Code is valid - remove from storage
-    verificationCodes.delete(email);
+    // Code is valid - Update user as verified
+    try {
+      const updateQuery = `
+        UPDATE users 
+        SET is_email_verified = TRUE,
+            email_verification_code = NULL,
+            email_verification_expires = NULL,
+            updated_at = CURRENT_TIMESTAMP
+        WHERE id = $1
+      `;
+      const result = await query(updateQuery, [user.id]);
+      
+      if (result.rowCount === 0) {
+        console.log("❌ Failed to update user:", email);
+        return new Response(
+          JSON.stringify({
+            error: "Failed to update verification status. Please try again.",
+          }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      }
+      
+      console.log("✅ Database updated successfully for:", email);
+    } catch (dbError) {
+      console.error("💥 Database update error:", dbError);
+      return new Response(
+        JSON.stringify({
+          error: "Failed to update verification status. Please try again.",
+          details: process.env.NODE_ENV === "development" ? dbError.message : undefined,
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
     console.log("✅ Email verified successfully:", email);
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Email verified successfully",
+        message: "Email verified successfully! You can now access your account.",
       }),
       {
         status: 200,
