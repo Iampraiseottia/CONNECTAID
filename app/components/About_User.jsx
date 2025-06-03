@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-
-import { Save, ArrowLeft, CheckCircle, Edit, X } from "lucide-react";
-
+import { Save, ArrowLeft, CheckCircle, Edit, X, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
 
 const About_User = ({ setActiveComponent }) => {
+  const [profileId, setProfileId] = useState(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -24,15 +24,54 @@ const About_User = ({ setActiveComponent }) => {
   const [saved, setSaved] = useState(false);
   const [isEditMode, setIsEditMode] = useState(true);
   const [dataExists, setDataExists] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
-  // Load saved data on component mount
+  // Load user profile data on component mount
   useEffect(() => {
-    const savedUserData = localStorage.getItem("userData");
-    if (savedUserData) {
-      setFormData(JSON.parse(savedUserData));
-      setDataExists(true);
-      setIsEditMode(false);
-    }
+    const loadUserProfile = async () => {
+      // First try to load from localStorage
+      const localData = loadFromLocalStorage();
+
+      if (localData && localData.profileId) {
+        setProfileId(localData.profileId);
+
+        try {
+          // Try to fetch latest data from database
+          const response = await fetch(
+            `/api/user-profile?profileId=${localData.profileId}`
+          );
+          const result = await response.json();
+
+          if (response.ok && result.exists) {
+            setFormData(result.data);
+            setDataExists(true);
+            setIsEditMode(false);
+            // Update localStorage with fresh data
+            saveToLocalStorage(result.data, localData.profileId);
+          } else {
+            // Database data not found, use localStorage data
+            setFormData(localData.data);
+            setDataExists(true);
+            setIsEditMode(false);
+          }
+        } catch (error) {
+          console.error("Error loading user profile from server:", error);
+          // Use localStorage data as fallback
+          setFormData(localData.data);
+          setDataExists(true);
+          setIsEditMode(false);
+        }
+      } else {
+        // No local data, start with new profile creation
+        setDataExists(false);
+        setIsEditMode(true);
+      }
+
+      setLoading(false);
+    };
+
+    loadUserProfile();
   }, []);
 
   const interestOptions = [
@@ -54,7 +93,6 @@ const About_User = ({ setActiveComponent }) => {
       if (value && !value.startsWith("+")) {
         newValue = "+" + value;
       }
-
       newValue = newValue.replace(/[^\+0-9]/g, "");
 
       setFormData((prevData) => ({
@@ -141,7 +179,6 @@ const About_User = ({ setActiveComponent }) => {
       newErrors.state = "State/Province/Region must not exceed 20 characters";
     }
 
-
     if (!formData.country.trim()) newErrors.country = "Country is required";
     else if (formData.country.trim().length < 4) {
       newErrors.country = "Country must be at least 4 characters";
@@ -153,7 +190,7 @@ const About_User = ({ setActiveComponent }) => {
     else if (formData.bio.trim().length < 21) {
       newErrors.bio = "bio must be at least 20 characters";
     } else if (formData.bio.trim().length > 2060) {
-      newErrors.bio = "bio must not exceed 60 characters";
+      newErrors.bio = "bio must not exceed 2060 characters";
     }
 
     if (formData.interests.length < 4) {
@@ -163,7 +200,29 @@ const About_User = ({ setActiveComponent }) => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const saveToLocalStorage = (data, profileId) => {
+    const profileInfo = {
+      data: data,
+      profileId: profileId,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem("userProfile", JSON.stringify(profileInfo));
+  };
+
+  const loadFromLocalStorage = () => {
+    try {
+      const stored = localStorage.getItem("userProfile");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        return parsed;
+      }
+    } catch (error) {
+      console.error("Error loading from localStorage:", error);
+    }
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validate();
@@ -172,33 +231,106 @@ const About_User = ({ setActiveComponent }) => {
       return;
     }
 
-    // Save data to localStorage
-    localStorage.setItem("userData", JSON.stringify(formData));
+    setSaving(true);
 
-    setSaved(true);
-    setDataExists(true);
+    try {
+      const endpoint = "/api/user-profile";
+      const method = dataExists && profileId ? "PUT" : "POST";
 
-    setTimeout(() => {
-      setSaved(false);
-      setIsEditMode(false);
-    }, 2000);
+      const requestBody = profileId
+        ? { profileId: profileId, profileData: formData }
+        : { profileData: formData };
+
+      console.log("Sending data:", requestBody);
+
+      const response = await fetch(endpoint, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const result = await response.json();
+      console.log("API Response:", result);
+
+      if (response.ok) {
+        setSaved(true);
+        setDataExists(true);
+
+        // Update profileId if this was a new profile
+        if (!profileId && result.profileId) {
+          setProfileId(result.profileId);
+        }
+
+        // Save to localStorage
+        saveToLocalStorage(formData, result.profileId || profileId);
+
+        setTimeout(() => {
+          setSaved(false);
+          setIsEditMode(false);
+        }, 2000);
+
+        console.log(
+          dataExists
+            ? "Profile updated successfully"
+            : "Profile created successfully"
+        );
+      } else {
+        if (result.error) {
+          console.error("API Error:", result.error);
+          setErrors({ general: result.error });
+        }
+      }
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      // Save to localStorage even if server request fails
+      saveToLocalStorage(formData, profileId);
+      // Still show error for server communication
+      setErrors({ general: "Network error. Data saved locally." });
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleEdit = () => {
     setIsEditMode(true);
   };
 
-  const handleCancel = () => {
-    // Retrieve the saved data again
-    const savedUserData = localStorage.getItem("userData");
-    if (savedUserData) {
-      setFormData(JSON.parse(savedUserData));
-      setErrors({});
+  const handleCancel = async () => {
+    if (dataExists && profileId) {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/user-profile?profileId=${profileId}`
+        );
+        const result = await response.json();
+
+        if (response.ok && result.exists) {
+          setFormData(result.data);
+          setErrors({});
+        } else {
+          // Fallback to localStorage
+          const localData = loadFromLocalStorage();
+          if (localData) {
+            setFormData(localData.data);
+          }
+        }
+      } catch (error) {
+        console.error("Error reloading profile:", error);
+        // Fallback to localStorage
+        const localData = loadFromLocalStorage();
+        if (localData) {
+          setFormData(localData.data);
+        }
+      } finally {
+        setLoading(false);
+      }
     }
     setIsEditMode(false);
   };
 
-
+  // Refs for form inputs
   const fullNameRef = useRef();
   const dateOfBirthRef = useRef();
   const genderRef = useRef();
@@ -206,24 +338,22 @@ const About_User = ({ setActiveComponent }) => {
   const homeAddressRef = useRef();
   const cityRef = useRef();
   const regionRef = useRef();
-  const zipCodeRef = useRef();
   const countryRef = useRef();
   const bioRef = useRef();
 
-
-  const onMouseEnterFullName = () => isEditMode && fullNameRef.current.focus();
+  // Mouse enter handlers
+  const onMouseEnterFullName = () => isEditMode && fullNameRef.current?.focus();
   const onMouseEnterDateOfBirth = () =>
-    isEditMode && dateOfBirthRef.current.focus();
-  const onMouseEnterGender = () => isEditMode && genderRef.current.focus();
+    isEditMode && dateOfBirthRef.current?.focus();
+  const onMouseEnterGender = () => isEditMode && genderRef.current?.focus();
   const onMouseEnterPhoneNumber = () =>
-    isEditMode && phoneNumberRef.current.focus();
+    isEditMode && phoneNumberRef.current?.focus();
   const onMouseEnterHomeAddress = () =>
-    isEditMode && homeAddressRef.current.focus();
-  const onMouseEnterCity = () => isEditMode && cityRef.current.focus();
-  const onMouseEnterRegion = () => isEditMode && regionRef.current.focus();
-  const onMouseEnterZipCode = () => isEditMode && zipCodeRef.current.focus();
-  const onMouseEnterCountry = () => isEditMode && countryRef.current.focus();
-  const onMouseEnterBio = () => isEditMode && bioRef.current.focus();
+    isEditMode && homeAddressRef.current?.focus();
+  const onMouseEnterCity = () => isEditMode && cityRef.current?.focus();
+  const onMouseEnterRegion = () => isEditMode && regionRef.current?.focus();
+  const onMouseEnterCountry = () => isEditMode && countryRef.current?.focus();
+  const onMouseEnterBio = () => isEditMode && bioRef.current?.focus();
 
   // Common class for inputs
   const getInputClass = (fieldName, minLength = null) => {
@@ -246,6 +376,22 @@ const About_User = ({ setActiveComponent }) => {
     if (isValid) return `${baseClass} border-green-500 focus:ring-green-500`;
     return `${baseClass} border-gray-500 dark:border-gray-600 focus:ring-gray-500`;
   };
+
+  // Show loading state 
+  if (loading) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center"
+      >
+        <div className="flex items-center space-x-2">
+          <Loader2 className="animate-spin" size={24} />
+          <span className="dark:text-white">Loading profile...</span>
+        </div>
+      </motion.div>
+    );
+  }
 
   return (
     <motion.div
@@ -275,6 +421,7 @@ const About_User = ({ setActiveComponent }) => {
                 <button
                   onClick={handleCancel}
                   className="mr-4 p-2 rounded-full text-gray-600 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-gray-300"
+                  disabled={saving}
                 >
                   <X size={20} />
                 </button>
@@ -431,7 +578,6 @@ const About_User = ({ setActiveComponent }) => {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-
               {/* Home Address */}
               <div>
                 <label
@@ -507,9 +653,6 @@ const About_User = ({ setActiveComponent }) => {
                 )}
               </div>
 
-              {/* ZIP/Postal Code */}
-             
-
               {/* Country */}
               <div>
                 <label
@@ -542,7 +685,7 @@ const About_User = ({ setActiveComponent }) => {
                 htmlFor="bio"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
               >
-                About Yourself
+                About Yourself *
               </label>
               <textarea
                 id="bio"
@@ -629,7 +772,7 @@ const About_User = ({ setActiveComponent }) => {
                         : "text-gray-500 dark:text-gray-400"
                     }`}
                   >
-                    {formData.interests.length}/6 areas selected
+                    {formData.interests.length}/8 areas selected
                   </span>
                   {formData.interests.length >= 6 && (
                     <CheckCircle size={16} className="ml-2 text-green-500" />
@@ -642,10 +785,15 @@ const About_User = ({ setActiveComponent }) => {
               <div className="flex justify-center mt-2 mb-4">
                 <button
                   type="submit"
-                  className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center transition-colors"
-                  disabled={saved}
+                  className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md flex items-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={saving || saved}
                 >
-                  {saved ? (
+                  {saving ? (
+                    <>
+                      <Loader2 className="animate-spin mr-2" size={18} />
+                      {dataExists ? "Updating..." : "Saving..."}
+                    </>
+                  ) : saved ? (
                     <>
                       <CheckCircle size={18} className="mr-2" />
                       Saved
