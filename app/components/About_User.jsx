@@ -380,16 +380,9 @@ const About_User = ({ setActiveComponent }) => {
   // Show loading state 
   if (loading) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center"
-      >
-        <div className="flex items-center space-x-2">
-          <Loader2 className="animate-spin" size={24} />
-          <span className="dark:text-white">Loading profile...</span>
-        </div>
-      </motion.div>
+       <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div> Loading profile...
+      </div>
     );
   }
 

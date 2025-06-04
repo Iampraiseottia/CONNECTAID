@@ -8,8 +8,6 @@ import {
   Save,
   CheckCircle,
   AlertCircle,
-  AlertTriangle,
-  ChevronRight,
   Pencil,
   X,
   Maximize,
@@ -29,66 +27,88 @@ const Identity_User = ({ setActiveComponent }) => {
   const [hasStoredData, setHasStoredData] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [previewDocument, setPreviewDocument] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Load stored documents from localStorage on component mount
+  // Load data from database on component mount
   useEffect(() => {
-    const storedBirthCertificate = localStorage.getItem("birthCertificateFile");
-    const storedIdFiles = localStorage.getItem("idFiles");
-    const storedSelfieFile = localStorage.getItem("selfieFile");
-
-    if (storedBirthCertificate) {
-      setBirthCertificateFile(JSON.parse(storedBirthCertificate));
-    }
-
-    if (storedIdFiles) {
-      setIdFiles(JSON.parse(storedIdFiles));
-    }
-
-    if (storedSelfieFile) {
-      setSelfieFile(JSON.parse(storedSelfieFile));
-    }
-
-    const hasData = storedBirthCertificate || storedIdFiles || storedSelfieFile;
-    setHasStoredData(!!hasData);
+    fetchIdentityData();
   }, []);
+
+  const fetchIdentityData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/identity", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        const data = result.data;
+        setVerificationMethod(data.verification_method || "idVerification");
+        setBirthCertificateFile(data.birth_certificate_file);
+        setIdFiles(data.id_files || []);
+        setSelfieFile(data.selfie_file);
+        setHasStoredData(true);
+      } else {
+        setHasStoredData(false);
+      }
+    } catch (error) {
+      console.error("Error fetching identity data:", error);
+      setHasStoredData(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleVerificationMethodChange = (method) => {
     setVerificationMethod(method);
     setErrors({});
   };
 
-  const createFileObject = (file) => {
-    // Create a serializable file object
+  const createFileObject = async (file) => {
+    // Create a serializable file object with base64 data
+    const base64Data = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target.result);
+      reader.readAsDataURL(file);
+    });
+
     return {
       name: file.name,
       type: file.type,
       size: file.size,
       lastModified: file.lastModified,
-      dataUrl: URL.createObjectURL(file),
+      dataUrl: base64Data,
       originalFile: file,
     };
   };
 
-  const handleBCUpload = (e) => {
+  const handleBCUpload = async (e) => {
     if (e.target.files[0]) {
-      const fileObj = createFileObject(e.target.files[0]);
+      const fileObj = await createFileObject(e.target.files[0]);
       setBirthCertificateFile(fileObj);
       setErrors((prev) => ({ ...prev, birthCertificateFile: null }));
     }
   };
 
-  const handleIdUpload = (e) => {
+  const handleIdUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
-      const fileObjs = files.map((file) => createFileObject(file));
+      const fileObjs = await Promise.all(
+        files.map((file) => createFileObject(file))
+      );
       setIdFiles(fileObjs);
       setErrors((prev) => ({ ...prev, idFiles: null }));
     }
   };
 
-  const handleSelfieUpload = (e) => {
+  const handleSelfieUpload = async (e) => {
     if (e.target.files[0]) {
-      const fileObj = createFileObject(e.target.files[0]);
+      const fileObj = await createFileObject(e.target.files[0]);
       setSelfieFile(fileObj);
       setErrors((prev) => ({ ...prev, selfieFile: null }));
     }
@@ -118,7 +138,7 @@ const Identity_User = ({ setActiveComponent }) => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = validate();
@@ -129,47 +149,84 @@ const Identity_User = ({ setActiveComponent }) => {
 
     setProcessing(true);
 
-    // Store files in localStorage
-    localStorage.setItem(
-      "birthCertificateFile",
-      JSON.stringify(birthCertificateFile)
-    );
-    localStorage.setItem("idFiles", JSON.stringify(idFiles));
-    localStorage.setItem("selfieFile", JSON.stringify(selfieFile));
+    try {
+      const verificationData = {
+        verificationMethod,
+        birthCertificateFile,
+        idFiles,
+        selfieFile,
+      };
 
-    setTimeout(() => {
+      // Use PUT method if updating existing data, POST for new data
+      const method = hasStoredData ? "PUT" : "POST";
+
+      const response = await fetch("/api/identity", {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(verificationData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setHasStoredData(true);
+        setEditMode(false);
+
+        // Refresh data from database
+        await fetchIdentityData();
+
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 2000);
+      } else {
+        console.error("Error saving identity verification:", result.error);
+        // You can add error handling UI here
+      }
+    } catch (error) {
+      console.error("Error submitting identity verification:", error);
+      // You can add error handling UI here
+    } finally {
       setProcessing(false);
-      setSubmitted(true);
-      setHasStoredData(true);
-      setEditMode(false);
-
-      setTimeout(() => {
-        setSubmitted(false);
-      }, 2000);
-    }, 1500);
+    }
   };
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
   };
 
-  const removeFile = (type) => {
+  const removeFile = async (type) => {
     if (type === "birthCertificate") {
       setBirthCertificateFile(null);
-      localStorage.removeItem("birthCertificateFile");
     } else if (type === "id") {
       setIdFiles([]);
-      localStorage.removeItem("idFiles");
     } else if (type === "selfie") {
       setSelfieFile(null);
-      localStorage.removeItem("selfieFile");
     }
 
     // Check if all files are removed
-    const hasFiles = birthCertificateFile || idFiles.length > 0 || selfieFile;
+    const hasFiles =
+      (type !== "birthCertificate" && birthCertificateFile) ||
+      (type !== "id" && idFiles.length > 0) ||
+      (type !== "selfie" && selfieFile);
+
     if (!hasFiles) {
       setHasStoredData(false);
       setEditMode(false);
+
+      // Delete from database if no files remain
+      try {
+        await fetch("/api/identity", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.error("Error deleting identity verification:", error);
+      }
     }
   };
 
@@ -183,6 +240,9 @@ const Identity_User = ({ setActiveComponent }) => {
 
   const renderDocumentPreview = (file, type) => {
     if (!file) return null;
+
+    // Prioritize dataUrl (which contains base64 data from database or new uploads)
+    const imageUrl = file.dataUrl || file.base64Data;
 
     return (
       <div className="mt-2 border rounded-md p-3 bg-gray-50 dark:bg-gray-700">
@@ -210,10 +270,10 @@ const Identity_User = ({ setActiveComponent }) => {
           </div>
         </div>
 
-        {file.type.startsWith("image/") && (
+        {file.type.startsWith("image/") && imageUrl && (
           <div className="relative h-32 w-full overflow-hidden rounded border border-gray-200 dark:border-gray-600">
             <img
-              src={file.dataUrl}
+              src={imageUrl}
               alt={`Preview of ${file.name}`}
               className="h-full w-full object-contain cursor-pointer"
               onClick={() => handleDocumentPreview(file)}
@@ -221,7 +281,7 @@ const Identity_User = ({ setActiveComponent }) => {
           </div>
         )}
 
-        {!file.type.startsWith("image/") && (
+        {(!file.type.startsWith("image/") || !imageUrl) && (
           <div
             className="h-32 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600 cursor-pointer"
             onClick={() => handleDocumentPreview(file)}
@@ -240,73 +300,83 @@ const Identity_User = ({ setActiveComponent }) => {
 
     return (
       <div className="mt-2 space-y-2">
-        {idFiles.map((file, index) => (
-          <div
-            key={index}
-            className="border rounded-md p-3 bg-gray-50 dark:bg-gray-700"
-          >
-            <div className="flex justify-between items-center mb-2">
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-xs">
-                {file.name}
-              </p>
-              <div className="flex space-x-2">
-                {editMode && (
+        {idFiles.map((file, index) => {
+          const imageUrl =
+            file.dataUrl ||
+            file.url ||
+            (file.originalFile ? URL.createObjectURL(file.originalFile) : null);
+
+          return (
+            <div
+              key={index}
+              className="border rounded-md p-3 bg-gray-50 dark:bg-gray-700"
+            >
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-xs">
+                  {file.name}
+                </p>
+                <div className="flex space-x-2">
+                  {editMode && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newFiles = [...idFiles];
+                        newFiles.splice(index, 1);
+                        setIdFiles(newFiles);
+                      }}
+                      className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                    >
+                      <X size={18} />
+                    </button>
+                  )}
                   <button
                     type="button"
-                    onClick={() => {
-                      const newFiles = [...idFiles];
-                      newFiles.splice(index, 1);
-                      setIdFiles(newFiles);
-                      if (newFiles.length === 0) {
-                        localStorage.removeItem("idFiles");
-                      } else {
-                        localStorage.setItem(
-                          "idFiles",
-                          JSON.stringify(newFiles)
-                        );
-                      }
-                    }}
-                    className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+                    onClick={() => handleDocumentPreview(file)}
+                    className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                   >
-                    <X size={18} />
+                    <Maximize size={18} />
                   </button>
-                )}
-                <button
-                  type="button"
+                </div>
+              </div>
+
+              {file.type.startsWith("image/") && imageUrl && (
+                <div className="relative h-32 w-full overflow-hidden rounded border border-gray-200 dark:border-gray-600">
+                  <img
+                    src={imageUrl}
+                    alt={`Preview of ${file.name}`}
+                    className="h-full w-full object-contain cursor-pointer"
+                    onClick={() => handleDocumentPreview(file)}
+                  />
+                </div>
+              )}
+
+              {(!file.type.startsWith("image/") || !imageUrl) && (
+                <div
+                  className="h-32 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600 cursor-pointer"
                   onClick={() => handleDocumentPreview(file)}
-                  className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  <Maximize size={18} />
-                </button>
-              </div>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {file.type.includes("pdf")
+                      ? "PDF Document"
+                      : "Document File"}
+                  </p>
+                </div>
+              )}
             </div>
-
-            {file.type.startsWith("image/") && (
-              <div className="relative h-32 w-full overflow-hidden rounded border border-gray-200 dark:border-gray-600">
-                <img
-                  src={file.dataUrl}
-                  alt={`Preview of ${file.name}`}
-                  className="h-full w-full object-contain cursor-pointer"
-                  onClick={() => handleDocumentPreview(file)}
-                />
-              </div>
-            )}
-
-            {!file.type.startsWith("image/") && (
-              <div
-                className="h-32 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-600 cursor-pointer"
-                onClick={() => handleDocumentPreview(file)}
-              >
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {file.type.includes("pdf") ? "PDF Document" : "Document File"}
-                </p>
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
     );
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>{" "}
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <motion.div
@@ -392,10 +462,16 @@ const Identity_User = ({ setActiveComponent }) => {
                         verificationMethod === "idVerification"
                           ? "border-teal-500 bg-teal-50 dark:border-teal-500 dark:bg-teal-900/30"
                           : "border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500"
+                      } ${
+                        !editMode && hasStoredData
+                          ? "cursor-not-allowed opacity-60"
+                          : ""
                       }`}
-                      onClick={() =>
-                        handleVerificationMethodChange("idVerification")
-                      }
+                      onClick={() => {
+                        if (editMode || !hasStoredData) {
+                          handleVerificationMethodChange("idVerification");
+                        }
+                      }}
                     >
                       <div className="flex items-center">
                         <input
@@ -404,6 +480,7 @@ const Identity_User = ({ setActiveComponent }) => {
                           name="verificationMethod"
                           checked={verificationMethod === "idVerification"}
                           onChange={() => {}}
+                          disabled={!editMode && hasStoredData}
                           className="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300"
                         />
                         <label
@@ -576,53 +653,57 @@ const Identity_User = ({ setActiveComponent }) => {
                   </div>
                 )}
 
-                <div className="flex justify-end mt-8">
-                  <button
-                    type="submit"
-                    className={`flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-                      processing ? "opacity-75 cursor-not-allowed" : ""
-                    } bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 dark:bg-teal-700 dark:hover:bg-teal-600 dark:focus:ring-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2`}
-                    disabled={processing}
-                  >
-                    {processing ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Processing...
-                      </>
-                    ) : (
-                      <>
-                        <Save size={18} className="mr-2" />
-                        {hasStoredData ? "Update Documents" : "Save Documents"}
-                      </>
-                    )}
-                  </button>
-                </div>
+                {(editMode || !hasStoredData) && (
+                  <div className="flex justify-end mt-8">
+                    <button
+                      type="submit"
+                      className={`flex items-center justify-center py-2 px-6 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                        processing ? "opacity-75 cursor-not-allowed" : ""
+                      } bg-teal-600 hover:bg-teal-700 focus:ring-teal-500 dark:bg-teal-700 dark:hover:bg-teal-600 dark:focus:ring-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2`}
+                      disabled={processing}
+                    >
+                      {processing ? (
+                        <>
+                          <svg
+                            className="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        <>
+                          <Save size={18} className="mr-2" />
+                          {hasStoredData
+                            ? "Update Documents"
+                            : "Save Documents"}
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           )}
         </div>
       </div>
 
-      {/* Large Document Preview Modal */}
+      {/* Large Document Preview Modal */} 
       {previewDocument && (
         <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-auto">
@@ -640,7 +721,7 @@ const Identity_User = ({ setActiveComponent }) => {
             <div className="p-4">
               {previewDocument.type.startsWith("image/") ? (
                 <img
-                  src={previewDocument.dataUrl}
+                  src={previewDocument.dataUrl || previewDocument.base64Data}
                   alt={`Preview of ${previewDocument.name}`}
                   className="max-w-full max-h-[80vh] mx-auto"
                 />
