@@ -19,7 +19,6 @@ import {
 
 import Metadata from "./Metadata";
 import About_User from "./About_User";
-import Identity_User from "./Identity_User";
 import TrackDonation from "./TrackDonation";
 import Survey_User from "./Survey_User";
 import Campaigns from "./Campaigns";
@@ -65,11 +64,7 @@ const SideBar = () => {
         description:
           "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
       },
-      identity: {
-        title: "Identity Verification ~ Profile  - ConnectAID ",
-        description:
-          "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
-      },
+
       TrackDonation: {
         title: "Track Your Donations - ConnectAID ",
         description:
@@ -96,7 +91,7 @@ const SideBar = () => {
     setMetadata(metadataMap[component] || metadataMap["dashboardMain"]);
   };
 
-  // Set active component from URL parameter 
+  // Set active component from URL parameter
   useEffect(() => {
     if (componentParam) {
       setActiveComponent(componentParam);
@@ -147,8 +142,7 @@ const SideBar = () => {
         return <MyDonations setActiveComponent={setActiveComponent} />;
       case "about-you":
         return <About_User setActiveComponent={setActiveComponent} />;
-      case "identity":
-        return <Identity_User setActiveComponent={setActiveComponent} />;
+
       case "survey":
         return <Survey_User setActiveComponent={setActiveComponent} />;
       case "TrackDonation":
@@ -308,7 +302,7 @@ const SideBar = () => {
                 ? "justify-between"
                 : "justify-center"
             } ${isOpen ? "mb-1" : ""} ${
-              ["about-you", "identity", "survey"].includes(activeComponent)
+              ["about-you", "survey"].includes(activeComponent)
                 ? "bg-white text-teal-500"
                 : ""
             }`}
@@ -368,37 +362,7 @@ const SideBar = () => {
                       : "hidden"
                   }`}
                 >
-                  {"About You"}
-                </span>
-              </li>
-
-              <li
-                onClick={() => handleComponentChange("identity")}
-                title="Identity"
-                className={`py-2 pl-4 pr-4 hover:bg-white ease-in-out hover:text-teal-500 cursor-pointer transition-all ${
-                  expandedSideBar || isDesktop
-                    ? "text-left pl-8"
-                    : "text-center"
-                } ${
-                  activeComponent === "identity" ? "bg-white text-teal-500" : ""
-                }`}
-              >
-                <FontAwesomeIcon
-                  icon={faIdCard}
-                  className={`transition-all ${
-                    expandedSideBar || isDesktop
-                      ? "h-6 w-6 mr-2"
-                      : "w-6 h-6 mx-auto"
-                  }`}
-                />
-                <span
-                  className={`transition-all ${
-                    expandedSideBar || isDesktop
-                      ? "inline-block text-[19px]"
-                      : "hidden"
-                  }`}
-                >
-                  Identity
+                  {"Profile"}
                 </span>
               </li>
 

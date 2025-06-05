@@ -1,11 +1,21 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { Save, ArrowLeft, CheckCircle, Edit, X, Loader2 } from "lucide-react";
+import {
+  Save,
+  ArrowLeft,
+  CheckCircle,
+  Edit,
+  X,
+  Loader2,
+  Upload,
+  Camera,
+} from "lucide-react";
 import { motion } from "motion/react";
 
 const About_User = ({ setActiveComponent }) => {
   const [profileId, setProfileId] = useState(null);
+  const [previewDocument, setPreviewDocument] = useState(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -18,6 +28,7 @@ const About_User = ({ setActiveComponent }) => {
     country: "",
     bio: "",
     interests: [],
+    selfieFile: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -132,6 +143,108 @@ const About_User = ({ setActiveComponent }) => {
     });
   };
 
+  const handleSelfieUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        setErrors((prev) => ({
+          ...prev,
+          selfieFile: "Selfie size should not exceed 5MB",
+        }));
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith("image/")) {
+        setErrors((prev) => ({
+          ...prev,
+          selfieFile: "Please select a valid image file",
+        }));
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setFormData((prev) => ({
+          ...prev,
+          selfieFile: e.target.result,
+        }));
+        // Clear any previous error
+        setErrors((prev) => ({
+          ...prev,
+          selfieFile: null,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeSelfie = () => {
+    setFormData((prev) => ({
+      ...prev,
+      selfieFile: null,
+    }));
+    // Clear file input
+    const fileInput = document.getElementById("selfie-upload");
+    if (fileInput) {
+      fileInput.value = "";
+    }
+  };
+
+  const openImagePreview = (imageData) => {
+    setPreviewDocument({
+      name: "Profile Selfie",
+      type: "image/jpeg",
+      dataUrl: imageData,
+    });
+  };
+
+  const closePreview = () => {
+    setPreviewDocument(null);
+  };
+
+  const renderDocumentPreview = (file, type) => {
+    if (!file) return null;
+
+    return (
+      <div className="mt-4 p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <div className="flex-shrink-0">
+              <img
+                src={file}
+                alt={`${type} preview`}
+                className="h-16 w-16 object-cover rounded-lg border border-gray-300 dark:border-gray-600 cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={() => openImagePreview(file)}
+              />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-gray-900 dark:text-white">
+                {type === "selfie" ? "Selfie" : "Profile Image"}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Image uploaded successfully
+              </p>
+              <p className="text-xs text-blue-600 dark:text-blue-400 cursor-pointer">
+                Click to view larger
+              </p>
+            </div>
+          </div>
+          {isEditMode && (
+            <button
+              type="button"
+              onClick={type === "selfie" ? removeSelfie : removeImage}
+              className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+            >
+              <X size={20} />
+            </button>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   const validate = () => {
     let newErrors = {};
 
@@ -197,6 +310,12 @@ const About_User = ({ setActiveComponent }) => {
       newErrors.interests = "Please select at least 4 areas of interest";
     }
 
+    if (formData.selfieFile && typeof formData.selfieFile === "string") {
+      if (formData.selfieFile.length > 10 * 1024 * 1024) {
+        newErrors.selfieFile = "Selfie file is too large";
+      }
+    }
+
     return newErrors;
   };
 
@@ -237,11 +356,18 @@ const About_User = ({ setActiveComponent }) => {
       const endpoint = "/api/user-profile";
       const method = dataExists && profileId ? "PUT" : "POST";
 
-      const requestBody = profileId
-        ? { profileId: profileId, profileData: formData }
-        : { profileData: formData };
+      // Ensure profileId is properly formatted (convert to string if it's a number)
+      const cleanProfileId = profileId ? String(profileId).trim() : null;
+
+      const requestBody =
+        cleanProfileId && dataExists
+          ? { profileId: cleanProfileId, profileData: formData }
+          : { profileData: formData };
 
       console.log("Sending data:", requestBody);
+      console.log("Method:", method);
+      console.log("ProfileId:", cleanProfileId);
+      console.log("DataExists:", dataExists);
 
       const response = await fetch(endpoint, {
         method: method,
@@ -259,12 +385,13 @@ const About_User = ({ setActiveComponent }) => {
         setDataExists(true);
 
         // Update profileId if this was a new profile
-        if (!profileId && result.profileId) {
+        if (!cleanProfileId && result.profileId) {
           setProfileId(result.profileId);
         }
 
-        // Save to localStorage
-        saveToLocalStorage(formData, result.profileId || profileId);
+        // Save to localStorage with the correct profileId
+        const finalProfileId = result.profileId || cleanProfileId;
+        saveToLocalStorage(formData, finalProfileId);
 
         setTimeout(() => {
           setSaved(false);
@@ -279,14 +406,54 @@ const About_User = ({ setActiveComponent }) => {
       } else {
         if (result.error) {
           console.error("API Error:", result.error);
-          setErrors({ general: result.error });
+          // If profile not found, treat as new profile creation
+          if (
+            result.error.includes("Profile not found") ||
+            result.error.includes("not found")
+          ) {
+            console.log("Profile not found, creating new profile...");
+            // Reset state to create new profile
+            setProfileId(null);
+            setDataExists(false);
+            // Retry as POST request
+            const retryResponse = await fetch(endpoint, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ profileData: formData }),
+            });
+
+            const retryResult = await retryResponse.json();
+
+            if (retryResponse.ok) {
+              setSaved(true);
+              setDataExists(true);
+              setProfileId(retryResult.profileId);
+              saveToLocalStorage(formData, retryResult.profileId);
+
+              setTimeout(() => {
+                setSaved(false);
+                setIsEditMode(false);
+              }, 2000);
+
+              console.log("Profile created successfully on retry");
+            } else {
+              setErrors({
+                general: retryResult.error || "Failed to create profile",
+              });
+            }
+          } else {
+            setErrors({ general: result.error });
+          }
+        } else {
+          setErrors({ general: "An unexpected error occurred" });
         }
       }
     } catch (error) {
       console.error("Error saving profile:", error);
-      // Save to localStorage even if server request fails
-      saveToLocalStorage(formData, profileId);
-      // Still show error for server communication
+      const finalProfileId = profileId || `temp_${Date.now()}`;
+      saveToLocalStorage(formData, finalProfileId);
       setErrors({ general: "Network error. Data saved locally." });
     } finally {
       setSaving(false);
@@ -377,11 +544,12 @@ const About_User = ({ setActiveComponent }) => {
     return `${baseClass} border-gray-500 dark:border-gray-600 focus:ring-gray-500`;
   };
 
-  // Show loading state 
+  // Show loading state
   if (loading) {
     return (
-       <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div> Loading profile...
+      <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>{" "}
+        Loading profile...
       </div>
     );
   }
@@ -672,8 +840,7 @@ const About_User = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            {/* Bio */}
-            <div className="mb-6">
+            <div className="mb-4">
               <label
                 htmlFor="bio"
                 className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1"
@@ -695,6 +862,49 @@ const About_User = ({ setActiveComponent }) => {
               {errors.bio && isEditMode && (
                 <p className="mt-1 text-sm text-red-500">{errors.bio}</p>
               )}
+            </div>
+
+            {/* Upload Selfie */}
+            <div className="mb-6">
+              {" "}
+              {/* Ensure consistent spacing */}
+              <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+                Upload Picture 
+              </label>
+              {(!formData.selfieFile || isEditMode) && (
+                <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500">
+                  <div className="space-y-1 text-center">
+                    <Upload className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+                    <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                      <label
+                        htmlFor="selfie-upload"
+                        className="relative cursor-pointer rounded-md font-medium bg-white text-teal-600 hover:text-teal-500 dark:bg-gray-800 dark:text-teal-400 dark:hover:text-teal-300 focus-within:outline-none"
+                      >
+                        <span>Upload a Picture</span>
+                        <input
+                          id="selfie-upload"
+                          name="selfie-upload"
+                          type="file"
+                          className="sr-only"
+                          accept="image/*"
+                          onChange={handleSelfieUpload}
+                        />
+                      </label>
+                      <p className="pl-1">or drag and drop</p>
+                    </div>
+                    <p className="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                  </div>
+                </div>
+              )}
+              {formData.selfieFile &&
+                renderDocumentPreview(formData.selfieFile, "selfie")}
+              {errors.selfieFile && (
+                <p className="mt-2 text-sm text-red-600">{errors.selfieFile}</p>
+              )}
+              <p className="mt-2 text-xs text-gray-500 dark:text-gray-300 dark:font-medium dark:text-opacity-90">
+                Please ensure your face is clearly visible, and you are not
+                wearing sunglasses or a hat.
+              </p>
             </div>
 
             {/* Interests */}
@@ -805,16 +1015,67 @@ const About_User = ({ setActiveComponent }) => {
               <div className="flex justify-center mt-2 mb-4">
                 <button
                   type="button"
-                  onClick={() => setActiveComponent("identity")}
                   className="bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-6 rounded-md transition-colors"
                 >
-                  Continue
+                  Submit
                 </button>
               </div>
             )}
           </form>
         </div>
       </div>
+
+      {/* Large Document Preview Modal */} 
+      {previewDocument && (
+        <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-auto">
+            <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate max-w-md">
+                {previewDocument.name}
+              </h3>
+              <button
+                onClick={closePreview}
+                className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            <div className="p-4">
+              {previewDocument.type.startsWith("image/") ? (
+                <img
+                  src={previewDocument.dataUrl || previewDocument.base64Data}
+                  alt={`Preview of ${previewDocument.name}`}
+                  className="max-w-full max-h-[80vh] mx-auto"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12">
+                  <div className="text-gray-400 dark:text-gray-500 mb-4">
+                    <svg
+                      className="h-16 w-16"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {previewDocument.type.includes("pdf")
+                      ? "PDF Document Preview Not Available"
+                      : "Document Preview Not Available"}
+                  </p>
+                  <p className="mt-2 text-xs text-gray-500 dark:text-gray-500">
+                    {previewDocument.name}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div> 
+        </div>
+      )}
     </motion.div>
   );
 };

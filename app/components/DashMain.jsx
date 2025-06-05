@@ -480,12 +480,7 @@ const DashMain = ({ setActiveComponent }) => {
                 >
                   Complete About You
                 </button>
-                <button
-                  onClick={() => handleNavigation("identity")}
-                  className="py-3 px-5 ease-in-out mx-3 rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
-                >
-                  Verify Identity
-                </button>
+                
                 <button
                   onClick={() => handleNavigation("survey")}
                   className="py-3 px-5 ease-in-out rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"

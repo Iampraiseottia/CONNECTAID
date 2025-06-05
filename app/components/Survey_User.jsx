@@ -614,7 +614,7 @@ const Survey_User = ({ setActiveComponent }) => {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <button
-              onClick={() => setActiveComponent("identity")}
+              onClick={() => setActiveComponent("about-you")}
               className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors dark:text-gray-200"
             >
               <ArrowLeft size={20} />
