@@ -1,18 +1,17 @@
-import { UserProfileService } from '../../../lib/database/userProfileService.js';
+import { UserProfileService } from "../../../lib/database/userProfileService.js";
 
 // GET - Fetch user profile
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const profileId = searchParams.get("profileId");
+    const username = searchParams.get("username");
 
-    if (!profileId) {
-      return Response.json({ error: "Profile ID is required" }, { status: 400 });
+    if (!username) {
+      return Response.json({ error: "Username is required" }, { status: 400 });
     }
 
-    const profile = await UserProfileService.getUserProfile(profileId);
+    const profile = await UserProfileService.getUserProfile(username);
     return Response.json(profile);
-
   } catch (error) {
     console.error("Error fetching user profile:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
@@ -23,11 +22,11 @@ export async function GET(request) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { profileData } = body;
+    const { username, profileData } = body;
 
-    if (!profileData) {
+    if (!username || !profileData) {
       return Response.json(
-        { error: "Profile data is required" },
+        { error: "Username and profile data are required" },
         { status: 400 }
       );
     }
@@ -35,13 +34,19 @@ export async function POST(request) {
     // Validate profile data
     UserProfileService.validateProfileData(profileData);
 
-    const result = await UserProfileService.createUserProfile(profileData);
+    const result = await UserProfileService.createUserProfile(
+      username,
+      profileData
+    );
     return Response.json(result, { status: 201 });
-
   } catch (error) {
     console.error("Error creating user profile:", error);
 
-    if (error.message.includes('is required') || error.message.includes('interests')) {
+    if (
+      error.message.includes("is required") ||
+      error.message.includes("interests") ||
+      error.message.includes("already exists")
+    ) {
       return Response.json({ error: error.message }, { status: 400 });
     }
 
@@ -53,11 +58,11 @@ export async function POST(request) {
 export async function PUT(request) {
   try {
     const body = await request.json();
-    const { profileId, profileData } = body;
+    const { username, profileData } = body;
 
-    if (!profileId || !profileData) {
+    if (!username || !profileData) {
       return Response.json(
-        { error: "Profile ID and profile data are required" },
+        { error: "Username and profile data are required" },
         { status: 400 }
       );
     }
@@ -65,17 +70,22 @@ export async function PUT(request) {
     // Validate profile data
     UserProfileService.validateProfileData(profileData);
 
-    const result = await UserProfileService.updateUserProfile(profileId, profileData);
+    const result = await UserProfileService.updateUserProfile(
+      username,
+      profileData
+    );
     return Response.json(result);
-
   } catch (error) {
     console.error("Error updating user profile:", error);
 
-    if (error.message === 'Profile not found') {
+    if (error.message === "Profile not found") {
       return Response.json({ error: error.message }, { status: 404 });
     }
 
-    if (error.message.includes('is required') || error.message.includes('interests')) {
+    if (
+      error.message.includes("is required") ||
+      error.message.includes("interests")
+    ) {
       return Response.json({ error: error.message }, { status: 400 });
     }
 
@@ -83,23 +93,22 @@ export async function PUT(request) {
   }
 }
 
-// DELETE - Delete user profile 
+// DELETE - Delete user profile
 export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url);
-    const profileId = searchParams.get("profileId");
+    const username = searchParams.get("username");
 
-    if (!profileId) {
-      return Response.json({ error: "Profile ID is required" }, { status: 400 });
+    if (!username) {
+      return Response.json({ error: "Username is required" }, { status: 400 });
     }
 
-    const result = await UserProfileService.deleteUserProfile(profileId);
+    const result = await UserProfileService.deleteUserProfile(username);
     return Response.json(result);
-
   } catch (error) {
     console.error("Error deleting user profile:", error);
 
-    if (error.message === 'Profile not found') {
+    if (error.message === "Profile not found") {
       return Response.json({ error: error.message }, { status: 404 });
     }
 

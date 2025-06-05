@@ -17,6 +17,8 @@ const About_User = ({ setActiveComponent }) => {
   const [profileId, setProfileId] = useState(null);
   const [previewDocument, setPreviewDocument] = useState(null);
 
+  const [username, setUsername] = useState(null);
+
   const [formData, setFormData] = useState({
     fullName: "",
     dateOfBirth: "",
@@ -40,50 +42,62 @@ const About_User = ({ setActiveComponent }) => {
 
   // Load user profile data on component mount
   useEffect(() => {
-    const loadUserProfile = async () => {
-      // First try to load from localStorage
-      const localData = loadFromLocalStorage();
+  const loadUserProfile = async () => {
+    const currentUsername = await getCurrentUsername(); 
 
-      if (localData && localData.profileId) {
-        setProfileId(localData.profileId);
+    if (!currentUsername) {
+      console.error("No username found");
+      setLoading(false);
+      return;
+    }
 
-        try {
-          // Try to fetch latest data from database
-          const response = await fetch(
-            `/api/user-profile?profileId=${localData.profileId}`
-          );
-          const result = await response.json();
+    setUsername(currentUsername);
 
-          if (response.ok && result.exists) {
-            setFormData(result.data);
-            setDataExists(true);
-            setIsEditMode(false);
-            // Update localStorage with fresh data
-            saveToLocalStorage(result.data, localData.profileId);
-          } else {
-            // Database data not found, use localStorage data
+    // First try to load from localStorage
+    const localData = loadFromLocalStorage(currentUsername);
+
+    if (localData && localData.username === currentUsername) {
+      try {
+        // Try to fetch latest data from database
+        const response = await fetch(
+          `/api/user-profile?username=${currentUsername}`
+        );
+        const result = await response.json();
+
+        if (response.ok && result.exists) {
+          setFormData(result.data);
+          setDataExists(true);
+          setIsEditMode(false);
+          saveToLocalStorage(result.data, currentUsername);
+        } else {
+          if (localData.data) {
             setFormData(localData.data);
             setDataExists(true);
             setIsEditMode(false);
+          } else {
+            setDataExists(false);
+            setIsEditMode(true);
           }
-        } catch (error) {
-          console.error("Error loading user profile from server:", error);
-          // Use localStorage data as fallback
+        }
+      } catch (error) {
+        console.error("Error loading user profile from server:", error);
+        if (localData && localData.data) {
           setFormData(localData.data);
           setDataExists(true);
           setIsEditMode(false);
         }
-      } else {
-        // No local data, start with new profile creation
-        setDataExists(false);
-        setIsEditMode(true);
       }
+    } else {
+      // No local data, start with new profile creation
+      setDataExists(false);
+      setIsEditMode(true);
+    }
 
-      setLoading(false);
-    };
+    setLoading(false);
+  };
 
-    loadUserProfile();
-  }, []);
+  loadUserProfile();
+}, []);
 
   const interestOptions = [
     "Education",
@@ -319,18 +333,21 @@ const About_User = ({ setActiveComponent }) => {
     return newErrors;
   };
 
-  const saveToLocalStorage = (data, profileId) => {
+  const saveToLocalStorage = (data, username) => {
     const profileInfo = {
       data: data,
-      profileId: profileId,
+      username: username,
       timestamp: Date.now(),
     };
-    localStorage.setItem("userProfile", JSON.stringify(profileInfo));
+    localStorage.setItem(
+      `userProfile_${username}`,
+      JSON.stringify(profileInfo)
+    );
   };
 
-  const loadFromLocalStorage = () => {
+  const loadFromLocalStorage = (username) => {
     try {
-      const stored = localStorage.getItem("userProfile");
+      const stored = localStorage.getItem(`userProfile_${username}`);
       if (stored) {
         const parsed = JSON.parse(stored);
         return parsed;
@@ -354,19 +371,16 @@ const About_User = ({ setActiveComponent }) => {
 
     try {
       const endpoint = "/api/user-profile";
-      const method = dataExists && profileId ? "PUT" : "POST";
-
-      // Ensure profileId is properly formatted (convert to string if it's a number)
-      const cleanProfileId = profileId ? String(profileId).trim() : null;
+      const method = dataExists && username ? "PUT" : "POST";
 
       const requestBody =
-        cleanProfileId && dataExists
-          ? { profileId: cleanProfileId, profileData: formData }
-          : { profileData: formData };
+        dataExists && username
+          ? { username: username, profileData: formData }
+          : { username: username, profileData: formData };
 
       console.log("Sending data:", requestBody);
       console.log("Method:", method);
-      console.log("ProfileId:", cleanProfileId);
+      console.log("Username:", username);
       console.log("DataExists:", dataExists);
 
       const response = await fetch(endpoint, {
@@ -384,14 +398,8 @@ const About_User = ({ setActiveComponent }) => {
         setSaved(true);
         setDataExists(true);
 
-        // Update profileId if this was a new profile
-        if (!cleanProfileId && result.profileId) {
-          setProfileId(result.profileId);
-        }
-
-        // Save to localStorage with the correct profileId
-        const finalProfileId = result.profileId || cleanProfileId;
-        saveToLocalStorage(formData, finalProfileId);
+        // Save to localStorage with the username
+        saveToLocalStorage(formData, username);
 
         setTimeout(() => {
           setSaved(false);
@@ -406,14 +414,13 @@ const About_User = ({ setActiveComponent }) => {
       } else {
         if (result.error) {
           console.error("API Error:", result.error);
-          // If profile not found, treat as new profile creation
+          // Handle profile not found case
           if (
             result.error.includes("Profile not found") ||
             result.error.includes("not found")
           ) {
             console.log("Profile not found, creating new profile...");
             // Reset state to create new profile
-            setProfileId(null);
             setDataExists(false);
             // Retry as POST request
             const retryResponse = await fetch(endpoint, {
@@ -421,7 +428,10 @@ const About_User = ({ setActiveComponent }) => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ profileData: formData }),
+              body: JSON.stringify({
+                username: username,
+                profileData: formData,
+              }),
             });
 
             const retryResult = await retryResponse.json();
@@ -429,8 +439,7 @@ const About_User = ({ setActiveComponent }) => {
             if (retryResponse.ok) {
               setSaved(true);
               setDataExists(true);
-              setProfileId(retryResult.profileId);
-              saveToLocalStorage(formData, retryResult.profileId);
+              saveToLocalStorage(formData, username);
 
               setTimeout(() => {
                 setSaved(false);
@@ -465,37 +474,37 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   const handleCancel = async () => {
-    if (dataExists && profileId) {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `/api/user-profile?profileId=${profileId}`
-        );
-        const result = await response.json();
+  if (dataExists && username) {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `/api/user-profile?username=${username}`
+      );
+      const result = await response.json();
 
-        if (response.ok && result.exists) {
-          setFormData(result.data);
-          setErrors({});
-        } else {
-          // Fallback to localStorage
-          const localData = loadFromLocalStorage();
-          if (localData) {
-            setFormData(localData.data);
-          }
-        }
-      } catch (error) {
-        console.error("Error reloading profile:", error);
+      if (response.ok && result.exists) {
+        setFormData(result.data);
+        setErrors({});
+      } else {
         // Fallback to localStorage
-        const localData = loadFromLocalStorage();
+        const localData = loadFromLocalStorage(username);
         if (localData) {
           setFormData(localData.data);
         }
-      } finally {
-        setLoading(false);
       }
+    } catch (error) {
+      console.error("Error reloading profile:", error);
+      // Fallback to localStorage
+      const localData = loadFromLocalStorage(username);
+      if (localData) {
+        setFormData(localData.data);
+      }
+    } finally {
+      setLoading(false);
     }
-    setIsEditMode(false);
-  };
+  }
+  setIsEditMode(false);
+};
 
   // Refs for form inputs
   const fullNameRef = useRef();
@@ -543,6 +552,27 @@ const About_User = ({ setActiveComponent }) => {
     if (isValid) return `${baseClass} border-green-500 focus:ring-green-500`;
     return `${baseClass} border-gray-500 dark:border-gray-600 focus:ring-gray-500`;
   };
+
+ const getCurrentUsername = async () => {
+  try {
+    // Get the user session from cookies
+    const response = await fetch('/api/auth/me', {
+      method: 'GET',
+      credentials: 'include', 
+    });
+
+    if (response.ok) {
+      const userData = await response.json();
+      return userData.username;
+    } else {
+      console.error('Failed to get user data');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error getting current username:', error);
+    return null;
+  }
+};
 
   // Show loading state
   if (loading) {
@@ -869,7 +899,7 @@ const About_User = ({ setActiveComponent }) => {
               {" "}
               {/* Ensure consistent spacing */}
               <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-                Upload Picture 
+                Upload Picture
               </label>
               {(!formData.selfieFile || isEditMode) && (
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md transition-colors border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500">
@@ -1025,7 +1055,7 @@ const About_User = ({ setActiveComponent }) => {
         </div>
       </div>
 
-      {/* Large Document Preview Modal */} 
+      {/* Large Document Preview Modal */}
       {previewDocument && (
         <div className="fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-auto">
@@ -1073,7 +1103,7 @@ const About_User = ({ setActiveComponent }) => {
                 </div>
               )}
             </div>
-          </div> 
+          </div>
         </div>
       )}
     </motion.div>
