@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEnvelope,
   faLock,
@@ -107,7 +107,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) {
       // Scroll to the first error
       const firstErrorField = Object.keys(errors).find((key) => errors[key]);
@@ -116,14 +116,14 @@ const Login = () => {
       }
       return;
     }
-  
+
     setIsLoading(true);
-    
+
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: formValues.email,
@@ -131,47 +131,47 @@ const Login = () => {
           userType: formValues.userType,
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
-        // Store user data in localStorage or context
-        localStorage.setItem('user', JSON.stringify(data.user));
-        localStorage.setItem('token', data.token);
-        
+        // Store user data in localStorage
+        localStorage.setItem("user", JSON.stringify(data.user));
+
         router.push("/dashboard");
-       
       } else {
         // Handle different error cases
         if (response.status === 404) {
           setErrors({
             ...errors,
-            general: 'User not found. Please check your email or register first.',
+            general:
+              "User not found. Please check your email or register first.",
           });
         } else if (response.status === 401) {
-          if (data.error.includes('verify your email')) {
+          if (data.error.includes("verify your email")) {
             setErrors({
               ...errors,
-              general: 'Please verify your email before logging in. Check your inbox for verification link.',
+              general:
+                "Please verify your email before logging in. Check your inbox for verification link.",
             });
           } else {
             setErrors({
               ...errors,
-              general: 'Invalid email or password. Please try again.',
+              general: "Invalid email or password. Please try again.",
             });
           }
         } else {
           setErrors({
             ...errors,
-            general: data.error || 'Login failed. Please try again.',
+            general: data.error || "Login failed. Please try again.",
           });
         }
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       setErrors({
         ...errors,
-        general: 'Network error. Please check your connection and try again.',
+        general: "Network error. Please check your connection and try again.",
       });
     } finally {
       setIsLoading(false);
@@ -244,7 +244,7 @@ const Login = () => {
               className={`border ${
                 errors.email ? "border-red-500" : "border-slate-400"
               } 
-              px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg dark:bg-white dark:text-black `} 
+              px-3 md:px-5 mt-2 ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400 outline-none w-full py-2 md:py-3 text-base md:text-lg rounded-lg dark:bg-white dark:text-black `}
             />
             <ErrorMessage message={errors.email} />
           </div>
@@ -306,27 +306,28 @@ const Login = () => {
             </div>
           </div>
 
-        
-
           {/* Login Button */}
           <button
-  type="submit"
-  disabled={isLoading}
-  className="w-[90%] mx-5 sm:mx-10 mt-10 bg-teal-500 hover:bg-teal-600 text-white text-xl font-bold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
->
-  {isLoading ? 'Logging in...' : 'Login'}
-</button>
+            type="submit"
+            disabled={isLoading}
+            className="w-[90%] mx-5 sm:mx-10 mt-10 bg-teal-500 hover:bg-teal-600 text-white text-xl font-bold py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         {/* Register Link */}
         <p className="text-center text-gray-600 mt-6 text-[16px]">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-teal-600 font-semibold hover:text-[16.2px] hover:underline ">
+          <Link
+            href="/register"
+            className="text-teal-600 font-semibold hover:text-[16.2px] hover:underline "
+          >
             Register
           </Link>
-        </p> 
+        </p>
 
-        {/* Google Login */} 
+        {/* Google Login */}
         <button
           type="submit"
           className="mt-6 w-[90%] mx-5 sm:mx-10 flex items-center justify-center border-2 border-teal-500 text-black hover:bg-teal-500 hover:text-white transition-all duration-300 py-3 rounded-lg font-semibold text-lg"
@@ -335,7 +336,7 @@ const Login = () => {
             src="/icon/google.png"
             alt="Google Icon"
             width={24}
-            height={24} 
+            height={24}
             className="mr-3"
           />
           Login With Google

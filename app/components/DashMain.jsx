@@ -42,6 +42,61 @@ const DashMain = ({ setActiveComponent }) => {
   const [donationData, setDonationData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [userData, setUserData] = useState({
+  username: "User",
+  email: "",
+  fullName: "",
+});
+
+  useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      // First try to get from localStorage (immediate access) 
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        setUserData({
+          username: user.username || "User",
+          email: user.email || "",
+          fullName: user.full_name || "",
+        });
+      }
+
+      // Then fetch fresh data from API 
+      const response = await fetch("/api/auth/user", {
+        method: "GET",
+        credentials: 'include', 
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const user = data.user;
+        
+        setUserData({
+          username: user.username || "User",
+          email: user.email || "",
+          fullName: user.full_name || "",
+        });
+
+        // Update localStorage with fresh data
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        console.log("Failed to fetch user data:", response.status);
+        // If API fails but we have stored data, keep using it
+        if (!storedUser) {
+          console.log("No stored user data, user might need to login");
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // If there's an error but we have stored data, keep using it
+    }
+  };
+
+  fetchUserData();
+}, []);
+
+
   // Simulate fetching data
   useEffect(() => {
     const mockDonationData = [
@@ -217,8 +272,8 @@ const DashMain = ({ setActiveComponent }) => {
             <span className="text-gray-800 dark:text-gray-100">
               Welcome Back!!!,
             </span>
-            <span className="text-[lightseagreen] text-[28px] md:text-[36px] lg:text-[42px] pl-1">
-              Ottia Praise
+            <span className="text-[lightseagreen] text-[28px] md:text-[36px] lg:text-[42px] pl-2">
+              {userData.username}
             </span>
           </h1>
         </div>
@@ -264,7 +319,9 @@ const DashMain = ({ setActiveComponent }) => {
             className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold cursor-pointer ease-in-out duration-100 hover:bg-teal-600 transition-colors"
             title="Profile"
           >
-            OP
+            {userData.username
+              ? userData.username.substring(0, 2).toUpperCase()
+              : "U"}
           </div>
         </div>
       </div>
@@ -480,7 +537,7 @@ const DashMain = ({ setActiveComponent }) => {
                 >
                   Complete About You
                 </button>
-                
+
                 <button
                   onClick={() => handleNavigation("survey")}
                   className="py-3 px-5 ease-in-out rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
@@ -606,4 +663,4 @@ const DashMain = ({ setActiveComponent }) => {
   );
 };
 
-export default DashMain; 
+export default DashMain;

@@ -1,8 +1,7 @@
-
 import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { comparePassword } from "@/lib/auth";
-import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(request) {
   try {
@@ -48,24 +47,14 @@ export async function POST(request) {
     if (!user.is_email_verified) {
       return NextResponse.json(
         {
-          error: "Please verify your email address with the 6-digit code before logging in",
+          error:
+            "Please verify your email address with the 6-digit code before logging in",
           requiresVerification: true,
           email: user.email,
         },
         { status: 403 }
       );
     }
-
-    // Generate JWT token
-    const token = jwt.sign(
-      {
-        userId: user.id,
-        email: user.email,
-        username: user.username,
-      },
-      process.env.JWT_SECRET || "your-secret-key",
-      { expiresIn: "7d" }
-    );
 
     // Update last login timestamp
     const updateLoginQuery = `
@@ -84,10 +73,14 @@ export async function POST(request) {
         user: {
           ...userWithoutPassword,
         },
-        token,
         success: true,
       },
-      { status: 200 }
+      {
+        status: 200,
+        headers: {
+          "Set-Cookie": `user_session=${user.id}; HttpOnly; Secure; SameSite=Strict; Max-Age=604800; Path=/`,
+        },
+      }
     );
   } catch (error) {
     console.error("Login error:", error);

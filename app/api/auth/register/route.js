@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { cookies } from "next/headers";
+
 import {
   hashPassword,
   generateVerificationCode,
@@ -30,7 +32,7 @@ export async function POST(request) {
 
     // Check if user already exists
     const existingUserQuery = `
-      SELECT id, email, username FROM users 
+      SELECT id, email, username FROM users
       WHERE email = $1 OR username = $2
     `;
     const existingUser = await query(existingUserQuery, [
@@ -56,18 +58,18 @@ export async function POST(request) {
     // Hash password
     const hashedPassword = await hashPassword(password);
 
-    // Generate 6-digit verification code and the code expires every after 15 minutes 
+    // Generate 6-digit verification code and the code expires every after 15 minutes
     const verificationCode = generateVerificationCode();
     const codeExpiry = generateCodeExpiry();
 
     // Insert new user with is_email_verified set to false
     const insertUserQuery = `
       INSERT INTO users (
-        full_name, 
-        email, 
-        username, 
-        password_hash, 
-        email_verification_code, 
+        full_name,
+        email,
+        username,
+        password_hash,
+        email_verification_code,
         email_verification_expires,
         is_email_verified,
         created_at,
@@ -88,10 +90,10 @@ export async function POST(request) {
 
     console.log(`Verification code for ${email}: ${verificationCode}`);
 
-
     return NextResponse.json(
       {
-        message: "Registration successful! Please check your email for a 6-digit verification code.",
+        message:
+          "Registration successful! Please check your email for a 6-digit verification code.",
         user: {
           id: newUser.rows[0].id,
           email: newUser.rows[0].email,
@@ -101,7 +103,12 @@ export async function POST(request) {
         },
         requiresVerification: true,
       },
-      { status: 201 }
+      {
+        status: 201,
+        headers: {
+          "Set-Cookie": `user_session=${newUser.rows[0].id}; HttpOnly; Secure; SameSite=Strict; Max-Age=604800; Path=/`,
+        },
+      }
     );
   } catch (error) {
     console.error("Registration error:", error);

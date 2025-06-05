@@ -18,7 +18,6 @@ export default function SurveyAnalyticsStats() {
   };
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loadingAuth, setLoadingAuth] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -33,7 +32,7 @@ export default function SurveyAnalyticsStats() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setLoginAttempting(true);
+    setLoginAttempting(true); 
 
     try {
       const storedCredentials = await fetchAdminCredentials();
@@ -65,7 +64,7 @@ export default function SurveyAnalyticsStats() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setLoadingAuth(false);
+      setLoading(false);
     }, 500);
     return () => clearTimeout(timer);
   }, []);
