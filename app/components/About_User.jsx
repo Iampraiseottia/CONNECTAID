@@ -42,62 +42,62 @@ const About_User = ({ setActiveComponent }) => {
 
   // Load user profile data on component mount
   useEffect(() => {
-  const loadUserProfile = async () => {
-    const currentUsername = await getCurrentUsername(); 
+    const loadUserProfile = async () => {
+      const currentUsername = await getCurrentUsername();
 
-    if (!currentUsername) {
-      console.error("No username found");
-      setLoading(false);
-      return;
-    }
+      if (!currentUsername) {
+        console.error("No username found");
+        setLoading(false);
+        return;
+      }
 
-    setUsername(currentUsername);
+      setUsername(currentUsername);
 
-    // First try to load from localStorage
-    const localData = loadFromLocalStorage(currentUsername);
+      // First try to load from localStorage
+      const localData = loadFromLocalStorage(currentUsername);
 
-    if (localData && localData.username === currentUsername) {
-      try {
-        // Try to fetch latest data from database
-        const response = await fetch(
-          `/api/user-profile?username=${currentUsername}`
-        );
-        const result = await response.json();
+      if (localData && localData.username === currentUsername) {
+        try {
+          // Try to fetch latest data from database
+          const response = await fetch(
+            `/api/user-profile?username=${currentUsername}`
+          );
+          const result = await response.json();
 
-        if (response.ok && result.exists) {
-          setFormData(result.data);
-          setDataExists(true);
-          setIsEditMode(false);
-          saveToLocalStorage(result.data, currentUsername);
-        } else {
-          if (localData.data) {
+          if (response.ok && result.exists) {
+            setFormData(result.data);
+            setDataExists(true);
+            setIsEditMode(false);
+            saveToLocalStorage(result.data, currentUsername);
+          } else {
+            if (localData.data) {
+              setFormData(localData.data);
+              setDataExists(true);
+              setIsEditMode(false);
+            } else {
+              setDataExists(false);
+              setIsEditMode(true);
+            }
+          }
+        } catch (error) {
+          console.error("Error loading user profile from server:", error);
+          if (localData && localData.data) {
             setFormData(localData.data);
             setDataExists(true);
             setIsEditMode(false);
-          } else {
-            setDataExists(false);
-            setIsEditMode(true);
           }
         }
-      } catch (error) {
-        console.error("Error loading user profile from server:", error);
-        if (localData && localData.data) {
-          setFormData(localData.data);
-          setDataExists(true);
-          setIsEditMode(false);
-        }
+      } else {
+        // No local data, start with new profile creation
+        setDataExists(false);
+        setIsEditMode(true);
       }
-    } else {
-      // No local data, start with new profile creation
-      setDataExists(false);
-      setIsEditMode(true);
-    }
 
-    setLoading(false);
-  };
+      setLoading(false);
+    };
 
-  loadUserProfile();
-}, []);
+    loadUserProfile();
+  }, []);
 
   const interestOptions = [
     "Education",
@@ -180,15 +180,47 @@ const About_User = ({ setActiveComponent }) => {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        setFormData((prev) => ({
-          ...prev,
-          selfieFile: e.target.result,
-        }));
-        // Clear any previous error
-        setErrors((prev) => ({
-          ...prev,
-          selfieFile: null,
-        }));
+        const img = new Image();
+        img.onload = () => {
+          // Compress the image
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // Calculate new dimensions (max 800px width/height)
+          const maxSize = 800;
+          let { width, height } = img;
+
+          if (width > height) {
+            if (width > maxSize) {
+              height = (height * maxSize) / width;
+              width = maxSize;
+            }
+          } else {
+            if (height > maxSize) {
+              width = (width * maxSize) / height;
+              height = maxSize;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          // Draw and compress
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.7);
+
+          setFormData((prev) => ({
+            ...prev,
+            selfieFile: compressedDataUrl,
+          }));
+
+          // Clear any previous error
+          setErrors((prev) => ({
+            ...prev,
+            selfieFile: null,
+          }));
+        };
+        img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
@@ -334,15 +366,97 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   const saveToLocalStorage = (data, username) => {
-    const profileInfo = {
-      data: data,
-      username: username,
-      timestamp: Date.now(),
-    };
-    localStorage.setItem(
-      `userProfile_${username}`,
-      JSON.stringify(profileInfo)
-    );
+    try {
+      // Create a copy of data without the large selfie file
+      const dataToStore = { ...data };
+
+      // Only store a reference/flag for selfie, not the actual base64 data
+      if (dataToStore.selfieFile) {
+        dataToStore.selfieFile = {
+          hasFile: true,
+          lastModified: Date.now(),
+          // You could store just a small thumbnail or hash instead
+          size: dataToStore.selfieFile.length,
+        };
+      }
+
+      const profileInfo = {
+        data: dataToStore,
+        username: username,
+        timestamp: Date.now(),
+      };
+
+      const serializedData = JSON.stringify(profileInfo);
+
+      // Check if data is too large (rough estimate: 4MB limit)
+      if (serializedData.length > 4 * 1024 * 1024) {
+        console.warn(
+          "Profile data too large for localStorage, storing minimal version"
+        );
+        // Store only essential data
+        const minimalData = {
+          data: {
+            fullName: data.fullName,
+            dateOfBirth: data.dateOfBirth,
+            gender: data.gender,
+            phoneNumber: data.phoneNumber,
+            address: data.address,
+            city: data.city,
+            state: data.state,
+            country: data.country,
+            bio: data.bio?.substring(0, 500), // Truncate bio if too long
+            interests: data.interests,
+            selfieFile: null, // Don't store large files
+          },
+          username: username,
+          timestamp: Date.now(),
+          isMinimal: true,
+        };
+        localStorage.setItem(
+          `userProfile_${username}`,
+          JSON.stringify(minimalData)
+        );
+        return;
+      }
+
+      localStorage.setItem(`userProfile_${username}`, serializedData);
+    } catch (error) {
+      console.error("Error saving to localStorage:", error);
+
+      if (error.name === "QuotaExceededError") {
+        console.warn(
+          "localStorage quota exceeded, clearing old data and retrying with minimal data"
+        );
+
+        // Clear old profile data
+        Object.keys(localStorage).forEach((key) => {
+          if (key.startsWith("userProfile_")) {
+            localStorage.removeItem(key);
+          }
+        });
+
+        // Try saving minimal data only
+        try {
+          const minimalData = {
+            data: {
+              fullName: data.fullName,
+              phoneNumber: data.phoneNumber,
+              city: data.city,
+              interests: data.interests,
+            },
+            username: username,
+            timestamp: Date.now(),
+            isMinimal: true,
+          };
+          localStorage.setItem(
+            `userProfile_${username}`,
+            JSON.stringify(minimalData)
+          );
+        } catch (secondError) {
+          console.error("Failed to save even minimal data:", secondError);
+        }
+      }
+    }
   };
 
   const loadFromLocalStorage = (username) => {
@@ -350,12 +464,72 @@ const About_User = ({ setActiveComponent }) => {
       const stored = localStorage.getItem(`userProfile_${username}`);
       if (stored) {
         const parsed = JSON.parse(stored);
+
+        // If it's minimal data, warn the user
+        if (parsed.isMinimal) {
+          console.warn("Loaded minimal profile data from localStorage");
+        }
+
         return parsed;
       }
     } catch (error) {
       console.error("Error loading from localStorage:", error);
+      // If JSON parsing fails, clear the corrupted data
+      localStorage.removeItem(`userProfile_${username}`);
     }
     return null;
+  };
+
+  // Alternative: Use IndexedDB for large files
+  const saveImageToIndexedDB = async (imageData, username) => {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("ProfileImages", 1);
+
+      request.onerror = () => reject(request.error);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("images")) {
+          db.createObjectStore("images", { keyPath: "username" });
+        }
+      };
+
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["images"], "readwrite");
+        const store = transaction.objectStore("images");
+
+        store.put({
+          username: username,
+          imageData: imageData,
+          timestamp: Date.now(),
+        });
+
+        transaction.oncomplete = () => resolve();
+        transaction.onerror = () => reject(transaction.error);
+      };
+    });
+  };
+
+  const loadImageFromIndexedDB = async (username) => {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("ProfileImages", 1);
+
+      request.onerror = () => reject(request.error);
+
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(["images"], "readonly");
+        const store = transaction.objectStore("images");
+        const getRequest = store.get(username);
+
+        getRequest.onsuccess = () => {
+          resolve(getRequest.result?.imageData || null);
+        };
+
+        getRequest.onerror = () => reject(getRequest.error);
+      };
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -398,8 +572,18 @@ const About_User = ({ setActiveComponent }) => {
         setSaved(true);
         setDataExists(true);
 
-        // Save to localStorage with the username
-        saveToLocalStorage(formData, username);
+        // Save to localStorage with error handling
+        try {
+          saveToLocalStorage(formData, username);
+
+          // Optionally save large images to IndexedDB
+          if (formData.selfieFile && formData.selfieFile.length > 1024 * 1024) {
+            await saveImageToIndexedDB(formData.selfieFile, username);
+          }
+        } catch (storageError) {
+          console.warn("Failed to save to local storage:", storageError);
+          // Continue normally - the data is saved to the server
+        }
 
         setTimeout(() => {
           setSaved(false);
@@ -461,9 +645,15 @@ const About_User = ({ setActiveComponent }) => {
       }
     } catch (error) {
       console.error("Error saving profile:", error);
-      const finalProfileId = profileId || `temp_${Date.now()}`;
-      saveToLocalStorage(formData, finalProfileId);
-      setErrors({ general: "Network error. Data saved locally." });
+
+      // Try to save minimal data locally as backup
+      try {
+        const finalProfileId = profileId || `temp_${Date.now()}`;
+        saveToLocalStorage(formData, finalProfileId);
+        setErrors({ general: "Network error. Essential data saved locally." });
+      } catch (storageError) {
+        setErrors({ general: "Network error. Unable to save data locally." });
+      }
     } finally {
       setSaving(false);
     }
@@ -474,37 +664,35 @@ const About_User = ({ setActiveComponent }) => {
   };
 
   const handleCancel = async () => {
-  if (dataExists && username) {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `/api/user-profile?username=${username}`
-      );
-      const result = await response.json();
+    if (dataExists && username) {
+      setLoading(true);
+      try {
+        const response = await fetch(`/api/user-profile?username=${username}`);
+        const result = await response.json();
 
-      if (response.ok && result.exists) {
-        setFormData(result.data);
-        setErrors({});
-      } else {
+        if (response.ok && result.exists) {
+          setFormData(result.data);
+          setErrors({});
+        } else {
+          // Fallback to localStorage
+          const localData = loadFromLocalStorage(username);
+          if (localData) {
+            setFormData(localData.data);
+          }
+        }
+      } catch (error) {
+        console.error("Error reloading profile:", error);
         // Fallback to localStorage
         const localData = loadFromLocalStorage(username);
         if (localData) {
           setFormData(localData.data);
         }
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error reloading profile:", error);
-      // Fallback to localStorage
-      const localData = loadFromLocalStorage(username);
-      if (localData) {
-        setFormData(localData.data);
-      }
-    } finally {
-      setLoading(false);
     }
-  }
-  setIsEditMode(false);
-};
+    setIsEditMode(false);
+  };
 
   // Refs for form inputs
   const fullNameRef = useRef();
@@ -553,26 +741,26 @@ const About_User = ({ setActiveComponent }) => {
     return `${baseClass} border-gray-500 dark:border-gray-600 focus:ring-gray-500`;
   };
 
- const getCurrentUsername = async () => {
-  try {
-    // Get the user session from cookies
-    const response = await fetch('/api/auth/me', {
-      method: 'GET',
-      credentials: 'include', 
-    });
+  const getCurrentUsername = async () => {
+    try {
+      // Get the user session from cookies
+      const response = await fetch("/api/auth/me", {
+        method: "GET",
+        credentials: "include",
+      });
 
-    if (response.ok) {
-      const userData = await response.json();
-      return userData.username;
-    } else {
-      console.error('Failed to get user data');
+      if (response.ok) {
+        const userData = await response.json();
+        return userData.username;
+      } else {
+        console.error("Failed to get user data");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error getting current username:", error);
       return null;
     }
-  } catch (error) {
-    console.error('Error getting current username:', error);
-    return null;
-  }
-};
+  };
 
   // Show loading state
   if (loading) {

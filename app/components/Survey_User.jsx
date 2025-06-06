@@ -703,10 +703,9 @@ const Survey_User = ({ setActiveComponent }) => {
   // Show loading state while trying to fetch initial data
   if (!hasLoadedData) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-gray-900">
-        <p className="text-gray-700 dark:text-gray-300">
-          Loading survey data...
-        </p>
+      <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-teal-500"></div>{" "}
+        Loading Survey...
       </div>
     );
   }

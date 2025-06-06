@@ -2,14 +2,14 @@ import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(request) {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies(); 
     const userSession = cookieStore.get('user_session');
 
     if (!userSession) {
       return NextResponse.json(
-        { error: "Not authenticated" },
+        { error: 'No user session found' },
         { status: 401 }
       );
     }
@@ -41,9 +41,9 @@ export async function GET() {
     });
 
   } catch (error) {
-    console.error("Error getting user data:", error);
+    console.error('Error in auth/me route:', error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
