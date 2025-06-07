@@ -76,7 +76,6 @@ export async function POST(request) {
       );
     }
 
-    // Update user as verified
     const updateQuery = `
       UPDATE users 
       SET is_email_verified = TRUE, 

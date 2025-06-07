@@ -36,6 +36,8 @@ import { motion } from "motion/react";
 const Campaigns = () => {
   const [activeCampaigns, setActiveCampaigns] = useState([]);
 
+  const [donationError, setDonationError] = useState(null);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState("all");
 
@@ -61,8 +63,6 @@ const Campaigns = () => {
     return matchesFilter && matchesSearch;
   });
 
-  // Fetching Past Successful Event Data from Postgres
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -84,8 +84,6 @@ const Campaigns = () => {
 
     fetchActiveCampaigns();
   }, []);
-
-  // Donate Now Setup
 
   const [showPaymentsPlace, setShowPaymentsPlace] = useState(false);
   const [showCampDetails, setShowCampDetails] = useState(false);
@@ -294,43 +292,73 @@ const Campaigns = () => {
     return `TXN-${timestamp}-${randomStr}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (validateForm()) {
       setIsSubmitting(true);
+      setDonationError(null);
 
-      // Prepare donation data
       const transactionId = generateTransactionId();
       const paymentMethodName =
         paymentMethods.find((method) => method.id === selectedPayment)?.name ||
         selectedPayment;
 
-      const newDonationData = {
-        name: name,
+      const donationPayload = {
+        campaignId: selectedCampaign,
+        donorName: name,
         phoneNumber: phoneNumber,
         amount: amount,
         paymentMethod: paymentMethodName,
         transactionId: transactionId,
-        timestamp: new Date().toISOString(),
       };
 
-      setDonationData(newDonationData);
+      try {
+        // Sending my donation data to backend 
+        const response = await fetch("/api/donations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(donationPayload),
+        });
 
-      console.log("Form submitted successfully", newDonationData);
+        const result = await response.json();
 
-      setShowPaymentsPlace(false);
-      setThankYouMessage(true);
+        if (response.ok && result.success) {
+          // Success - show thank you message
+          const newDonationData = {
+            name: name,
+            phoneNumber: phoneNumber,
+            amount: amount,
+            paymentMethod: paymentMethodName,
+            transactionId: transactionId,
+            timestamp: new Date().toISOString(),
+          };
 
-      setTimeout(() => {
+          setDonationData(newDonationData);
+          setShowPaymentsPlace(false);
+          setThankYouMessage(true);
+
+          console.log("Donation processed successfully", result.donation);
+
+          setTimeout(() => {
+            setIsSubmitting(false);
+            setAmount("");
+            setName("");
+            setPhoneNumber("");
+            setSelectedPayment("");
+            setSelectedCampaign(null);
+          }, 15000);
+        } else {
+          // Error occurred
+          throw new Error(result.error || "Failed to process donation");
+        }
+      } catch (error) {
+        console.error("Donation error:", error);
+        setDonationError(error.message);
         setIsSubmitting(false);
-
-        setAmount("");
-        setName("");
-        setPhoneNumber("");
-        setSelectedPayment("");
-        setSelectedCampaign(null);
-      }, 1000000);
+      }
     } else {
       console.log("Form has errors");
     }
@@ -371,7 +399,7 @@ const Campaigns = () => {
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
-      <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">]
+      <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
         
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
@@ -380,8 +408,8 @@ const Campaigns = () => {
           <p className="text-slate-600 dark:text-gray-300">
             Browse through current campaigns and support causes that matter to
             you.
-          </p>        </div>
-
+          </p>{" "}
+        </div>
         {/* Search and Filter Bar */}
         <div className="mb-8 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -413,7 +441,6 @@ const Campaigns = () => {
             </div>
           </div>
         </div>
-
         {/* Category Pills */}
         <div className="mb-8 overflow-x-auto">
           <div className="flex space-x-2 pb-2">
@@ -436,7 +463,6 @@ const Campaigns = () => {
             ))}
           </div>
         </div>
-
         {/* Campaigns Table */}
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
@@ -512,7 +538,6 @@ const Campaigns = () => {
             </tbody>
           </table>
         </div>
-
         {/* View Payment Modal */}
         {showPaymentsPlace && selectedCampaign && getSelectedCampaignData() && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 view_pay">
@@ -713,13 +738,24 @@ const Campaigns = () => {
                     isSubmitting ? "opacity-70 cursor-not-allowed" : ""
                   }`}
                 >
-                  {isSubmitting ? "Donate Now" : "Donate Now"}
+                  {isSubmitting ? "Submitting..." : "Donate Now"}
                 </button>
+
+                {donationError && (
+                  <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+                    <div className="flex items-center">
+                      <X className="h-5 w-5 text-red-400 mr-2" />
+                      <p className="text-sm text-red-600 dark:text-red-400">
+                        {donationError}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
               </form>
             </div>
           </div>
         )}
-
         {/* Thank You Message */}
         {thankYouMessage && selectedCampaign && getSelectedCampaignData() && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -828,7 +864,7 @@ const Campaigns = () => {
                   <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
                   <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
                     Campaign Details
-                  </h2>
+                  </h2>\
                 </div>
                 <button
                   onClick={() => setShowCampDetails(false)}
@@ -925,7 +961,6 @@ const Campaigns = () => {
             </div>
           </div>
         )}
-
         {/* Share Modal */}
         {showShareCampaigns && selectedCampaign && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">

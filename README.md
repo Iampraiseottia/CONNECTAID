@@ -21,11 +21,11 @@ This disconnect can result in unfulfilled needs and wasted resources, preventing
 
 3. Search and Filtering: Advance search and filter mechanism based on various categories and keywords.
 
-4. Enhanced Security: Email and Phone verification, upload of national document alongside your photo, 2FA, request limiting, transaction verification and secure data handling.
+4. Enhanced Security: Email verification, 2FA, transaction verification and secure data handling.
 
 5. Impact Tracking: Donors can track the impact of their donations and receive feedbacks.
 
 
-Seekers request is done physically or throuh call and their request is validated and verified by ConnectAID team.
+Seekers request is done physically or through call and their request is validated and verified by ConnectAID team and uploaded to the web application where willing donor can donate and the seeker prayers are been answered.
 
 
