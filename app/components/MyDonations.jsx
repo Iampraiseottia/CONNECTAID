@@ -24,7 +24,6 @@ import {
 
 import { motion } from "motion/react";
 
-
 const MyDonations = ({ setActiveComponent }) => {
   const [donations, setDonations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -48,123 +47,83 @@ const MyDonations = ({ setActiveComponent }) => {
   ];
 
   React.useEffect(() => {
-    // Simulate API fetch
-    setTimeout(() => {
-      setDonations([
-        {
-          id: "DON-2025-001",
-          campaign: "Clean Water Initiative",
-          organization: "Water for All",
-          date: "2025-04-15",
-          amount: 10000,
-          status: "completed",
-          category: "Humanitarian",
-          receipt: "R-2025-001",
-          impact: "Provided clean water to an entire local community",
-          description:
-            "This donation helped fund the construction of a water treatment facility in a rural community facing water scarcity and contamination issues.",
-          beneficiaries: "350 families in Karatu Village",
-          location: "Eastern Province",
-          taxDeductible: true,
-          contactPerson: "Maria Hernandez",
-          contactEmail: "m.hernandez@waterforall.org",
-        },
-        {
-          id: "DON-2025-002",
-          campaign: "School Supplies Drive",
-          organization: "Education First",
-          date: "2025-03-22",
-          amount: 30000,
-          status: "completed",
-          category: "Education",
-          receipt: "R-2025-002",
-          impact: "Equipped 8 students with supplies",
-          description:
-            "Your donation provided textbooks, notebooks, calculators, and other essential school supplies to underprivileged students.",
-          beneficiaries: "8 high school students from low-income families",
-          location: "Central District Schools",
-          taxDeductible: true,
-          contactPerson: "David Omondi",
-          contactEmail: "d.omondi@educationfirst.org",
-        },
-        {
-          id: "DON-2025-003",
-          campaign: "Hurricane Relief Fund",
-          organization: "Disaster Response Team",
-          date: "2025-02-10",
-          amount: 250000,
-          status: "completed",
-          category: "Disaster Relief",
-          receipt: "R-2025-003",
-          impact: "Helped 5 families with emergency housing",
-          description:
-            "Your generous contribution provided temporary housing, food, clean water, and basic necessities to families displaced by Hurricane Marcus.",
-          beneficiaries: "5 families (21 individuals)",
-          location: "Coastal Region",
-          taxDeductible: true,
-          contactPerson: "James Wilson",
-          contactEmail: "j.wilson@disasterresponse.org",
-        },
-        {
-          id: "DON-2025-004",
-          campaign: "Monthly Children's Hospital Support",
-          organization: "Children's Medical Foundation",
-          date: "2025-04-01",
-          amount: 50000,
-          status: "recurring",
-          category: "Healthcare",
-          receipt: "R-2025-004",
-          impact: "Contributed to pediatric care",
-          description:
-            "Your monthly donation supports ongoing medical treatment for children with chronic illnesses, helping to cover medication costs and specialized care.",
-          beneficiaries: "Children's Ward at Regional Hospital",
-          location: "Metropolitan Medical Center",
-          taxDeductible: true,
-          contactPerson: "Dr. Sarah Chen",
-          contactEmail: "s.chen@childrenmedical.org",
-          nextPaymentDate: "2025-05-01",
-        },
-        {
-          id: "DON-2025-005",
-          campaign: "Shelter For Homeless",
-          organization: "Housing Support",
-          date: "2025-07-09",
-          amount: 85000,
-          status: "completed",
-          category: "Environment",
-          receipt: "R-2025-005",
-          impact: "Supported habitat restoration efforts",
-          description:
-            "Your donation contributed to the construction of environmentally sustainable temporary housing units for homeless individuals.",
-          beneficiaries: "12 individuals experiencing homelessness",
-          location: "Western District",
-          taxDeductible: true,
-          contactPerson: "Patrick Mwangi",
-          contactEmail: "p.mwangi@housingsupport.org",
-        },
-        {
-          id: "DON-2025-006",
-          campaign: "Food Bank Distribution",
-          organization: "Community Helpers",
-          date: "2025-04-10",
-          amount: 20000,
-          status: "pending",
-          category: "Poverty Alleviation",
-          receipt: "Pending",
-          impact: "Processing",
-          description:
-            "This donation will help stock local food banks with nutritious meals for families facing food insecurity.",
-          beneficiaries: "Estimated 25 families",
-          location: "Southern Community Center",
-          taxDeductible: true,
-          contactPerson: "Elena Rodriguez",
-          contactEmail: "e.rodriguez@communityhelpers.org",
-          expectedCompletionDate: "2025-04-20",
-        },
-      ]);
+  const fetchDonations = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch("/api/my-donation"); 
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch donations");
+      }
+
+      const data = await response.json();
+
+      // Transform the database data to match the component's expected format
+      const transformedDonations = data.donations.map((donation) => ({
+        id: `DON-${donation.id}`,
+        campaign: donation.campaign_title,
+        organization: "ConnectAID", 
+        date: donation.created_at.split("T")[0], 
+        amount: donation.amount,
+        status: donation.status,
+        category: donation.campaign_category,
+        receipt: `R-${donation.transaction_id}`,
+        impact: getImpactMessage(donation.campaign_category, donation.amount),
+        description: donation.campaign_description,
+        beneficiaries: getBeneficiaries(donation.campaign_category),
+        location: "Cameroon", 
+        taxDeductible: true,
+        contactPerson: "ConnectAID", 
+        contactEmail: "connectaid@gmail.com", 
+        transactionId: donation.transaction_id,
+        paymentMethod: donation.payment_method,
+        donorName: donation.donor_name,
+        phoneNumber: donation.phone_number,
+        campaignImage: donation.campaign_image,
+      }));
+
+      setDonations(transformedDonations);
+    } catch (error) {
+      console.error("Error fetching donations:", error);
+    } finally {
       setIsLoading(false);
-    }, 1000);
-  }, []);
+    }
+  };
+
+  fetchDonations();
+}, []);
+
+  const getImpactMessage = (category, amount) => {
+    const baseMessages = {
+      Food: "Helped provide meals to families in need",
+      Education: "Supported educational resources for students",
+      Healthcare: "Contributed to medical care and treatment",
+      "Disaster Relief": "Provided emergency assistance to affected families",
+      Children: "Supported children and youth programs",
+      Environment: "Contributed to environmental conservation efforts",
+      Humanitarian: "Provided humanitarian aid to communities",
+      "Extreme-Cases": "Provided critical emergency assistance",
+      "Poverty Alleviation": "Helped families escape poverty",
+    };
+
+    return baseMessages[category] || "Made a positive impact in the community";
+  };
+
+  const getBeneficiaries = (category) => {
+    const beneficiaryMessages = {
+      Food: "Families facing food insecurity",
+      Education: "Students from underserved communities",
+      Healthcare: "Patients in need of medical care",
+      "Disaster Relief": "Families affected by disasters",
+      Children: "Children and youth in our programs",
+      Environment: "Local communities and wildlife",
+      Humanitarian: "Communities in crisis",
+      "Extreme-Cases": "Individuals in extreme situations",
+      "Poverty Alleviation": "Low-income families",
+    };
+
+    return beneficiaryMessages[category] || "Community members in need";
+  }; 
 
   const toggleCategory = (category) => {
     if (selectedCategories.includes(category)) {
@@ -266,13 +225,10 @@ const MyDonations = ({ setActiveComponent }) => {
       }
     };
 
-
-
-    
     return (
       <motion.div
         initial={{ opacity: 0, y: 100 }}
-        whileInView={{ y: 0, opacity: 1 }} 
+        whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
         viewport={{ once: true, amount: 0.05 }}
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
@@ -564,11 +520,11 @@ const MyDonations = ({ setActiveComponent }) => {
       transition={{ duration: 0.7, delay: 0.7 }}
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 bg-gray-50 dark:bg-slate-900 min-h-screen"
-    > 
+    >
       <div className="max-w-7xl mx-auto mt-12">
         <div className="flex items-center mb-6">
           <button
-            onClick={() => setActiveComponent("dashboardMain")} 
+            onClick={() => setActiveComponent("dashboardMain")}
             className="mr-4 p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
           >
             <ArrowLeft size={20} className="text-gray-800 dark:text-gray-200" />
