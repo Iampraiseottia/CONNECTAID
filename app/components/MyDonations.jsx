@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 
 const MyDonations = ({ setActiveComponent }) => {
   const [donations, setDonations] = useState([]);
@@ -47,51 +48,50 @@ const MyDonations = ({ setActiveComponent }) => {
   ];
 
   React.useEffect(() => {
-  const fetchDonations = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/my-donation"); 
+    const fetchDonations = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/my-donation");
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch donations");
+        if (!response.ok) {
+          throw new Error("Failed to fetch donations");
+        }
+
+        const data = await response.json();
+
+        // Transform the database data to match the component's expected format
+        const transformedDonations = data.donations.map((donation) => ({
+          id: `DON-${donation.id}`,
+          campaign: donation.campaign_title,
+          organization: "ConnectAID",
+          date: donation.created_at.split("T")[0],
+          amount: donation.amount,
+          status: donation.status,
+          category: donation.campaign_category,
+          receipt: `R-${donation.transaction_id}`,
+          impact: getImpactMessage(donation.campaign_category, donation.amount),
+          description: donation.campaign_description,
+          beneficiaries: getBeneficiaries(donation.campaign_category),
+          location: "Cameroon",
+          contactPerson: "ConnectAID",
+          contactEmail: "connectaid@gmail.com",
+          transactionId: donation.transaction_id,
+          paymentMethod: donation.payment_method,
+          donorName: donation.donor_name,
+          phoneNumber: donation.phone_number,
+          campaignImage: donation.campaign_image,
+        }));
+
+        setDonations(transformedDonations);
+      } catch (error) {
+        console.error("Error fetching donations:", error);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      const data = await response.json();
-
-      // Transform the database data to match the component's expected format
-      const transformedDonations = data.donations.map((donation) => ({
-        id: `DON-${donation.id}`,
-        campaign: donation.campaign_title,
-        organization: "ConnectAID", 
-        date: donation.created_at.split("T")[0], 
-        amount: donation.amount,
-        status: donation.status,
-        category: donation.campaign_category,
-        receipt: `R-${donation.transaction_id}`,
-        impact: getImpactMessage(donation.campaign_category, donation.amount),
-        description: donation.campaign_description,
-        beneficiaries: getBeneficiaries(donation.campaign_category),
-        location: "Cameroon", 
-        taxDeductible: true,
-        contactPerson: "ConnectAID", 
-        contactEmail: "connectaid@gmail.com", 
-        transactionId: donation.transaction_id,
-        paymentMethod: donation.payment_method,
-        donorName: donation.donor_name,
-        phoneNumber: donation.phone_number,
-        campaignImage: donation.campaign_image,
-      }));
-
-      setDonations(transformedDonations);
-    } catch (error) {
-      console.error("Error fetching donations:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  fetchDonations();
-}, []);
+    fetchDonations();
+  }, []);
 
   const getImpactMessage = (category, amount) => {
     const baseMessages = {
@@ -123,7 +123,7 @@ const MyDonations = ({ setActiveComponent }) => {
     };
 
     return beneficiaryMessages[category] || "Community members in need";
-  }; 
+  };
 
   const toggleCategory = (category) => {
     if (selectedCategories.includes(category)) {
@@ -252,6 +252,14 @@ const MyDonations = ({ setActiveComponent }) => {
 
           {/* Content */}
           <div className="p-6">
+            <Image
+              src={donation.campaignImage}
+              width={400}
+              height={400}
+              alt={donation.campaign}
+              className="w-full h-96 object-cover mb-6"
+            />
+
             {/* Primary Info */}
             <div className="bg-gray-50 dark:bg-slate-700 rounded-lg p-4 mb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -384,14 +392,7 @@ const MyDonations = ({ setActiveComponent }) => {
                       {donation.receipt}
                     </p>
                   </div>
-                  <div className="mb-4">
-                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                      Tax Deductible
-                    </h4>
-                    <p className="text-gray-800 dark:text-gray-200">
-                      {donation.taxDeductible ? "Yes" : "No"}
-                    </p>
-                  </div>
+
                   <div className="mb-4">
                     <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       Contact Person

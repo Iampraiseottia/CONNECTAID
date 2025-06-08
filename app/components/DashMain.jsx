@@ -465,11 +465,11 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  People Impacted
+                  Completed Donations
                 </p>
                 <p className="text-2xl font-bold text-slate-800 dark:text-gray-100">
                   {userStats.peopleImpacted}
-                </p>
+                </p> 
               </div>
             </div>
           </div>
