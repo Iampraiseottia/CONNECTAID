@@ -36,157 +36,159 @@ const DashMain = ({ setActiveComponent }) => {
     campaignsSupported: 27,
     peopleImpacted: 485,
     recentCampaigns: [],
-    upcomingEvents: [],
+    donationCampaigns: [], // This will hold data from /api/campaigns-donation
   });
 
   const [donationData, setDonationData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [userData, setUserData] = useState({
-  username: "User",
-  email: "",
-  fullName: "",
-});
+    username: "User",
+    email: "",
+    fullName: "",
+  });
+
+  // State for search functionality
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState({
+    campaigns: [], // For mock/recent campaigns
+    events: [], // If you have events to search
+    donationCampaigns: [], // For API-fetched donation campaigns
+  });
 
   useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      // First try to get from localStorage (immediate access) 
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setUserData({
-          username: user.username || "User",
-          email: user.email || "",
-          fullName: user.full_name || "",
-        });
-      }
-
-      // Then fetch fresh data from API 
-      const response = await fetch("/api/auth/user", {
-        method: "GET",
-        credentials: 'include', 
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const user = data.user;
-        
-        setUserData({
-          username: user.username || "User",
-          email: user.email || "",
-          fullName: user.full_name || "",
-        });
-
-        // Update localStorage with fresh data
-        localStorage.setItem('user', JSON.stringify(user));
-      } else {
-        console.log("Failed to fetch user data:", response.status);
-        // If API fails but we have stored data, keep using it
-        if (!storedUser) {
-          console.log("No stored user data, user might need to login");
+    const fetchUserData = async () => {
+      try {
+        // First try to get from localStorage (immediate access)
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          setUserData({
+            username: user.username || "User",
+            email: user.email || "",
+            fullName: user.full_name || "",
+          });
         }
+
+        // Then fetch fresh data from API
+        const response = await fetch("/api/auth/user", {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const user = data.user;
+
+          setUserData({
+            username: user.username || "User",
+            email: user.email || "",
+            fullName: user.full_name || "",
+          });
+
+          // Update localStorage with fresh data
+          localStorage.setItem("user", JSON.stringify(user));
+        } else {
+          console.log("Failed to fetch user data:", response.status);
+          // If API fails but we have stored data, keep using it
+          if (!storedUser) {
+            console.log("No stored user data, user might need to login");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        // If there's an error but we have stored data, keep using it
       }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      // If there's an error but we have stored data, keep using it
-    }
-  };
+    };
 
-  fetchUserData();
-}, []);
+    fetchUserData();
+  }, []);
 
-
-  // Simulate fetching data
+  // Simulate fetching data and fetch real donation campaigns
   useEffect(() => {
-    const mockDonationData = [
-      { month: "Jan", amount: 25000 },
-      { month: "Feb", amount: 50000 },
-      { month: "Mar", amount: 10000 },
-      { month: "Apr", amount: 70000 },
-      { month: "May", amount: 20000 },
-      { month: "Jun", amount: 30000 },
-      { month: "Jul", amount: 15000 },
-      { month: "Aug", amount: 85000 },
-      { month: "Sep", amount: 12500 },
-      { month: "Oct", amount: 40000 },
-      { month: "Nov", amount: 50000 },
-      { month: "Dec", amount: 90000 },
-    ];
+    const fetchData = async () => {
+      const mockDonationData = [
+        { month: "Jan", amount: 25000 },
+        { month: "Feb", amount: 50000 },
+        { month: "Mar", amount: 10000 },
+        { month: "Apr", amount: 70000 },
+        { month: "May", amount: 20000 },
+        { month: "Jun", amount: 30000 },
+        { month: "Jul", amount: 15000 },
+        { month: "Aug", amount: 85000 },
+        { month: "Sep", amount: 12500 },
+        { month: "Oct", amount: 40000 },
+        { month: "Nov", amount: 50000 },
+        { month: "Dec", amount: 90000 },
+      ];
 
-    // Mock recent campaigns
-    const mockRecentCampaigns = [
-      {
-        id: 1,
-        title: "Education for Rural Children",
-        category: "Education",
-        amountDonated: "10, 000",
-        date: "2024-03-12",
-      },
-      {
-        id: 2,
-        title: "Medical Supplies for Local Clinic",
-        category: "Healthcare",
-        amountDonated: "70, 000",
-        date: "2024-04-05",
-      },
-      {
-        id: 3,
-        title: "Local Community Food Distribution",
-        category: "Food ",
-        amountDonated: "20, 000",
-        date: "2024-05-28",
-      },
-      {
-        id: 4,
-        title: "Clean Water Source For Community",
-        category: "Water",
-        amountDonated: "30, 000",
-        date: "2024-06-18",
-      },
-      {
-        id: 5,
-        title: "Shelter For Homeless",
-        category: "Healthcare",
-        amountDonated: "85, 000",
-        date: "2025-07-09",
-      },
-    ];
+      // Mock recent campaigns (these are fixed, not fetched)
+      const mockRecentCampaigns = [
+        {
+          id: 1,
+          title: "Education for Rural Children",
+          category: "Education",
+          amountDonated: "10, 000",
+          date: "2024-03-12",
+        },
+        {
+          id: 2,
+          title: "Medical Supplies for Local Clinic",
+          category: "Healthcare",
+          amountDonated: "70, 000",
+          date: "2024-04-05",
+        },
+        {
+          id: 3,
+          title: "Local Community Food Distribution",
+          category: "Food ",
+          amountDonated: "20, 000",
+          date: "2024-05-28",
+        },
+        {
+          id: 4,
+          title: "Clean Water Source For Community",
+          category: "Water",
+          amountDonated: "30, 000",
+          date: "2024-06-18",
+        },
+        {
+          id: 5,
+          title: "Shelter For Homeless",
+          category: "Healthcare",
+          amountDonated: "85, 000",
+          date: "2025-07-09",
+        },
+      ];
 
-    // Mock upcoming events
-    const mockUpcomingEvents = [
-      {
-        id: 1,
-        title:
-          "Hope for the Homeless: Compassion / Provide Home for the Homeless",
-        date: "15 June 2025",
-        time: "11:00 AM",
-      },
-      {
-        id: 2,
-        title:
-          "Empowering Future Generations: Access to Clean Water for Children",
-        date: "20 Aug 2025",
-        time: "2:30 PM",
-      },
-      {
-        id: 3,
-        title: "Stand Together for Change: Aid Those in Extreme Cases of Need!",
-        date: "13 Oct 2025",
-        time: "11:30 AM",
-      },
-    ];
+      // Fetching my donation campaigns from API
+      let fetchedDonationCampaigns = [];
+      try {
+        // CORRECTED API ENDPOINT: Changed to /api/campaigns-donation
+        const response = await fetch("/api/campaigns-donation?limit=4");
+        if (response.ok) {
+          const data = await response.json();
+          fetchedDonationCampaigns = data.activeCampaigns || [];
+        } else {
+          console.error("Failed to fetch donation campaigns:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching donation campaigns:", error);
+      }
 
-    // Simulate loading delay
-    setTimeout(() => {
-      setDonationData(mockDonationData);
       setUserStats((prev) => ({
         ...prev,
         recentCampaigns: mockRecentCampaigns,
-        upcomingEvents: mockUpcomingEvents,
+        donationCampaigns: fetchedDonationCampaigns, // Use fetched data here
       }));
+
+      setDonationData(mockDonationData);
       setIsLoading(false);
-    }, 1000);
+    };
+
+    setTimeout(() => {
+      fetchData();
+    }, 1000); // Simulate network delay
   }, []);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -202,41 +204,40 @@ const DashMain = ({ setActiveComponent }) => {
     searchRef.current.focus();
   };
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState({
-    campaigns: [],
-    events: [],
-  });
-
+  // Search logic
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setSearchResults({
         campaigns: [],
         events: [],
+        donationCampaigns: [],
       });
       return;
     }
 
     const query = searchQuery.toLowerCase();
 
-    const filteredCampaigns = userStats.recentCampaigns.filter(
+    // Filter recent campaigns (mock data)
+    const filteredRecentCampaigns = userStats.recentCampaigns.filter(
       (campaign) =>
         campaign.title.toLowerCase().includes(query) ||
         campaign.category.toLowerCase().includes(query)
     );
 
-    const filteredEvents = userStats.upcomingEvents.filter(
-      (event) =>
-        event.title.toLowerCase().includes(query) ||
-        event.date.includes(query) ||
-        event.time.toLowerCase().includes(query)
+    // Filter donation campaigns (fetched from API)
+    const filteredDonationCampaigns = userStats.donationCampaigns.filter(
+      (campaign) =>
+        campaign.title.toLowerCase().includes(query) ||
+        campaign.category.toLowerCase().includes(query)
     );
 
+    // Update search results state
     setSearchResults({
-      campaigns: filteredCampaigns,
-      events: filteredEvents,
+      campaigns: filteredRecentCampaigns,
+      events: [], // Populate if you have event data
+      donationCampaigns: filteredDonationCampaigns,
     });
-  }, [searchQuery, userStats.recentCampaigns, userStats.upcomingEvents]);
+  }, [searchQuery, userStats.recentCampaigns, userStats.donationCampaigns]);
 
   const isSearchActive = searchQuery.trim() !== "";
 
@@ -336,17 +337,17 @@ const DashMain = ({ setActiveComponent }) => {
 
           {/* No results message */}
           {searchResults.campaigns.length === 0 &&
-            searchResults.events.length === 0 && (
+            searchResults.donationCampaigns.length === 0 && (
               <p className="text-center py-4 text-gray-500 dark:text-gray-400">
                 No results found. Try a different search term.
               </p>
             )}
 
-          {/* Campaign Search Results */}
+          {/* Campaign Search Results (from mock recent campaigns) */}
           {searchResults.campaigns.length > 0 && (
             <div className="mb-6">
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
-                Campaigns
+                Recent Campaigns
               </h3>
               <div className="space-y-4">
                 {searchResults.campaigns.map((campaign) => (
@@ -378,35 +379,31 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           )}
 
-          {/* Event Search Results */}
-          {searchResults.events.length > 0 && (
+          {/* Current Donation Campaign Search Results (from API) */}
+          {searchResults.donationCampaigns.length > 0 && (
             <div>
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
-                Events
+                Donation Campaigns
               </h3>
               <div className="space-y-4">
-                {searchResults.events.map((event) => (
+                {searchResults.donationCampaigns.map((campaign) => (
                   <div
-                    key={event.id}
+                    key={campaign.id}
                     className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
                   >
                     <h3 className="font-medium text-slate-800 dark:text-gray-200">
-                      {event.title}
+                      {campaign.title}
                     </h3>
                     <div className="flex items-center mt-1">
-                      <Calendar
-                        size={16}
-                        className="mr-1 text-gray-500 dark:text-gray-400"
-                      />
                       <span className="text-sm mr-3 text-gray-500 dark:text-gray-400">
-                        {event.date}
+                        {campaign.category}
                       </span>
                       <Clock
                         size={16}
                         className="mr-1 text-gray-500 dark:text-gray-400"
                       />
                       <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {event.time}
+                        {new Date(campaign.date).toLocaleDateString()}
                       </span>
                     </div>
                   </div>
@@ -469,7 +466,7 @@ const DashMain = ({ setActiveComponent }) => {
                 </p>
                 <p className="text-2xl font-bold text-slate-800 dark:text-gray-100">
                   {userStats.peopleImpacted}
-                </p> 
+                </p>
               </div>
             </div>
           </div>
@@ -549,7 +546,7 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
-            {/* Recent Campaigns */}
+            {/* Recent Campaigns (mock data) */}
             <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
               <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Heart size={20} className="mr-2 text-teal-600" />
@@ -613,47 +610,66 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            {/* Upcoming Events */}
+            {/* Current Donation Campaigns (fetched from API) */}
             <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
               <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
-                <Calendar size={20} className="mr-2 text-teal-600" />
-                Upcoming Events
+                <Heart size={20} className="mr-2 text-teal-600" />
+                Current Donation Campaigns
               </h2>
               <div className="overflow-hidden">
-                {userStats.upcomingEvents.length > 0 ? (
+                {userStats.donationCampaigns.length > 0 ? (
                   <div className="space-y-4">
-                    {userStats.upcomingEvents.map((event) => (
+                    {userStats.donationCampaigns.slice(0, 4).map((campaign) => (
                       <div
-                        key={event.id}
+                        key={campaign.id}
                         className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
                       >
                         <h3 className="font-medium text-slate-800 dark:text-gray-200">
-                          {event.title}
+                          {campaign.title}
                         </h3>
-                        <div className="flex items-center mt-1">
-                          <Calendar
-                            size={16}
-                            className="mr-1 text-gray-500 dark:text-gray-400"
-                          />
-                          <span className="text-sm mr-3 text-gray-500 dark:text-gray-400">
-                            {event.date}
-                          </span>
-                          <Clock
-                            size={16}
-                            className="mr-1 text-gray-500 dark:text-gray-400"
-                          />
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {event.time}
-                          </span>
+                        <div className="flex items-center justify-between mt-1">
+                          <div className="flex items-center">
+                            <span className="text-sm text-gray-500 dark:text-gray-400 mr-3">
+                              {campaign.category}
+                            </span>
+                            <Clock
+                              size={16}
+                              className="mr-1 text-gray-500 dark:text-gray-400"
+                            />
+                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                              {new Date(campaign.date).toLocaleDateString()}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <p className="text-center py-4 text-gray-500 dark:text-gray-400">
-                    No upcoming events
+                    No current donation campaigns
                   </p>
                 )}
+
+                <button
+                  onClick={() => handleNavigation("Campaigns")}
+                  className="mt-4 font-medium flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+                >
+                  See all campaigns 
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    ></path>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
