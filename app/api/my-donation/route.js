@@ -49,7 +49,7 @@ export async function GET(request) {
       WHERE username = $1
       ORDER BY created_at DESC
     `;
-    
+
     const donationsResult = await query(donationsQuery, [user.username]);
 
     return NextResponse.json(

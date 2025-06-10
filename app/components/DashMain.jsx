@@ -32,9 +32,9 @@ import { motion } from "motion/react";
 
 const DashMain = ({ setActiveComponent }) => {
   const [userStats, setUserStats] = useState({
-    totalDonated: "497, 500",
-    campaignsSupported: 27,
-    peopleImpacted: 485,
+    totalDonated: "0",
+    campaignsSupported: 0,
+    peopleImpacted: 0,
     recentCampaigns: [],
     donationCampaigns: [], // This will hold data from /api/campaigns-donation
   });
@@ -51,7 +51,7 @@ const DashMain = ({ setActiveComponent }) => {
   // State for search functionality
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState({
-    campaigns: [], // For mock/recent campaigns
+    campaigns: [], // Now for recent campaigns fetched from API
     events: [], // If you have events to search
     donationCampaigns: [], // For API-fetched donation campaigns
   });
@@ -104,67 +104,78 @@ const DashMain = ({ setActiveComponent }) => {
     fetchUserData();
   }, []);
 
-  // Simulate fetching data and fetch real donation campaigns
+  // Fetch real user donations and donation campaigns
   useEffect(() => {
     const fetchData = async () => {
-      const mockDonationData = [
-        { month: "Jan", amount: 25000 },
-        { month: "Feb", amount: 50000 },
-        { month: "Mar", amount: 10000 },
-        { month: "Apr", amount: 70000 },
-        { month: "May", amount: 20000 },
-        { month: "Jun", amount: 30000 },
-        { month: "Jul", amount: 15000 },
-        { month: "Aug", amount: 85000 },
-        { month: "Sep", amount: 12500 },
-        { month: "Oct", amount: 40000 },
-        { month: "Nov", amount: 50000 },
-        { month: "Dec", amount: 90000 },
-      ];
+      let fetchedRecentDonations = [];
+      let totalDonatedAmount = 0;
+      let campaignsSupportedCount = 0;
+      let completedDonationsCount = 0;
+      const donationHistoryChartData = [];
 
-      // Mock recent campaigns (these are fixed, not fetched)
-      const mockRecentCampaigns = [
-        {
-          id: 1,
-          title: "Education for Rural Children",
-          category: "Education",
-          amountDonated: "10, 000",
-          date: "2024-03-12",
-        },
-        {
-          id: 2,
-          title: "Medical Supplies for Local Clinic",
-          category: "Healthcare",
-          amountDonated: "70, 000",
-          date: "2024-04-05",
-        },
-        {
-          id: 3,
-          title: "Local Community Food Distribution",
-          category: "Food ",
-          amountDonated: "20, 000",
-          date: "2024-05-28",
-        },
-        {
-          id: 4,
-          title: "Clean Water Source For Community",
-          category: "Water",
-          amountDonated: "30, 000",
-          date: "2024-06-18",
-        },
-        {
-          id: 5,
-          title: "Shelter For Homeless",
-          category: "Healthcare",
-          amountDonated: "85, 000",
-          date: "2025-07-09",
-        },
-      ];
+      // Fetch user's donations from your API
+      try {
+        const response = await fetch("/api/my-donation");
+        if (response.ok) {
+          const data = await response.json();
+          fetchedRecentDonations = data.donations || [];
 
-      // Fetching my donation campaigns from API
+          // Calculate statistics from fetched donations
+          totalDonatedAmount = fetchedRecentDonations.reduce(
+            (sum, donation) => sum + donation.amount,
+            0
+          );
+
+          const uniqueCampaignIds = new Set(
+            fetchedRecentDonations.map((donation) => donation.campaign_id)
+          );
+          campaignsSupportedCount = uniqueCampaignIds.size;
+
+          completedDonationsCount = fetchedRecentDonations.filter(
+            (donation) => donation.status === "completed"
+          ).length;
+
+          // Prepare data for the donation history chart
+          const monthlyDonations = fetchedRecentDonations.reduce(
+            (acc, donation) => {
+              const date = new Date(donation.created_at);
+              const month = date.toLocaleString("en-US", { month: "short" });
+              acc[month] = (acc[month] || 0) + donation.amount;
+              return acc;
+            },
+            {}
+          );
+
+          const allMonths = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          allMonths.forEach((month) => {
+            donationHistoryChartData.push({
+              month: month,
+              amount: monthlyDonations[month] || 0,
+            });
+          });
+        } else {
+          console.error("Failed to fetch user donations:", response.status);
+        }
+      } catch (error) {
+        console.error("Error fetching user donations:", error);
+      }
+
+      // Fetching other donation campaigns from API (already present in the original code)
       let fetchedDonationCampaigns = [];
       try {
-        // CORRECTED API ENDPOINT: Changed to /api/campaigns-donation
         const response = await fetch("/api/campaigns-donation?limit=4");
         if (response.ok) {
           const data = await response.json();
@@ -178,18 +189,28 @@ const DashMain = ({ setActiveComponent }) => {
 
       setUserStats((prev) => ({
         ...prev,
-        recentCampaigns: mockRecentCampaigns,
+        totalDonated: totalDonatedAmount.toLocaleString(), // Format as string with commas
+        campaignsSupported: campaignsSupportedCount,
+        peopleImpacted: completedDonationsCount,
+        recentCampaigns: fetchedRecentDonations.map((d) => ({
+          // Map to match existing structure
+          id: d.id,
+          title: d.campaign_title,
+          category: d.campaign_category,
+          amountDonated: d.amount.toLocaleString(),
+          date: new Date(d.created_at).toLocaleDateString(),
+        })),
         donationCampaigns: fetchedDonationCampaigns, // Use fetched data here
       }));
 
-      setDonationData(mockDonationData);
+      setDonationData(donationHistoryChartData);
       setIsLoading(false);
     };
 
     setTimeout(() => {
       fetchData();
     }, 1000); // Simulate network delay
-  }, []);
+  }, [userData.username]); // Re-fetch when username changes
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -217,7 +238,7 @@ const DashMain = ({ setActiveComponent }) => {
 
     const query = searchQuery.toLowerCase();
 
-    // Filter recent campaigns (mock data)
+    // Filter recent campaigns (now from fetched data)
     const filteredRecentCampaigns = userStats.recentCampaigns.filter(
       (campaign) =>
         campaign.title.toLowerCase().includes(query) ||
@@ -303,7 +324,7 @@ const DashMain = ({ setActiveComponent }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search campaigns or events..."
-              className="px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border bg-white border-gray-300 text-gray-900 focus:ring-teal-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-teal-500 duration-200 ease-in-out focus:outline-none focus:ring-2"
+              className="px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border bg-white border-300 text-gray-900 focus:ring-teal-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-teal-500 duration-200 ease-in-out focus:outline-none focus:ring-2"
             />
             <Search
               className="absolute left-3 top-2.5 text-gray-400"
@@ -343,11 +364,11 @@ const DashMain = ({ setActiveComponent }) => {
               </p>
             )}
 
-          {/* Campaign Search Results (from mock recent campaigns) */}
+          {/* Campaign Search Results (from user's recent campaigns) */}
           {searchResults.campaigns.length > 0 && (
             <div className="mb-6">
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
-                Recent Campaigns
+                Your Recent Donations
               </h3>
               <div className="space-y-4">
                 {searchResults.campaigns.map((campaign) => (
@@ -366,7 +387,7 @@ const DashMain = ({ setActiveComponent }) => {
                       </div>
                       <div className="text-right">
                         <p className="font-medium text-teal-600">
-                          ${campaign.amountDonated}
+                          {campaign.amountDonated} Francs
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
                           {campaign.date}
@@ -383,7 +404,7 @@ const DashMain = ({ setActiveComponent }) => {
           {searchResults.donationCampaigns.length > 0 && (
             <div>
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
-                Donation Campaigns
+                Other Donation Campaigns
               </h3>
               <div className="space-y-4">
                 {searchResults.donationCampaigns.map((campaign) => (
@@ -455,7 +476,7 @@ const DashMain = ({ setActiveComponent }) => {
 
             <div
               className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
-              title="People Impacted"
+              title="Completed Donations"
             >
               <div className="bg-purple-100 p-3 rounded-full mr-4">
                 <Users size={24} className="text-purple-600" />
@@ -546,7 +567,7 @@ const DashMain = ({ setActiveComponent }) => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
-            {/* Recent Campaigns (mock data) */}
+            {/* Recent Campaigns (now from fetched data) */}
             <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
               <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Heart size={20} className="mr-2 text-teal-600" />
@@ -555,7 +576,7 @@ const DashMain = ({ setActiveComponent }) => {
               <div className="overflow-hidden">
                 {userStats.recentCampaigns.length > 0 ? (
                   <div className="space-y-4">
-                    {userStats.recentCampaigns.map((campaign) => (
+                    {userStats.recentCampaigns.slice(0, 5).map((campaign) => (
                       <div
                         key={campaign.id}
                         className="border-b pb-4 last:border-0 border-gray-200 dark:border-gray-700"
@@ -654,7 +675,7 @@ const DashMain = ({ setActiveComponent }) => {
                   onClick={() => handleNavigation("Campaigns")}
                   className="mt-4 font-medium flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
                 >
-                  See all campaigns 
+                  See all campaigns
                   <svg
                     className="w-4 h-4 ml-1"
                     fill="none"
