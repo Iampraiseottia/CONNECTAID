@@ -36,11 +36,13 @@ const DashMain = ({ setActiveComponent }) => {
     campaignsSupported: 0,
     peopleImpacted: 0,
     recentCampaigns: [],
-    donationCampaigns: [], // This will hold data from /api/campaigns-donation
+    donationCampaigns: [],
   });
 
   const [donationData, setDonationData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
+  const [isSurveyComplete, setIsSurveyComplete] = useState(false);
 
   const [userData, setUserData] = useState({
     username: "User",
@@ -48,18 +50,20 @@ const DashMain = ({ setActiveComponent }) => {
     fullName: "",
   });
 
-  // State for search functionality
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState({
-    campaigns: [], // Now for recent campaigns fetched from API
-    events: [], // If you have events to search
-    donationCampaigns: [], // For API-fetched donation campaigns
+    campaigns: [],
+    events: [],
+    donationCampaigns: [],
   });
 
+  // Effect to fetch user data and profile/survey completion status
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserDataAndCompletionStatus = async () => {
+      let currentUsername = userData.username; // Use state's current username for initial fetch
+
       try {
-        // First try to get from localStorage (immediate access)
+        // Attempt to get user data from localStorage first for faster UI updates
         const storedUser = localStorage.getItem("user");
         if (storedUser) {
           const user = JSON.parse(storedUser);
@@ -68,16 +72,17 @@ const DashMain = ({ setActiveComponent }) => {
             email: user.email || "",
             fullName: user.full_name || "",
           });
+          currentUsername = user.username; // Update username from stored data
         }
 
-        // Then fetch fresh data from API
-        const response = await fetch("/api/auth/user", {
+        // Fetch fresh user data from the authentication API
+        const userResponse = await fetch("/api/auth/user", {
           method: "GET",
           credentials: "include",
         });
 
-        if (response.ok) {
-          const data = await response.json();
+        if (userResponse.ok) {
+          const data = await userResponse.json();
           const user = data.user;
 
           setUserData({
@@ -85,26 +90,71 @@ const DashMain = ({ setActiveComponent }) => {
             email: user.email || "",
             fullName: user.full_name || "",
           });
+          currentUsername = user.username; 
 
-          // Update localStorage with fresh data
           localStorage.setItem("user", JSON.stringify(user));
         } else {
-          console.log("Failed to fetch user data:", response.status);
-          // If API fails but we have stored data, keep using it
+          console.error("Failed to fetch user data:", userResponse.status);
           if (!storedUser) {
-            console.log("No stored user data, user might need to login");
+            console.warn("No stored user data, user might need to login.");
           }
         }
+
+        // Fetch user profile and survey data only if a valid username is available
+        if (currentUsername && currentUsername !== "User") {
+          const profileResponse = await fetch(
+            `/api/user-profile?username=${currentUsername}`
+          );
+          if (profileResponse.ok) {
+            const profile = await profileResponse.json();
+            const profileIsComplete =
+              profile &&
+              profile.full_name && String(profile.full_name).trim() !== '' &&
+              profile.date_of_birth && 
+              profile.gender && String(profile.gender).trim() !== '' &&
+              profile.phone_number && String(profile.phone_number).trim() !== '' &&
+              profile.home_address && String(profile.home_address).trim() !== '' &&
+              profile.city && String(profile.city).trim() !== '' &&
+              profile.state_province_region && String(profile.state_province_region).trim() !== '' &&
+              profile.country && String(profile.country).trim() !== '' &&
+              profile.bio && String(profile.bio).trim() !== '' &&
+              profile.interests && Array.isArray(profile.interests) && profile.interests.length > 0 &&
+              profile.selfie_file && String(profile.selfie_file).trim() !== '';
+
+            setIsProfileComplete(profileIsComplete);
+          } else if (profileResponse.status === 404) {
+            setIsProfileComplete(false); 
+          } else {
+            console.error("Failed to fetch user profile:", profileResponse.status);
+            setIsProfileComplete(false); 
+          }
+
+          // Fetch User Survey Data
+          const surveyResponse = await fetch(`/api/survey`);
+          if (surveyResponse.ok) {
+            const surveyData = await surveyResponse.json();
+            setIsSurveyComplete(!!surveyData.survey);
+          } else if (surveyResponse.status === 404) {
+            setIsSurveyComplete(false); 
+          } else {
+            console.error("Failed to fetch survey data:", surveyResponse.status);
+            setIsSurveyComplete(false); 
+          }
+        } else {
+          setIsProfileComplete(false);
+          setIsSurveyComplete(false);
+        }
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        // If there's an error but we have stored data, keep using it
+        console.error("Error fetching user data or completion status:", error);
+        setIsProfileComplete(false);
+        setIsSurveyComplete(false);
       }
     };
 
-    fetchUserData();
-  }, []);
+    fetchUserDataAndCompletionStatus();
+  }, [userData.username]); 
 
-  // Fetch real user donations and donation campaigns
+  // Fetching user donations and general campaigns
   useEffect(() => {
     const fetchData = async () => {
       let fetchedRecentDonations = [];
@@ -113,9 +163,9 @@ const DashMain = ({ setActiveComponent }) => {
       let completedDonationsCount = 0;
       const donationHistoryChartData = [];
 
-      // Fetch user's donations from your API
+      // Fetch user's personal donations
       try {
-        const response = await fetch("/api/my-donation");
+        const response = await fetch("/api/my-donation", { credentials: "include" });
         if (response.ok) {
           const data = await response.json();
           fetchedRecentDonations = data.donations || [];
@@ -147,18 +197,8 @@ const DashMain = ({ setActiveComponent }) => {
           );
 
           const allMonths = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
           ];
           allMonths.forEach((month) => {
             donationHistoryChartData.push({
@@ -173,7 +213,7 @@ const DashMain = ({ setActiveComponent }) => {
         console.error("Error fetching user donations:", error);
       }
 
-      // Fetching other donation campaigns from API (already present in the original code)
+      // Fetching other active donation campaigns from the main campaigns API
       let fetchedDonationCampaigns = [];
       try {
         const response = await fetch("/api/campaigns-donation?limit=4");
@@ -181,36 +221,38 @@ const DashMain = ({ setActiveComponent }) => {
           const data = await response.json();
           fetchedDonationCampaigns = data.activeCampaigns || [];
         } else {
-          console.error("Failed to fetch donation campaigns:", response.status);
+          console.error("Failed to fetch general donation campaigns:", response.status);
         }
       } catch (error) {
-        console.error("Error fetching donation campaigns:", error);
+        console.error("Error fetching general donation campaigns:", error);
       }
 
+      // Update userStats state with all fetched data
       setUserStats((prev) => ({
         ...prev,
-        totalDonated: totalDonatedAmount.toLocaleString(), // Format as string with commas
+        totalDonated: totalDonatedAmount.toLocaleString(), 
         campaignsSupported: campaignsSupportedCount,
         peopleImpacted: completedDonationsCount,
         recentCampaigns: fetchedRecentDonations.map((d) => ({
-          // Map to match existing structure
           id: d.id,
           title: d.campaign_title,
           category: d.campaign_category,
-          amountDonated: d.amount.toLocaleString(),
-          date: new Date(d.created_at).toLocaleDateString(),
+          amountDonated: d.amount.toLocaleString(), 
+          date: new Date(d.created_at).toLocaleDateString(), 
         })),
-        donationCampaigns: fetchedDonationCampaigns, // Use fetched data here
+        donationCampaigns: fetchedDonationCampaigns, 
       }));
 
       setDonationData(donationHistoryChartData);
-      setIsLoading(false);
+      setIsLoading(false); 
     };
 
-    setTimeout(() => {
-      fetchData();
-    }, 1000); // Simulate network delay
-  }, [userData.username]); // Re-fetch when username changes
+    if (userData.username !== "User") {
+      setTimeout(() => { 
+        fetchData();
+      }, 1000);
+    }
+  }, [userData.username]); 
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -218,14 +260,13 @@ const DashMain = ({ setActiveComponent }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Search Input
   const searchRef = useRef();
 
   const onMouseEnterSearch = () => {
     searchRef.current.focus();
   };
 
-  // Search logic
+  // Effect for handling search logic
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setSearchResults({
@@ -238,14 +279,12 @@ const DashMain = ({ setActiveComponent }) => {
 
     const query = searchQuery.toLowerCase();
 
-    // Filter recent campaigns (now from fetched data)
     const filteredRecentCampaigns = userStats.recentCampaigns.filter(
       (campaign) =>
         campaign.title.toLowerCase().includes(query) ||
         campaign.category.toLowerCase().includes(query)
     );
 
-    // Filter donation campaigns (fetched from API)
     const filteredDonationCampaigns = userStats.donationCampaigns.filter(
       (campaign) =>
         campaign.title.toLowerCase().includes(query) ||
@@ -255,10 +294,10 @@ const DashMain = ({ setActiveComponent }) => {
     // Update search results state
     setSearchResults({
       campaigns: filteredRecentCampaigns,
-      events: [], // Populate if you have event data
+      events: [], 
       donationCampaigns: filteredDonationCampaigns,
     });
-  }, [searchQuery, userStats.recentCampaigns, userStats.donationCampaigns]);
+  }, [searchQuery, userStats.recentCampaigns, userStats.donationCampaigns]); 
 
   const isSearchActive = searchQuery.trim() !== "";
 
@@ -266,11 +305,10 @@ const DashMain = ({ setActiveComponent }) => {
     if (typeof setActiveComponent === "function") {
       setActiveComponent(route);
     } else {
-      console.warn("Navigation function is not available");
+      console.warn("Navigation function (setActiveComponent) is not available.");
     }
   };
 
-  // Loading State UI
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen w-full bg-gray-50 dark:bg-slate-900">
@@ -278,6 +316,8 @@ const DashMain = ({ setActiveComponent }) => {
       </div>
     );
   }
+
+  const showProfileCompletionAlert = !isProfileComplete || !isSurveyComplete;
 
   return (
     <motion.div
@@ -287,7 +327,7 @@ const DashMain = ({ setActiveComponent }) => {
       viewport={{ once: true, amount: 0.05 }}
       className="p-6 min-h-screen bg-gray-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100"
     >
-      {/* Header */}
+      {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 mt-8 md:mb-8 gap-4">
         <div className="pt-2 md:pt-4 w-full md:w-auto">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold break-words flex flex-col md:flex-row">
@@ -300,22 +340,24 @@ const DashMain = ({ setActiveComponent }) => {
           </h1>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile menu button for small screens */}
         <div className="md:hidden w-full flex justify-end">
           <button
             onClick={toggleMenu}
             className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Toggle navigation menu"
           >
             <Menu size={24} className="text-gray-700 dark:text-gray-200" />
           </button>
         </div>
 
-        {/* Desktop header items / Mobile menu */}
+        {/* Desktop header items / Mobile menu (conditionally rendered) */}
         <div
           className={`${
             isMenuOpen ? "flex " : "hidden"
           } md:flex flex-col md:flex-row items-center w-full md:w-auto gap-4 md:space-x-5`}
         >
+          {/* Search Input Field */}
           <div className="relative w-full md:w-auto">
             <input
               type="text"
@@ -324,7 +366,8 @@ const DashMain = ({ setActiveComponent }) => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search campaigns or events..."
-              className="px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border bg-white border-300 text-gray-900 focus:ring-teal-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-teal-500 duration-200 ease-in-out focus:outline-none focus:ring-2"
+              className="px-4 py-2 pl-10 w-full md:w-64 lg:w-96 rounded-lg border bg-white border-gray-300 text-gray-900 focus:ring-teal-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:focus:ring-teal-500 duration-200 ease-in-out focus:outline-none focus:ring-2"
+              aria-label="Search campaigns or events"
             />
             <Search
               className="absolute left-3 top-2.5 text-gray-400"
@@ -332,14 +375,17 @@ const DashMain = ({ setActiveComponent }) => {
             />
           </div>
 
-          {/* Use the new Notifications Component */}
+          {/* Notifications Component */}
           <NotificationsComponent setActiveComponent={setActiveComponent} />
 
           {/* User Avatar */}
           <div
             onClick={() => handleNavigation("profile")}
             className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold cursor-pointer ease-in-out duration-100 hover:bg-teal-600 transition-colors"
-            title="Profile"
+            title="Go to Profile"
+            role="button"
+            tabIndex="0"
+            aria-label="User Profile"
           >
             {userData.username
               ? userData.username.substring(0, 2).toUpperCase()
@@ -348,7 +394,7 @@ const DashMain = ({ setActiveComponent }) => {
         </div>
       </div>
 
-      {/* Search Results Section */}
+      {/* Search Results Section (visible when search is active) */}
       {isSearchActive && (
         <div className="mb-8 p-6 rounded-lg shadow-md bg-white dark:bg-gray-800 dark:border dark:border-gray-700">
           <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
@@ -356,7 +402,7 @@ const DashMain = ({ setActiveComponent }) => {
             Search Results for "{searchQuery}"
           </h2>
 
-          {/* No results message */}
+          {/* Message for no search results */}
           {searchResults.campaigns.length === 0 &&
             searchResults.donationCampaigns.length === 0 && (
               <p className="text-center py-4 text-gray-500 dark:text-gray-400">
@@ -364,7 +410,7 @@ const DashMain = ({ setActiveComponent }) => {
               </p>
             )}
 
-          {/* Campaign Search Results (from user's recent campaigns) */}
+          {/* Display User's Recent Donations from Search */}
           {searchResults.campaigns.length > 0 && (
             <div className="mb-6">
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
@@ -400,7 +446,7 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           )}
 
-          {/* Current Donation Campaign Search Results (from API) */}
+          {/* Display Other Donation Campaigns from Search */}
           {searchResults.donationCampaigns.length > 0 && (
             <div>
               <h3 className="font-medium mb-3 text-slate-800 dark:text-gray-200">
@@ -435,14 +481,14 @@ const DashMain = ({ setActiveComponent }) => {
         </div>
       )}
 
-      {/* Only show the regular content when not searching */}
+      {/* Main Dashboard Content (visible when search is not active) */}
       {!isSearchActive && (
         <>
-          {/* Stats */}
+          {/* User Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div
               className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
-              title="Total Donated"
+              title="Total Amount Donated"
             >
               <div className="bg-teal-100 p-3 rounded-full mr-4">
                 <DollarSign size={24} className="text-teal-600" />
@@ -459,7 +505,7 @@ const DashMain = ({ setActiveComponent }) => {
 
             <div
               className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
-              title="Campaigns Supported"
+              title="Number of Campaigns Supported"
             >
               <div className="bg-blue-100 p-3 rounded-full mr-4">
                 <Gift size={24} className="text-blue-600" />
@@ -476,7 +522,7 @@ const DashMain = ({ setActiveComponent }) => {
 
             <div
               className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 flex items-center bg-white dark:bg-gray-800"
-              title="Completed Donations"
+              title="Total Completed Donations"
             >
               <div className="bg-purple-100 p-3 rounded-full mr-4">
                 <Users size={24} className="text-purple-600" />
@@ -492,7 +538,7 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          {/* Donation History Chart */}
+          {/* Donation History Chart Section */}
           <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 mb-8 bg-white dark:bg-gray-800">
             <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
               <TrendingUp size={20} className="mr-2 text-teal-600" />
@@ -533,41 +579,46 @@ const DashMain = ({ setActiveComponent }) => {
             </div>
           </div>
 
-          {/* Incomplete Profile Alert */}
-          <div className="mt-10 mb-4 p-4 rounded-lg flex items-start shadow-md hover:shadow-lg ease-in-out duration-300 bg-amber-50 border border-amber-200 dark:bg-amber-900 dark:border-amber-800">
-            <AlertCircle
-              size={24}
-              className="mr-3 mt-0.5 flex-shrink-0 text-amber-500 dark:text-amber-300"
-            />
-            <div>
-              <h3 className="font-medium text-amber-800 dark:text-amber-200">
-                Complete Your Profile
-              </h3>
-              <p className="mt-1 text-amber-700 dark:text-amber-300">
-                Please 🙏 complete your profile to enhance your donation
-                experience and help us match you with campaigns that align with
-                your interests.
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <button
-                  onClick={() => handleNavigation("about-you")}
-                  className="py-3 px-5 ease-in-out rounded text-[16px] font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
-                >
-                  Complete About You
-                </button>
-
-                <button
-                  onClick={() => handleNavigation("survey")}
-                  className="py-3 px-5 ease-in-out rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
-                >
-                  Take Survey
-                </button>
+          {/* Conditional Alert to Complete Profile/Survey */}
+          {showProfileCompletionAlert && (
+            <div className="mt-10 mb-4 p-4 rounded-lg flex items-start shadow-md hover:shadow-lg ease-in-out duration-300 bg-amber-50 border border-amber-200 dark:bg-amber-900 dark:border-amber-800">
+              <AlertCircle
+                size={24}
+                className="mr-3 mt-0.5 flex-shrink-0 text-amber-500 dark:text-amber-300"
+              />
+              <div>
+                <h3 className="font-medium text-amber-800 dark:text-amber-200">
+                  Complete Your Profile
+                </h3>
+                <p className="mt-1 text-amber-700 dark:text-amber-300">
+                  Please 🙏 complete your profile and survey to enhance your donation
+                  experience and help us match you with campaigns that align with
+                  your interests.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {!isProfileComplete && (
+                    <button
+                      onClick={() => handleNavigation("about-you")}
+                      className="py-3 px-5 ease-in-out rounded text-[16px] font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
+                    >
+                      Complete About You
+                    </button>
+                  )}
+                  {!isSurveyComplete && (
+                    <button
+                      onClick={() => handleNavigation("survey")}
+                      className="py-3 px-5 ease-in-out rounded text-sm font-medium bg-amber-100 hover:bg-amber-200 text-amber-800 dark:bg-amber-800 dark:hover:bg-amber-700 dark:text-amber-100"
+                    >
+                      Take Survey
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
+          {/* Recent Campaigns You've Supported Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 my-10">
-            {/* Recent Campaigns (now from fetched data) */}
             <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
               <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Heart size={20} className="mr-2 text-teal-600" />
@@ -611,6 +662,7 @@ const DashMain = ({ setActiveComponent }) => {
                 <button
                   onClick={() => handleNavigation("Campaigns")}
                   className="mt-4 font-medium flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+                  aria-label="View all supported campaigns"
                 >
                   View all campaigns
                   <svg
@@ -631,7 +683,7 @@ const DashMain = ({ setActiveComponent }) => {
               </div>
             </div>
 
-            {/* Current Donation Campaigns (fetched from API) */}
+            {/* Current Donation Campaigns Section (General campaigns from API) */}
             <div className="p-6 rounded-lg shadow-md hover:shadow-lg ease-in-out duration-300 bg-white dark:bg-gray-800">
               <h2 className="text-xl font-semibold mb-4 flex items-center text-slate-800 dark:text-gray-100">
                 <Heart size={20} className="mr-2 text-teal-600" />
@@ -674,6 +726,7 @@ const DashMain = ({ setActiveComponent }) => {
                 <button
                   onClick={() => handleNavigation("Campaigns")}
                   className="mt-4 font-medium flex items-center text-teal-600 hover:text-teal-800 dark:text-teal-400 dark:hover:text-teal-300"
+                  aria-label="See all active campaigns"
                 >
                   See all campaigns
                   <svg
