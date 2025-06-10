@@ -1,8 +1,71 @@
-
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { cookies } from 'next/headers';
 
+// GET method - Fetch user donations
+export async function GET() {
+  try {
+    const cookieStore = await cookies();
+    const userSession = cookieStore.get('user_session');
+
+    if (!userSession) {
+      return NextResponse.json({ error: 'No active session' }, { status: 401 });
+    }
+
+    const userId = userSession.value;
+
+    // Get user data to get username 
+    const userQuery = 'SELECT username FROM users WHERE id = $1';
+    const userResult = await query(userQuery, [userId]);
+    
+    if (userResult.rows.length === 0) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    const username = userResult.rows[0].username;
+
+    // Fetch user's donations
+    const donationsQuery = `
+      SELECT 
+        id,
+        campaign_id,
+        donor_name,
+        phone_number,
+        amount,
+        payment_method,
+        transaction_id,
+        campaign_title,
+        campaign_category,
+        campaign_description,
+        campaign_image,
+        status,
+        created_at,
+        updated_at
+      FROM donations 
+      WHERE username = $1 
+      ORDER BY created_at DESC
+    `;
+
+    const donationsResult = await query(donationsQuery, [username]);
+
+    return NextResponse.json({
+      success: true,
+      donations: donationsResult.rows
+    }, { status: 200 });
+
+  } catch (error) {
+    console.error('Error fetching donations:', error);
+    
+    return NextResponse.json(
+      { 
+        error: 'Failed to fetch donations. Please try again.'
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// POST method - Create new donation
 export async function POST(request) {
   try {
     const cookieStore = await cookies();
