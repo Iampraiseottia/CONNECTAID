@@ -60,7 +60,7 @@ const DashMain = ({ setActiveComponent }) => {
   // Effect to fetch user data and profile/survey completion status
   useEffect(() => {
     const fetchUserDataAndCompletionStatus = async () => {
-      let currentUsername = userData.username; // Use state's current username for initial fetch
+      let currentUsername = userData.username; 
 
       try {
         // Attempt to get user data from localStorage first for faster UI updates
@@ -72,7 +72,7 @@ const DashMain = ({ setActiveComponent }) => {
             email: user.email || "",
             fullName: user.full_name || "",
           });
-          currentUsername = user.username; // Update username from stored data
+          currentUsername = user.username; 
         }
 
         // Fetch fresh user data from the authentication API
