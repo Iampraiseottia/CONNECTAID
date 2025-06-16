@@ -254,7 +254,7 @@ const DonatePayment = () => {
   // Generate transaction ID
   const generateTransactionId = () => {
     const timestamp = Date.now().toString(36);
-    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase(); 
     return `TXN-${timestamp}-${randomStr}`;
   };
 
