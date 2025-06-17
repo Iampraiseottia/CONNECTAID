@@ -307,13 +307,13 @@ const Hero = () => {
               </div>
               <Link
                 href="/donate-payment"
-                className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-yellow-300 transition duration-300
+                className={`bg-white text-black font-bold ease-in-out cursor-pointer rounded hover:rounded-3xl hover:text-[lightseagreen] hover:bg-white hover:border-2 hover:border-teal-500 transition duration-300
                 ${
                   isScrolled
                     ? "py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base"
                     : "py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base"
                 }`}
-              >
+              > 
                 DONATE NOW
               </Link>
             </div>
@@ -492,7 +492,7 @@ const Hero = () => {
                 </div>
                 <Link
                   href="/donate-payment"
-                  className="bg-white text-black font-bold py-2 px-6 hover:text-[lightseagreen] rounded hover:bg-yellow-300 transition duration-300"
+                  className="bg-white text-black font-bold py-2 px-6 hover:text-[lightseagreen] rounded hover:bg-white hover:border-teal-500 hover:border-2 transition duration-300"
                 >
                   DONATE NOW
                 </Link>
