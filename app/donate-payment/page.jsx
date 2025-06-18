@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import { motion } from "motion/react";
+import { motion } from "framer-motion"; // Changed from "motion/react" to "framer-motion" for common usage
 
 import Metadata from "../components/Metadata";
 
@@ -254,49 +254,90 @@ const DonatePayment = () => {
   // Generate transaction ID
   const generateTransactionId = () => {
     const timestamp = Date.now().toString(36);
-    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase(); 
+    const randomStr = Math.random().toString(36).substring(2, 8).toUpperCase();
     return `TXN-${timestamp}-${randomStr}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    // Added 'async' keyword
     e.preventDefault();
 
     if (validateForm()) {
       setIsSubmitting(true);
 
-      // Prepare donation data
+      // Prepare donation data for API
       const transactionId = generateTransactionId();
       const paymentMethodName =
         paymentMethods.find((method) => method.id === selectedPayment)?.name ||
         selectedPayment;
 
       const newDonationData = {
-        name: name,
-        email: email,
-        phoneNumber: phoneNumber,
-        amount: amount,
-        category: category,
-        paymentMethod: paymentMethodName,
-        transactionId: transactionId,
-        timestamp: new Date().toISOString(),
+        full_name: name, // Corresponds to database column
+        email: email, // Corresponds to database column
+        phone_number: phoneNumber, // Corresponds to database column
+        donation_amount: amount, // Corresponds to database column
+        category: category, // Corresponds to database column
+        payment_method: paymentMethodName, // Corresponds to database column
+        transaction_id: transactionId, // Corresponds to database column
       };
 
-      setDonationData(newDonationData);
+      try {
+        const response = await fetch("/api/guest_donations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newDonationData),
+        });
 
-      console.log("Form submitted successfully", newDonationData);
+        const result = await response.json();
 
-      setThankYouMessage(true);
-
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setAmount(500);
-        setName("");
-        setEmail("");
-        setPhoneNumber("");
-        setCategory("");
-        setSelectedPayment("");
-        setAgreeToTerms(false);
-      }, 1000);
+        if (response.ok) {
+          // API call successful, display thank you message
+          setDonationData({
+            ...newDonationData,
+            timestamp: new Date().toISOString(), // Add timestamp for display
+          });
+          setThankYouMessage(true);
+          // Clear form fields after successful submission
+          setAmount(500);
+          setName("");
+          setEmail("");
+          setPhoneNumber("");
+          setCategory("");
+          setSelectedPayment("");
+          setAgreeToTerms(false);
+          setErrors({
+            // Clear any lingering errors
+            name: "",
+            email: "",
+            category: "",
+            terms: "",
+            payment: "",
+            phoneNumber: "",
+          });
+        } else {
+          // API call failed, display error
+          console.error(
+            "Donation submission failed:",
+            result.message || "Unknown error"
+          );
+          // You might want to show a user-friendly error message on the UI
+          // For now, we'll just log it.
+          // Example: showMessage(`Error: ${result.message}`, 'error');
+          alert(
+            `Error: ${
+              result.message || "Something went wrong. Please try again."
+            }`
+          );
+        }
+      } catch (error) {
+        console.error("Network error during donation submission:", error);
+        // Example: showMessage('An unexpected error occurred. Please try again.', 'error');
+        alert("An unexpected error occurred. Please try again.");
+      } finally {
+        setIsSubmitting(false); // Re-enable the submit button
+      }
     } else {
       console.log("Form has errors");
     }
@@ -426,7 +467,7 @@ const DonatePayment = () => {
                       ? "focus:border-red-500"
                       : "focus:border-green-500"
                   }`}
-                  placeholder="e.g Mbong Alex Tabeng"
+                  placeholder="e.g Mbongo Alex Tabeng"
                   ref={nameDonate}
                   onMouseEnter={onMouseEnterNameDonate}
                 />
@@ -669,13 +710,14 @@ const DonatePayment = () => {
 
                 {/* Thank You Message */}
                 <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
-                  Thank You, {donationData.name}! 🙏
+                  Thank You, {donationData.full_name}! 🙏
                 </h2>
 
                 <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
                   Your generous donation of{" "}
                   <span className="font-bold text-green-600 dark:text-green-400">
-                    {Number(donationData.amount).toLocaleString()} Francs
+                    {Number(donationData.donation_amount).toLocaleString()}{" "}
+                    Francs
                   </span>{" "}
                   has been successfully processed!
                 </p>
@@ -691,7 +733,7 @@ const DonatePayment = () => {
                         Name:
                       </span>
                       <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.name}
+                        {donationData.full_name}
                       </span>
                     </div>
 
@@ -709,7 +751,7 @@ const DonatePayment = () => {
                         Phone:
                       </span>
                       <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.phoneNumber}
+                        {donationData.phone_number}
                       </span>
                     </div>
 
@@ -727,7 +769,7 @@ const DonatePayment = () => {
                         Payment Method:
                       </span>
                       <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
-                        {donationData.paymentMethod.replace(/_/g, " ")}
+                        {donationData.payment_method.replace(/_/g, " ")}
                       </span>
                     </div>
 
@@ -736,7 +778,7 @@ const DonatePayment = () => {
                         Transaction ID:
                       </span>
                       <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
-                        {donationData.transactionId}
+                        {donationData.transaction_id}
                       </span>
                     </div>
                   </div>
