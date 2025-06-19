@@ -13,7 +13,7 @@ export async function POST(request) {
       transaction_id
     } = await request.json();
 
-    // Basic validation: Check if all required fields are present 
+    // Check if all required fields are present 
     if (!full_name || !email || !phone_number || !donation_amount || !category || !payment_method || !transaction_id) {
       return NextResponse.json({ message: 'All required fields must be provided.' }, { status: 400 });
     }
@@ -64,15 +64,10 @@ export async function POST(request) {
   }
 }
 
-/**
- * Handles GET requests to retrieve guest donations.
- * @param {Request} request The incoming request object.
- * @returns {NextResponse} The response object.
- */
+
 export async function GET(request) {
   try {
-    // You can add query parameters for filtering, pagination, etc. here
-    // For now, let's fetch all donations
+    // Fetching all donations
     const selectQuery = `
       SELECT
         id,

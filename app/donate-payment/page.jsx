@@ -9,7 +9,7 @@ import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
 import Breadcrumb from "../components/Breadcrumb";
 
-import { motion } from "framer-motion"; // Changed from "motion/react" to "framer-motion" for common usage
+import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
@@ -259,7 +259,6 @@ const DonatePayment = () => {
   };
 
   const handleSubmit = async (e) => {
-    // Added 'async' keyword
     e.preventDefault();
 
     if (validateForm()) {
@@ -272,13 +271,13 @@ const DonatePayment = () => {
         selectedPayment;
 
       const newDonationData = {
-        full_name: name, // Corresponds to database column
-        email: email, // Corresponds to database column
-        phone_number: phoneNumber, // Corresponds to database column
-        donation_amount: amount, // Corresponds to database column
-        category: category, // Corresponds to database column
-        payment_method: paymentMethodName, // Corresponds to database column
-        transaction_id: transactionId, // Corresponds to database column
+        full_name: name, 
+        email: email, 
+        phone_number: phoneNumber, 
+        donation_amount: amount, 
+        category: category, 
+        payment_method: paymentMethodName, 
+        transaction_id: transactionId, 
       };
 
       try {
@@ -293,13 +292,11 @@ const DonatePayment = () => {
         const result = await response.json();
 
         if (response.ok) {
-          // API call successful, display thank you message
           setDonationData({
             ...newDonationData,
-            timestamp: new Date().toISOString(), // Add timestamp for display
+            timestamp: new Date().toISOString(), 
           });
           setThankYouMessage(true);
-          // Clear form fields after successful submission
           setAmount(500);
           setName("");
           setEmail("");
@@ -308,7 +305,6 @@ const DonatePayment = () => {
           setSelectedPayment("");
           setAgreeToTerms(false);
           setErrors({
-            // Clear any lingering errors
             name: "",
             email: "",
             category: "",
@@ -322,9 +318,6 @@ const DonatePayment = () => {
             "Donation submission failed:",
             result.message || "Unknown error"
           );
-          // You might want to show a user-friendly error message on the UI
-          // For now, we'll just log it.
-          // Example: showMessage(`Error: ${result.message}`, 'error');
           alert(
             `Error: ${
               result.message || "Something went wrong. Please try again."
@@ -333,10 +326,9 @@ const DonatePayment = () => {
         }
       } catch (error) {
         console.error("Network error during donation submission:", error);
-        // Example: showMessage('An unexpected error occurred. Please try again.', 'error');
         alert("An unexpected error occurred. Please try again.");
       } finally {
-        setIsSubmitting(false); // Re-enable the submit button
+        setIsSubmitting(false); 
       }
     } else {
       console.log("Form has errors");
