@@ -63,6 +63,10 @@ const DonationDetails1 = () => {
     terms: "",
   });
 
+  // Add states for API response handling
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -107,8 +111,36 @@ const DonationDetails1 = () => {
   const [donationData, setDonationData] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  const handleSubmit = (e) => {
+  // API call function to submit donation
+  const submitDonationToAPI = async (donationPayload) => {
+    try {
+      const response = await fetch("/api/guest_donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationPayload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit donation");
+      }
+
+      return result;
+    } catch (error) {
+      console.error("API submission error:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Clear previous errors
+    setSubmitError("");
+    setSubmitSuccess(false);
 
     const newErrors = {};
     let isValid = true;
@@ -157,46 +189,73 @@ const DonationDetails1 = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      // Generate transaction ID
-      const timestamp = Date.now().toString(36);
-      const randomStr = Math.random()
-        .toString(36)
-        .substring(2, 8)
-        .toUpperCase();
-      const transactionId = `TXN-${timestamp}-${randomStr}`;
+      try {
+        // Generate transaction ID
+        const timestamp = Date.now().toString(36);
+        const randomStr = Math.random()
+          .toString(36)
+          .substring(2, 8)
+          .toUpperCase();
+        const transactionId = `TXN-${timestamp}-${randomStr}`;
 
-      // Get payment method name
-      const paymentMethodName =
-        selectedPayment === "mtn" ? "MTN Mobile Money" : "Orange Mobile Money";
+        // Get payment method name
+        const paymentMethodName =
+          selectedPayment === "mtn"
+            ? "MTN Mobile Money"
+            : "Orange Mobile Money";
 
-      const newDonationData = {
-        name: formData.fullName,
-        email: formData.email,
-        phoneNumber: formData.mobileNumber,
-        amount: selectedAmount,
-        category: "Food Donation - Let's End Hunger Together",
-        paymentMethod: paymentMethodName,
-        transactionId: transactionId,
-        timestamp: new Date().toISOString(),
-      };
+        // Prepare data for API submission
+        const donationPayload = {
+          full_name: formData.fullName,
+          email: formData.email,
+          phone_number: formData.mobileNumber,
+          donation_amount: selectedAmount,
+          category: "Food Donation - Let's End Hunger Together",
+          payment_method: paymentMethodName,
+          transaction_id: transactionId,
+        };
 
-      setDonationData(newDonationData);
+        // Submit to API
+        const apiResponse = await submitDonationToAPI(donationPayload);
 
-      console.log("Form submitted successfully", newDonationData);
+        // Create display data for thank you message
+        const newDonationData = {
+          name: formData.fullName,
+          email: formData.email,
+          phoneNumber: formData.mobileNumber,
+          amount: selectedAmount,
+          category: "Food Donation - Let's End Hunger Together",
+          paymentMethod: paymentMethodName,
+          transactionId: transactionId,
+          timestamp: new Date().toISOString(),
+          dbRecord: apiResponse.donation,
+        };
 
-      setThankYouMessage(true);
+        setDonationData(newDonationData);
+        setSubmitSuccess(true);
+        setThankYouMessage(true);
 
-      setTimeout(() => {
+        console.log("Donation submitted successfully:", apiResponse);
+
+        // Reset form after successful submission
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setSelectedAmount(1000);
+          setFormData({
+            mobileNumber: "",
+            fullName: "",
+            email: "",
+          });
+          setSelectedPayment("mtn");
+          setAgreedToTerms(false);
+        }, 1000);
+      } catch (error) {
+        console.error("Error submitting donation:", error);
+        setSubmitError(
+          error.message || "Failed to submit donation. Please try again."
+        );
         setIsSubmitting(false);
-        setSelectedAmount(1000);
-        setFormData({
-          mobileNumber: "",
-          fullName: "",
-          email: "",
-        });
-        setSelectedPayment("mtn");
-        setAgreedToTerms(false);
-      }, 1000);
+      }
     } else {
       console.log("Form has errors");
     }
@@ -279,7 +338,7 @@ const DonationDetails1 = () => {
                       Hunger is a pressing issue that affects millions of
                       individuals and families in our local communities. Every
                       day, countless people go without the nutritious food they
-                      need to thrive. This is not just a statistic; it’s a
+                      need to thrive. This is not just a statistic; it's a
                       reality that impacts our neighbors, friends, and families.
                       But together, we can change this narrative. By donating to
                       our local hunger relief initiatives, you can play a vital
@@ -347,6 +406,30 @@ const DonationDetails1 = () => {
                       </button>
                     </div>
                   </motion.div>
+
+                  {/* Error Message Display */}
+                  {submitError && (
+                    <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+                      <div className="flex">
+                        <div className="flex-shrink-0">
+                          <svg
+                            className="h-5 w-5 text-red-400"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                        <div className="ml-3">
+                          <p className="text-sm text-red-700">{submitError}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   <motion.form
                     onSubmit={handleSubmit}
@@ -596,7 +679,7 @@ const DonationDetails1 = () => {
                   like you, Sarah was able to access a local food pantry. With
                   the support she received, she not only fed her children but
                   also enrolled in a job training program that helped her secure
-                  stable employment. Sarah’s story is just one of many that
+                  stable employment. Sarah's story is just one of many that
                   illustrate the profound impact your donations can have.
                 </p>
                 <p className="text-gray-600 mb-6">
