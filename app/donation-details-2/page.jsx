@@ -21,26 +21,21 @@ import {
   DollarSign,
 } from "lucide-react";
 
-import navLogo from "/public/icon/logo.png"; 
-
+import navLogo from "/public/icon/logo.png";
 
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-
-
-
-import relatedPostImg1 from '/public/gallery/donateList-1.png'
-import relatedPostImg2 from '/public/gallery/gallery-4.png'
-import relatedPostImg4 from '/public/urgent/urgent-1.png'
-import relatedPostImg5 from '/public/gallery/donationList-2.png'
-import relatedPostImg6 from '/public/gallery/gallery-1.png'
-import relatedPostImg8 from '/public/gallery/gallery-2.png'
-import relatedPostImg9 from '/public/blog/blog-5.png'
-import relatedPostImg10 from '/public/gallery/education.png'
-import relatedPostImg12 from '/public/gallery/water.png'
-
+import relatedPostImg1 from "/public/gallery/donateList-1.png";
+import relatedPostImg2 from "/public/gallery/gallery-4.png";
+import relatedPostImg4 from "/public/urgent/urgent-1.png";
+import relatedPostImg5 from "/public/gallery/donationList-2.png";
+import relatedPostImg6 from "/public/gallery/gallery-1.png";
+import relatedPostImg8 from "/public/gallery/gallery-2.png";
+import relatedPostImg9 from "/public/blog/blog-5.png";
+import relatedPostImg10 from "/public/gallery/education.png";
+import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails2 = () => {
   const metadata = {
@@ -84,8 +79,13 @@ const DonationDetails2 = () => {
   };
 
   const validateMobileNumber = (number) => {
-    const mobileRegex = /^\d{3}\d{3}\d{3}$/;
-    return mobileRegex.test(number);
+    const cleanNumber = number.replace(/\s+/g, "");
+
+    const generalPattern = /^\+237\d{9}$/;
+
+    const cmrPattern = /^\d{9}$/;
+
+    return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
   };
 
   const validateEmail = (email) => {
@@ -119,19 +119,26 @@ const DonationDetails2 = () => {
     let isValid = true;
 
     if (!formData.mobileNumber) {
-      newErrors.mobileNumber = "Mobile number is required";
-      isValid = false;
-    } else if (!validateMobileNumber(formData.mobileNumber)) {
-      newErrors.mobileNumber =
-        "Please enter a valid mobile number (e.g. 686529762)";
-      isValid = false;
-    } else if (formData.mobileNumber.length < 2) {
-      newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
-      isValid = false;
-    } else if (formData.mobileNumber.length > 16) {
-      newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
-      isValid = false;
+    newErrors.mobileNumber = "Mobile number is required";
+    isValid = false;
+  } else if (!validateMobileNumber(formData.mobileNumber)) {
+    newErrors.mobileNumber =
+      "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
+    isValid = false;
+  } else {
+    const cleanNumber = formData.mobileNumber.replace(/\s+/g, '');
+    if (cleanNumber.startsWith('+237')) {
+      if (cleanNumber.length !== 13) {
+        newErrors.mobileNumber = "+237 followed by 9 digits";
+        isValid = false;
+      }
+    } else {
+      if (cleanNumber.length !== 9) {
+        newErrors.mobileNumber = "Should be exactly 9 digits";
+        isValid = false;
+      }
     }
+  }
 
     if (!formData.fullName) {
       newErrors.fullName = "Full Name is required";
@@ -179,7 +186,8 @@ const DonationDetails2 = () => {
         email: formData.email,
         phoneNumber: formData.mobileNumber,
         amount: selectedAmount,
-        category: "Education Donation - Let's Empower minds and change lives together",
+        category:
+          "Education Donation - Let's Empower minds and change lives together",
         paymentMethod: paymentMethodName,
         transactionId: transactionId,
         timestamp: new Date().toISOString(),
@@ -435,7 +443,6 @@ const DonationDetails2 = () => {
                     </div>
                   </motion.div>
 
-                  
                   <motion.form
                     onSubmit={handleSubmit}
                     className="space-y-5"
@@ -527,7 +534,7 @@ const DonationDetails2 = () => {
                           <div>
                             <input
                               type="text"
-                              placeholder="Mobile Money Number e.g 686529762*"
+                              placeholder="Mobile Money Number e.g 686529762 or +237686529762*"
                               className={`w-full border outline-none ease-in-out px-3 py-2 rounded-md focus:outline-none focus:ring-2 dark:bg-white dark:text-gray-800 ${
                                 errors.mobileNumber
                                   ? "border-red-500 focus:ring-red-500"
@@ -656,9 +663,7 @@ const DonationDetails2 = () => {
                       </button>
                     </div>
                   </motion.form>
-
                 </div>
-              
               </div>
               <motion.hr
                 initial={{ opacity: 0, y: 100 }}
@@ -706,7 +711,9 @@ const DonationDetails2 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3  dark:bg-white dark:text-black">Our Challenge </h4>
+                <h4 className="text-xl font-bold mb-3  dark:bg-white dark:text-black">
+                  Our Challenge{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   By addressing these challenges and working towards these
                   goals, we can empower individuals through education and create
@@ -714,10 +721,11 @@ const DonationDetails2 = () => {
                   make a lasting impact in our communities and they include:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>1. Access to Quality Education:</b> <br /> Many individuals, 
-                  especially in underserved communities, face significant
-                  barriers to accessing quality education. This includes a lack
-                  of schools, inadequate facilities, and insufficient resources.
+                  <b>1. Access to Quality Education:</b> <br /> Many
+                  individuals, especially in underserved communities, face
+                  significant barriers to accessing quality education. This
+                  includes a lack of schools, inadequate facilities, and
+                  insufficient resources.
                 </p>
                 <p className="text-gray-600 mb-4">
                   <b>2. Economic Barriers:</b> <br /> The rising costs of
@@ -735,10 +743,10 @@ const DonationDetails2 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>4. Limited Awareness of Resources:</b> <br /> Many individuals
-                  are unaware of the educational resources and support available 
-                  to them, which can prevent them from seeking help and
-                  accessing opportunities.
+                  <b>4. Limited Awareness of Resources:</b> <br /> Many
+                  individuals are unaware of the educational resources and
+                  support available to them, which can prevent them from seeking
+                  help and accessing opportunities.
                 </p>
 
                 <motion.hr
@@ -749,40 +757,42 @@ const DonationDetails2 = () => {
                   className="my-6 border-gray-200"
                 />
 
-                <h4 className="text-xl font-bold mb-3  dark:bg-white dark:text-black">Our Goals </h4>
+                <h4 className="text-xl font-bold mb-3  dark:bg-white dark:text-black">
+                  Our Goals{" "}
+                </h4>
                 <p className="text-gray-600 mb-4">
                   Our goal is to create a community where everyone has access to
                   good and quality education. We aim to achieve this through a
                   comprehensive approach that includes:
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>1. Increase Access to Education: </b> <br /> Our primary goal
-                  is to ensure that all individuals, regardless of their
+                  <b>1. Increase Access to Education: </b> <br /> Our primary
+                  goal is to ensure that all individuals, regardless of their
                   background, have access to quality education. This includes
                   building more schools, providing transportation, and ensuring
                   that educational facilities are equipped with necessary
                   resources.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  <b>2. Provide Financial Support: </b> <br /> We aim to establish
-                  scholarship programs and financial aid initiatives to
-                  alleviate the economic burden of education. This will help
+                  <b>2. Provide Financial Support: </b> <br /> We aim to
+                  establish scholarship programs and financial aid initiatives
+                  to alleviate the economic burden of education. This will help
                   students cover tuition, books, and other essential expenses.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>3. Enhance Teacher Training and Support: I</b> <br /> We will
-                  work to improve teacher training programs and provide ongoing
-                  professional development to ensure that educators are
+                  <b>3. Enhance Teacher Training and Support: I</b> <br /> We
+                  will work to improve teacher training programs and provide
+                  ongoing professional development to ensure that educators are
                   well-equipped to meet the needs of their students.
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>4. Promote Inclusivity and Diversity: </b> <br /> Our goal is
-                  to create an inclusive educational environment that respects
-                  and accommodates the diverse cultural backgrounds of all
-                  students. This includes implementing programs that encourage
-                  the participation of underrepresented groups.
+                  <b>4. Promote Inclusivity and Diversity: </b> <br /> Our goal
+                  is to create an inclusive educational environment that
+                  respects and accommodates the diverse cultural backgrounds of
+                  all students. This includes implementing programs that
+                  encourage the participation of underrepresented groups.
                 </p>
 
                 <p className="text-gray-600 mb-4">
@@ -792,11 +802,12 @@ const DonationDetails2 = () => {
                 </p>
 
                 <p className="text-gray-600 mb-4">
-                  <b>6. Raise Awareness and Advocacy:</b> <br /> We aim to increase
-                  awareness of available educational resources and support
-                  systems within communities. This includes outreach programs,
-                  workshops, and partnerships with local organizations to ensure
-                  that individuals know how to access the help they need.
+                  <b>6. Raise Awareness and Advocacy:</b> <br /> We aim to
+                  increase awareness of available educational resources and
+                  support systems within communities. This includes outreach
+                  programs, workshops, and partnerships with local organizations
+                  to ensure that individuals know how to access the help they
+                  need.
                 </p>
 
                 <p className="text-gray-600 mb-4">
@@ -882,7 +893,7 @@ const DonationDetails2 = () => {
                       <div className="flex-shrink-0 w-20 h-24 relative">
                         <Link href="/upcoming-event-details-1">
                           <Image
-                            src={relatedPostImg1} 
+                            src={relatedPostImg1}
                             alt="Upcoming Event 1"
                             fill
                             className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
@@ -932,7 +943,6 @@ const DonationDetails2 = () => {
                     </div>
                     <hr className="my-4 border-gray-200" />
                   </div>
-
 
                   <div className="">
                     <div className="flex gap-3">
@@ -1021,8 +1031,6 @@ const DonationDetails2 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-              
-
                   <div className="">
                     <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -1107,8 +1115,6 @@ const DonationDetails2 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-           
-
                   <div className="">
                     <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -1170,139 +1176,137 @@ const DonationDetails2 = () => {
             </div>
           </div>
 
-           {/* Thank You Message */}
-        {thankYouMessage && donationData && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-8 mt-2">
-                <div className="flex items-center ">
-                  <Image
-                    src={navLogo}
-                    alt="ConnectAID Logo"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 mr-2"
-                  />
-                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                    ConnectAID
+          {/* Thank You Message */}
+          {thankYouMessage && donationData && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-8 mt-2">
+                  <div className="flex items-center ">
+                    <Image
+                      src={navLogo}
+                      alt="ConnectAID Logo"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 mr-2"
+                    />
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                      ConnectAID
+                    </h2>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setThankYouMessage(false);
+                    }}
+                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                {/* Success Content */}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
+                    <CheckCircle
+                      size={48}
+                      className="text-green-500 dark:text-green-400"
+                    />
+                    <div className="absolute -top-2 -right-2">
+                      <Heart size={20} className="text-red-500 fill-current" />
+                    </div>
+                  </div>
+
+                  {/* Thank You Message */}
+                  <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
+                    Thank You, {donationData.name}! 🙏
                   </h2>
-                </div>
-                <button
-                  onClick={() => {
-                    setThankYouMessage(false);
-                  }}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                >
-                  <X size={20} />
-                </button>
-              </div>
 
-              {/* Success Content */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
-                  <CheckCircle
-                    size={48}
-                    className="text-green-500 dark:text-green-400"
-                  />
-                  <div className="absolute -top-2 -right-2">
-                    <Heart size={20} className="text-red-500 fill-current" />
-                  </div>
-                </div>
+                  <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                    Your generous donation of{" "}
+                    <span className="font-bold text-green-600 dark:text-green-400">
+                      {Number(donationData.amount).toLocaleString()} Francs
+                    </span>{" "}
+                    has been successfully processed!
+                  </p>
 
-                {/* Thank You Message */}
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
-                  Thank You, {donationData.name}! 🙏
-                </h2>
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                      Donation Details:
+                    </h3>
 
-                <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
-                  Your generous donation of{" "}
-                  <span className="font-bold text-green-600 dark:text-green-400">
-                    {Number(donationData.amount).toLocaleString()} Francs
-                  </span>{" "}
-                  has been successfully processed!
-                </p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Name:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.name}
+                        </span>
+                      </div>
 
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
-                  <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
-                    Donation Details:
-                  </h3>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Email:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.email}
+                        </span>
+                      </div>
 
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Name:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.name}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Phone:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.phoneNumber}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Email:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.email}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Category:
+                        </span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                          {donationData.category}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Phone:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.phoneNumber}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Payment Method:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
+                          {donationData.paymentMethod.replace(/_/g, " ")}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Category:
-                      </span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
-                        {donationData.category}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Payment Method:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
-                        {donationData.paymentMethod.replace(/_/g, " ")}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Transaction ID:
-                      </span>
-                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
-                        {donationData.transactionId}
-                      </span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Transaction ID:
+                        </span>
+                        <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                          {donationData.transactionId}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                  <Download size={18} />
-                  Download Receipt
-                </button>
+                  <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                    <Download size={18} />
+                    Download Receipt
+                  </button>
 
-                <div className="text-center">
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
-                    Your contribution is making a real difference! 💫
-                  </p>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs">
-                    The Donation Receipt Has been Sent To Your Email{" "}
-                  </p>
+                  <div className="text-center">
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                      Your contribution is making a real difference! 💫
+                    </p>
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">
+                      The Donation Receipt Has been Sent To Your Email{" "}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-
-
+          )}
         </div>
       </section>
 

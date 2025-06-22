@@ -85,11 +85,11 @@ const DonationDetails1 = () => {
  const validateMobileNumber = (number) => {
     const cleanNumber = number.replace(/\s+/g, '');
     
-    const internationalPattern = /^\+237\d{9}$/;
+    const generalPattern = /^\+237\d{9}$/;
     
-    const localPattern = /^\d{9}$/;
+    const cmrPattern = /^\d{9}$/;
     
-    return internationalPattern.test(cleanNumber) || localPattern.test(cleanNumber);
+    return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
   };
 
   const validateEmail = (email) => {
@@ -150,7 +150,7 @@ const DonationDetails1 = () => {
     const newErrors = {};
     let isValid = true;
 
-     if (!formData.mobileNumber) {
+    if (!formData.mobileNumber) {
     newErrors.mobileNumber = "Mobile number is required";
     isValid = false;
   } else if (!validateMobileNumber(formData.mobileNumber)) {
