@@ -63,7 +63,7 @@ const DonationDetails1 = () => {
     terms: "",
   });
 
-  // Add states for API response handling
+  // States for API response handling
   const [submitError, setSubmitError] = useState("");
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
@@ -116,7 +116,7 @@ const DonationDetails1 = () => {
   const [donationData, setDonationData] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  // API call function to submit donation
+  // API call function to submit donation 
   const submitDonationToAPI = async (donationPayload) => {
     try {
       const response = await fetch("/api/guest_donations", {
@@ -249,7 +249,7 @@ const DonationDetails1 = () => {
 
         console.log("Donation submitted successfully:", apiResponse);
 
-        // Reset form after successful submission
+        // Reset form after successful submission 
         setTimeout(() => {
           setIsSubmitting(false);
           setSelectedAmount(1000);

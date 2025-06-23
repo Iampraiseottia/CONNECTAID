@@ -63,6 +63,10 @@ const DonationDetails2 = () => {
     terms: "",
   });
 
+  // States for API response handling
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -112,33 +116,61 @@ const DonationDetails2 = () => {
   const [donationData, setDonationData] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  const handleSubmit = (e) => {
+  // API call function to submit donation
+  const submitDonationToAPI = async (donationPayload) => {
+    try {
+      const response = await fetch("/api/guest_donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationPayload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit donation");
+      }
+
+      return result;
+    } catch (error) {
+      console.error("API submission error:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Clear previous errors
+    setSubmitError("");
+    setSubmitSuccess(false);
 
     const newErrors = {};
     let isValid = true;
 
     if (!formData.mobileNumber) {
-    newErrors.mobileNumber = "Mobile number is required";
-    isValid = false;
-  } else if (!validateMobileNumber(formData.mobileNumber)) {
-    newErrors.mobileNumber =
-      "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
-    isValid = false;
-  } else {
-    const cleanNumber = formData.mobileNumber.replace(/\s+/g, '');
-    if (cleanNumber.startsWith('+237')) {
-      if (cleanNumber.length !== 13) {
-        newErrors.mobileNumber = "+237 followed by 9 digits";
-        isValid = false;
-      }
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
+      isValid = false;
     } else {
-      if (cleanNumber.length !== 9) {
-        newErrors.mobileNumber = "Should be exactly 9 digits";
-        isValid = false;
+      const cleanNumber = formData.mobileNumber.replace(/\s+/g, "");
+      if (cleanNumber.startsWith("+237")) {
+        if (cleanNumber.length !== 13) {
+          newErrors.mobileNumber = "+237 followed by 9 digits";
+          isValid = false;
+        }
+      } else {
+        if (cleanNumber.length !== 9) {
+          newErrors.mobileNumber = "Should be exactly 9 digits";
+          isValid = false;
+        }
       }
     }
-  }
 
     if (!formData.fullName) {
       newErrors.fullName = "Full Name is required";
@@ -169,47 +201,74 @@ const DonationDetails2 = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      // Generate transaction ID
-      const timestamp = Date.now().toString(36);
-      const randomStr = Math.random()
-        .toString(36)
-        .substring(2, 8)
-        .toUpperCase();
-      const transactionId = `TXN-${timestamp}-${randomStr}`;
+      try {
+        // Generate transaction ID
+        const timestamp = Date.now().toString(36);
+        const randomStr = Math.random()
+          .toString(36)
+          .substring(2, 8)
+          .toUpperCase();
+        const transactionId = `TXN-${timestamp}-${randomStr}`;
 
-      // Get payment method name
-      const paymentMethodName =
-        selectedPayment === "mtn" ? "MTN Mobile Money" : "Orange Mobile Money";
+        // Get payment method name
+        const paymentMethodName =
+          selectedPayment === "mtn"
+            ? "MTN Mobile Money"
+            : "Orange Mobile Money";
 
-      const newDonationData = {
-        name: formData.fullName,
-        email: formData.email,
-        phoneNumber: formData.mobileNumber,
-        amount: selectedAmount,
-        category:
-          "Education Donation - Let's Empower minds and change lives together",
-        paymentMethod: paymentMethodName,
-        transactionId: transactionId,
-        timestamp: new Date().toISOString(),
-      };
+        // Prepare data for API submission
+        const donationPayload = {
+          full_name: formData.fullName,
+          email: formData.email,
+          phone_number: formData.mobileNumber,
+          donation_amount: selectedAmount,
+          category: "Education Donation - Let's Empower minds and change lives together",
+          payment_method: paymentMethodName,
+          transaction_id: transactionId,
+        };
 
-      setDonationData(newDonationData);
+        // Submit to API
+        const apiResponse = await submitDonationToAPI(donationPayload);
 
-      console.log("Form submitted successfully", newDonationData);
+        // Create display data for thank you message
+        const newDonationData = {
+          name: formData.fullName,
+          email: formData.email,
+          phoneNumber: formData.mobileNumber,
+          amount: selectedAmount,
+          category:
+            "Education Donation - Let's Empower minds and change lives together",
+          paymentMethod: paymentMethodName,
+          transactionId: transactionId,
+          timestamp: new Date().toISOString(),
+          dbRecord: apiResponse.donation,
+        };
 
-      setThankYouMessage(true);
+        setDonationData(newDonationData);
+        setSubmitSuccess(true);
+        setThankYouMessage(true);
 
-      setTimeout(() => {
+        console.log("Donation submitted successfully:", apiResponse);
+
+        // Reset form after successful submission
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setSelectedAmount(1000);
+          setFormData({
+            mobileNumber: "",
+            fullName: "",
+            email: "",
+          });
+          setSelectedPayment("mtn");
+          setAgreedToTerms(false);
+        }, 1000);
+      } catch (error) {
+        console.error("Error submitting donation:", error);
+        setSubmitError(
+          error.message || "Failed to submit donation. Please try again." 
+        );
         setIsSubmitting(false);
-        setSelectedAmount(1000);
-        setFormData({
-          mobileNumber: "",
-          fullName: "",
-          email: "",
-        });
-        setSelectedPayment("mtn");
-        setAgreedToTerms(false);
-      }, 1000);
+      }
     } else {
       console.log("Form has errors");
     }
@@ -451,79 +510,6 @@ const DonationDetails2 = () => {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
                   >
-                    {/* Payment Method */}
-                    <div className="mb-8">
-                      <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
-                        Select Payment Method
-                      </h4>
-                      <div className="space-y-3 ">
-                        <div className="flex items-center">
-                          <input
-                            id="mtn-momo"
-                            type="radio"
-                            name="payment"
-                            value="mtn"
-                            checked={selectedPayment === "mtn"}
-                            onChange={() => setSelectedPayment("mtn")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
-                          />
-                          <label
-                            htmlFor="mtn-momo"
-                            className="ml-2 text-gray-700"
-                          >
-                            MTN Mobile Money
-                          </label>
-                        </div>
-                        <div className="flex items-center">
-                          <input
-                            id="orange-momo"
-                            type="radio"
-                            name="payment"
-                            value="orange"
-                            checked={selectedPayment === "orange"}
-                            onChange={() => setSelectedPayment("orange")}
-                            className="w-4 h-4 text-green-600 focus:ring-green-500 accent-green-600"
-                          />
-                          <label
-                            htmlFor="orange-momo"
-                            className="ml-2 text-gray-700"
-                          >
-                            ORANGE Mobile Money
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Amount */}
-                    <div className="mb-8">
-                      <button
-                        type="button"
-                        className="mb-4 w-full sm:w-auto text-xl font-semibold py-2 px-10 dark:text-slate-900 text-black  "
-                      >
-                        Select An Amount From Available Options Below
-                      </button>
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {[
-                          500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500,
-                          5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000,
-                          9500, 10000, 50000, 100000, 500000, 1000000,
-                        ].map((amount) => (
-                          <button
-                            key={amount}
-                            type="button"
-                            onClick={() => setSelectedAmount(amount)}
-                            className={`py-2 px-4 rounded border ${
-                              selectedAmount === amount
-                                ? "bg-green-600 text-white border-green-600"
-                                : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
-                            }`}
-                          >
-                            {amount} Frs
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
                     {/* Your Full Name */}
                     <div className="mb-6">
                       <h4 className="text-lg font-bold mb-4 dark:text-slate-900 text-black ">
