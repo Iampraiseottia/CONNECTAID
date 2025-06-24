@@ -11,6 +11,17 @@ import Breadcrumb from "../components/Breadcrumb";
 import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
+import Image from "next/image";
+
+import galleryImg1 from "/public/gallery/water.png";
+import galleryImg2 from "/public/gallery/training.png";
+import galleryImg3 from "/public/gallery/suffering.png";
+import galleryImg4 from "/public/gallery/pastevent.png";
+import galleryImg5 from "/public/gallery/medicine2.png";
+import galleryImg6 from "/public/gallery/food.jpg";
+import galleryImg7 from "/public/gallery/education.png";
+import galleryImg8 from "/public/gallery/donateList-1.png";
+import galleryImg9 from "/public/gallery/africanchildren2.png";
 
 const PictureGallery = () => {
   const metadata = {
@@ -71,23 +82,29 @@ const PictureGallery = () => {
           >
             <div className="space-y-6">
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/water.png"
+                <Image
+                  src={galleryImg1}
                   alt="Gallery Image 1"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/training.png"
+                <Image
+                  src={galleryImg2}
                   alt="Gallery Image 2"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/suffering.png"
+                <Image
+                  src={galleryImg3}
                   alt="Gallery Image 3"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
@@ -95,23 +112,29 @@ const PictureGallery = () => {
 
             <div className="space-y-6">
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/pastevent.png"
+                <Image
+                  src={galleryImg4}
                   alt="Gallery Image 4"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/medicine2.png"
+                <Image
+                  src={galleryImg5}
                   alt="Gallery Image 5"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/food.jpg"
+                <Image
+                  src={galleryImg6}
                   alt="Gallery Image 6"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
@@ -119,23 +142,29 @@ const PictureGallery = () => {
 
             <div className="space-y-6">
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/education.png"
+                <Image
+                  src={galleryImg7}
                   alt="Gallery Image 7"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/donateList-1.png"
+                <Image
+                  src={galleryImg8}
                   alt="Gallery Image 8"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
               <div className="overflow-hidden rounded-lg shadow-lg group">
-                <img
-                  src="/gallery/africanchildren2.png"
+                <Image
+                  src={galleryImg9}
                   alt="Gallery Image 9"
+                  height={384}
+                  width="100%"
                   className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
@@ -143,8 +172,6 @@ const PictureGallery = () => {
           </motion.div>
         </div>
       </section>
-
-    
 
       {/* Footer  */}
       <Footer />
