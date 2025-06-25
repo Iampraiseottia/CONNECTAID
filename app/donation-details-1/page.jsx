@@ -169,7 +169,7 @@ const DonationDetails1 = () => {
         newErrors.mobileNumber = "Should be exactly 9 digits";
         isValid = false;
       }
-    }
+    } 
   }
 
     if (!formData.fullName) {
