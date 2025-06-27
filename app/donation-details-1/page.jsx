@@ -82,13 +82,13 @@ const DonationDetails1 = () => {
     }
   };
 
- const validateMobileNumber = (number) => {
-    const cleanNumber = number.replace(/\s+/g, '');
-    
+  const validateMobileNumber = (number) => {
+    const cleanNumber = number.replace(/\s+/g, "");
+
     const generalPattern = /^\+237\d{9}$/;
-    
+
     const cmrPattern = /^\d{9}$/;
-    
+
     return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
   };
 
@@ -116,7 +116,7 @@ const DonationDetails1 = () => {
   const [donationData, setDonationData] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  // API call function to submit donation 
+  // API call function to submit donation
   const submitDonationToAPI = async (donationPayload) => {
     try {
       const response = await fetch("/api/guest_donations", {
@@ -151,26 +151,26 @@ const DonationDetails1 = () => {
     let isValid = true;
 
     if (!formData.mobileNumber) {
-    newErrors.mobileNumber = "Mobile number is required";
-    isValid = false;
-  } else if (!validateMobileNumber(formData.mobileNumber)) {
-    newErrors.mobileNumber =
-      "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
-    isValid = false;
-  } else {
-    const cleanNumber = formData.mobileNumber.replace(/\s+/g, '');
-    if (cleanNumber.startsWith('+237')) {
-      if (cleanNumber.length !== 13) {
-        newErrors.mobileNumber = "+237 followed by 9 digits";
-        isValid = false;
-      }
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
+      isValid = false;
     } else {
-      if (cleanNumber.length !== 9) {
-        newErrors.mobileNumber = "Should be exactly 9 digits";
-        isValid = false;
+      const cleanNumber = formData.mobileNumber.replace(/\s+/g, "");
+      if (cleanNumber.startsWith("+237")) {
+        if (cleanNumber.length !== 13) {
+          newErrors.mobileNumber = "+237 followed by 9 digits";
+          isValid = false;
+        }
+      } else {
+        if (cleanNumber.length !== 9) {
+          newErrors.mobileNumber = "Should be exactly 9 digits";
+          isValid = false;
+        }
       }
-    } 
-  }
+    }
 
     if (!formData.fullName) {
       newErrors.fullName = "Full Name is required";
@@ -249,7 +249,7 @@ const DonationDetails1 = () => {
 
         console.log("Donation submitted successfully:", apiResponse);
 
-        // Reset form after successful submission 
+        // Reset form after successful submission
         setTimeout(() => {
           setIsSubmitting(false);
           setSelectedAmount(1000);
@@ -271,7 +271,7 @@ const DonationDetails1 = () => {
     } else {
       console.log("Form has errors");
     }
-  }; 
+  };
 
   return (
     <main className="bg-[#f9f9f9]">
@@ -1270,7 +1270,7 @@ const DonationDetails1 = () => {
                 </button>
 
                 <div className="text-center">
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2"> 
+                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
                     Your contribution is making a real difference! 💫
                   </p>
                   <p className="text-slate-500 dark:text-slate-400 text-xs">
