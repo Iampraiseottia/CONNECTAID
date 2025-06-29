@@ -90,7 +90,7 @@ const DonationDetails1 = () => {
     const cmrPattern = /^\d{9}$/;
 
     return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
-  };
+  }; 
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -531,7 +531,7 @@ const DonationDetails1 = () => {
                       </h4>
                       <div className="bg-gray-50 rounded-lg">
                         <div className="grid grid-cols-1 gap-4 mb-4">
-                          <div>
+                          <div> 
                             <input
                               type="text"
                               placeholder="Mobile Money Number e.g 686529762 or +237686529762*"
