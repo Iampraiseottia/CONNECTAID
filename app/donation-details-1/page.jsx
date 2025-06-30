@@ -271,7 +271,7 @@ const DonationDetails1 = () => {
     } else {
       console.log("Form has errors");
     }
-  }; 
+  };
 
   return (
     <main className="bg-[#f9f9f9]">
