@@ -261,7 +261,7 @@ const DonationDetails1 = () => {
           setSelectedPayment("mtn");
           setAgreedToTerms(false);
         }, 1000);
-      } catch (error) {
+      } catch (error) { 
         console.error("Error submitting donation:", error);
         setSubmitError(
           error.message || "Failed to submit donation. Please try again."
