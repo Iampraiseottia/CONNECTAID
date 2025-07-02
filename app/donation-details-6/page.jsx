@@ -21,7 +21,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-import navLogo from "/public/icon/logo.png"; 
+import navLogo from "/public/icon/logo.png";
 
 import { motion } from "motion/react";
 
@@ -63,6 +63,10 @@ const DonationDetails6 = () => {
     terms: "",
   });
 
+  // States for API response handling
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -86,8 +90,7 @@ const DonationDetails6 = () => {
     const cmrPattern = /^\d{9}$/;
 
     return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
-  }; 
-
+  };
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -113,8 +116,36 @@ const DonationDetails6 = () => {
   const [donationData, setDonationData] = useState(null);
   const [thankYouMessage, setThankYouMessage] = useState(false);
 
-  const handleSubmit = (e) => {
+  // API call function to submit donation
+  const submitDonationToAPI = async (donationPayload) => {
+    try {
+      const response = await fetch("/api/guest_donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationPayload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit donation");
+      }
+
+      return result;
+    } catch (error) {
+      console.error("API submission error:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Clear previous errors
+    setSubmitError("");
+    setSubmitSuccess(false);
 
     const newErrors = {};
     let isValid = true;
@@ -170,46 +201,73 @@ const DonationDetails6 = () => {
     if (isValid) {
       setIsSubmitting(true);
 
-      // Generate transaction ID
-      const timestamp = Date.now().toString(36);
-      const randomStr = Math.random()
-        .toString(36)
-        .substring(2, 8)
-        .toUpperCase();
-      const transactionId = `TXN-${timestamp}-${randomStr}`;
+      try {
+        // Generate transaction ID
+        const timestamp = Date.now().toString(36);
+        const randomStr = Math.random()
+          .toString(36)
+          .substring(2, 8)
+          .toUpperCase();
+        const transactionId = `TXN-${timestamp}-${randomStr}`;
 
-      // Get payment method name
-      const paymentMethodName =
-        selectedPayment === "mtn" ? "MTN Mobile Money" : "Orange Mobile Money";
+        // Get payment method name
+        const paymentMethodName =
+          selectedPayment === "mtn"
+            ? "MTN Mobile Money"
+            : "Orange Mobile Money";
 
-      const newDonationData = {
-        name: formData.fullName,
-        email: formData.email,
-        phoneNumber: formData.mobileNumber,
-        amount: selectedAmount,
-        category: "Extreme Cases Donation ",
-        paymentMethod: paymentMethodName,
-        transactionId: transactionId,
-        timestamp: new Date().toISOString(),
-      };
+        // Prepare data for API submission
+        const donationPayload = {
+          full_name: formData.fullName,
+          email: formData.email,
+          phone_number: formData.mobileNumber,
+          donation_amount: selectedAmount,
+          category: "Extreme Cases Donation ",
+          payment_method: paymentMethodName,
+          transaction_id: transactionId,
+        };
 
-      setDonationData(newDonationData);
+        // Submit to API
+        const apiResponse = await submitDonationToAPI(donationPayload);
 
-      console.log("Form submitted successfully", newDonationData);
+        // Create display data for thank you message
+        const newDonationData = {
+          name: formData.fullName,
+          email: formData.email,
+          phoneNumber: formData.mobileNumber,
+          amount: selectedAmount,
+          category: "Extreme Cases Donation ",
+          paymentMethod: paymentMethodName,
+          transactionId: transactionId,
+          timestamp: new Date().toISOString(),
+          dbRecord: apiResponse.donation,
+        };
 
-      setThankYouMessage(true);
+        setDonationData(newDonationData);
+        setSubmitSuccess(true);
+        setThankYouMessage(true);
 
-      setTimeout(() => {
+        console.log("Donation submitted successfully:", apiResponse);
+
+        // Reset form after successful submission
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setSelectedAmount(1000);
+          setFormData({
+            mobileNumber: "",
+            fullName: "",
+            email: "",
+          });
+          setSelectedPayment("mtn");
+          setAgreedToTerms(false);
+        }, 1000);
+      } catch (error) {
+        console.error("Error submitting donation:", error);
+        setSubmitError(
+          error.message || "Failed to submit donation. Please try again."
+        );
         setIsSubmitting(false);
-        setSelectedAmount(1000);
-        setFormData({
-          mobileNumber: "",
-          fullName: "",
-          email: "",
-        });
-        setSelectedPayment("mtn");
-        setAgreedToTerms(false);
-      }, 1000);
+      }
     } else {
       console.log("Form has errors");
     }
@@ -624,7 +682,7 @@ const DonationDetails6 = () => {
                   role in making such transformations possible, not only
                   changing individual lives but also fostering hope and
                   resilience in vulnerable communities like Juma's.
-                  <br /> 
+                  <br />
                 </p>
 
                 <hr className="my-6 border-gray-200" />
