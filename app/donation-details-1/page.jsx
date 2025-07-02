@@ -262,7 +262,7 @@ const DonationDetails1 = () => {
           setAgreedToTerms(false);
         }, 1000);
       } catch (error) { 
-        console.error("Error submitting donation:", error);
+        console.error("Error submitting donation:", error); 
         setSubmitError(
           error.message || "Failed to submit donation. Please try again."
         );

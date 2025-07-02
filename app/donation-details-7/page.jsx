@@ -79,9 +79,15 @@ const DonationDetails7 = () => {
     }
   };
 
+  
   const validateMobileNumber = (number) => {
-    const mobileRegex = /^\d{3}\d{3}\d{3}$/;
-    return mobileRegex.test(number);
+    const cleanNumber = number.replace(/\s+/g, "");
+
+    const generalPattern = /^\+237\d{9}$/;
+
+    const cmrPattern = /^\d{9}$/;
+
+    return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
   };
 
   const validateEmail = (email) => {
@@ -119,14 +125,21 @@ const DonationDetails7 = () => {
       isValid = false;
     } else if (!validateMobileNumber(formData.mobileNumber)) {
       newErrors.mobileNumber =
-        "Please enter a valid mobile number (e.g. 686529762)";
+        "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
       isValid = false;
-    } else if (formData.mobileNumber.length < 2) {
-      newErrors.mobileNumber = "Mobile Number must be at least 2 characters";
-      isValid = false;
-    } else if (formData.mobileNumber.length > 16) {
-      newErrors.mobileNumber = "Mobile Number cannot exceed 16 characters";
-      isValid = false;
+    } else {
+      const cleanNumber = formData.mobileNumber.replace(/\s+/g, "");
+      if (cleanNumber.startsWith("+237")) {
+        if (cleanNumber.length !== 13) {
+          newErrors.mobileNumber = "+237 followed by 9 digits";
+          isValid = false;
+        }
+      } else {
+        if (cleanNumber.length !== 9) {
+          newErrors.mobileNumber = "Should be exactly 9 digits";
+          isValid = false;
+        }
+      }
     }
 
     if (!formData.fullName) {
@@ -447,7 +460,7 @@ const DonationDetails7 = () => {
                           <div>
                             <input
                               type="text"
-                              placeholder="Mobile Money Number e.g 686529762*"
+                              placeholder="Mobile Money Number e.g 686529762 or +237686529762*"
                               className={`w-full border outline-none ease-in-out px-3 py-2 rounded-md focus:outline-none focus:ring-2 dark:bg-white dark:text-gray-800 ${
                                 errors.mobileNumber
                                   ? "border-red-500 focus:ring-red-500"
