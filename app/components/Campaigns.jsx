@@ -198,17 +198,23 @@ const Campaigns = () => {
     const value = e.target.value;
     setPhoneNumber(value);
 
-    const phoneNumberRegex = /^\+237[0-9]{9}$/;
+    // Regex patterns for both number formats
+    const phoneNumberWithCountryCode = /^\+237[0-9]{9}$/;
+    const phoneNumberWithoutCountryCode = /^[0-9]{9}$/;
+
     if (!value.trim()) {
       setErrors((prev) => ({
         ...prev,
-        phoneNumber: "Phone NUmber is required",
+        phoneNumber: "Phone Number is required",
       }));
-    } else if (!phoneNumberRegex.test(value)) {
+    } else if (
+      !phoneNumberWithCountryCode.test(value) &&
+      !phoneNumberWithoutCountryCode.test(value)
+    ) {
       setErrors((prev) => ({
         ...prev,
         phoneNumber:
-          "Please enter a valid phone number as defined in the format below",
+          "Please enter a valid phone number: +237XXXXXXXXX or XXXXXXXXX (9 digits)",
       }));
     } else {
       setErrors((prev) => ({ ...prev, phoneNumber: "" }));
@@ -268,10 +274,15 @@ const Campaigns = () => {
       newErrors.phoneNumber = "Phone number is required";
       valid = false;
     } else {
-      const phoneRegex = /^\+237[0-9]{9}$/;
-      if (!phoneRegex.test(phoneNumber.trim())) {
+      const phoneWithCountryCode = /^\+237[0-9]{9}$/;
+      const phoneWithoutCountryCode = /^[0-9]{9}$/;
+
+      if (
+        !phoneWithCountryCode.test(phoneNumber.trim()) &&
+        !phoneWithoutCountryCode.test(phoneNumber.trim())
+      ) {
         newErrors.phoneNumber =
-          "Phone Number must be in format +237 followed by 9 digits";
+          "Phone Number must be +237XXXXXXXXX or XXXXXXXXX (9 digits)";
         valid = false;
       }
     }
@@ -314,7 +325,7 @@ const Campaigns = () => {
       };
 
       try {
-        // Sending my donation data to backend 
+        // Sending my donation data to backend
         const response = await fetch("/api/donations", {
           method: "POST",
           headers: {
@@ -400,7 +411,6 @@ const Campaigns = () => {
       className="p-6 bg-gray-50 dark:bg-gray-900 min-h-screen pt-20"
     >
       <div className="max-w-[1500px] mx-auto rounded-lg shadow-lg p-6 bg-white dark:bg-gray-800 transition-colors duration-200">
-        
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">
             Active Campaigns
@@ -613,7 +623,7 @@ const Campaigns = () => {
                       name="phoneNumber"
                       value={phoneNumber}
                       onMouseEnter={onMouseEnterPhoneNumber}
-                      placeholder="+237XXXXXXXXX"
+                      placeholder="+237682368261 or 682376283"
                       ref={phoneNumberDonate}
                       onChange={handlePhoneNumberChange}
                       className={`w-full border outline-none ease-in-out
@@ -751,7 +761,6 @@ const Campaigns = () => {
                     </div>
                   </div>
                 )}
-
               </form>
             </div>
           </div>
@@ -864,7 +873,8 @@ const Campaigns = () => {
                   <CheckCircle className="text-green-600 dark:text-green-400 mr-2" />
                   <h2 className="text-2xl font-bold text-gray-800 dark:text-white -mt-[2px]">
                     Campaign Details
-                  </h2>\
+                  </h2>
+                  \
                 </div>
                 <button
                   onClick={() => setShowCampDetails(false)}
