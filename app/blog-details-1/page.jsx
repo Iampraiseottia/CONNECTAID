@@ -1036,7 +1036,7 @@ const BlogDetails1 = () => {
                                 </p>
                               </div>
                               <p className="text-gray-600 mb-3">
-                                {comment.comment}
+                                {comment.comment} 
                               </p>
                             </div>
                           </div>

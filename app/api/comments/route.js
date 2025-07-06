@@ -23,8 +23,8 @@ export async function POST(request) {
     }
 
     // Truncate fields to fit database constraints
-    const truncatedAvatarUrl = avatarUrl ? avatarUrl.substring(0, 500) : null;
-    const truncatedFullName = fullName.substring(0, 255); // Assuming TEXT type can handle this
+    const truncatedAvatarUrl = avatarUrl ? avatarUrl.substring(0, 9500000) : null;
+    const truncatedFullName = fullName.substring(0, 255); 
     const truncatedEmail = email.substring(0, 255);
 
     const result = await pool.query(
