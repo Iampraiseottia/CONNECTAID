@@ -62,7 +62,7 @@ const UpcomingEventDetail3 = () => {
   const [eventPassed, setEventPassed] = useState(false);
 
   useEffect(() => {
-    const targetDate = new Date("2025-10-15T11:30:00");
+    const targetDate = new Date("2025-12-15T11:30:00");
 
     // Calculate time difference immediately on component mount
     const calculateTimeLeft = () => {

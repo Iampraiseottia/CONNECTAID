@@ -26,21 +26,21 @@ import { motion } from "motion/react";
 
 import Metadata from "../components/Metadata";
 
-import eventImg from "/public/gallery/donateList-1.png"
-import eventImg2 from "/public/gallery/donationList-2.png" 
+import eventImg from "/public/gallery/donateList-1.png";
+import eventImg2 from "/public/gallery/donationList-2.png";
 
-import relatedPostImg1 from '/public/gallery/donateList-1.png'
-import relatedPostImg2 from '/public/gallery/gallery-4.png'
-import relatedPostImg3 from '/public/gallery/gallery-20.png'
-import relatedPostImg4 from '/public/urgent/urgent-1.png'
-import relatedPostImg5 from '/public/gallery/donationList-2.png'
-import relatedPostImg6 from '/public/gallery/gallery-1.png'
-import relatedPostImg7 from '/public/gallery/gallery-3.png'
-import relatedPostImg8 from '/public/gallery/gallery-2.png'
-import relatedPostImg9 from '/public/blog/blog-5.png'
-import relatedPostImg10 from '/public/gallery/education.png'
-import relatedPostImg11 from '/public/gallery/gallery-13.png'
-import relatedPostImg12 from '/public/gallery/water.png'
+import relatedPostImg1 from "/public/gallery/donateList-1.png";
+import relatedPostImg2 from "/public/gallery/gallery-4.png";
+import relatedPostImg3 from "/public/gallery/gallery-20.png";
+import relatedPostImg4 from "/public/urgent/urgent-1.png";
+import relatedPostImg5 from "/public/gallery/donationList-2.png";
+import relatedPostImg6 from "/public/gallery/gallery-1.png";
+import relatedPostImg7 from "/public/gallery/gallery-3.png";
+import relatedPostImg8 from "/public/gallery/gallery-2.png";
+import relatedPostImg9 from "/public/blog/blog-5.png";
+import relatedPostImg10 from "/public/gallery/education.png";
+import relatedPostImg11 from "/public/gallery/gallery-13.png";
+import relatedPostImg12 from "/public/gallery/water.png";
 
 const UpcomingEventDetail1 = () => {
   const metadata = {
@@ -61,7 +61,8 @@ const UpcomingEventDetail1 = () => {
   const [eventPassed, setEventPassed] = useState(false);
 
   useEffect(() => {
-    const targetDate = new Date("2025-06-15T11:30:00");
+    const targetDate = new Date("2025-10-15T11:30:00");
+    let timer;
 
     // Calculate time difference immediately on component mount
     const calculateTimeLeft = () => {
@@ -79,7 +80,9 @@ const UpcomingEventDetail1 = () => {
         setEventPassed(false);
       } else {
         // Event has passed
-        clearInterval(timer);
+        if (timer) {
+          clearInterval(timer);
+        }
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
         setEventPassed(true);
       }
@@ -89,10 +92,14 @@ const UpcomingEventDetail1 = () => {
     calculateTimeLeft();
 
     // Update countdown every second
-    const timer = setInterval(calculateTimeLeft, 1000);
+    timer = setInterval(calculateTimeLeft, 1000);
 
     // Clean up the interval on component unmount
-    return () => clearInterval(timer);
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
   }, []);
 
   const timeUnits = [
@@ -206,13 +213,13 @@ const UpcomingEventDetail1 = () => {
                       <Image
                         src={eventImg}
                         alt="Homeless Pic"
-                        fill 
+                        fill
                         className="object-cover rounded-lg"
                       />
                     </div>
 
                     <div className="mb-8">
-                      <h2 className="text-xl font-bold mb-4">Events Details</h2> 
+                      <h2 className="text-xl font-bold mb-4">Events Details</h2>
                       <p className="text-gray-700 mb-4">
                         Join us for our upcoming charity event, "Hope for the
                         Homeless: Compassion," where we unite to make a tangible
@@ -268,7 +275,7 @@ const UpcomingEventDetail1 = () => {
                           <strong>Organizer Phone:</strong> +237 656 826 638
                         </li>
                         <li className="flex gap-2">
-                          <strong>Availability:</strong> All Willing Donors 
+                          <strong>Availability:</strong> All Willing Donors
                         </li>
                         <li className="flex gap-2">
                           <strong>Venue:</strong> Council Hall
@@ -280,7 +287,12 @@ const UpcomingEventDetail1 = () => {
                       </ul>
 
                       <p className="text-gray-700 mb-6">
-                      Don’t miss your chance to make a real impact! Join us at "Hope for the Homeless: Compassion" and be part of a transformative movement. Your presence and support can provide shelter, food, and hope to those in need. Together, we can change lives—let’s stand united against homelessness!
+                        Don’t miss your chance to make a real impact! Join us at
+                        "Hope for the Homeless: Compassion" and be part of a
+                        transformative movement. Your presence and support can
+                        provide shelter, food, and hope to those in need.
+                        Together, we can change lives—let’s stand united against
+                        homelessness!
                       </p>
 
                       <br />
@@ -324,27 +336,29 @@ const UpcomingEventDetail1 = () => {
                                     By: admin
                                   </p>
                                 </div>
-                                <div className="flex gap-2 items-center"> 
+                                <div className="flex gap-2 items-center">
                                   <MessageSquare className="w-4 h-4 text-gray-700" />
-                                  <p className="text-gray-600 text-sm">
-                                    Water
-                                  </p>
+                                  <p className="text-gray-600 text-sm">Water</p>
                                 </div>
                               </div>
 
                               <h4 className="text-lg font-bold text-gray-800 mb-3">
-                              Empowering Future Generations: Access to Clean Water for Children
+                                Empowering Future Generations: Access to Clean
+                                Water for Children
                               </h4>
 
                               <p className="text-gray-600 mb-6 text-sm">
-                              It focuses on providing clean water access, essential for children's health and education, ensuring a sustainable future. Join us in making a vital impact!
+                                It focuses on providing clean water access,
+                                essential for children's health and education,
+                                ensuring a sustainable future. Join us in making
+                                a vital impact!
                               </p>
 
                               <Link
                                 href="/upcoming-event-details-2"
                                 className="inline-block px-6 py-3 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700 transition-colors"
                               >
-                                Read More 
+                                Read More
                               </Link>
                             </div>
                           </div>
@@ -452,357 +466,361 @@ const UpcomingEventDetail1 = () => {
                   </motion.div>
 
                   {/* Related Posts */}
-              <motion.div
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
-                viewport={{ once: true, amount: 0.1 }}
-                className="bg-white rounded-lg shadow-md p-6"
-              >
-                Global
-                <h3 className="text-lg font-bold text-gray-800 mb-2">
-                  Related Post
-                </h3>
-                <div className="space-y-4">
-                  {/* {[1, 2, 3, 4].map((post) => ( */}
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-24 relative">
-                        <Link href="/upcoming-event-details-1">
-                          <Image
-                            src={relatedPostImg1} 
-                            alt="Upcoming Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500  " />
-                          <span>June 15, 2025</span>
+                  <motion.div
+                    initial={{ opacity: 0, y: 100 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="bg-white rounded-lg shadow-md p-6"
+                  >
+                    Global
+                    <h3 className="text-lg font-bold text-gray-800 mb-2">
+                      Related Post
+                    </h3>
+                    <div className="space-y-4">
+                      {/* {[1, 2, 3, 4].map((post) => ( */}
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-24 relative">
+                            <Link href="/upcoming-event-details-1">
+                              <Image
+                                src={relatedPostImg1}
+                                alt="Upcoming Event 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500  " />
+                              <span>June 15, 2025</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/upcoming-event-details-1">
+                                Hope for the Homeless: Compassion / Provide Home
+                                for the Homeless
+                              </a>
+                            </h4>
+                          </div>
                         </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/upcoming-event-details-1">
-                            Hope for the Homeless: Compassion / Provide Home for
-                            the Homeless
-                          </a>
-                        </h4>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-6">
+                              <Image
+                                src={relatedPostImg2}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 22, 000, 000 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-6">
+                                Act now, save lives—your donation can support
+                                those facing extreme hardships and urgent needs!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-20 relative">
+                            <Link href="/past-event-details-1">
+                              <Image
+                                src={relatedPostImg3}
+                                alt="Past Event 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500 " />
+                              <span>September 03, 2024</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/past-event-details-1">
+                                Empowering Futures Through Accessible Education
+                                for All
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-5">
+                              <Image
+                                src={relatedPostImg4}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 15, 100, 000 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-5">
+                                Give hope, change lives—your donation can
+                                provide shelter and support for the homeless
+                                today!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      {/* ))} */}
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-20 relative">
+                            <Link href="/upcoming-event-details-2">
+                              <Image
+                                src={relatedPostImg5}
+                                alt="Upcoming Event 2"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500 " />
+                              <span>August 20, 2025</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/upcoming-event-details-2">
+                                Empowering Future Generations: Access to Clean
+                                Water for Children.
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-1">
+                              <Image
+                                src={relatedPostImg6}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 6, 126, 750 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-1">
+                                Empower minds, change futures — Donate today and
+                                make a long lasting impacts in lives of people
+                                and communities!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-20 relative">
+                            <Link href="/past-event-details-2">
+                              <Image
+                                src={relatedPostImg7}
+                                alt="Past Event 2"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500 " />
+                              <span>November 09, 2024</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/past-event-details-2">
+                                Quality Medicine: Empowering a Healthier
+                                Community
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-3">
+                              <Image
+                                src={relatedPostImg8}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 12, 050, 250 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-3">
+                                Heal lives, restore hope — Your donation can
+                                provide essential medical care to those in
+                                need!!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-20 relative">
+                            <Link href="/upcoming-event-details-2">
+                              <Image
+                                src={relatedPostImg9}
+                                alt="Upcoming Event 2"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500 " />
+                              <span>October 13, 2025</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/upcoming-event-details-2">
+                                Stand Together for Change: Aid Those in Extreme
+                                Cases of Need!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-2">
+                              <Image
+                                src={relatedPostImg10}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 6, 126, 750 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-2">
+                                Empower minds, change futures — Your donation
+                                can provide education and hope to children in
+                                need!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-20 relative">
+                            <Link href="/past-event-details-3">
+                              <Image
+                                src={relatedPostImg11}
+                                alt="Past Event 3"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <Clock className="w-3 h-3 text-teal-500 " />
+                              <span>February 24, 2024</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/past-event-details-3">
+                                Nourished Communities: The Power of Good Food
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
+                      </div>
+
+                      <div className="">
+                        <div className="flex gap-3">
+                          <div className="flex-shrink-0 w-20 h-[110px] relative">
+                            <Link href="/donation-details-4">
+                              <Image
+                                src={relatedPostImg12}
+                                alt="Donation List 1"
+                                fill
+                                className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
+                              />
+                            </Link>
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
+                              <DollarSign className="w-3 h-3 text-teal-500 " />
+                              <span>Raised Amount: 26, 058, 500 Francs</span>
+                            </div>
+                            <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
+                              <a href="/donation-details-4">
+                                Quench thirst, transform lives—your donation can
+                                provide clean water to communities in need!
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                        <hr className="my-4 border-gray-200" />
                       </div>
                     </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-6">
-                          <Image
-                            src={relatedPostImg2}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 22, 000, 000 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-6">
-                            Act now, save lives—your donation can support those
-                            facing extreme hardships and urgent needs!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-1">
-                          <Image
-                            src={relatedPostImg3}
-                            alt="Past Event 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>September 03, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-1">
-                            Empowering Futures Through Accessible Education for
-                            All
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-5">
-                          <Image
-                            src={relatedPostImg4}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 15, 100, 000 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-5">
-                            Give hope, change lives—your donation can provide
-                            shelter and support for the homeless today!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  {/* ))} */}
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/upcoming-event-details-2">
-                          <Image
-                            src={relatedPostImg5}
-                            alt="Upcoming Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>August 20, 2025</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/upcoming-event-details-2">
-                            Empowering Future Generations: Access to Clean Water
-                            for Children.
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-1">
-                          <Image
-                            src={relatedPostImg6}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 6, 126, 750 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-1">
-                            Empower minds, change futures — Donate today and
-                            make a long lasting impacts in lives of people and
-                            communities!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-2">
-                          <Image
-                            src={relatedPostImg7}
-                            alt="Past Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>November 09, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-2">
-                            Quality Medicine: Empowering a Healthier Community
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-3">
-                          <Image
-                            src={relatedPostImg8}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 12, 050, 250 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-3">
-                            Heal lives, restore hope — Your donation can provide
-                            essential medical care to those in need!!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/upcoming-event-details-2">
-                          <Image
-                            src={relatedPostImg9}
-                            alt="Upcoming Event 2"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>October 13, 2025</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/upcoming-event-details-2">
-                            Stand Together for Change: Aid Those in Extreme
-                            Cases of Need!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-2">
-                          <Image
-                            src={relatedPostImg10}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 6, 126, 750 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-2">
-                            Empower minds, change futures — Your donation can
-                            provide education and hope to children in need!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-20 relative">
-                        <Link href="/past-event-details-3">
-                          <Image
-                            src={relatedPostImg11}
-                            alt="Past Event 3"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <Clock className="w-3 h-3 text-teal-500 " />
-                          <span>February 24, 2024</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/past-event-details-3">
-                            Nourished Communities: The Power of Good Food
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-
-                  <div className="">
-                    <div className="flex gap-3">
-                      <div className="flex-shrink-0 w-20 h-[110px] relative">
-                        <Link href="/donation-details-4">
-                          <Image
-                            src={relatedPostImg12}
-                            alt="Donation List 1"
-                            fill
-                            className="rounded object-cover hover:scale-105 duration-200 ease-in-out pt-2"
-                          />
-                        </Link>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-1 text-gray-500 text-sm mb-1">
-                          <DollarSign className="w-3 h-3 text-teal-500 " />
-                          <span>Raised Amount: 26, 058, 500 Francs</span>
-                        </div>
-                        <h4 className="font-medium text-gray-800 hover:text-teal-600 transition-colors">
-                          <a href="/donation-details-4">
-                            Quench thirst, transform lives—your donation can
-                            provide clean water to communities in need!
-                          </a>
-                        </h4>
-                      </div>
-                    </div>
-                    <hr className="my-4 border-gray-200" />
-                  </div>
-                </div>
-              </motion.div>
+                  </motion.div>
 
                   {/* Tags */}
                   <div className="bg-white rounded-lg shadow-md p-6">
