@@ -14,7 +14,6 @@ import { motion } from "motion/react";
 import {
   User,
   MessageSquare,
-  Search,
   Clock,
   DollarSign,
   Upload,
@@ -65,7 +64,6 @@ const BlogDetails1 = () => {
   const fullNameRef = useRef();
   const emailAddressRef = useRef();
   const commentRef = useRef();
-  const searchRef = useRef();
 
   const onMouseEnterFullNameRef = () => {
     fullNameRef.current.focus();
@@ -75,9 +73,6 @@ const BlogDetails1 = () => {
   };
   const onMouseEnterCommentRef = () => {
     commentRef.current.focus();
-  };
-  const onMouseEnterSearchRef = () => {
-    searchRef.current.focus();
   };
 
   const avatarInputRef = useRef();
@@ -281,7 +276,7 @@ const BlogDetails1 = () => {
 
         await fetchComments();
       } else {
-        throw new Error(data.error || "Failed to submit comment"); 
+        throw new Error(data.error || "Failed to submit comment");
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
@@ -1036,7 +1031,7 @@ const BlogDetails1 = () => {
                                 </p>
                               </div>
                               <p className="text-gray-600 mb-3">
-                                {comment.comment} 
+                                {comment.comment}
                               </p>
                             </div>
                           </div>
@@ -1066,31 +1061,6 @@ const BlogDetails1 = () => {
             {/* Sidebar */}
             <div className="lg:col-span-3">
               <div className="space-y-8">
-                {/* Search Box */}
-                <motion.div
-                  initial={{ opacity: 0, y: 100 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  className="bg-white rounded-lg shadow-md p-6"
-                >
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
-                    Search Here
-                  </h3>
-                  <div className="relative">
-                    <input
-                      type="search"
-                      placeholder="Enter Your Keyword"
-                      className="w-full p-3 pr-10 border border-gray-300 outline-none rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 dark:bg-white dark:text-black"
-                      ref={searchRef}
-                      onMouseEnter={onMouseEnterSearchRef}
-                    />
-                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <Search className="w-5 h-5 text-gray-500" />
-                    </div>
-                  </div>
-                </motion.div>
-
                 {/* Category List */}
                 <motion.div
                   initial={{ opacity: 0, y: 100 }}

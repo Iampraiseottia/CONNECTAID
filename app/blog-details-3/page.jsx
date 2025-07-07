@@ -14,7 +14,6 @@ import { motion } from "motion/react";
 import {
   User,
   MessageSquare,
-  Search,
   Clock,
   DollarSign,
   Upload,
@@ -65,7 +64,6 @@ const BlogDetails3 = () => {
   const fullNameRef = useRef();
   const emailAddressRef = useRef();
   const commentRef = useRef();
-  const searchRef = useRef();
 
   const onMouseEnterFullNameRef = () => {
     fullNameRef.current.focus();
@@ -76,9 +74,7 @@ const BlogDetails3 = () => {
   const onMouseEnterCommentRef = () => {
     commentRef.current.focus();
   };
-  const onMouseEnterSearchRef = () => {
-    searchRef.current.focus();
-  };
+  
 
   const avatarInputRef = useRef();
 
