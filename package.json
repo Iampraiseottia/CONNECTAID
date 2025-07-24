@@ -13,6 +13,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@neondatabase/serverless": "^1.0.1",
     "@vercel/postgres": "^0.10.0",
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
