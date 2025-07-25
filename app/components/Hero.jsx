@@ -226,35 +226,6 @@ const Hero = () => {
                     Donation Details
                   </Link>
 
-                  {/* Nested dropdown for Login
-                  <div className="relative group/login">
-                    <div className="py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer">
-                      <p>Login</p>
-                      <ChevronRight className="w-4 h-4" />
-                    </div>
-                    <div className="absolute left-full top-0 hidden bg-white w-60 border-l-2 border-t-2 border-l-teal-500 border-t-teal-500 h-auto py-5 transition-all group-hover/login:block p-2 rounded shadow-lg">
-                      <Link
-                        href="/login"
-                        className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        href="/register"
-                        className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide"
-                      >
-                        Registration
-                      </Link>
-                      <Link
-                        href="/forgot-password"
-                        className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide"
-                      >
-                        Forgot Password
-                      </Link>
-                    </div>
-                  </div> */}
-
-
                   <Link
                     href="/blog-details-1"
                     className="block py-2 text-slate-800 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide"
@@ -313,7 +284,7 @@ const Hero = () => {
                     ? "py-2 px-4 xl:py-3 xl:px-7 text-sm xl:text-base"
                     : "py-2 px-4 xl:py-4 xl:px-9 text-sm xl:text-base"
                 }`}
-              > 
+              >
                 DONATE NOW
               </Link>
             </div>
@@ -395,42 +366,6 @@ const Hero = () => {
                   >
                     Donate Pay
                   </Link>
-
-                  {/* <div className="relative">
-                    <button
-                      onClick={() =>
-                        document
-                          .getElementById("mobileLogin")
-                          .classList.toggle("hidden")
-                      }
-                      className="py-2 text-white hover:text-yellow-500 flex items-center justify-between w-full"
-                    >
-                      Login <ChevronRight className="ml-1 w-4 h-4" />
-                    </button>
-                    <div
-                      id="mobileLogin"
-                      className="hidden bg-gray-700 mt-1 p-2 rounded ml-4"
-                    >
-                      <Link
-                        href="/login"
-                        className="block py-2 text-white hover:text-yellow-500"
-                      >
-                        Login
-                      </Link>
-                      <Link
-                        href="/register"
-                        className="block py-2 text-white hover:text-yellow-500"
-                      >
-                        Registration
-                      </Link>
-                      <Link
-                        href="/forgot-password"
-                        className="block py-2 text-white hover:text-yellow-500"
-                      >
-                        Forgot Password
-                      </Link>
-                    </div>
-                  </div> */}
 
                   <Link
                     href="/blog-details-1"
@@ -526,7 +461,7 @@ const Hero = () => {
 
             <div className="flex flex-wrap gap-3 md:gap-4">
               <Link
-                href="/donate-payment"
+                href="/register"
                 className="bg-teal-600 font-semibold border border-teal-600 hover:bg-teal-700 text-white text-sm sm:text-base md:text-lg lg:text-xl cursor-pointer ease-in-out duration-300 py-2 px-6 md:py-2 md:px-10 lg:py-3 lg:px-14 rounded-full transition"
               >
                 Register To View All Your Donations

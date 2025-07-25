@@ -87,7 +87,7 @@ export async function GET(request) {
 
     const result = await query(selectQuery);
 
-    // Return the fetched donations
+    // Return the fetched donations 
     return NextResponse.json({
       message: 'Donations retrieved successfully.',
       donations: result.rows
