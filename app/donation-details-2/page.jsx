@@ -222,7 +222,8 @@ const DonationDetails2 = () => {
           email: formData.email,
           phone_number: formData.mobileNumber,
           donation_amount: selectedAmount,
-          category: "Education Donation - Let's Empower minds and change lives together",
+          category:
+            "Education Donation - Let's Empower minds and change lives together",
           payment_method: paymentMethodName,
           transaction_id: transactionId,
         };
@@ -265,12 +266,203 @@ const DonationDetails2 = () => {
       } catch (error) {
         console.error("Error submitting donation:", error);
         setSubmitError(
-          error.message || "Failed to submit donation. Please try again." 
+          error.message || "Failed to submit donation. Please try again."
         );
         setIsSubmitting(false);
       }
     } else {
       console.log("Form has errors");
+    }
+  };
+
+  // PDF
+
+  const downloadReceiptAsPDF = async () => {
+    if (!donationData) return;
+
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+
+      const leftMargin = 20;
+      const rightMargin = 190;
+      const centerX = 105;
+
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text("25/07/2025, 00:19", leftMargin, 15);
+      doc.text("Donation Receipt - ConnectAID", rightMargin, 15, {
+        align: "right",
+      });
+
+      doc.setFontSize(24);
+      doc.setTextColor(22, 163, 74);
+      doc.setFont("Arial", "bold");
+      doc.text("CONNECTAID", centerX, 35, { align: "center" });
+
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Donation Receipt", centerX, 55, { align: "center" });
+
+      doc.setDrawColor(22, 163, 74);
+      doc.setLineWidth(2);
+      doc.line(leftMargin, 65, rightMargin, 65);
+
+      doc.setFontSize(22);
+      doc.setTextColor(22, 163, 74);
+      doc.text(
+        `${Number(donationData.amount).toLocaleString()} Francs`,
+        centerX,
+        85,
+        { align: "center" }
+      );
+
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      doc.text("Donation Amount", centerX, 95, { align: "center" });
+
+      let yPos = 120;
+      const lineHeight = 12;
+
+      const details = [
+        {
+          label: "Full Name:",
+          value: donationData.name,
+          rightAlign: true,
+        },
+        {
+          label: "Email:",
+          value: donationData.email,
+          rightAlign: true,
+        },
+        {
+          label: "Phone Number:",
+          value: donationData.phoneNumber,
+          rightAlign: true,
+        },
+        {
+          label: "Category:",
+          value: donationData.category,
+          rightAlign: true,
+          valueColor: [22, 163, 74],
+        },
+        {
+          label: "Payment Method:",
+          value: donationData.paymentMethod
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+          rightAlign: true,
+        },
+        {
+          label: "Transaction ID:",
+          value: donationData.transactionId,
+          rightAlign: true,
+        },
+        {
+          label: "Date:",
+          value: new Date(donationData.timestamp).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }),
+          rightAlign: true,
+        },
+      ];
+
+      details.forEach((detail) => {
+        doc.setFontSize(11);
+        doc.setTextColor(60, 60, 60);
+        doc.text(detail.label, leftMargin + 25, yPos);
+
+        doc.setTextColor(
+          detail.valueColor ? detail.valueColor[0] : 0,
+          detail.valueColor ? detail.valueColor[1] : 0,
+          detail.valueColor ? detail.valueColor[2] : 0
+        );
+
+        if (detail.rightAlign) {
+          doc.text(detail.value, rightMargin - 25, yPos, { align: "right" });
+        } else {
+          doc.text(detail.value, leftMargin + 85, yPos);
+        }
+
+        yPos += lineHeight;
+      });
+
+      yPos += 20;
+
+      doc.setFillColor(240, 255, 240);
+      doc.rect(leftMargin, yPos - 5, rightMargin - leftMargin, 35, "F");
+
+      doc.setFontSize(16);
+      doc.setTextColor(22, 163, 74);
+      doc.text("Thank You for Your Generosity!", centerX, yPos + 10, {
+        align: "center",
+      });
+
+      // Thank you message
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(
+        "Your donation will make a real difference in someone's life. We appreciate your",
+        centerX,
+        yPos + 20,
+        { align: "center" }
+      );
+      doc.text("kindness and support for our cause.", centerX, yPos + 28, {
+        align: "center",
+      });
+
+      // Footer section
+      yPos += 50;
+
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.5);
+      doc.line(leftMargin, yPos, rightMargin, yPos);
+
+      yPos += 10;
+
+      doc.setFontSize(11);
+      doc.setTextColor(0, 0, 0);
+      doc.text("ConnectAID", centerX, yPos, { align: "center" });
+
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text("- Connecting Hearts, Changing Lives", centerX, yPos + 8, {
+        align: "center",
+      });
+
+      yPos += 18;
+      doc.text(
+        "This is an official receipt for your donation. Please keep this for your records.",
+        centerX,
+        yPos,
+        { align: "center" }
+      );
+
+      yPos += 10;
+      doc.text(
+        `Generated on: ${new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}`,
+        centerX,
+        yPos,
+        { align: "center" }
+      );
+
+      // Save the PDF
+      doc.save(`ConnectAID-Receipt-${donationData.transactionId}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Error generating PDF. Please try again.");
     }
   };
 
@@ -1276,7 +1468,10 @@ const DonationDetails2 = () => {
                     </div>
                   </div>
 
-                  <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={downloadReceiptAsPDF}
+                    className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  >
                     <Download size={18} />
                     Download Receipt
                   </button>
@@ -1284,9 +1479,6 @@ const DonationDetails2 = () => {
                   <div className="text-center">
                     <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
                       Your contribution is making a real difference! 💫
-                    </p>
-                    <p className="text-slate-500 dark:text-slate-400 text-xs">
-                      The Donation Receipt Has been Sent To Your Email{" "}
                     </p>
                   </div>
                 </div>

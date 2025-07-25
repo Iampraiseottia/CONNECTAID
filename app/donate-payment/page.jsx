@@ -479,14 +479,12 @@ const DonatePayment = () => {
       // Footer section
       yPos += 50;
 
-      // Separator line
       doc.setDrawColor(200, 200, 200);
       doc.setLineWidth(0.5);
       doc.line(leftMargin, yPos, rightMargin, yPos);
 
       yPos += 10;
 
-      // Footer text
       doc.setFontSize(11);
       doc.setTextColor(0, 0, 0);
       doc.text("ConnectAID", centerX, yPos, { align: "center" });

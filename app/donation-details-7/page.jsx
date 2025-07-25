@@ -21,8 +21,7 @@ import {
   DollarSign,
 } from "lucide-react";
 
-import navLogo from "/public/icon/logo.png"; 
-
+import navLogo from "/public/icon/logo.png";
 
 import { motion } from "motion/react";
 
@@ -46,233 +45,424 @@ const DonationDetails7 = () => {
   };
 
   const [selectedPayment, setSelectedPayment] = useState("mtn");
-    const [selectedAmount, setSelectedAmount] = useState(1000);
-    const [agreedToTerms, setAgreedToTerms] = useState(true);
-  
-    const [isSubmitting, setIsSubmitting] = useState(false);
-  
-    const [formData, setFormData] = useState({
-      mobileNumber: "",
-      fullName: "",
-      email: "",
+  const [selectedAmount, setSelectedAmount] = useState(1000);
+  const [agreedToTerms, setAgreedToTerms] = useState(true);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [formData, setFormData] = useState({
+    mobileNumber: "",
+    fullName: "",
+    email: "",
+  });
+
+  const [errors, setErrors] = useState({
+    mobileNumber: "",
+    fullName: "",
+    email: "",
+    terms: "",
+  });
+
+  // States for API response handling
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
     });
-  
-    const [errors, setErrors] = useState({
-      mobileNumber: "",
-      fullName: "",
-      email: "",
-      terms: "",
-    });
-  
-    // States for API response handling
-    const [submitError, setSubmitError] = useState("");
-    const [submitSuccess, setSubmitSuccess] = useState(false);
-  
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({
-        ...formData,
-        [name]: value,
+
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
       });
-  
-      if (errors[name]) {
-        setErrors({
-          ...errors,
-          [name]: "",
-        });
+    }
+  };
+
+  const validateMobileNumber = (number) => {
+    const cleanNumber = number.replace(/\s+/g, "");
+
+    const generalPattern = /^\+237\d{9}$/;
+
+    const cmrPattern = /^\d{9}$/;
+
+    return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const mobileMoneyNumberRef = useRef();
+  const fullNameRef = useRef();
+  const emailAddressRef = useRef();
+
+  const onMouseEnterMobileNUmberRef = () => {
+    mobileMoneyNumberRef.current.focus();
+  };
+
+  const onMouseEnterFullNameRef = () => {
+    fullNameRef.current.focus();
+  };
+
+  const onMouseEnterEmailAddressRef = () => {
+    emailAddressRef.current.focus();
+  };
+
+  const [donationData, setDonationData] = useState(null);
+  const [thankYouMessage, setThankYouMessage] = useState(false);
+
+  // API call function to submit donation
+  const submitDonationToAPI = async (donationPayload) => {
+    try {
+      const response = await fetch("/api/guest_donations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationPayload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to submit donation");
       }
-    };
-  
-    const validateMobileNumber = (number) => {
-      const cleanNumber = number.replace(/\s+/g, "");
-  
-      const generalPattern = /^\+237\d{9}$/;
-  
-      const cmrPattern = /^\d{9}$/;
-  
-      return generalPattern.test(cleanNumber) || cmrPattern.test(cleanNumber);
-    }; 
-  
-    const validateEmail = (email) => {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
-    };
-  
-    const mobileMoneyNumberRef = useRef();
-    const fullNameRef = useRef();
-    const emailAddressRef = useRef();
-  
-    const onMouseEnterMobileNUmberRef = () => {
-      mobileMoneyNumberRef.current.focus();
-    };
-  
-    const onMouseEnterFullNameRef = () => {
-      fullNameRef.current.focus();
-    };
-  
-    const onMouseEnterEmailAddressRef = () => {
-      emailAddressRef.current.focus();
-    };
-  
-    const [donationData, setDonationData] = useState(null);
-    const [thankYouMessage, setThankYouMessage] = useState(false);
-  
-    // API call function to submit donation
-    const submitDonationToAPI = async (donationPayload) => {
+
+      return result;
+    } catch (error) {
+      console.error("API submission error:", error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Clear previous errors
+    setSubmitError("");
+    setSubmitSuccess(false);
+
+    const newErrors = {};
+    let isValid = true;
+
+    if (!formData.mobileNumber) {
+      newErrors.mobileNumber = "Mobile number is required";
+      isValid = false;
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber =
+        "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
+      isValid = false;
+    } else {
+      const cleanNumber = formData.mobileNumber.replace(/\s+/g, "");
+      if (cleanNumber.startsWith("+237")) {
+        if (cleanNumber.length !== 13) {
+          newErrors.mobileNumber = "+237 followed by 9 digits";
+          isValid = false;
+        }
+      } else {
+        if (cleanNumber.length !== 9) {
+          newErrors.mobileNumber = "Should be exactly 9 digits";
+          isValid = false;
+        }
+      }
+    }
+
+    if (!formData.fullName) {
+      newErrors.fullName = "Full Name is required";
+      isValid = false;
+    } else if (formData.fullName.length < 2) {
+      newErrors.fullName = "Full Name must be at least 2 characters";
+      isValid = false;
+    } else if (formData.fullName.length > 40) {
+      newErrors.fullName = "Full Name cannot exceed 50 characters";
+      isValid = false;
+    }
+
+    if (!formData.email) {
+      newErrors.email = "Email address is required";
+      isValid = false;
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    if (!agreedToTerms) {
+      newErrors.terms = "You must agree to the Terms of Service";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+
+    if (isValid) {
+      setIsSubmitting(true);
+
       try {
-        const response = await fetch("/api/guest_donations", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(donationPayload),
-        });
-  
-        const result = await response.json();
-  
-        if (!response.ok) {
-          throw new Error(result.message || "Failed to submit donation");
-        }
-  
-        return result;
-      } catch (error) {
-        console.error("API submission error:", error);
-        throw error;
-      }
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      // Clear previous errors
-      setSubmitError("");
-      setSubmitSuccess(false);
-  
-      const newErrors = {};
-      let isValid = true;
-  
-      if (!formData.mobileNumber) {
-        newErrors.mobileNumber = "Mobile number is required";
-        isValid = false;
-      } else if (!validateMobileNumber(formData.mobileNumber)) {
-        newErrors.mobileNumber =
-          "Please enter a valid mobile number (e.g. 686529762 or +237686529762)";
-        isValid = false;
-      } else {
-        const cleanNumber = formData.mobileNumber.replace(/\s+/g, "");
-        if (cleanNumber.startsWith("+237")) {
-          if (cleanNumber.length !== 13) {
-            newErrors.mobileNumber = "+237 followed by 9 digits";
-            isValid = false;
-          }
-        } else {
-          if (cleanNumber.length !== 9) {
-            newErrors.mobileNumber = "Should be exactly 9 digits";
-            isValid = false;
-          }
-        }
-      }
-  
-      if (!formData.fullName) {
-        newErrors.fullName = "Full Name is required";
-        isValid = false;
-      } else if (formData.fullName.length < 2) {
-        newErrors.fullName = "Full Name must be at least 2 characters";
-        isValid = false;
-      } else if (formData.fullName.length > 40) {
-        newErrors.fullName = "Full Name cannot exceed 50 characters";
-        isValid = false;
-      }
-  
-      if (!formData.email) {
-        newErrors.email = "Email address is required";
-        isValid = false;
-      } else if (!validateEmail(formData.email)) {
-        newErrors.email = "Please enter a valid email address";
-        isValid = false;
-      }
-  
-      if (!agreedToTerms) {
-        newErrors.terms = "You must agree to the Terms of Service";
-        isValid = false;
-      }
-  
-      setErrors(newErrors);
-  
-      if (isValid) {
-        setIsSubmitting(true);
-  
-        try {
-          // Generate transaction ID
-          const timestamp = Date.now().toString(36);
-          const randomStr = Math.random()
-            .toString(36)
-            .substring(2, 8)
-            .toUpperCase();
-          const transactionId = `TXN-${timestamp}-${randomStr}`;
-  
-          // Get payment method name
-          const paymentMethodName =
-            selectedPayment === "mtn"
-              ? "MTN Mobile Money"
-              : "Orange Mobile Money";
-  
-          // Prepare data for API submission
-          const donationPayload = {
-            full_name: formData.fullName,
-            email: formData.email,
-            phone_number: formData.mobileNumber,
-            donation_amount: selectedAmount,
-            category: "Vocational Training Donation",
-            payment_method: paymentMethodName,
-            transaction_id: transactionId,
-          };
-  
-          // Submit to API
-          const apiResponse = await submitDonationToAPI(donationPayload);
-  
-          // Create display data for thank you message
-          const newDonationData = {
-            name: formData.fullName,
-            email: formData.email,
-            phoneNumber: formData.mobileNumber,
-            amount: selectedAmount,
-            category: "Vocational Training Donation",
-            paymentMethod: paymentMethodName,
-            transactionId: transactionId,
-            timestamp: new Date().toISOString(),
-            dbRecord: apiResponse.donation,
-          };
-  
-          setDonationData(newDonationData);
-          setSubmitSuccess(true);
-          setThankYouMessage(true);
-  
-          console.log("Donation submitted successfully:", apiResponse);
-  
-          // Reset form after successful submission
-          setTimeout(() => {
-            setIsSubmitting(false);
-            setSelectedAmount(1000);
-            setFormData({
-              mobileNumber: "",
-              fullName: "",
-              email: "",
-            });
-            setSelectedPayment("mtn");
-            setAgreedToTerms(false);
-          }, 1000);
-        } catch (error) { 
-          console.error("Error submitting donation:", error); 
-          setSubmitError(
-            error.message || "Failed to submit donation. Please try again."
-          );
+        // Generate transaction ID
+        const timestamp = Date.now().toString(36);
+        const randomStr = Math.random()
+          .toString(36)
+          .substring(2, 8)
+          .toUpperCase();
+        const transactionId = `TXN-${timestamp}-${randomStr}`;
+
+        // Get payment method name
+        const paymentMethodName =
+          selectedPayment === "mtn"
+            ? "MTN Mobile Money"
+            : "Orange Mobile Money";
+
+        // Prepare data for API submission
+        const donationPayload = {
+          full_name: formData.fullName,
+          email: formData.email,
+          phone_number: formData.mobileNumber,
+          donation_amount: selectedAmount,
+          category: "Vocational Training Donation",
+          payment_method: paymentMethodName,
+          transaction_id: transactionId,
+        };
+
+        // Submit to API
+        const apiResponse = await submitDonationToAPI(donationPayload);
+
+        // Create display data for thank you message
+        const newDonationData = {
+          name: formData.fullName,
+          email: formData.email,
+          phoneNumber: formData.mobileNumber,
+          amount: selectedAmount,
+          category: "Vocational Training Donation",
+          paymentMethod: paymentMethodName,
+          transactionId: transactionId,
+          timestamp: new Date().toISOString(),
+          dbRecord: apiResponse.donation,
+        };
+
+        setDonationData(newDonationData);
+        setSubmitSuccess(true);
+        setThankYouMessage(true);
+
+        console.log("Donation submitted successfully:", apiResponse);
+
+        // Reset form after successful submission
+        setTimeout(() => {
           setIsSubmitting(false);
-        }
-      } else {
-        console.log("Form has errors");
+          setSelectedAmount(1000);
+          setFormData({
+            mobileNumber: "",
+            fullName: "",
+            email: "",
+          });
+          setSelectedPayment("mtn");
+          setAgreedToTerms(false);
+        }, 1000);
+      } catch (error) {
+        console.error("Error submitting donation:", error);
+        setSubmitError(
+          error.message || "Failed to submit donation. Please try again."
+        );
+        setIsSubmitting(false);
       }
-    }; 
+    } else {
+      console.log("Form has errors");
+    }
+  };
+
+  // PDF
+
+  const downloadReceiptAsPDF = async () => {
+    if (!donationData) return;
+
+    try {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF();
+
+      const leftMargin = 20;
+      const rightMargin = 190;
+      const centerX = 105;
+
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text("25/07/2025, 00:19", leftMargin, 15);
+      doc.text("Donation Receipt - ConnectAID", rightMargin, 15, {
+        align: "right",
+      });
+
+      doc.setFontSize(24);
+      doc.setTextColor(22, 163, 74);
+      doc.setFont("Arial", "bold");
+      doc.text("CONNECTAID", centerX, 35, { align: "center" });
+
+      doc.setFontSize(18);
+      doc.setTextColor(0, 0, 0);
+      doc.text("Donation Receipt", centerX, 55, { align: "center" });
+
+      doc.setDrawColor(22, 163, 74);
+      doc.setLineWidth(2);
+      doc.line(leftMargin, 65, rightMargin, 65);
+
+      doc.setFontSize(22);
+      doc.setTextColor(22, 163, 74);
+      doc.text(
+        `${Number(donationData.amount).toLocaleString()} Francs`,
+        centerX,
+        85,
+        { align: "center" }
+      );
+
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      doc.text("Donation Amount", centerX, 95, { align: "center" });
+
+      let yPos = 120;
+      const lineHeight = 12;
+
+      const details = [
+        {
+          label: "Full Name:",
+          value: donationData.name,
+          rightAlign: true,
+        },
+        {
+          label: "Email:",
+          value: donationData.email,
+          rightAlign: true,
+        },
+        {
+          label: "Phone Number:",
+          value: donationData.phoneNumber,
+          rightAlign: true,
+        },
+        {
+          label: "Category:",
+          value: donationData.category,
+          rightAlign: true,
+          valueColor: [22, 163, 74],
+        },
+        {
+          label: "Payment Method:",
+          value: donationData.paymentMethod
+            .replace(/_/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()),
+          rightAlign: true,
+        },
+        {
+          label: "Transaction ID:",
+          value: donationData.transactionId,
+          rightAlign: true,
+        },
+        {
+          label: "Date:",
+          value: new Date(donationData.timestamp).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          }),
+          rightAlign: true,
+        },
+      ];
+
+      details.forEach((detail) => {
+        doc.setFontSize(11);
+        doc.setTextColor(60, 60, 60);
+        doc.text(detail.label, leftMargin + 25, yPos);
+
+        doc.setTextColor(
+          detail.valueColor ? detail.valueColor[0] : 0,
+          detail.valueColor ? detail.valueColor[1] : 0,
+          detail.valueColor ? detail.valueColor[2] : 0
+        );
+
+        if (detail.rightAlign) {
+          doc.text(detail.value, rightMargin - 25, yPos, { align: "right" });
+        } else {
+          doc.text(detail.value, leftMargin + 85, yPos);
+        }
+
+        yPos += lineHeight;
+      });
+
+      yPos += 20;
+
+      doc.setFillColor(240, 255, 240);
+      doc.rect(leftMargin, yPos - 5, rightMargin - leftMargin, 35, "F");
+
+      doc.setFontSize(16);
+      doc.setTextColor(22, 163, 74);
+      doc.text("Thank You for Your Generosity!", centerX, yPos + 10, {
+        align: "center",
+      });
+
+      // Thank you message
+      doc.setFontSize(10);
+      doc.setTextColor(0, 0, 0);
+      doc.text(
+        "Your donation will make a real difference in someone's life. We appreciate your",
+        centerX,
+        yPos + 20,
+        { align: "center" }
+      );
+      doc.text("kindness and support for our cause.", centerX, yPos + 28, {
+        align: "center",
+      });
+
+      // Footer section
+      yPos += 50;
+
+      doc.setDrawColor(200, 200, 200);
+      doc.setLineWidth(0.5);
+      doc.line(leftMargin, yPos, rightMargin, yPos);
+
+      yPos += 10;
+
+      doc.setFontSize(11);
+      doc.setTextColor(0, 0, 0);
+      doc.text("ConnectAID", centerX, yPos, { align: "center" });
+
+      doc.setFontSize(10);
+      doc.setTextColor(100, 100, 100);
+      doc.text("- Connecting Hearts, Changing Lives", centerX, yPos + 8, {
+        align: "center",
+      });
+
+      yPos += 18;
+      doc.text(
+        "This is an official receipt for your donation. Please keep this for your records.",
+        centerX,
+        yPos,
+        { align: "center" }
+      );
+
+      yPos += 10;
+      doc.text(
+        `Generated on: ${new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}`,
+        centerX,
+        yPos,
+        { align: "center" }
+      );
+
+      // Save the PDF
+      doc.save(`ConnectAID-Receipt-${donationData.transactionId}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert("Error generating PDF. Please try again.");
+    }
+  };
 
   return (
     <main className="bg-[#f9f9f9]">
@@ -906,7 +1096,6 @@ const DonationDetails7 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-
                   <div className="">
                     <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -994,8 +1183,6 @@ const DonationDetails7 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-                 
-
                   <div className="">
                     <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -1080,8 +1267,6 @@ const DonationDetails7 = () => {
                     <hr className="my-4 border-gray-200" />
                   </div>
 
-              
-
                   <div className="">
                     <div className="flex gap-3">
                       <div className="flex-shrink-0 w-20 h-[110px] relative">
@@ -1143,139 +1328,137 @@ const DonationDetails7 = () => {
             </div>
           </div>
 
+          {/* Thank You Message */}
+          {thankYouMessage && donationData && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="flex justify-between items-center mb-8 mt-2">
+                  <div className="flex items-center ">
+                    <Image
+                      src={navLogo}
+                      alt="ConnectAID Logo"
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 mr-2"
+                    />
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+                      ConnectAID
+                    </h2>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setThankYouMessage(false);
+                    }}
+                    className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
 
-           {/* Thank You Message */}
-        {thankYouMessage && donationData && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="flex justify-between items-center mb-8 mt-2">
-                <div className="flex items-center ">
-                  <Image
-                    src={navLogo}
-                    alt="ConnectAID Logo"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 mr-2"
-                  />
-                  <h2 className="text-xl font-bold text-gray-800 dark:text-white">
-                    ConnectAID
+                {/* Success Content */}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
+                    <CheckCircle
+                      size={48}
+                      className="text-green-500 dark:text-green-400"
+                    />
+                    <div className="absolute -top-2 -right-2">
+                      <Heart size={20} className="text-red-500 fill-current" />
+                    </div>
+                  </div>
+
+                  {/* Thank You Message */}
+                  <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
+                    Thank You, {donationData.name}! 🙏
                   </h2>
-                </div>
-                <button
-                  onClick={() => {
-                    setThankYouMessage(false);
-                  }}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
-                >
-                  <X size={20} />
-                </button>
-              </div>
 
-              {/* Success Content */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-24 h-24 bg-green-200 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 relative">
-                  <CheckCircle
-                    size={48}
-                    className="text-green-500 dark:text-green-400"
-                  />
-                  <div className="absolute -top-2 -right-2">
-                    <Heart size={20} className="text-red-500 fill-current" />
-                  </div>
-                </div>
+                  <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
+                    Your generous donation of{" "}
+                    <span className="font-bold text-green-600 dark:text-green-400">
+                      {Number(donationData.amount).toLocaleString()} Francs
+                    </span>{" "}
+                    has been successfully processed!
+                  </p>
 
-                {/* Thank You Message */}
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-2 text-center">
-                  Thank You, {donationData.name}! 🙏
-                </h2>
+                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
+                    <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
+                      Donation Details:
+                    </h3>
 
-                <p className="text-slate-600 dark:text-slate-400 text-center mb-4">
-                  Your generous donation of{" "}
-                  <span className="font-bold text-green-600 dark:text-green-400">
-                    {Number(donationData.amount).toLocaleString()} Francs
-                  </span>{" "}
-                  has been successfully processed!
-                </p>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Name:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.name}
+                        </span>
+                      </div>
 
-                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 w-full mb-6">
-                  <h3 className="font-semibold text-slate-800 dark:text-slate-200 mb-3">
-                    Donation Details:
-                  </h3>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Email:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.email}
+                        </span>
+                      </div>
 
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Name:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.name}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Phone:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">
+                          {donationData.phoneNumber}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Email:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.email}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Category:
+                        </span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                          {donationData.category}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Phone:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium">
-                        {donationData.phoneNumber}
-                      </span>
-                    </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Payment Method:
+                        </span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
+                          {donationData.paymentMethod.replace(/_/g, " ")}
+                        </span>
+                      </div>
 
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Category:
-                      </span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
-                        {donationData.category}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Payment Method:
-                      </span>
-                      <span className="text-slate-700 dark:text-slate-300 font-medium capitalize">
-                        {donationData.paymentMethod.replace(/_/g, " ")}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-500 dark:text-slate-400">
-                        Transaction ID:
-                      </span>
-                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
-                        {donationData.transactionId}
-                      </span>
+                      <div className="flex justify-between items-center">
+                        <span className="text-slate-500 dark:text-slate-400">
+                          Transaction ID:
+                        </span>
+                        <span className="font-mono text-slate-700 dark:text-slate-300 text-xs">
+                          {donationData.transactionId}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <button className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
-                  <Download size={18} />
-                  Download Receipt
-                </button>
+                  <button
+                    onClick={downloadReceiptAsPDF}
+                    className="w-full py-3 px-4 mb-4 rounded-lg bg-blue-500 dark:bg-blue-600 text-white font-medium hover:bg-blue-600 dark:hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <Download size={18} />
+                    Download Receipt
+                  </button>
 
-                <div className="text-center">
-                  <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
-                    Your contribution is making a real difference! 💫
-                  </p>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs">
-                    The Donation Receipt Has been Sent To Your Email{" "}
-                  </p>
+                  <div className="text-center">
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">
+                      Your contribution is making a real difference! 💫
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-
+          )}
         </div>
       </section>
 
