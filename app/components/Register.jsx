@@ -507,7 +507,7 @@ const Register = () => {
         </form>
 
         <p className="px-4 sm:px-6 md:px-8 lg:px-10 mt-4 text-center py-2 text-sm md:text-base text-[16px] dark:text-slate-900 text-black">
-          Already have an account?{" "}
+          Already have a member?{" "}
           <Link
             href="/login"
             className="text-teal-600 font-medium  hover:text-[16.2px] hover:underline"

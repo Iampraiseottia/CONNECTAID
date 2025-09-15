@@ -166,8 +166,7 @@ const Navbar = () => {
                 isActiveInArray([
                   "/blog",
                   "/upcoming-event-details-1",
-                  "/login",
-                  "/register",
+                  
                   "/forgot-password",
                   "/faqs",
                   "/donate-payment",
@@ -247,56 +246,6 @@ const Navbar = () => {
                 </Link>
 
                 
-                {/* Nested dropdown for Login */}
-                {/* <div className="relative group/login">
-                  <div
-                    className={`py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide flex justify-between items-center cursor-pointer 
-                  ${
-                    isActiveInArray(["/login", "/register", "/forgot-password"])
-                      ? "text-teal-500"
-                      : "text-slate-800"
-                  }`}
-                  >
-                    <p>Login</p>
-                    <ChevronRight className="w-4 h-4" />
-                  </div>
-                  <div className="absolute left-full top-0 hidden bg-white w-60 border-l-2 border-t-2 border-l-teal-500 border-t-teal-500 h-auto py-5 transition-all group-hover/login:block p-2 rounded shadow-lg">
-                    <Link
-                      href="/login"
-                      className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${
-                          isActive("/login")
-                            ? "text-teal-500"
-                            : "text-slate-800"
-                        }`}
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      href="/register"
-                      className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${
-                          isActive("/register")
-                            ? "text-teal-500"
-                            : "text-slate-800"
-                        }`}
-                    >
-                      Registration
-                    </Link>
-                    <Link
-                      href="/forgot-password"
-                      className={`block py-2 pl-2 ease-in-out duration-200 text-[16px] xl:text-[18px] hover:text-lg xl:hover:text-xl hover:text-teal-600 font-semibold tracking-wide 
-                        ${
-                          isActive("/forgot-password")
-                            ? "text-teal-500"
-                            : "text-slate-800"
-                        }`}
-                    >
-                      Forgot Password
-                    </Link>
-                  </div>
-                </div> */}
-
 
                 <Link
                   href="/blog-details-1"
@@ -353,6 +302,18 @@ const Navbar = () => {
               }`}
             >
               Contact
+            </Link>
+
+            <Link
+              href="/register"
+              className={`text-lg xl:text-xl font-semibold transition-colors duration-300 
+              ${
+                isActive("/register")
+                  ? "text-teal-500"
+                  : "text-black hover:text-teal-600"
+              }`}
+            >
+              Become-A-Member
             </Link>
           </div>
 
@@ -452,8 +413,7 @@ const Navbar = () => {
                   isActiveInArray([
                     "/blog",
                     "/upcoming-event-details-1",
-                    "/login",
-                    "/register",
+                  
                     "/forgot-password",
                     "/faqs",
                     "/donate-payment",
@@ -545,65 +505,6 @@ const Navbar = () => {
                 </Link>
 
 
-                {/* <div className="relative">
-                  <button
-                    onClick={() =>
-                      document
-                        .getElementById("mobileLogin")
-                        .classList.toggle("hidden")
-                    }
-                    className={`py-2 flex items-center justify-between w-full ${
-                      isActiveInArray([
-                        "/login",
-                        "/register",
-                        "/forgot-password",
-                      ])
-                        ? "text-teal-500"
-                        : "text-black hover:text-teal-600"
-                    }`}
-                  >
-                    Login <ChevronRight className="ml-1 w-4 h-4" />
-                  </button>
-                  <div
-                    id="mobileLogin"
-                    className="hidden bg-gray-200 mt-1 p-2 rounded ml-4"
-                  >
-                    <Link
-                      href="/login"
-                      className={`block py-2 
-                      ${
-                        isActive("/login")
-                          ? "text-teal-500"
-                          : "text-black hover:text-teal-600"
-                      }`}
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      href="/register"
-                      className={`block py-2 
-                      ${
-                        isActive("/register")
-                          ? "text-teal-500"
-                          : "text-black hover:text-teal-600"
-                      }`}
-                    >
-                      Registration
-                    </Link>
-                    <Link
-                      href="/forgot-password"
-                      className={`block py-2 
-                      ${
-                        isActive("/forgot-password")
-                          ? "text-teal-500"
-                          : "text-black hover:text-teal-600"
-                      }`}
-                    >
-                      Forgot Password
-                    </Link>
-                  </div>
-                </div> */}
-
 
                 <Link
                   href="/blog-details-1"
@@ -664,6 +565,18 @@ const Navbar = () => {
               Contact
             </Link>
 
+            <Link
+              href="/register"
+              className={`text-xl font-semibold 
+              ${
+                isActive("/register")
+                  ? "text-teal-500"
+                  : "text-black hover:text-teal-600"
+              }`}
+            >
+              Become a Member
+            </Link>
+
             <div className="flex items-center justify-between mt-4">
               <div className="relative group">
                 <button
@@ -694,6 +607,7 @@ const Navbar = () => {
               >
                 DONATE NOW
               </Link>
+              
             </div>
           </div>
         </div>

@@ -340,7 +340,36 @@ const Login = () => {
             className="mr-3"
           />
           Login With Google
-        </button>
+        </button> 
+
+         <button
+          type="submit"
+          className="mt-6 w-[90%] mx-5 sm:mx-10 flex items-center justify-center border-2 border-teal-500 text-black hover:bg-teal-500 hover:text-white transition-all duration-300 py-3 rounded-lg font-semibold text-lg"
+        >
+          <Image
+            src="/icon/apple.png"
+            alt="Google Icon"
+            width={24}
+            height={24}
+            className="mr-3"
+          />
+          Login With Apple
+        </button> 
+        
+         <button
+          type="submit"
+          className="mt-6 w-[90%] mx-5 sm:mx-10 flex items-center justify-center border-2 border-teal-500 text-black hover:bg-teal-500 hover:text-white transition-all duration-300 py-3 rounded-lg font-semibold text-lg"
+        >
+          <Image
+            src="/icon/fb2.png"
+            alt="Google Icon"
+            width={24}
+            height={24}
+            className="mr-3"
+          />
+          Login With Facebook 
+        </button> 
+        
       </div>
     </motion.main>
   );
