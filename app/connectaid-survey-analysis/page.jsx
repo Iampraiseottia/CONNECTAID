@@ -25,22 +25,40 @@ export default function SurveyAnalyticsStats() {
 
   const [loading, setLoading] = useState(true);
 
-  const fetchAdminCredentials = async () => {
-    return { username: "aldris", password_hash: "wise man moses" };
+  const fetchAdminCredentials = async (enteredUsername, enteredPassword) => {
+    try {
+      const response = await fetch("/api/admin/verify-credentials", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: enteredUsername,
+          password: enteredPassword,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Authentication failed");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching admin credentials:", error);
+      throw error;
+    }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    setLoginAttempting(true); 
+    setLoginAttempting(true);
 
     try {
-      const storedCredentials = await fetchAdminCredentials();
+      const result = await fetchAdminCredentials(username, password);
 
-      if (
-        username === storedCredentials.username &&
-        password === storedCredentials.password_hash
-      ) {
+      if (result.authenticated) {
         setIsAuthenticated(true);
         setError("");
         setUsername("");
