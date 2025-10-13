@@ -29,7 +29,7 @@ const ForgotPassword = () => {
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
 
-  const emailRef = useRef(); 
+  const emailRef = useRef();
 
   const onMouseEnterEmailRef = () => {
     emailRef.current.focus();
@@ -65,10 +65,10 @@ const ForgotPassword = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -86,7 +86,7 @@ const ForgotPassword = () => {
         />
       </motion.div>
 
-   {/* Forgot Password Section  */}
+      {/* Forgot Password Section  */}
       <motion.main
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -98,15 +98,15 @@ const ForgotPassword = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
             <Image
               src={navLogo}
-              height={80} 
+              height={80}
               width={80}
               alt="ConnectAID Logo"
               className="w-16 h-16 md:w-20 md:h-20"
             />
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-wide text-center md:text-left dark:text-slate-950 text-black ">
-              ConnectAID 
+              ConnectAID
             </h1>
-          </div> 
+          </div>
 
           <br />
 

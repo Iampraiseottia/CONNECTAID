@@ -125,10 +125,10 @@ const NewPassword = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -296,13 +296,13 @@ const NewPassword = () => {
                   />
                   <label
                     htmlFor="Seeker"
-                    className="ml-2 text-base md:text-lg font-medium cursor-pointer  dark:text-slate-900 text-black " 
+                    className="ml-2 text-base md:text-lg font-medium cursor-pointer  dark:text-slate-900 text-black "
                   >
                     Seeker
                   </label>
                 </div>
               </div>
-            </fieldset> 
+            </fieldset>
 
             <button
               className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"

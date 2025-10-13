@@ -1,3 +1,4 @@
+// api/auth/user/route.js
 
 import { NextResponse } from "next/server";
 import { query } from "@/lib/db";

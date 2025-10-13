@@ -43,7 +43,6 @@ import upcomingRelatedImg1 from "/public/gallery/donateList-1.png";
 import upcomingRelatedImg2 from "/public/gallery/suffering.png";
 
 const UpcomingEventDetail2 = () => {
-  
   const metadata = {
     title:
       "Empowering Future Generations: Access to Clean Water for Children - ConnectAID ",
@@ -107,10 +106,10 @@ const UpcomingEventDetail2 = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for About Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}

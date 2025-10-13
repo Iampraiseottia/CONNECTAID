@@ -24,10 +24,10 @@ const TermsConditions = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -57,9 +57,11 @@ const TermsConditions = () => {
             <div className="max-w-4xl mx-auto">
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Introduction</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Introduction
+                </h2>
                 <p className="text-gray-700 mb-4">
-                  Welcome to ConnectAID. These Terms and Conditions govern your 
+                  Welcome to ConnectAID. These Terms and Conditions govern your
                   use of the ConnectAID web application and services provided
                   through our platform. ConnectAID is a charitable platform
                   designed to connect individuals seeking assistance ("Seekers")
@@ -78,7 +80,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Communications</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Communications
+                </h2>
                 <p className="text-gray-700 mb-4">
                   By creating an account with ConnectAID, you agree to receive
                   communications from us. These may include service
@@ -97,7 +101,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Donations</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Donations
+                </h2>
                 <p className="text-gray-700 mb-4">
                   When making a donation through ConnectAID, you may be asked to
                   supply certain information relevant to your donation including
@@ -157,7 +163,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Subscriptions</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Subscriptions
+                </h2>
                 <p className="text-gray-700 mb-4">
                   ConnectAID offers subscription plans for Donors who wish to
                   make recurring contributions. Subscriptions are billed in
@@ -191,7 +199,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Refunds</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Refunds
+                </h2>
                 <p className="text-gray-700 mb-4">
                   Due to the charitable nature of ConnectAID, most donations are
                   non-refundable once they have been processed and distributed
@@ -220,7 +230,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">User Content</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  User Content
+                </h2>
                 <p className="text-gray-700 mb-4">
                   ConnectAID allows you to post, share, and otherwise make
                   available certain information, text, images, videos, or other
@@ -265,7 +277,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div className="mb-8">
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Prohibited Uses</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Prohibited Uses
+                </h2>
                 <p className="text-gray-700 mb-4">
                   You may use ConnectAID only for lawful and ethical charitable
                   purposes. You agree not to use our service:
@@ -368,7 +382,9 @@ const TermsConditions = () => {
 
               {/* Single Terms Section */}
               <div>
-                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">Acknowledgement</h2>
+                <h2 className="text-2xl font-semibold mb-4 dark:text-gray-800">
+                  Acknowledgement
+                </h2>
                 <p className="text-gray-700 mb-4">
                   BY USING CONNECTAID OR OTHER SERVICES PROVIDED BY US, YOU
                   ACKNOWLEDGE THAT YOU HAVE READ THESE TERMS AND CONDITIONS AND

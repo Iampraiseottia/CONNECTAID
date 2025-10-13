@@ -42,8 +42,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const DonationDetails2 = () => {
   const metadata = {
-    title:
-      "Quality Medicine: Empowering a Healthier Community - ConnectAID ",
+    title: "Quality Medicine: Empowering a Healthier Community - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
@@ -74,7 +73,6 @@ const DonationDetails2 = () => {
   const onMouseEnterCommentRef = () => {
     commentRef.current.focus();
   };
-
 
   const avatarInputRef = useRef();
 
@@ -304,10 +302,10 @@ const DonationDetails2 = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}

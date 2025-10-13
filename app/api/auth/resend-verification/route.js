@@ -1,3 +1,5 @@
+// api/auth/resend-verification/route.js
+
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { generateVerificationCode, generateCodeExpiry } from '@/lib/auth';

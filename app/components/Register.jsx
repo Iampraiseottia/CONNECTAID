@@ -184,11 +184,8 @@ const Register = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Registration successful - user session is now set via cookie
-        // Store user data in localStorage for immediate access
         localStorage.setItem("user", JSON.stringify(data.user));
 
-        // Redirect to email verification
         router.push(
           `/email-verification?email=${encodeURIComponent(formValues.email)}`
         );

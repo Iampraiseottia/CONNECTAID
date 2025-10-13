@@ -25,10 +25,10 @@ const Events = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -42,13 +42,12 @@ const Events = () => {
           title="UPCOMING EVENTS"
           description="UPCOMING EVENT LIST"
           breadcrumAlt="EVENTS Hero Background Image"
-          breadcrumbImage="/gallery/breadcrumb-1.png" 
+          breadcrumbImage="/gallery/breadcrumb-1.png"
         />
       </motion.div>
 
       {/* Upcoming Events */}
       <Upcoming />
-
 
       {/* Picture Gallery  */}
       <Gallery />

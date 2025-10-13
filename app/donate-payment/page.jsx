@@ -356,7 +356,7 @@ const DonatePayment = () => {
       });
 
       doc.setFontSize(24);
-      doc.setTextColor(22, 163, 74); 
+      doc.setTextColor(22, 163, 74);
       doc.setFont("Arial", "bold");
       doc.text("CONNECTAID", centerX, 35, { align: "center" });
 
@@ -404,7 +404,7 @@ const DonatePayment = () => {
           label: "Category:",
           value: donationData.category,
           rightAlign: true,
-          valueColor: [22, 163, 74], 
+          valueColor: [22, 163, 74],
         },
         {
           label: "Payment Method:",
@@ -454,7 +454,7 @@ const DonatePayment = () => {
 
       yPos += 20;
 
-      doc.setFillColor(240, 255, 240); 
+      doc.setFillColor(240, 255, 240);
       doc.rect(leftMargin, yPos - 5, rightMargin - leftMargin, 35, "F");
 
       doc.setFontSize(16);
@@ -518,7 +518,7 @@ const DonatePayment = () => {
         { align: "center" }
       );
 
-      // Save the PDF 
+      // Save the PDF
       doc.save(`ConnectAID-Receipt-${donationData.transaction_id}.pdf`);
     } catch (error) {
       console.error("Error generating PDF:", error);
@@ -530,10 +530,10 @@ const DonatePayment = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for About Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}

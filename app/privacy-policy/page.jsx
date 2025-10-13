@@ -24,10 +24,10 @@ const PrivacyPolicy = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header */}
+      {/* Navigation Bar */}
       <Navbar />
 
-      {/* Breadcrumb for About Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -112,12 +112,12 @@ const PrivacyPolicy = () => {
             <div className="mb-8">
               <h2 className="text-2xl font-semibold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-16 after:h-1 after:bg-green-600 dark:text-gray-800">
                 Information We Collect
-              </h2> 
+              </h2>
               <p className="text-gray-700 mb-6">
                 At ConnectAID, we collect certain information to help facilitate
                 connections between donors and those seeking assistance. We
                 strive to collect only what is necessary to provide our services
-                effectively while respecting your privacy. Our platform is built 
+                effectively while respecting your privacy. Our platform is built
                 on trust, and we take our responsibility to protect your
                 information seriously.
               </p>

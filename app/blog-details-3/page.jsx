@@ -42,8 +42,7 @@ import relatedPostImg12 from "/public/gallery/water.png";
 
 const BlogDetails3 = () => {
   const metadata = {
-    title:
-      "Nourished Communities: The Power of Good Food - ConnectAID ",
+    title: "Nourished Communities: The Power of Good Food - ConnectAID ",
     description:
       "ConnectAID is a charity application where seekers(those in need) of help can find and meet donors (those willing to help) in which they can gain valuable assistance.",
   };
@@ -60,7 +59,6 @@ const BlogDetails3 = () => {
   const [displayedComments, setDisplayedComments] = useState(5);
   const [generatedAvatar, setGeneratedAvatar] = useState("");
 
-
   const fullNameRef = useRef();
   const emailAddressRef = useRef();
   const commentRef = useRef();
@@ -74,7 +72,6 @@ const BlogDetails3 = () => {
   const onMouseEnterCommentRef = () => {
     commentRef.current.focus();
   };
-  
 
   const avatarInputRef = useRef();
 
@@ -200,7 +197,6 @@ const BlogDetails3 = () => {
     }
   };
 
-
   useEffect(() => {
     if (fullName.trim()) {
       const avatar = generateAvatar(fullName);
@@ -215,7 +211,7 @@ const BlogDetails3 = () => {
     setDisplayedComments((prev) => prev + 15);
   };
 
-  // Fetch comments 
+  // Fetch comments
   const fetchComments = async () => {
     try {
       const response = await fetch(`/api/comments?blogPostId=blog-details-3`);
@@ -305,10 +301,10 @@ const BlogDetails3 = () => {
     <div className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -776,7 +772,7 @@ const BlogDetails3 = () => {
                         Profile Picture (Optional)
                       </label>
                       <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
+                        <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
                           {avatarPreview ? (
                             <img
                               src={avatarPreview}

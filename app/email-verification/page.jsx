@@ -1,3 +1,5 @@
+// app/email-verification/page.jsx
+
 "use client";
 
 import { React, useRef, useState, useEffect, Suspense } from "react";

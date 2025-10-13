@@ -67,7 +67,7 @@ const ContactUS = () => {
       valid = false;
     }
 
-    // Phone validation 
+    // Phone validation
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
       valid = false;
@@ -82,7 +82,7 @@ const ContactUS = () => {
       newErrors.email = "Email address is required";
       valid = false;
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"; 
+      newErrors.email = "Please enter a valid email address";
       valid = false;
     }
 
@@ -200,10 +200,10 @@ const ContactUS = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}

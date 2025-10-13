@@ -86,10 +86,10 @@ const Verify = () => {
     <main className="bg-[#f9f9f9]">
       <Metadata title={metadata.title} description={metadata.description} />
 
-      {/* Navigation Bar | Header  */}
+      {/* Navigation Bar  */}
       <Navbar />
 
-      {/* Breadcrumb for ABout Page */}
+      {/* Breadcrumb  */}
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         whileInView={{ y: 0, opacity: 1 }}
@@ -141,8 +141,6 @@ const Verify = () => {
                 Verification Codes
               </label>
 
-             
-
               <div className="mt-6 mb-1 flex flex-row justify-start items-center ">
                 {[0, 1, 2, 3].map((index) => (
                   <input
@@ -154,7 +152,7 @@ const Verify = () => {
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onMouseEnter={() => onMouseEnterCode(index)}
                     inputMode="numeric"
-                    pattern="[0-9]*" 
+                    pattern="[0-9]*"
                     maxLength={1}
                     placeholder={index + 1}
                     className={`w-[18%] text-center text-base bg-transparent rounded-xl outline-none border-2 
@@ -166,7 +164,7 @@ const Verify = () => {
                     py-3 px-4 focus:ring-1 focus:ring-[#0ef] focus:outline-none duration-300 
                     ${index < 3 ? "mr-3" : ""}`}
                   />
-                ))} 
+                ))}
               </div>
 
               {error && (
@@ -174,8 +172,7 @@ const Verify = () => {
                   {error}
                 </p>
               )}
-
-            </div> 
+            </div>
 
             <button
               className="mx-[10%] mt-7 mb-4 py-4 flex justify-center items-center bg-teal-500 text-white ease-in-out duration-200 hover:bg-teal-600 hover:rounded-2xl text-3xl font-bold tracking-wide w-[80%]"

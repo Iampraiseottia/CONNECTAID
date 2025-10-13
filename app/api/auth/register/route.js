@@ -1,3 +1,5 @@
+// api/auth/register/route.js 
+
 import { NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { cookies } from "next/headers";
